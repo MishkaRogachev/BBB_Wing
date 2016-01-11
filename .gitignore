@@ -26,3 +26,10 @@
 *.exe
 *.out
 *.app
+
+# CMake
+CMakeLists.txt.user
+
+# Build artifacts
+build
+result
