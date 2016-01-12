@@ -6,7 +6,7 @@ set(PROJECT board)
 project(${PROJECT})
 
 # CMake modules
-include(${CMAKE_CURRENT_SOURCE_DIR}/../../cmake/RecurseSubdirs.cmake)
+include(${CMAKE_CURRENT_SOURCE_DIR}/../../../cmake/RecurseSubdirs.cmake)
 
 # Enable Qt modules
 find_package(Qt5 COMPONENTS Core)

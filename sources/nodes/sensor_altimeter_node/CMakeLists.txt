@@ -2,17 +2,14 @@
 cmake_minimum_required(VERSION 2.8.11)
 
 # Project
-set(PROJECT altitude_sensor_node)
+set(PROJECT sensor_altimeter_node)
 project(${PROJECT})
 
-# Root dir
-set(ROOT_DIR ${CMAKE_CURRENT_SOURCE_DIR}/../../)
-
 # CMake modules
-include(${ROOT_DIR}/cmake/RecurseSubdirs.cmake)
+include(${CMAKE_CURRENT_SOURCE_DIR}/../../../cmake/RecurseSubdirs.cmake)
 
 # Common
-add_subdirectory(${ROOT_DIR}/common ${CMAKE_CURRENT_BINARY_DIR}/common)
+add_subdirectory(../../common ${CMAKE_CURRENT_BINARY_DIR}/common)
 
 # Enable Qt modules
 find_package(Qt5 COMPONENTS Core)
@@ -32,7 +29,7 @@ set(INCLUDES
 include_directories(${INCLUDES})
 
 # Sources
-file(GLOB_RECURSE INTERNAL_SOURCES "sources/*.h" "sources/*.cpp")
+file(GLOB_RECURSE INTERNAL_SOURCES "*.h" "*.cpp")
 set(SOURCES
     ${SOURCES}
     ${INTERNAL_SOURCES}

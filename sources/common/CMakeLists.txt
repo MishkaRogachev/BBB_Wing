@@ -9,7 +9,7 @@ set(INCLUDES
 PARENT_SCOPE)
     
 # Sources
-file(GLOB_RECURSE INTERNAL_SOURCES "sources/*.h" "sources/*.cpp")
+file(GLOB_RECURSE INTERNAL_SOURCES "*.h" "*.cpp")
 set(SOURCES 
     ${SOURCES} 
     ${INTERNAL_SOURCES} 

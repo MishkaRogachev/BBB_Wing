@@ -9,8 +9,8 @@ set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_SOURCE_DIR}/result)
 set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${CMAKE_SOURCE_DIR}/result)
 
 # Nodes targets
-add_subdirectory(nodes/sensor_altimeter_node)
+add_subdirectory(sources/nodes/sensor_altimeter_node)
 
 # Target subdirectories
-add_subdirectory(targets/board)
+add_subdirectory(sources/targets/board)
 
