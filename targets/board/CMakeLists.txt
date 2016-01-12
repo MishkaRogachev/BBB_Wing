@@ -27,9 +27,6 @@ file(GLOB_RECURSE SOURCES "*.cpp" "*.h")
 # Add compiler flags
 add_compile_options(-std=c++11 -Wall)
 
-# Include directories
-include_directories(${INCLUDES})
-
 # Executable target
 add_executable(${PROJECT} ${SOURCES})
 
