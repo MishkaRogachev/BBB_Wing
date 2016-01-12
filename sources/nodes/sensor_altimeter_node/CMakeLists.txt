@@ -8,8 +8,9 @@ project(${PROJECT})
 # CMake modules
 include(${CMAKE_CURRENT_SOURCE_DIR}/../../../cmake/RecurseSubdirs.cmake)
 
-# Common
+# External dirs
 add_subdirectory(../../common ${CMAKE_CURRENT_BINARY_DIR}/common)
+add_subdirectory(../../devices ${CMAKE_CURRENT_BINARY_DIR}/devices)
 
 # Enable Qt modules
 find_package(Qt5 COMPONENTS Core)
