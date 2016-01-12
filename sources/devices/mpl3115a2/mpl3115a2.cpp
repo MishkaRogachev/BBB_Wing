@@ -69,9 +69,9 @@ Mpl3115A2::Mpl3115A2():
     I2cDevice()
 {}
 
-bool Mpl3115A2::start()
+bool Mpl3115A2::start(const char* filename)
 {
-    if (!I2cDevice::start()) return false;
+    if (!I2cDevice::start(filename)) return false;
     if (this->i2cRead(WHO_AM_I) != 0xC4) return false;
 
     return true;

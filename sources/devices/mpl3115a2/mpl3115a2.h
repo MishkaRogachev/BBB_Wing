@@ -13,7 +13,7 @@ namespace devices
 
         Mpl3115A2();
 
-        bool start() override;
+        bool start(const char* filename = "/dev/i2c-2") override;
         int i2cAddress() const override;
 
         void setPowerMode(PowerMode mode);

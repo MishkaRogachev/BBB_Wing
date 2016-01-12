@@ -30,7 +30,11 @@ set(INCLUDES
 include_directories(${INCLUDES})
 
 # Sources
-file(GLOB_RECURSE INTERNAL_SOURCES "*.h" "*.cpp")
+set(INTERNAL_SOURCES
+    sensor_altimeter_node.h
+    sensor_altimeter_node.cpp
+)
+
 set(SOURCES
     ${SOURCES}
     ${INTERNAL_SOURCES}
@@ -46,4 +50,4 @@ add_library(${PROJECT} STATIC ${SOURCES})
 target_link_libraries (${PROJECT} ${LIBRARIES})
 
 # Tests
-# add_subdirectory(tests)
+add_subdirectory(tests)
