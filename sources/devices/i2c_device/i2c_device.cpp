@@ -1,6 +1,7 @@
 #include "i2c_device.h"
 
 // Linux
+#include <cstddef>
 #include <fcntl.h>
 #include <sys/ioctl.h>
 #include <linux/i2c-dev.h>
