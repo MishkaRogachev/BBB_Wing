@@ -9,9 +9,9 @@ int main(int argc, char *argv[])
 
     altimeter.start();
 
-    qDebug() << "Pressure:" << altimeter.readPressure();
-    qDebug() << "Altitude:" << altimeter.readAltitude();
+    qDebug() << "Pressure:" << altimeter.readAltitude();
+/*    qDebug() << "Altitude:" << altimeter.readAltitude();
     qDebug() << "Temperature:" << altimeter.readTemperature();
-
+*/
     return 0;
 }

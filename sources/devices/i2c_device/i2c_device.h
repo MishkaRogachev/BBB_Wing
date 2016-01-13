@@ -14,7 +14,7 @@ namespace devices
 
         virtual bool start(const char* filename = "/dev/i2c-2");
         void stop();
-        virtual int i2cAddress() const;
+        virtual uint8_t i2cAddress() const;
 
         uint8_t i2cRead(uint8_t reg);
         void i2cWrite(uint8_t reg, uint8_t data);

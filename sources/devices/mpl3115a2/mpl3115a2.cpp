@@ -1,14 +1,13 @@
 #include "mpl3115a2.h"
 
+// Qt TMP:
+#include <QDebug>
+
 // Std
 #include <unistd.h>
 
-// Datasheet http://cdn.sparkfun.com/datasheets/Sensors/Pressure/MPL3115A2.pdf
-// Some code copied from Arduio implementation from
-// https://github.com/sparkfun/MPL3115A2_Breakout/blob/master/Libraries/Arduino
-
 // Adress
-#define MPL3115A2_ADRESS 0x60 // WARNING: 0xC0 in datasheet?
+#define MPL3115A2_ADRESS 0x60
 
 // Registers
 #define STATUS     0x00
@@ -58,11 +57,6 @@
 #define OFF_T      0x2C
 #define OFF_H      0x2D
 
-void delay(unsigned long ms)
-{
-    usleep(ms * 1000);
-}
-
 using namespace devices;
 
 Mpl3115A2::Mpl3115A2():
@@ -77,109 +71,44 @@ bool Mpl3115A2::start(const char* filename)
     return true;
 }
 
-int Mpl3115A2::i2cAddress() const
+uint8_t Mpl3115A2::i2cAddress() const
 {
     return MPL3115A2_ADRESS;
 }
 
-void Mpl3115A2::setPowerMode(PowerMode mode)
-{
-    uint8_t setting = this->i2cRead(CTRL_REG1);
-
-    switch (mode) {
-    case Active:
-        setting |= (1 << 0);
-        break;
-    case Standby:
-        setting &= ~(1 << 0);
-        break;
-    }
-
-    this->i2cWrite(CTRL_REG1, setting);
-}
-
-void Mpl3115A2::setMeasurementMode(MeasurementMode mode)
-{
-    uint8_t setting = this->i2cRead(CTRL_REG1);
-
-    switch (mode) {
-    case Active:
-        setting |= (1 << 7);
-        break;
-    case Standby:
-        setting &= ~(1 << 7);
-        break;
-    }
-
-    this->i2cWrite(CTRL_REG1, setting);
-}
-
-void Mpl3115A2::enableEventFlags()
-{
-    this->i2cWrite(PT_DATA_CFG, 0x07); // Enable all three pressure and temp event flags
-}
-
-void Mpl3115A2::toggleOneShot()
-{
-    uint8_t setting = this->i2cRead(CTRL_REG1); //Read current settings
-    setting &= ~(1 << 1); //Clear OST bit
-    this->i2cWrite(CTRL_REG1, setting);
-
-    setting = this->i2cRead(CTRL_REG1); //Read current settings to be safe
-    setting |= (1 << 1); //Set OST bit
-    this->i2cWrite(CTRL_REG1, setting);
-}
-
 float Mpl3115A2::readAltitude()
 {
-    this->toggleOneShot();
+    qDebug() << "Enable Data Flags";
 
-    float result = 0.0;
-    return result;
+    this->i2cWrite(CTRL_REG1, 0xB8); // Set to Altimeter with an OSR = 128
+    this->i2cWrite(PT_DATA_CFG, 0x07); // Enable Data Flags in PT_DATA_CFG
+    this->i2cWrite(CTRL_REG1, 0xB9); // Set Active (polling)
+
+    qDebug() << "Starting measure";
+
+    for (int counter = 0; counter < 60; ++counter) //Error out after max of 512ms for a read
+    {
+        uint8_t status = this->i2cRead(STATUS);
+        qDebug() << "Status:" << status;
+
+        if ((status & (1<<2)) != 0)
+        {
+            qDebug() << "Writing ";
+
+            uint8_t msb = this->i2cRead(0x01);
+            uint8_t csb = this->i2cRead(0x02);
+            uint8_t lsb = this->i2cRead(0x04);
+
+            qDebug() << "Msb:" << msb << "Csb:" << csb << "Lsb:" << lsb;
+
+            float tempcsb = (lsb>>4) / 16.0;
+            float altitude = (float)( (msb << 8) | csb) + tempcsb;
+
+            return altitude;
+        }
+
+        usleep(10);
+    }
+
+    return 0.0;
 }
-
-float Mpl3115A2::readPressure()
-{
-    if ((this->i2cRead(STATUS) & (1 << 2)) == 0) this->toggleOneShot();
-
-    // Wait for PDR bit, indicates we have new pressure data
-    while ((this->i2cRead(STATUS) & (1 << 2)) == 0) delay(10);
-
-    float result = 0.0;
-    return result;
-
-//    TODO: transmission to base class
-    // Read pressure registers
-//    Wire.beginTransmission(MPL3115A2_ADDRESS);
-//    Wire.write(OUT_P_MSB);  // Address of data to get
-//    Wire.endTransmission(false); // Send data to I2C dev with option for a repeated start. THIS IS NECESSARY and not supported before Arduino V1.0.1!
-//    if (Wire.requestFrom(MPL3115A2_ADDRESS, 3) != 3) { // Request three bytes
-//        return -999;
-//    }
-
-//    byte msb, csb, lsb;
-//    msb = Wire.read();
-//    csb = Wire.read();
-//    lsb = Wire.read();
-
-//    toggleOneShot(); //Toggle the OST bit causing the sensor to immediately take another reading
-
-//    // Pressure comes back as a left shifted 20 bit number
-//    long pressure_whole = (long)msb<<16 | (long)csb<<8 | (long)lsb;
-//    pressure_whole >>= 6; //Pressure is an 18 bit number with 2 bits of decimal. Get rid of decimal portion.
-
-//    lsb &= B00110000; //Bits 5/4 represent the fractional component
-//    lsb >>= 4; //Get it right aligned
-//    float pressure_decimal = (float)lsb/4.0; //Turn it into fraction
-
-//    float pressure = (float)pressure_whole + pressure_decimal;
-
-//    return(pressure);
-}
-
-float Mpl3115A2::readTemperature()
-{
-    float result = 0.0;
-    return result;
-}
-

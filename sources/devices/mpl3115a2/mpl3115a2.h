@@ -8,23 +8,12 @@ namespace devices
     class Mpl3115A2 : public I2cDevice
     {
     public:
-        enum PowerMode { Standby, Active };
-        enum MeasurementMode { Barometer, Altimeter };
-
         Mpl3115A2();
 
         bool start(const char* filename = "/dev/i2c-2") override;
-        int i2cAddress() const override;
-
-        void setPowerMode(PowerMode mode);
-        void setMeasurementMode(MeasurementMode mode);
-
-        void enableEventFlags();
-        void toggleOneShot(void);
+        uint8_t i2cAddress() const override;
 
         float readAltitude();
-        float readPressure();
-        float readTemperature();
     };
 }
 

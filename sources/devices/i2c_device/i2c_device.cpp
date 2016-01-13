@@ -34,7 +34,7 @@ void I2cDevice::stop()
     close(m_file);
 }
 
-int I2cDevice::i2cAddress() const
+uint8_t I2cDevice::i2cAddress() const
 {
     return 0x0;
 }
