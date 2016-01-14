@@ -76,13 +76,22 @@ uint8_t Mpl3115A2::i2cAddress() const
     return MPL3115A2_ADRESS;
 }
 
+void Mpl3115A2::toogleOneShot()
+{
+    qDebug() << "Toggling one shot";
+
+    uint8_t tempSetting = this->i2cRead(CTRL_REG1);
+    tempSetting &= ~(1 << 1); //Clear OST bit
+    this->i2cWrite(CTRL_REG1, tempSetting);
+
+    tempSetting = this->i2cRead(CTRL_REG1); // re-read to be safe
+    tempSetting |= ~(1 << 1); //Set OST bit
+    this->i2cWrite(CTRL_REG1, tempSetting);
+}
+
 float Mpl3115A2::readAltitude()
 {
-    qDebug() << "Enable Data Flags";
-
-    this->i2cWrite(CTRL_REG1, 0xB8); // Set to Altimeter with an OSR = 128
-    this->i2cWrite(PT_DATA_CFG, 0x07); // Enable Data Flags in PT_DATA_CFG
-    this->i2cWrite(CTRL_REG1, 0xB9); // Set Active (polling)
+    this->toogleOneShot();
 
     qDebug() << "Starting measure";
 
@@ -91,7 +100,7 @@ float Mpl3115A2::readAltitude()
         uint8_t status = this->i2cRead(STATUS);
         qDebug() << "Status:" << status;
 
-        if ((status & (1<<2)) != 0)
+        if ((status & (1 << 1)) != 0)
         {
             qDebug() << "Writing ";
 
@@ -111,4 +120,14 @@ float Mpl3115A2::readAltitude()
     }
 
     return 0.0;
+}
+
+float Mpl3115A2::readPressure()
+{
+
+}
+
+float Mpl3115A2::readTemperature()
+{
+
 }
