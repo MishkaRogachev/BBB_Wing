@@ -1,7 +1,8 @@
 #include "mpl3115a2.h"
 
-// Qt TMP:
-#include <QDebug>
+// Implimentation based on Sparkfun's Arduino libary code
+// https://github.com/sparkfun/MPL3115A2_Breakout/tree/V_H1.1_L1.2.0/Libraries/Arduino/src
+// They said code is beerware!
 
 // Std
 #include <unistd.h>
@@ -66,9 +67,7 @@ Mpl3115A2::Mpl3115A2():
 bool Mpl3115A2::start(const char* filename)
 {
     if (!I2cDevice::start(filename)) return false;
-    qDebug() << "I2C device started";
     if (this->i2cRead(WHO_AM_I) != 0xC4) return false;
-    qDebug() << "MPL3115A2 online!";
 
     return true;
 }
@@ -81,13 +80,8 @@ uint8_t Mpl3115A2::i2cAddress() const
 void Mpl3115A2::setModeActive()
 {
     uint8_t reg = this->i2cRead(CTRL_REG1); //Read current settings
-    qDebug() << "CTRL_REG1:" << reg;
     reg |= (1 << 0); //Set SBYB bit
-    qDebug() << "Write CTRL_REG1:" << reg;
     this->i2cWrite(CTRL_REG1, reg);
-
-    reg = this->i2cRead(CTRL_REG1);
-    qDebug() << "CTRL_REG1:" << reg;
 }
 
 void Mpl3115A2::setModeStandby()
@@ -107,13 +101,8 @@ void Mpl3115A2::setModeBarometer()
 void Mpl3115A2::setModeAltimeter()
 {
     uint8_t reg = this->i2cRead(CTRL_REG1); //Read current settings
-    qDebug() << "CTRL_REG1:" << reg;
     reg |= (1 << 7); //Set ALT bit
-    qDebug() << "Write CTRL_REG1:" << reg;
     this->i2cWrite(CTRL_REG1, reg);
-
-    reg = this->i2cRead(CTRL_REG1);
-    qDebug() << "CTRL_REG1:" << reg;
 }
 
 void Mpl3115A2::setOversampleRate(int rate)
@@ -134,52 +123,32 @@ void Mpl3115A2::enableEventFlags()
 
 void Mpl3115A2::toogleOneShot()
 {
-    qDebug() << "Toggling one shot";
-
     uint8_t tempSetting = this->i2cRead(CTRL_REG1);
-    qDebug() << "CTRL_REG1:" << tempSetting;
-
     tempSetting &= ~(1 << 1); //Clear OST bit
-    qDebug() << "Write CTRL_REG1:" << tempSetting;
     this->i2cWrite(CTRL_REG1, tempSetting);
 
     tempSetting = this->i2cRead(CTRL_REG1); // re-read to be safe
-    qDebug() << "CTRL_REG1:" << tempSetting;
     tempSetting |= (1 << 1); //Set OST bit
-    qDebug() << "Write CTRL_REG1:" << tempSetting;
     this->i2cWrite(CTRL_REG1, tempSetting);
-
-    tempSetting = this->i2cRead(CTRL_REG1); // re-read to be safe
-    qDebug() << "CTRL_REG1:" << tempSetting;
 }
 
 float Mpl3115A2::readAltitude()
 {
     this->toogleOneShot();
 
-    qDebug() << "Starting measure";
-
     for (int counter = 0; counter < 60; ++counter) //Error out after max of 512ms for a read
     {
-        uint8_t status = this->i2cRead(STATUS);
-        qDebug() << "Status:" << status;
-
-        if ((status & (1 << 1)) != 0)
+        if ((this->i2cRead(STATUS) & (1 << 1)) != 0)
         {
-            qDebug() << "Reading...";
-
             uint8_t msb = this->i2cRead(0x01);
             uint8_t csb = this->i2cRead(0x02);
             uint8_t lsb = this->i2cRead(0x04);
 
-            qDebug() << "Msb:" << msb << "Csb:" << csb << "Lsb:" << lsb;
-
-            float tempcsb = (lsb>>4) / 16.0;
-            float altitude = (float)( (msb << 8) | csb) + tempcsb;
+            float tempcsb = (lsb >> 4) / 16.0;
+            float altitude = (float)((msb << 8) | csb) + tempcsb;
 
             return altitude;
         }
-
         usleep(10);
     }
 

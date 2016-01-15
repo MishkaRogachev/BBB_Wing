@@ -14,9 +14,9 @@ int main(int argc, char *argv[])
     altimeter.setOversampleRate(7); // Set Oversample to the recommended 128
     altimeter.enableEventFlags();
 
-    qDebug() << "Pressure:" << altimeter.readAltitude();
-/*    qDebug() << "Altitude:" << altimeter.readAltitude();
-    qDebug() << "Temperature:" << altimeter.readTemperature();
-*/
+    for (;;)
+    {
+        qDebug() << "Altitude:" << altimeter.readAltitude();
+    }
     return 0;
 }
