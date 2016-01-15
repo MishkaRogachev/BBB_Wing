@@ -1,11 +1,14 @@
 #include "mpl3115a2.h"
 
+// Std
+#include <unistd.h>
+
+// Qt
+#include <QDebug>
+
 // Implimentation based on Sparkfun's Arduino libary code
 // https://github.com/sparkfun/MPL3115A2_Breakout/tree/V_H1.1_L1.2.0/Libraries/Arduino/src
 // They said code is beerware!
-
-// Std
-#include <unistd.h>
 
 // Adress
 #define MPL3115A2_ADRESS 0x60
@@ -48,7 +51,9 @@
 #define P_MAX_CSB  0x22
 #define P_MAX_LSB  0x23
 #define T_MAX_MSB  0x24
-#define T_MAX_LSB  0x25
+#define T_MAX_LSB  0x25// Implimentation based on Sparkfun's Arduino libary code
+// https://github.com/sparkfun/MPL3115A2_Breakout/tree/V_H1.1_L1.2.0/Libraries/Arduino/src
+// They said code is beerware!
 #define CTRL_REG1  0x26
 #define CTRL_REG2  0x27
 #define CTRL_REG3  0x28
@@ -121,7 +126,7 @@ void Mpl3115A2::enableEventFlags()
     this->i2cWrite(PT_DATA_CFG, 0x07);
 }
 
-void Mpl3115A2::toogleOneShot()
+void Mpl3115A2::toggleOneShot()
 {
     uint8_t tempSetting = this->i2cRead(CTRL_REG1);
     tempSetting &= ~(1 << 1); //Clear OST bit
@@ -132,35 +137,19 @@ void Mpl3115A2::toogleOneShot()
     this->i2cWrite(CTRL_REG1, tempSetting);
 }
 
-float Mpl3115A2::readAltitude()
+Mpl3115A2::Mesurement Mpl3115A2::getMeasurement()
 {
-    this->toogleOneShot();
+    Mesurement mesurement;
+    this->toggleOneShot();
 
-    for (int counter = 0; counter < 60; ++counter) //Error out after max of 512ms for a read
-    {
-        if ((this->i2cRead(STATUS) & (1 << 1)) != 0)
-        {
-            uint8_t msb = this->i2cRead(0x01);
-            uint8_t csb = this->i2cRead(0x02);
-            uint8_t lsb = this->i2cRead(0x04);
+    while((this->i2cRead(STATUS) & (1 << 1)) == 0) { usleep(1000); qDebug() << "..."; }
 
-            float tempcsb = (lsb >> 4) / 16.0;
-            float altitude = (float)((msb << 8) | csb) + tempcsb;
+    uint8_t msb = this->i2cRead(0x01);
+    uint8_t csb = this->i2cRead(0x02);
+    uint8_t lsb = this->i2cRead(0x04);
 
-            return altitude;
-        }
-        usleep(10);
-    }
-
-    return 0.0;
-}
-
-float Mpl3115A2::readPressure()
-{
-    return 0.0;// TODO: impl
-}
-
-float Mpl3115A2::readTemperature()
-{
-    return 0.0;// TODO: impl
+    float tempcsb = (lsb >> 4) / 16.0;
+    mesurement.altitude = (float)((msb << 8) | csb) + tempcsb;
+    mesurement.temperature = (float)(msb + tempcsb);
+    return mesurement;
 }

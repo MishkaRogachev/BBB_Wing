@@ -16,7 +16,8 @@ int main(int argc, char *argv[])
 
     for (;;)
     {
-        qDebug() << "Altitude:" << altimeter.readAltitude();
+        auto mesurement = altimeter.getMeasurement();
+        qDebug() << "Altitude:" << mesurement.altitude << mesurement.temperature;
     }
     return 0;
 }
