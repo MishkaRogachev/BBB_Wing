@@ -116,6 +116,22 @@ void Mpl3115A2::setModeAltimeter()
     qDebug() << "CTRL_REG1:" << reg;
 }
 
+void Mpl3115A2::setOversampleRate(int rate)
+{
+    if(rate > 7) rate = 7; //OS cannot be larger than 0b.0111
+    rate <<= 3; //Align it for the CTRL_REG1 register
+
+    uint8_t reg = this->i2cRead(CTRL_REG1); //Read current settings
+    reg &= 0b11000111; //Clear out old OS bits
+    reg |= rate; //Mask in new OS bits
+    this->i2cWrite(CTRL_REG1, reg);
+}
+
+void Mpl3115A2::enableEventFlags()
+{
+    this->i2cWrite(PT_DATA_CFG, 0x07);
+}
+
 void Mpl3115A2::toogleOneShot()
 {
     qDebug() << "Toggling one shot";
@@ -172,10 +188,10 @@ float Mpl3115A2::readAltitude()
 
 float Mpl3115A2::readPressure()
 {
-    // TODO: impl
+    return 0.0;// TODO: impl
 }
 
 float Mpl3115A2::readTemperature()
 {
-    // TODO: impl
+    return 0.0;// TODO: impl
 }

@@ -18,6 +18,9 @@ namespace devices
         void setModeBarometer();
         void setModeAltimeter();
 
+        void setOversampleRate(int rate);
+        void enableEventFlags();
+
         void toogleOneShot();
 
         float readAltitude();

@@ -8,8 +8,11 @@ int main(int argc, char *argv[])
     devices::Mpl3115A2 altimeter;
 
     altimeter.start();
-    altimeter.setModeActive();
-    altimeter.setModeAltimeter();
+
+    altimeter.setModeAltimeter(); // Measure altitude above sea level in meters
+
+    altimeter.setOversampleRate(7); // Set Oversample to the recommended 128
+    altimeter.enableEventFlags();
 
     qDebug() << "Pressure:" << altimeter.readAltitude();
 /*    qDebug() << "Altitude:" << altimeter.readAltitude();
