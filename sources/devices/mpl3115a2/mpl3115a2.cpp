@@ -78,23 +78,42 @@ uint8_t Mpl3115A2::i2cAddress() const
     return MPL3115A2_ADRESS;
 }
 
+void Mpl3115A2::setModeActive()
+{
+    uint8_t reg = this->i2cRead(CTRL_REG1); //Read current settings
+    qDebug() << "CTRL_REG1:" << reg;
+    reg |= (1 << 0); //Set SBYB bit
+    qDebug() << "Write CTRL_REG1:" << reg;
+    this->i2cWrite(CTRL_REG1, reg);
+
+    reg = this->i2cRead(CTRL_REG1);
+    qDebug() << "CTRL_REG1:" << reg;
+}
+
+void Mpl3115A2::setModeStandby()
+{
+    uint8_t ctrl = this->i2cRead(CTRL_REG1); //Read current settings
+    ctrl &= ~(1 << 0); //Clear SBYB bit
+    this->i2cWrite(CTRL_REG1, ctrl);
+}
+
 void Mpl3115A2::setModeBarometer()
 {
-    uint8_t tempSetting = this->i2cRead(CTRL_REG1); //Read current settings
-    tempSetting &= ~(1 << 7); //Clear ALT bit
-    this->i2cWrite(CTRL_REG1, tempSetting);
+    uint8_t ctrl = this->i2cRead(CTRL_REG1); //Read current settings
+    ctrl &= ~(1 << 7); //Clear ALT bit
+    this->i2cWrite(CTRL_REG1, ctrl);
 }
 
 void Mpl3115A2::setModeAltimeter()
 {
-    uint8_t tempSetting = this->i2cRead(CTRL_REG1); //Read current settings
-    qDebug() << "CTRL_REG1:" << tempSetting;
-    tempSetting |= (1 << 7); //Set ALT bit
-    qDebug() << "Write CTRL_REG1:" << tempSetting;
-    this->i2cWrite(CTRL_REG1, tempSetting);
+    uint8_t reg = this->i2cRead(CTRL_REG1); //Read current settings
+    qDebug() << "CTRL_REG1:" << reg;
+    reg |= (1 << 7); //Set ALT bit
+    qDebug() << "Write CTRL_REG1:" << reg;
+    this->i2cWrite(CTRL_REG1, reg);
 
-    tempSetting = this->i2cRead(CTRL_REG1);
-    qDebug() << "CTRL_REG1:" << tempSetting;
+    reg = this->i2cRead(CTRL_REG1);
+    qDebug() << "CTRL_REG1:" << reg;
 }
 
 void Mpl3115A2::toogleOneShot()
@@ -110,7 +129,7 @@ void Mpl3115A2::toogleOneShot()
 
     tempSetting = this->i2cRead(CTRL_REG1); // re-read to be safe
     qDebug() << "CTRL_REG1:" << tempSetting;
-    tempSetting |= ~(1 << 1); //Set OST bit
+    tempSetting |= (1 << 1); //Set OST bit
     qDebug() << "Write CTRL_REG1:" << tempSetting;
     this->i2cWrite(CTRL_REG1, tempSetting);
 

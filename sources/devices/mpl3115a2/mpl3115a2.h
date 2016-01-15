@@ -13,6 +13,8 @@ namespace devices
         bool start(const char* filename = "/dev/i2c-2") override;
         uint8_t i2cAddress() const override;
 
+        void setModeActive();
+        void setModeStandby();
         void setModeBarometer();
         void setModeAltimeter();
 
