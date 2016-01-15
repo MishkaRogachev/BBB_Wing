@@ -66,7 +66,9 @@ Mpl3115A2::Mpl3115A2():
 bool Mpl3115A2::start(const char* filename)
 {
     if (!I2cDevice::start(filename)) return false;
+    qDebug() << "I2C device started";
     if (this->i2cRead(WHO_AM_I) != 0xC4) return false;
+    qDebug() << "MPL3115A2 online!";
 
     return true;
 }
@@ -76,22 +78,44 @@ uint8_t Mpl3115A2::i2cAddress() const
     return MPL3115A2_ADRESS;
 }
 
+void Mpl3115A2::setModeBarometer()
+{
+    uint8_t tempSetting = this->i2cRead(CTRL_REG1); //Read current settings
+    tempSetting &= ~(1 << 7); //Clear ALT bit
+    this->i2cWrite(CTRL_REG1, tempSetting);
+}
+
+void Mpl3115A2::setModeAltimeter()
+{
+    uint8_t tempSetting = this->i2cRead(CTRL_REG1); //Read current settings
+    qDebug() << "CTRL_REG1:" << tempSetting;
+    tempSetting |= (1 << 7); //Set ALT bit
+    qDebug() << "Write CTRL_REG1:" << tempSetting;
+    this->i2cWrite(CTRL_REG1, tempSetting);
+
+    tempSetting = this->i2cRead(CTRL_REG1);
+    qDebug() << "CTRL_REG1:" << tempSetting;
+}
+
 void Mpl3115A2::toogleOneShot()
 {
     qDebug() << "Toggling one shot";
 
     uint8_t tempSetting = this->i2cRead(CTRL_REG1);
+    qDebug() << "CTRL_REG1:" << tempSetting;
 
-    qDebug() << "Initial CTRL_REG1:" << tempSetting;
     tempSetting &= ~(1 << 1); //Clear OST bit
+    qDebug() << "Write CTRL_REG1:" << tempSetting;
     this->i2cWrite(CTRL_REG1, tempSetting);
-    qDebug() << "Writen cleared OST bit CTRL_REG1:" << tempSetting;
 
     tempSetting = this->i2cRead(CTRL_REG1); // re-read to be safe
-    qDebug() << "Re-readen CTRL_REG1:" << tempSetting;
+    qDebug() << "CTRL_REG1:" << tempSetting;
     tempSetting |= ~(1 << 1); //Set OST bit
+    qDebug() << "Write CTRL_REG1:" << tempSetting;
     this->i2cWrite(CTRL_REG1, tempSetting);
-    qDebug() << "Writen setted OST bit CTRL_REG1:" << tempSetting;
+
+    tempSetting = this->i2cRead(CTRL_REG1); // re-read to be safe
+    qDebug() << "CTRL_REG1:" << tempSetting;
 }
 
 float Mpl3115A2::readAltitude()
@@ -107,7 +131,7 @@ float Mpl3115A2::readAltitude()
 
         if ((status & (1 << 1)) != 0)
         {
-            qDebug() << "Writing ";
+            qDebug() << "Reading...";
 
             uint8_t msb = this->i2cRead(0x01);
             uint8_t csb = this->i2cRead(0x02);
