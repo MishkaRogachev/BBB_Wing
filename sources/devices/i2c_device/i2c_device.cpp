@@ -9,6 +9,8 @@
 
 using namespace devices;
 
+const char* I2cDevice::defaultI2cPath = "/dev/i2c-2";
+
 I2cDevice::I2cDevice():
     m_file(-1)
 {}

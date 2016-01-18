@@ -52,9 +52,7 @@
 #define P_MAX_CSB  0x22
 #define P_MAX_LSB  0x23
 #define T_MAX_MSB  0x24
-#define T_MAX_LSB  0x25// Implimentation based on Sparkfun's Arduino libary code
-// https://github.com/sparkfun/MPL3115A2_Breakout/tree/V_H1.1_L1.2.0/Libraries/Arduino/src
-// They said code is beerware!
+#define T_MAX_LSB  0x25
 #define CTRL_REG1  0x26
 #define CTRL_REG2  0x27
 #define CTRL_REG3  0x28
@@ -63,6 +61,8 @@
 #define OFF_P      0x2B
 #define OFF_T      0x2C
 #define OFF_H      0x2D
+
+#define MAX_MEASUREMENT_DELAY 512
 
 using namespace devices;
 
@@ -133,9 +133,10 @@ void Mpl3115A2::processMeasurement()
     this->toggleOneShot();
 
     qDebug() << "Processing";
-    while(!(this->i2cRead(STATUS) & (1 << 1)))
+    for (int counter = 0; !(this->i2cRead(STATUS) & (1 << 1)); ++counter)
     {
-        usleep(1000);
+        if (counter > MAX_MEASUREMENT_DELAY) return;
+        usleep(1000); // 1 millisecond delay
         qDebug() << "...";
     }
 
