@@ -132,12 +132,10 @@ void Mpl3115A2::processMeasurement()
 {
     this->toggleOneShot();
 
-    qDebug() << "Processing";
     for (int counter = 0; !(this->i2cRead(STATUS) & (1 << 1)); ++counter)
     {
         if (counter > MAX_MEASUREMENT_DELAY) return;
         usleep(1000); // 1 millisecond delay
-        qDebug() << "...";
     }
 
     uint8_t msb = this->i2cRead(OUT_P_MSB);
@@ -146,15 +144,11 @@ void Mpl3115A2::processMeasurement()
 
     if (this->i2cRead(CTRL_REG1) & (1 << 7))
     {
-        qDebug() << "Reading ALTITUDE";
-
         float templsb = (lsb >> 4) / 16.0;
         m_altitude = (float)((msb << 8) | csb) + templsb;
     }
     else
     {
-        qDebug() << "Reading PRESSURE";
-
         float templsb = (lsb >> 4) / 4.0;
         m_pressure = (float)((msb << 8) | csb) + templsb;
     }

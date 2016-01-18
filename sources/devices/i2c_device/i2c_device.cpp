@@ -53,14 +53,14 @@ void I2cDevice::i2cWrite(uint8_t reg, uint8_t data)
 
 void I2cDevice::setRegisterBit(uint8_t reg, uint8_t bit)
 {
-    uint8_t ctrl = this->i2cRead(reg);
-    reg |= (1 << bit);
-    this->i2cWrite(reg, ctrl);
+    uint8_t value = this->i2cRead(reg);
+    value |= (1 << bit);
+    this->i2cWrite(reg, value);
 }
 
 void I2cDevice::clearRegisterBit(uint8_t reg, uint8_t bit)
 {
-    uint8_t ctrl = this->i2cRead(reg);
-    reg &= ~(1 << bit);
-    this->i2cWrite(reg, ctrl);
+    uint8_t value = this->i2cRead(reg);
+    value &= ~(1 << bit);
+    this->i2cWrite(reg, value);
 }
