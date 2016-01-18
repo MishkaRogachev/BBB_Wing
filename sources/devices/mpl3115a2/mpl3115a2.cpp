@@ -2,6 +2,7 @@
 
 // Std
 #include <unistd.h>
+#include <limits>
 
 // Qt
 #include <QDebug>
@@ -66,7 +67,10 @@
 using namespace devices;
 
 Mpl3115A2::Mpl3115A2():
-    I2cDevice()
+    I2cDevice(),
+    m_altitude(std::numeric_limits<float>::quiet_NaN()),
+    m_temperature(std::numeric_limits<float>::quiet_NaN()),
+    m_pressure(std::numeric_limits<float>::quiet_NaN())
 {}
 
 bool Mpl3115A2::start(const char* filename)
@@ -137,19 +141,54 @@ void Mpl3115A2::toggleOneShot()
     this->i2cWrite(CTRL_REG1, tempSetting);
 }
 
-Mpl3115A2::Mesurement Mpl3115A2::getMeasurement()
+void Mpl3115A2::processMeasurement()
 {
-    Mesurement mesurement;
     this->toggleOneShot();
 
-    while((this->i2cRead(STATUS) & (1 << 1)) == 0) { usleep(1000); qDebug() << "..."; }
+    qDebug() << "Processing";
+    while(!(this->i2cRead(STATUS) & (1 << 1)))
+    {
+        usleep(1000);
+        qDebug() << "...";
+    }
 
-    uint8_t msb = this->i2cRead(0x01);
-    uint8_t csb = this->i2cRead(0x02);
-    uint8_t lsb = this->i2cRead(0x04);
+    uint8_t msb = this->i2cRead(OUT_P_MSB);
+    uint8_t csb = this->i2cRead(OUT_P_CSB);
+    uint8_t lsb = this->i2cRead(OUT_P_LSB);
 
-    float tempcsb = (lsb >> 4) / 16.0;
-    mesurement.altitude = (float)((msb << 8) | csb) + tempcsb;
-    mesurement.temperature = (float)(msb + tempcsb);
-    return mesurement;
+    if (this->i2cRead(CTRL_REG1) & (1 << 7))
+    {
+        qDebug() << "Reading ALTITUDE";
+
+        float templsb = (lsb >> 4) / 16.0;
+        m_altitude = (float)((msb << 8) | csb) + templsb;
+    }
+    else
+    {
+        qDebug() << "Reading PRESSURE";
+
+        float templsb = (lsb >> 4) / 4.0;
+        m_pressure = (float)((msb << 8) | csb) + templsb;
+    }
+
+    msb = this->i2cRead(OUT_T_MSB);
+    lsb = this->i2cRead(OUT_T_LSB);
+
+    float templsb = (lsb >> 4) / 16.0;
+    m_temperature = (float)(msb + templsb);
+}
+
+float Mpl3115A2::altitude() const
+{
+    return m_altitude;
+}
+
+float Mpl3115A2::temperature() const
+{
+    return m_temperature;
+}
+
+float Mpl3115A2::pressure() const
+{
+    return m_pressure;
 }

@@ -8,11 +8,6 @@ namespace devices
     class Mpl3115A2 : public I2cDevice
     {
     public:
-        struct Mesurement
-        {
-            float altitude;
-            float temperature;
-        };
         Mpl3115A2();
 
         bool start(const char* filename = "/dev/i2c-2") override;
@@ -27,8 +22,16 @@ namespace devices
         void enableEventFlags();
 
         void toggleOneShot();
+        void processMeasurement();
 
-        Mesurement getMeasurement();
+        float altitude() const;
+        float temperature() const;
+        float pressure() const;
+
+    private:
+        float m_altitude;
+        float m_temperature;
+        float m_pressure;
     };
 }
 
