@@ -88,30 +88,22 @@ uint8_t Mpl3115A2::i2cAddress() const
 
 void Mpl3115A2::setModeActive()
 {
-    uint8_t reg = this->i2cRead(CTRL_REG1); //Read current settings
-    reg |= (1 << 0); //Set SBYB bit
-    this->i2cWrite(CTRL_REG1, reg);
+    this->setRegisterBit(CTRL_REG1, 0); //Set SBYB bit
 }
 
 void Mpl3115A2::setModeStandby()
 {
-    uint8_t ctrl = this->i2cRead(CTRL_REG1); //Read current settings
-    ctrl &= ~(1 << 0); //Clear SBYB bit
-    this->i2cWrite(CTRL_REG1, ctrl);
-}
-
-void Mpl3115A2::setModeBarometer()
-{
-    uint8_t ctrl = this->i2cRead(CTRL_REG1); //Read current settings
-    ctrl &= ~(1 << 7); //Clear ALT bit
-    this->i2cWrite(CTRL_REG1, ctrl);
+    this->clearRegisterBit(CTRL_REG1, 0); //Clear SBYB bit
 }
 
 void Mpl3115A2::setModeAltimeter()
 {
-    uint8_t reg = this->i2cRead(CTRL_REG1); //Read current settings
-    reg |= (1 << 7); //Set ALT bit
-    this->i2cWrite(CTRL_REG1, reg);
+    this->setRegisterBit(CTRL_REG1, 7); //Set ALT bit
+}
+
+void Mpl3115A2::setModeBarometer()
+{
+    this->clearRegisterBit(CTRL_REG1, 7); //Clear ALT bit
 }
 
 void Mpl3115A2::setOversampleRate(int rate)
@@ -132,13 +124,8 @@ void Mpl3115A2::enableEventFlags()
 
 void Mpl3115A2::toggleOneShot()
 {
-    uint8_t tempSetting = this->i2cRead(CTRL_REG1);
-    tempSetting &= ~(1 << 1); //Clear OST bit
-    this->i2cWrite(CTRL_REG1, tempSetting);
-
-    tempSetting = this->i2cRead(CTRL_REG1); // re-read to be safe
-    tempSetting |= (1 << 1); //Set OST bit
-    this->i2cWrite(CTRL_REG1, tempSetting);
+    this->clearRegisterBit(CTRL_REG1, 1); //Clear OST bit
+    this->setRegisterBit(CTRL_REG1, 1); //Set OST bit
 }
 
 void Mpl3115A2::processMeasurement()

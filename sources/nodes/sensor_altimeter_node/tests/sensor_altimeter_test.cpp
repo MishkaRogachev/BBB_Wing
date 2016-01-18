@@ -9,15 +9,37 @@ int main(int argc, char *argv[])
 
     altimeter.start();
 
-    altimeter.setModeAltimeter(); // Measure altitude above sea level in meters
-
     altimeter.setOversampleRate(7); // Set Oversample to the recommended 128
     altimeter.enableEventFlags();
 
-    for (;;)
+    qDebug() << "Measure altitude above sea level in meters";
+    altimeter.setModeAltimeter();
+    for (int i = 0; i < 15; i++)
     {
-        auto mesurement = altimeter.getMeasurement();
-        qDebug() << "Altitude:" << mesurement.altitude << mesurement.temperature;
+        altimeter.processMeasurement();
+        qDebug() << "alt:" << altimeter.altitude() <<
+                    "tmp:" << altimeter.temperature() <<
+                    "prs:" << altimeter.pressure();
+    }
+
+    qDebug() << "Measure pressure level in kPa";
+    altimeter.setModeBarometer();
+    for (int i = 0; i < 15; i++)
+    {
+        altimeter.processMeasurement();
+        qDebug() << "alt:" << altimeter.altitude() <<
+                    "tmp:" << altimeter.temperature() <<
+                    "prs:" << altimeter.pressure();
+    }
+
+    qDebug() << "Measure altitude above sea level in meters";
+    altimeter.setModeAltimeter();
+    for (int i = 0; i < 15; i++)
+    {
+        altimeter.processMeasurement();
+        qDebug() << "alt:" << altimeter.altitude() <<
+                    "tmp:" << altimeter.temperature() <<
+                    "prs:" << altimeter.pressure();
     }
     return 0;
 }

@@ -15,8 +15,8 @@ namespace devices
 
         void setModeActive();
         void setModeStandby();
-        void setModeBarometer();
         void setModeAltimeter();
+        void setModeBarometer();
 
         void setOversampleRate(int rate);
         void enableEventFlags();

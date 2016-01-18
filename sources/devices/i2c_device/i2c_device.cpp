@@ -48,3 +48,17 @@ void I2cDevice::i2cWrite(uint8_t reg, uint8_t data)
 {
     i2c_smbus_write_byte_data(m_file, reg, data);
 }
+
+void I2cDevice::setRegisterBit(uint8_t reg, uint8_t bit)
+{
+    uint8_t ctrl = this->i2cRead(reg);
+    reg |= (1 << bit);
+    this->i2cWrite(reg, ctrl);
+}
+
+void I2cDevice::clearRegisterBit(uint8_t reg, uint8_t bit)
+{
+    uint8_t ctrl = this->i2cRead(reg);
+    reg &= ~(1 << bit);
+    this->i2cWrite(reg, ctrl);
+}

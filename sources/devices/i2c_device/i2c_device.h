@@ -19,6 +19,9 @@ namespace devices
         uint8_t i2cRead(uint8_t reg);
         void i2cWrite(uint8_t reg, uint8_t data);
 
+        void setRegisterBit(uint8_t reg, uint8_t bit);
+        void clearRegisterBit(uint8_t reg, uint8_t bit);
+
     private:
         int m_file;
     };
