@@ -1,16 +1,22 @@
 #ifndef SENSOR_ALTIMETER_NODE_H
 #define SENSOR_ALTIMETER_NODE_H
 
-#include "i_node.h"
+#include "abstract_node_frequency.h"
 
 namespace domain
 {
-    class SensorAltimeterNode: public INode
+    class SensorAltimeterNode: public AbstractNodeFrequency
     {
     public:
-        SensorAltimeterNode();
+        SensorAltimeterNode(QObject* parent = nullptr);
+        ~SensorAltimeterNode() override;
 
-        int exec() override;
+        void init() override;
+        void exec() override;
+
+    private:
+        class Impl;
+        Impl* const d;
     };
 }
 

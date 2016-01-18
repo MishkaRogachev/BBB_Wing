@@ -5,7 +5,7 @@
 
 namespace devices
 {
-    class Mpl3115A2 : public I2cDevice
+    class Mpl3115A2: public I2cDevice
     {
     public:
         Mpl3115A2();

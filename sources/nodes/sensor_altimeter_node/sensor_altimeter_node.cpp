@@ -1,19 +1,43 @@
 #include "sensor_altimeter_node.h"
 
+// Qt
+#include <QDebug>
+
+// Internal
 #include "mpl3115a2.h"
 
 using namespace domain;
 
-SensorAltimeterNode::SensorAltimeterNode()
+class SensorAltimeterNode::Impl
+{
+public:
+    devices::Mpl3115A2 altimeter;
+};
+
+SensorAltimeterNode::SensorAltimeterNode(QObject* parent):
+    AbstractNodeFrequency(parent),
+    d(new Impl())
 {}
 
-int SensorAltimeterNode::exec()
+SensorAltimeterNode::~SensorAltimeterNode()
 {
-    devices::Mpl3115A2 altimeter;
+    delete d;
+}
 
-    altimeter.start();
+void SensorAltimeterNode::init()
+{
+    d->altimeter.start();
 
-    // TODO: publish values
+    d->altimeter.setOversampleRate(7); // Set Oversample to the recommended 128
+    d->altimeter.enableEventFlags();
+    d->altimeter.setModeAltimeter();
+}
 
-    return 0;
+void SensorAltimeterNode::exec()
+{
+    d->altimeter.processMeasurement();
+
+    qDebug() << "alt:" << d->altimeter.altitude() <<
+                "tmp:" << d->altimeter.temperature() <<
+                "prs:" << d->altimeter.pressure();
 }
