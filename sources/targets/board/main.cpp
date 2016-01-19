@@ -12,6 +12,7 @@ int main(int argc, char* argv[])
     QCoreApplication app(argc, argv);
 
     domain::SensorAltimeterNode altNode;
+    altNode.init();
     altNode.start(25);
 
     return app.exec();
