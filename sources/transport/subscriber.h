@@ -16,8 +16,11 @@ namespace domain
         void subscribe(const QString& topic);
         void unsubscribe(const QString& topic);
 
+    signals:
+        void received(const QString& topic, const QByteArray& message);
+
     private slots:
-        void recv();
+        void onActivated();
     };
 }
 

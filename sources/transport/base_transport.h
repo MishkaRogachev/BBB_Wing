@@ -21,6 +21,9 @@ namespace domain
     protected:
         qint32 fileDescriptor() const;
 
+        QByteArray recv();
+        void send(const QByteArray& data);
+
     private:
         class Impl;
         Impl* const d;

@@ -20,7 +20,7 @@ Subscriber::Subscriber(const QStringList& endpoints, QObject* parent):
 
     QSocketNotifier* notifier = new QSocketNotifier(this->fileDescriptor(),
                                     QSocketNotifier::Read, this);
-    connect(notifier, &QSocketNotifier::activated, this, &Subscriber::recv);
+    connect(notifier, &QSocketNotifier::activated, this, &Subscriber::onActivated);
 }
 
 void Subscriber::subscribe(const QString& topic)
@@ -33,7 +33,7 @@ void Subscriber::unsubscribe(const QString& topic)
     this->setOption(ZMQ_UNSUBSCRIBE, topic);
 }
 
-void Subscriber::recv()
+void Subscriber::onActivated()
 {
 
 }

@@ -52,3 +52,19 @@ qint32 BaseTransport::fileDescriptor() const
     d->socket.getsockopt(ZMQ_FD, &fd, &size);
     return fd;
 }
+
+QByteArray BaseTransport::recv()
+{
+    zmq::message_t message;
+    d->socket.recv(&message);
+
+    return QByteArray(static_cast<char*>(message.data()), message.size());
+}
+
+void BaseTransport::send(const QByteArray& data)
+{
+     zmq::message_t message(data.size());
+     memcpy(message.data(), data.data(), data.size());
+
+     d->socket.send(message);
+}

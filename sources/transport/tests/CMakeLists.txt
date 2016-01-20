@@ -2,7 +2,7 @@
 cmake_minimum_required(VERSION 2.8.11)
 
 # Project
-set(PROJECT sensor_altimeter_test)
+set(PROJECT transport_tests)
 project(${PROJECT})
 
 # Find includes in corresponding build directories
@@ -15,25 +15,20 @@ find_package(Qt5 COMPONENTS Core Test)
 
 # Libs
 set(LIBRARIES
+    ${LIBRARIES}
 # Qt5
     Qt5::Core
     Qt5::Test
-# Internal
-    sensor_altimeter_node
+# ZeroMQ
+    zmq
 )
 
 # Includes
-HEADER_DIRECTORIES(INTERNAL_INCLUDES ${CMAKE_CURRENT_SOURCE_DIR})
-set(INCLUDES
-    ${INCLUDES}
-    ${INTERNAL_INCLUDES}
-)
-include_directories(${INCLUDES})
+HEADER_DIRECTORIES(TEST_INCLUDES ${CMAKE_CURRENT_SOURCE_DIR}/..)
+include_directories(${TEST_INCLUDES})
 
 # Test sources
-set(TEST_SOURCES
-    sensor_altimeter_test.cpp
-)
+file(GLOB_RECURSE TEST_SOURCES "../*.h" "../*.cpp")
 
 # Add compiler flags
 add_definitions(-std=c++11 -Wall)
