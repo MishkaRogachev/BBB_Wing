@@ -13,7 +13,7 @@ int main(int argc, char* argv[])
 
     domain::SensorAltimeterNode altNode;
     altNode.init();
-    altNode.start(25);
+    altNode.start(2);
 
     return app.exec();
 }

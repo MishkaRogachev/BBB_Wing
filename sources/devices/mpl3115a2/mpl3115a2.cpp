@@ -62,8 +62,6 @@
 #define OFF_T      0x2C
 #define OFF_H      0x2D
 
-#define MAX_MEASUREMENT_DELAY 512
-
 using namespace devices;
 
 Mpl3115A2::Mpl3115A2():
@@ -132,11 +130,7 @@ void Mpl3115A2::processMeasurement()
 {
     this->toggleOneShot();
 
-    for (int counter = 0; !(this->i2cRead(STATUS) & (1 << 1)); ++counter)
-    {
-        if (counter > MAX_MEASUREMENT_DELAY) return;
-        usleep(1000); // 1 millisecond delay
-    }
+    if (!(this->i2cRead(STATUS) & (1 << 1))) return;
 
     uint8_t msb = this->i2cRead(OUT_P_MSB);
     uint8_t csb = this->i2cRead(OUT_P_CSB);
