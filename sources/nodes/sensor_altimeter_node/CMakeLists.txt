@@ -10,17 +10,17 @@ include(${CMAKE_CURRENT_SOURCE_DIR}/../../../cmake/RecurseSubdirs.cmake)
 
 # External dirs
 add_subdirectory(../../common ${CMAKE_CURRENT_BINARY_DIR}/common)
+add_subdirectory(../../transport ${CMAKE_CURRENT_BINARY_DIR}/transport)
 add_subdirectory(../../devices ${CMAKE_CURRENT_BINARY_DIR}/devices)
 
 # Enable Qt modules
 find_package(Qt5 COMPONENTS Core)
 
-# Libs
+# Libraries
 set(LIBRARIES
+    ${LIBRARIES}
 # Qt5
     Qt5::Core
-# ZeroMQ
-    zmq
 )
 
 # Includes

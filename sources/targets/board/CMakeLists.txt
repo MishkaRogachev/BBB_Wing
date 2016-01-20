@@ -23,8 +23,6 @@ find_package(Qt5 COMPONENTS Core)
 set(LIBRARIES
 # Qt5
     Qt5::Core
-# ZeroMQ
-    zmq
 # Internal
     sensor_altimeter_node
 )
