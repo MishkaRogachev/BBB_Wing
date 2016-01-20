@@ -22,7 +22,7 @@ namespace domain
         qint32 fileDescriptor() const;
 
         QByteArray recv();
-        void send(const QByteArray& data);
+        void send(const QByteArray& data, int flags = 0);
 
     private:
         class Impl;

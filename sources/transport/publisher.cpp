@@ -10,3 +10,9 @@ Publisher::Publisher(const QString& endpoint, QObject* parent):
 {
     this->bind(endpoint);
 }
+
+void Publisher::publish(const QString& topic, const QByteArray& data)
+{
+    this->send(topic.toLatin1(), ZMQ_SNDMORE);
+    this->send(data);
+}

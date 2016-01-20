@@ -11,6 +11,9 @@ namespace domain
 
     public:
         Publisher(const QString& endpoint, QObject* parent = nullptr);
+
+    public slots:
+        void publish(const QString& topic, const QByteArray& data);
     };
 }
 

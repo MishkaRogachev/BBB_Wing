@@ -16,7 +16,7 @@ public:
     {}
 };
 
-zmq::context_t BaseTransport::Impl::context(0);
+zmq::context_t BaseTransport::Impl::context(1);
 
 BaseTransport::BaseTransport(int type, QObject* parent):
     QObject(parent),
@@ -61,10 +61,10 @@ QByteArray BaseTransport::recv()
     return QByteArray(static_cast<char*>(message.data()), message.size());
 }
 
-void BaseTransport::send(const QByteArray& data)
+void BaseTransport::send(const QByteArray& data, int flags)
 {
      zmq::message_t message(data.size());
      memcpy(message.data(), data.data(), data.size());
 
-     d->socket.send(message);
+     d->socket.send(message, flags);
 }
