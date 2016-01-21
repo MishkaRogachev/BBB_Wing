@@ -11,7 +11,7 @@ include(${CMAKE_CURRENT_SOURCE_DIR}/../../../cmake/RecurseSubdirs.cmake)
 # External dirs
 add_subdirectory(../../common ${CMAKE_CURRENT_BINARY_DIR}/common)
 add_subdirectory(../../transport ${CMAKE_CURRENT_BINARY_DIR}/transport)
-add_subdirectory(../../devices ${CMAKE_CURRENT_BINARY_DIR}/devices)
+add_subdirectory(../../devices/mpl3115a2 ${CMAKE_CURRENT_BINARY_DIR}/devices/mpl3115a2)
 
 # Enable Qt modules
 find_package(Qt5 COMPONENTS Core)
@@ -50,6 +50,3 @@ add_library(${PROJECT} STATIC ${SOURCES})
 
 # Link Libraries
 target_link_libraries (${PROJECT} ${LIBRARIES})
-
-# Tests
-add_subdirectory(tests)

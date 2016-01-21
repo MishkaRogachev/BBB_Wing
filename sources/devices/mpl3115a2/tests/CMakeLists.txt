@@ -2,7 +2,7 @@
 cmake_minimum_required(VERSION 2.8.11)
 
 # Project
-set(PROJECT sensor_altimeter_test)
+set(PROJECT mpl3115a2_test)
 project(${PROJECT})
 
 # Find includes in corresponding build directories
@@ -18,21 +18,21 @@ set(LIBRARIES
 # Qt5
     Qt5::Core
     Qt5::Test
-# Internal
-    sensor_altimeter_node
 )
 
 # Includes
-HEADER_DIRECTORIES(INTERNAL_INCLUDES ${CMAKE_CURRENT_SOURCE_DIR})
-set(INCLUDES
-    ${INCLUDES}
-    ${INTERNAL_INCLUDES}
+HEADER_DIRECTORIES(TEST_INCLUDES ${CMAKE_CURRENT_SOURCE_DIR}/..)
+set(TEST_INCLUDES
+    ${TEST_INCLUDES}
+    "../../i2c_device"
 )
-include_directories(${INCLUDES})
+include_directories(${TEST_INCLUDES})
 
 # Test sources
+file(GLOB_RECURSE TEST_SOURCES "../*.h" "../*.cpp")
 set(TEST_SOURCES
-    sensor_altimeter_test.cpp
+    ${TEST_SOURCES}
+    "../../i2c_device/i2c_device.cpp"
 )
 
 # Add compiler flags
