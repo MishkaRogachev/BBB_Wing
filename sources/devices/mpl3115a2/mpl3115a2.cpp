@@ -151,7 +151,18 @@ void Mpl3115A2::processMeasurement()
     lsb = this->i2cRead(OUT_T_LSB);
 
     float templsb = (lsb >> 4) / 16.0;
-    m_temperature = (float)(msb + templsb);
+
+    if (msb > 0x7F)
+    {
+        uint8_t foo = ~((msb << 8) + lsb) + 1;
+        msb = foo >> 8;
+        lsb = foo & 0x00F0;
+        m_temperature = -(float)(msb + templsb);
+    }
+    else
+    {
+        m_temperature = (float)(msb + templsb);
+    }
 }
 
 float Mpl3115A2::altitude() const
