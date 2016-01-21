@@ -16,7 +16,7 @@ public:
     {}
 };
 
-zmq::context_t BaseTransport::Impl::context(1);
+zmq::context_t BaseTransport::Impl::context(0);
 
 BaseTransport::BaseTransport(int type, QObject* parent):
     QObject(parent),
@@ -53,10 +53,10 @@ qint32 BaseTransport::fileDescriptor() const
     return fd;
 }
 
-QByteArray BaseTransport::recv()
+QByteArray BaseTransport::recv(int flags)
 {
     zmq::message_t message;
-    d->socket.recv(&message);
+    d->socket.recv(&message, flags);
 
     return QByteArray(static_cast<char*>(message.data()), message.size());
 }

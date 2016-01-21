@@ -1,4 +1,4 @@
-//Qt
+// Qt
 #include <QCoreApplication>
 
 // Tests
@@ -13,5 +13,3 @@ int main(int argc, char* argv[])
 
     return 0;
 }
-
- 

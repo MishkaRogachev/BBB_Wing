@@ -15,14 +15,15 @@ namespace domain
 
         void connectTo(const QString& endpoint);
         void bind(const QString& endpoint);
+        void unbind();
 
         void setOption(int option, const QString& value);
 
+        QByteArray recv(int flags = 0);
+        void send(const QByteArray& data, int flags = 0);
+
     protected:
         qint32 fileDescriptor() const;
-
-        QByteArray recv();
-        void send(const QByteArray& data, int flags = 0);
 
     private:
         class Impl;

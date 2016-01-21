@@ -1,7 +1,7 @@
 #include "pubsub_test.h"
 
 // Qt
-#include <QtTest/QSignalSpy>
+#include <QDebug>
 
 // Internal
 #include "publisher.h"
@@ -11,17 +11,94 @@ using namespace domain;
 
 void PubsubTest::oneToOne()
 {
-    Publisher pub("tcp://*:5563");
+    QString topic = "test_topic";
+    QByteArrayList msgs = { "first_message", "another_message", "last_message" };
 
-    Subscriber sub("tcp://localhost:5563");
-    sub.subscribe("test_topic");
+    Publisher pub("inproc://test", topic);
 
-    QSignalSpy spy(&sub, &Subscriber::received);
-    QCOMPARE(spy.count(), 0);
+    Subscriber sub("inproc://test", topic);
 
-    pub.publish("test_topic", "ping");
+    for (const QByteArray& msg: msgs)
+    {
+        pub.publish(msg);
+        QCOMPARE(QString(sub.recv()), topic);
+        QCOMPARE(sub.recv(), msg);
+    }
+}
 
-    QCOMPARE(spy.count(), 1);
+void PubsubTest::topicFiltring()
+{
+    Publisher pub("inproc://test2");
+    Subscriber sub("inproc://test2");
 
-    pub.publish("test_topic", "ping two");
+    pub.publish("abc", "test");
+
+    QCOMPARE(sub.recv(1), QByteArray());
+
+    sub.subscribe("abc");
+    pub.publish("abc", "test");
+
+    QCOMPARE(sub.recv(1), QByteArray("abc"));
+    QCOMPARE(sub.recv(1), QByteArray("test"));
+
+    pub.publish("abc123", "test2");
+
+    QCOMPARE(sub.recv(1), QByteArray("abc123"));
+    QCOMPARE(sub.recv(1), QByteArray("test2"));
+
+    sub.unsubscribe("abc");
+    pub.publish("abc123", "test3");
+
+    QCOMPARE(sub.recv(1), QByteArray());
+}
+
+void PubsubTest::oneToMany()
+{
+    Publisher pub("inproc://test3", "test");
+    Subscriber sub1("inproc://test3", "test");
+    Subscriber sub2("inproc://test3", "test");
+
+    pub.publish("123");
+
+    QCOMPARE(sub1.recv(1), QByteArray("test"));
+    QCOMPARE(sub1.recv(1), QByteArray("123"));
+    QCOMPARE(sub2.recv(1), QByteArray("test"));
+    QCOMPARE(sub2.recv(1), QByteArray("123"));
+
+    sub2.unsubscribe("test");
+    pub.publish("abc");
+
+    QCOMPARE(sub1.recv(1), QByteArray("test"));
+    QCOMPARE(sub1.recv(1), QByteArray("abc"));
+    QCOMPARE(sub2.recv(1), QByteArray());
+}
+
+void PubsubTest::manyToOne()
+{
+    Publisher pub1("inproc://test41");
+    Publisher pub2("inproc://test42");
+    Subscriber sub;
+    sub.connectTo("inproc://test41");
+    sub.connectTo("inproc://test42");
+    sub.subscribe("test");
+
+    pub1.publish("test", "123");
+    QCOMPARE(sub.recv(1), QByteArray("test"));
+    QCOMPARE(sub.recv(1), QByteArray("123"));
+
+    pub2.publish("test", "abc");
+    QCOMPARE(sub.recv(1), QByteArray("test"));
+    QCOMPARE(sub.recv(1), QByteArray("abc"));
+
+    sub.subscribe("pub1");
+    sub.subscribe("pub2");
+
+    pub1.publish("pub1", "123");
+    QCOMPARE(sub.recv(1), QByteArray("pub1"));
+    QCOMPARE(sub.recv(1), QByteArray("123"));
+
+    pub2.publish("pub2", "abc");
+    QCOMPARE(sub.recv(1), QByteArray("pub2"));
+    QCOMPARE(sub.recv(1), QByteArray("abc"));
+
 }

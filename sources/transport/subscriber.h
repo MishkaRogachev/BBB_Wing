@@ -10,8 +10,10 @@ namespace domain
         Q_OBJECT
 
     public:
+        Subscriber(QObject* parent = nullptr);
         Subscriber(const QString& endpoint, QObject* parent = nullptr);
-        Subscriber(const QStringList& endpoints, QObject* parent = nullptr);
+        Subscriber(const QString& endpoint, const QString& topic,
+                   QObject* parent = nullptr);
 
     public slots:
         void subscribe(const QString& topic);

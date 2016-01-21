@@ -9,20 +9,26 @@
 
 using namespace domain;
 
-Subscriber::Subscriber(const QString& endpoint, QObject* parent):
-    Subscriber(QStringList(endpoint), parent)
-{}
-
-Subscriber::Subscriber(const QStringList& endpoints, QObject* parent):
+Subscriber::Subscriber(QObject* parent):
     BaseTransport(ZMQ_SUB, parent)
 {
-    for (const QString& endpoint: endpoints)
-        this->connectTo(endpoint);
-
     QSocketNotifier* notifier = new QSocketNotifier(this->fileDescriptor(),
                                     QSocketNotifier::Read, this);
     connect(notifier, &QSocketNotifier::activated,
             this, &Subscriber::onActivated, Qt::DirectConnection);
+}
+
+Subscriber::Subscriber(const QString& endpoint, QObject* parent):
+    Subscriber(parent)
+{
+    this->connectTo(endpoint);
+}
+
+Subscriber::Subscriber(const QString& endpoint, const QString& topic,
+                       QObject* parent):
+    Subscriber(endpoint, parent)
+{
+    this->subscribe(topic);
 }
 
 void Subscriber::subscribe(const QString& topic)

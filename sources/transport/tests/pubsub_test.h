@@ -11,6 +11,9 @@ namespace domain
 
     private slots:
         void oneToOne();
+        void topicFiltring();
+        void oneToMany();
+        void manyToOne();
     };
 }
 
