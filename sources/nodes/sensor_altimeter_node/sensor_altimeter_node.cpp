@@ -5,6 +5,7 @@
 
 // Internal
 #include "mpl3115a2.h"
+#include "publisher.h"
 
 using namespace domain;
 
@@ -12,12 +13,16 @@ class SensorAltimeterNode::Impl
 {
 public:
     devices::Mpl3115A2 altimeter;
+    Publisher pub;
 };
 
 SensorAltimeterNode::SensorAltimeterNode(QObject* parent):
     AbstractNodeFrequency(parent),
     d(new Impl())
-{}
+{
+    d->pub.bind("inproc://altimeter");
+    d->pub.setTopic("alt_");
+}
 
 SensorAltimeterNode::~SensorAltimeterNode()
 {
@@ -37,7 +42,6 @@ void SensorAltimeterNode::exec()
 {
     d->altimeter.processMeasurement();
 
-    qDebug() << "alt:" << d->altimeter.altitude() <<
-                "tmp:" << d->altimeter.temperature() <<
-                "prs:" << d->altimeter.pressure();
+    d->pub.publish("altitude", QByteArray::number(d->altimeter.altitude()));
+    d->pub.publish("temperature", QByteArray::number(d->altimeter.temperature()));
 }
