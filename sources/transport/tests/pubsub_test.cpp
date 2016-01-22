@@ -1,9 +1,5 @@
 #include "pubsub_test.h"
 
-// Qt
-#include <QDebug>
-#include <QByteArrayList>
-
 // Internal
 #include "publisher.h"
 #include "subscriber.h"
@@ -13,10 +9,9 @@ using namespace domain;
 void PubsubTest::oneToOne()
 {
     QString topic = "test_topic";
-    QByteArrayList msgs = { "first_message", "another_message", "last_message" };
+    QList<QByteArray> msgs = { "first_msg", "another_msg", "last_msg" };
 
     Publisher pub("inproc://test", topic);
-
     Subscriber sub("inproc://test", topic);
 
     for (const QByteArray& msg: msgs)
