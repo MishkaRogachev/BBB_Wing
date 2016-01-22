@@ -147,13 +147,11 @@ void Mpl3115A2::processMeasurement()
         m_pressure = (float)((msb << 8) | csb) + templsb;
     }
 
-    msb = this->i2cRead(OUT_T_MSB);
-    lsb = this->i2cRead(OUT_T_LSB);
+    int8_t t_msb = this->i2cRead(OUT_T_MSB);
+    int8_t t_lsb = this->i2cRead(OUT_T_LSB);
 
-    float templsb = (lsb >> 4) / 16.0;
-
-    if (msb > 0x7F) m_temperature = (float)(0XFF - msb + templsb);
-    else m_temperature = (float)(msb + templsb);
+    float templsb = (t_lsb >> 4) / 16.0;
+    m_temperature = (float)(t_msb + templsb);
 }
 
 float Mpl3115A2::altitude() const
