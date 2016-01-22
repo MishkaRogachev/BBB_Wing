@@ -11,13 +11,13 @@ int main(int argc, char* argv[])
     QCoreApplication app(argc, argv);
 
     domain::DebugNode debugNode;
-    domain::SensorAltimeterNode altNode;
+    domain::SensorAltimeterNode altimeterNode;
 
     debugNode.init();
-    altNode.init();
+    altimeterNode.init();
 
     debugNode.start(1);
-    altNode.start(2);
+    altimeterNode.start(2);
 
     return app.exec();
 }

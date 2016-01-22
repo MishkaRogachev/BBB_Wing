@@ -152,8 +152,8 @@ void Mpl3115A2::processMeasurement()
 
     float templsb = (lsb >> 4) / 16.0;
 
-    if (msb > 0x7F) msb = 0XFF - msb;
-    m_temperature = (float)(msb + templsb);
+    if (msb > 0x7F) m_temperature = (float)(0XFF - msb + templsb);
+    else m_temperature = (float)(msb + templsb);
 }
 
 float Mpl3115A2::altitude() const
