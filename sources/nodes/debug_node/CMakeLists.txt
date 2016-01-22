@@ -2,40 +2,44 @@
 cmake_minimum_required(VERSION 2.8.11)
 
 # Project
-set(PROJECT board)
+set(PROJECT debug_node)
 project(${PROJECT})
 
 # CMake modules
 include(${CMAKE_CURRENT_SOURCE_DIR}/../../../cmake/RecurseSubdirs.cmake)
 
+# Find includes in corresponding build directories
+set(CMAKE_INCLUDE_CURRENT_DIR ON)
+# Instruct CMake to run moc automatically when needed.
+set(CMAKE_AUTOMOC ON)
+
 # External dirs
 add_subdirectory(../../common ${CMAKE_CURRENT_BINARY_DIR}/common)
+add_subdirectory(../../transport ${CMAKE_CURRENT_BINARY_DIR}/transport)
 
 # Enable Qt modules
 find_package(Qt5 COMPONENTS Core)
 
-# Libs
+# Libraries
 set(LIBRARIES
+    ${LIBRARIES}
 # Qt5
     Qt5::Core
-# Internal
-    debug_node
-    sensor_altimeter_node
 )
 
 # Includes
-HEADER_DIRECTORIES(NODES_INCLUDES ${CMAKE_CURRENT_SOURCE_DIR}/../../nodes)
 HEADER_DIRECTORIES(INTERNAL_INCLUDES ${CMAKE_CURRENT_SOURCE_DIR})
-
 set(INCLUDES
     ${INCLUDES}
-    ${NODES_INCLUDES}
     ${INTERNAL_INCLUDES}
 )
 include_directories(${INCLUDES})
 
 # Sources
-file(GLOB_RECURSE INTERNAL_SOURCES "*.cpp" "*.h")
+set(INTERNAL_SOURCES
+    debug_node.h
+    debug_node.cpp
+)
 
 set(SOURCES
     ${SOURCES}
@@ -45,8 +49,8 @@ set(SOURCES
 # Add compiler flags
 add_compile_options(-std=c++11 -Wall)
 
-# Executable target
-add_executable(${PROJECT} ${SOURCES})
+# Static Library target
+add_library(${PROJECT} STATIC ${SOURCES})
 
 # Link Libraries
 target_link_libraries (${PROJECT} ${LIBRARIES})

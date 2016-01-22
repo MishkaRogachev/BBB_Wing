@@ -18,4 +18,6 @@ set(SOURCES
 PARENT_SCOPE)
 
 # Tests
-add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/tests)
+if (NOT TARGET mpl3115a2_test)
+    add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/tests)
+endif()
