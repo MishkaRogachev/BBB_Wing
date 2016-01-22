@@ -2,6 +2,7 @@
 
 // Qt
 #include <QDebug>
+#include <QByteArrayList>
 
 // Internal
 #include "publisher.h"
