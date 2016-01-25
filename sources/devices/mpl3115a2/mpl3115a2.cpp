@@ -74,7 +74,7 @@ Mpl3115A2::Mpl3115A2():
 bool Mpl3115A2::start(const char* filename)
 {
     if (!I2cDevice::start(filename)) return false;
-    if (this->i2cRead(WHO_AM_I) != 0xC4) return false;
+    if (!this->checkDevicePresent()) return false;
 
     return true;
 }
@@ -82,6 +82,11 @@ bool Mpl3115A2::start(const char* filename)
 uint8_t Mpl3115A2::i2cAddress() const
 {
     return MPL3115A2_ADRESS;
+}
+
+bool Mpl3115A2::checkDevicePresent()
+{
+    return this->i2cRead(WHO_AM_I) == 0xC4;
 }
 
 void Mpl3115A2::setModeActive()

@@ -25,7 +25,7 @@ bool I2cDevice::start(const char* filename)
     if ((m_file = open(filename, O_RDWR)) < 0)
         return false;
 
-    if (!this->checkDevicePresent())
+    if (ioctl(m_file, I2C_SLAVE, this->i2cAddress()) < 0)
         return false;
 
     return true;
@@ -66,12 +66,12 @@ void I2cDevice::clearRegisterBit(uint8_t reg, uint8_t bit)
     this->i2cWrite(reg, value);
 }
 
-bool I2cDevice::checkDevicePresent()
-{
-    return ioctl(m_file, I2C_SLAVE, this->i2cAddress()) < 0;
-}
-
 bool I2cDevice::isStarted() const
 {
     return m_file != -1;
+}
+
+bool I2cDevice::checkDevicePresent()
+{
+    return true;
 }

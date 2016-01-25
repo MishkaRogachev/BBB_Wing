@@ -24,8 +24,8 @@ namespace devices
         void setRegisterBit(uint8_t reg, uint8_t bit);
         void clearRegisterBit(uint8_t reg, uint8_t bit);
 
-        bool checkDevicePresent();
         bool isStarted() const;
+        virtual bool checkDevicePresent();
 
     private:
         int m_file;
