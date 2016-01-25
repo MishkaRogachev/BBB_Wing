@@ -31,17 +31,28 @@ SensorAltimeterNode::~SensorAltimeterNode()
 
 void SensorAltimeterNode::init()
 {
-    d->altimeter.start();
+    if (d->altimeter.isStarted()) d->altimeter.stop();
 
-    d->altimeter.setOversampleRate(7); // Set Oversample to the recommended 128
-    d->altimeter.enableEventFlags();
-    d->altimeter.setModeAltimeter();
+    if (d->altimeter.start())
+    {
+        d->altimeter.setOversampleRate(7); // Set Oversample to the recommended 128
+        d->altimeter.enableEventFlags();
+        d->altimeter.setModeAltimeter();
+
+        d->pub.publish("status", QByteArray::number(true));
+    }
+    else d->pub.publish("status", QByteArray::number(false));
 }
 
 void SensorAltimeterNode::exec()
 {
-    d->altimeter.processMeasurement();
+    if (d->altimeter.isStarted() &&
+        d->altimeter.checkDevicePresent())
+    {
+        d->altimeter.processMeasurement();
 
-    d->pub.publish("altitude", QByteArray::number(d->altimeter.altitude()));
-    d->pub.publish("temperature", QByteArray::number(d->altimeter.temperature()));
+        d->pub.publish("altitude", QByteArray::number(d->altimeter.altitude()));
+        d->pub.publish("temperature", QByteArray::number(d->altimeter.temperature()));
+    }
+    else this->init();
 }
