@@ -16,7 +16,7 @@ public:
     {}
 };
 
-zmq::context_t BaseTransport::Impl::context(0);
+zmq::context_t BaseTransport::Impl::context(1);
 
 BaseTransport::BaseTransport(int type, QObject* parent):
     QObject(parent),

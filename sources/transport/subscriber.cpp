@@ -12,10 +12,10 @@ using namespace domain;
 Subscriber::Subscriber(QObject* parent):
     BaseTransport(ZMQ_SUB, parent)
 {
-    /*QSocketNotifier* notifier = new QSocketNotifier(this->fileDescriptor(),
+    QSocketNotifier* notifier = new QSocketNotifier(this->fileDescriptor(),
                                     QSocketNotifier::Read, this);
     connect(notifier, &QSocketNotifier::activated,
-            this, &Subscriber::onActivated, Qt::DirectConnection);*/
+            this, &Subscriber::onActivated, Qt::DirectConnection);
 }
 
 Subscriber::Subscriber(const QString& endpoint, QObject* parent):
@@ -43,6 +43,13 @@ void Subscriber::unsubscribe(const QString& topic)
 
 void Subscriber::onActivated()
 {
-    qDebug() << "activated!";
-    emit received("0_0", "data");
+    for (;;)
+    {
+        QString topic = this->recv(ZMQ_NOBLOCK);
+
+        if (topic.isEmpty()) break;
+
+        QByteArray data = this->recv(ZMQ_NOBLOCK);
+        emit received(topic, data);
+    }
 }

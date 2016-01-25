@@ -14,6 +14,9 @@ namespace domain
         void init() override;
         void exec() override;
 
+    private slots:
+        void onReceived(const QString& topic, const QByteArray& data);
+
     private:
         class Impl;
         Impl* const d;

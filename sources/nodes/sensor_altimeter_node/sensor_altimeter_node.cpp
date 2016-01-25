@@ -20,7 +20,7 @@ SensorAltimeterNode::SensorAltimeterNode(QObject* parent):
     AbstractNodeFrequency(parent),
     d(new Impl())
 {
-    d->pub.bind("inproc://altimeter");
+    d->pub.bind("ipc://altimeter"); //inproc://altimeter
     d->pub.setTopic("alt_");
 }
 

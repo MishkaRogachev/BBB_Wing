@@ -26,17 +26,18 @@ DebugNode::~DebugNode()
 
 void DebugNode::init()
 {
-     d->sub.connectTo("inproc://altimeter");
+    // Using ipc instead inproc becouse https://github.com/zeromq/libzmq/issues/1434
+     d->sub.connectTo("ipc://altimeter");
      d->sub.subscribe("");
+     connect(&d->sub, &Subscriber::received, this, &DebugNode::onReceived);
 }
 
 void DebugNode::exec()
 {
-    for (;;)
-    {
-        QByteArray msg = d->sub.recv(1);
-        if (msg.isEmpty()) break;
-        qDebug() << msg;
-    }
     qDebug() << "-----------------------------------";
+}
+
+void DebugNode::onReceived(const QString& topic, const QByteArray& data)
+{
+    qDebug() << topic << data;
 }
