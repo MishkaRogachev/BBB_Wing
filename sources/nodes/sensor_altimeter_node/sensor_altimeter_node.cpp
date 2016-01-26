@@ -39,10 +39,7 @@ void SensorAltimeterNode::init()
         d->altimeter.setOversampleRate(7);
         d->altimeter.enableEventFlags();
         d->altimeter.setModeAltimeter();
-
-        d->pub.publish("status", QByteArray::number(true));
     }
-    else d->pub.publish("status", QByteArray::number(false));
 }
 
 void SensorAltimeterNode::exec()
@@ -52,8 +49,13 @@ void SensorAltimeterNode::exec()
     {
         d->altimeter.processMeasurement();
 
+        d->pub.publish("status", QByteArray::number(true));
         d->pub.publish("altitude", QByteArray::number(d->altimeter.altitude()));
         d->pub.publish("temperature", QByteArray::number(d->altimeter.temperature()));
     }
-    else this->init();
+    else
+    {
+        d->pub.publish("status", QByteArray::number(false));
+        this->init();
+    }
 }
