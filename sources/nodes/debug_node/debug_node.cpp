@@ -2,16 +2,19 @@
 
 // Qt
 #include <QDebug>
+#include <QDateTime>
 
 // Internal
 #include "subscriber.h"
 
 using namespace domain;
+using TimedMessage = QPair<QDateTime, QByteArray>;
 
 class DebugNode::Impl
 {
 public:
     Subscriber sub;
+    QList<TimedMessage> messages;
 };
 
 DebugNode::DebugNode(QObject* parent):
@@ -34,10 +37,15 @@ void DebugNode::init()
 
 void DebugNode::exec()
 {
-    qDebug() << "-----------------------------------";
+    while (!d->messages.isEmpty())
+    {
+        TimedMessage message = d->messages.takeFirst();
+        qDebug() << message.first.toString(Qt::ISODate) << message.second;
+    }
 }
 
 void DebugNode::onReceived(const QString& topic, const QByteArray& data)
 {
-    qDebug() << topic << data;
+    d->messages.append(TimedMessage(QDateTime::currentDateTime(),
+                                     topic.toLatin1() + QByteArray(":") + data));
 }
