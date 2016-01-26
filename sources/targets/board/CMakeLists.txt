@@ -21,6 +21,7 @@ set(LIBRARIES
 # Internal
     debug_node
     sensor_altimeter_node
+    sensor_sns_node
 )
 
 # Includes

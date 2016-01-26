@@ -1,5 +1,8 @@
 #include "sensor_sns_node.h"
 
+// Gpsd
+#include "libgpsmm.h"
+
 // Qt
 #include <QDebug>
 
@@ -12,6 +15,11 @@ class SensorSnsNode::Impl
 {
 public:
     Publisher pub;
+    gpsmm handle;
+
+    Impl():
+        handle("localhost", DEFAULT_GPSD_PORT)
+    {}
 };
 
 SensorSnsNode::SensorSnsNode(QObject* parent):
@@ -28,7 +36,19 @@ SensorSnsNode::~SensorSnsNode()
 }
 
 void SensorSnsNode::init()
-{}
+{
+
+}
 
 void SensorSnsNode::exec()
-{}
+{
+    struct gps_data_t* data;
+
+    if ((data = d->handle.read()) == nullptr)
+    {
+        d->pub.publish("status", QByteArray::number(false));
+        return;
+    }
+
+    d->pub.publish("status", QByteArray::number(true));
+}

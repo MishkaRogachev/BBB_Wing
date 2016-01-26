@@ -23,6 +23,8 @@ find_package(Qt5 COMPONENTS Core)
 # Libraries
 set(LIBRARIES
     ${LIBRARIES}
+# Gpsd
+    gps
 # Qt5
     Qt5::Core
 )
