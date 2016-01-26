@@ -32,14 +32,17 @@ SensorSnsNode::~SensorSnsNode()
 }
 
 void SensorSnsNode::init()
-{}
+{
+    d->handle.stream(WATCH_ENABLE | WATCH_JSON);
+}
 
 void SensorSnsNode::exec()
 {
-    struct gps_data_t* data = d->handle.stream(WATCH_ENABLE | WATCH_JSON);
-    if (!data)
+    struct gps_data_t* data = nullptr;
+    if ((data = d->handle.read()) == nullptr)
     {
         d->pub.publish("status", QByteArray::number(false));
+        this->init();
         return;
     }
 
