@@ -12,6 +12,7 @@ set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${CMAKE_SOURCE_DIR}/result)
 add_subdirectory(sources/nodes/debug_node)
 add_subdirectory(sources/nodes/sensor_altimeter_node)
 add_subdirectory(sources/nodes/sensor_sns_node)
+add_subdirectory(sources/nodes/flight_recorder_node)
 
 # Target subdirectories
 add_subdirectory(sources/targets/board)
