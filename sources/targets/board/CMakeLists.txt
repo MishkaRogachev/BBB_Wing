@@ -22,6 +22,7 @@ set(LIBRARIES
     debug_node
     sensor_altimeter_node
     sensor_sns_node
+    flight_recorder_node
 )
 
 # Includes
