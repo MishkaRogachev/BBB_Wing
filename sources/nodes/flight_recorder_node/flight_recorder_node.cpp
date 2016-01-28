@@ -2,11 +2,11 @@
 
 // Qt
 #include <QDebug>
-#include <QDir>
 #include <QFile>
 #include <QDateTime>
 
 // Internal
+#include "config.h"
 #include "subscriber.h"
 
 namespace
@@ -54,7 +54,7 @@ void FlightRecorderNode::exec()
     QTextStream stream(&d->file);
     if (!d->file.isOpen())
     {
-        d->file.setFileName("/media/card/" +
+        d->file.setFileName(Config::setting("FlightRecorder/path").toString() +
                             QDateTime::currentDateTime().toString(
                                 "dd.MM.yyyy_hh:mm:ss") + ".csv");
         bool exists = d->file.exists();
