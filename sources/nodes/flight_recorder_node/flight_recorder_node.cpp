@@ -51,27 +51,39 @@ void FlightRecorderNode::init()
 
 void FlightRecorderNode::exec()
 {
+    Config::begin("FlightRecorder");
     QTextStream stream(&d->file);
+
+    if (d->file.isOpen() && (d->file.size() > Config::setting("max_record_size")
+        .toInt() || !d->file.exists())) d->file.close();
+
     if (!d->file.isOpen())
     {
-        QString path = Config::setting("FlightRecorder/path").toString();
+        QString path = Config::setting("path").toString();
         if (!QDir(path).exists()) QDir(path).mkpath(".");
+
         d->file.setFileName(path + QDateTime::currentDateTime().toString(
                                 "dd.MM.yyyy_hh:mm:ss") + ".csv");
+
         bool exists = d->file.exists();
-        if (!d->file.open(QIODevice::Append | QIODevice::Text))
+        if (!d->file.open(QIODevice::Append | QIODevice::Text |
+                          QIODevice::Unbuffered))
+        {
+            Config::end();
             return;
+        }
         if (!exists) stream << ::topics.join(::delimiter) << endl;
     }
 
     d->messages["time_stamp"] = QTime::currentTime().toString(
-                                    "hh:mm:ss.zzz").toLatin1();
+                                    Config::setting("time_format").toString())
+                                .toLatin1();
     QList<QByteArray> buffer;
     for (const QString& topic: ::topics)
         buffer.append(d->messages.value(topic));
 
     stream << buffer.join(::delimiter) << endl;
-    stream.flush();
+    Config::end();
 }
 
 void FlightRecorderNode::onReceived(const QString& topic, const QByteArray& msg)

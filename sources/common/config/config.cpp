@@ -32,9 +32,23 @@ void Config::setSetting(const QString& key, const QVariant& value)
     Config::instance().m_settings.setValue(key, value);
 }
 
+void Config::begin(const QString& prefix)
+{
+    Config::instance().m_settings.beginGroup(prefix);
+}
+
+void Config::end()
+{
+    Config::instance().m_settings.endGroup();
+}
+
 void Config::makeDefault()
 {
-    m_settings.setValue("FlightRecorder/path", "/media/sd_card/records/");
+    m_settings.beginGroup("FlightRecorder");
+    m_settings.setValue("path", "/media/sd_card/records/");
+    m_settings.setValue("max_record_size", 3.2e+7);
+    m_settings.setValue("time_format","hh:mm:ss.zzz");
+    m_settings.endGroup();
 }
 
 

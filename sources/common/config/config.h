@@ -14,6 +14,9 @@ namespace domain
         static QVariant setting(const QString& key);
         static void setSetting(const QString& key, const QVariant& setting);
 
+        static void begin(const QString& prefix);
+        static void end();
+
         void makeDefault();
 
     private:
