@@ -2,6 +2,7 @@
 
 // Qt
 #include <QDebug>
+#include <QDir>
 #include <QFile>
 #include <QDateTime>
 
@@ -54,8 +55,9 @@ void FlightRecorderNode::exec()
     QTextStream stream(&d->file);
     if (!d->file.isOpen())
     {
-        d->file.setFileName(Config::setting("FlightRecorder/path").toString() +
-                            QDateTime::currentDateTime().toString(
+        QString path = Config::setting("FlightRecorder/path").toString();
+        if (!QDir(path).exists()) QDir(path).mkpath(".");
+        d->file.setFileName(path + QDateTime::currentDateTime().toString(
                                 "dd.MM.yyyy_hh:mm:ss") + ".csv");
         bool exists = d->file.exists();
         if (!d->file.open(QIODevice::Append | QIODevice::Text))

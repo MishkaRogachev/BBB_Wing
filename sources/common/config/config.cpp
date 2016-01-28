@@ -2,6 +2,7 @@
 
 // Qt
 #include <QFileInfo>
+#include <QDebug>
 
 using namespace domain;
 
@@ -33,7 +34,7 @@ void Config::setSetting(const QString& key, const QVariant& value)
 
 void Config::makeDefault()
 {
-    m_settings.setValue("FlightRecorder/path", "/media/sd_card");
+    m_settings.setValue("FlightRecorder/path", "/media/sd_card/records/");
 }
 
 
