@@ -47,14 +47,16 @@ void SensorSnsNode::exec()
     }
 
     d->pub.publish("status", QByteArray::number(true));
+    d->pub.publish("satellites", QByteArray::number(data->satellites_used) +
+                   "/" + QByteArray::number(data->satellites_visible));
 
-    d->pub.publish("fix", QByteArray::number(data->status));
-    d->pub.publish("satellites_used", QByteArray::number(data->satellites_used));
-    d->pub.publish("satellites_visible", QByteArray::number(data->satellites_visible));
+    if (!data->status)
+    {
+        d->pub.publish("fix", QByteArray::number(0));
+        return;
+    }
 
-    if (!data->status) return;
-
-    d->pub.publish("fix_mode", QByteArray::number(data->fix.mode));
+    d->pub.publish("fix", QByteArray::number(data->fix.mode));
 
     if (data->fix.mode < 2) return;
 

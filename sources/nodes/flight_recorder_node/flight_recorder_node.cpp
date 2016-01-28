@@ -16,9 +16,8 @@ namespace
     const QStringList topics = {
         "time_stamp",
         "alt_status", "alt_altitude", "alt_temperature",
-        "sns_status", "sns_status", "sns_fix", "sns_fix_mode",
-        "sns_latitude", "sns_longitude", "sns_course", "sns_velocity",
-        "sns_altitude", "sns_climb" };
+        "sns_status", "sns_satellites", "sns_fix", "sns_latitude", "sns_longitude",
+        "sns_course", "sns_velocity", "sns_altitude", "sns_climb" };
 }
 
 using namespace domain;
