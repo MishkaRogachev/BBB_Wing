@@ -16,6 +16,7 @@ namespace
     const QString timeTopic = "time_stamp";
     const QStringList topics = {
         "alt_status", "alt_altitude", "alt_temperature",
+        "imu_status",
         "sns_status", "sns_satellites", "sns_fix", "sns_latitude", "sns_longitude",
         "sns_course", "sns_velocity", "sns_altitude", "sns_climb" };
 }
@@ -43,6 +44,7 @@ FlightRecorderNode::~FlightRecorderNode()
 void FlightRecorderNode::init()
 {
      d->sub.connectTo("ipc://altimeter");
+     d->sub.connectTo("ipc://imu");
      d->sub.connectTo("ipc://sns");
 
      d->sub.subscribe("");

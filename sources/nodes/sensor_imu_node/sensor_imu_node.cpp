@@ -4,6 +4,7 @@
 #include <QDebug>
 
 // Internal
+#include "lsm9ds1.h"
 #include "publisher.h"
 
 using namespace domain;
@@ -11,6 +12,7 @@ using namespace domain;
 class SensorImuNode::Impl
 {
 public:
+    devices::Lsm9ds1 imu;
     Publisher pub;
 };
 
@@ -29,10 +31,26 @@ SensorImuNode::~SensorImuNode()
 
 void SensorImuNode::init()
 {
-    // TODO: impl
+    if (d->imu.isStarted()) d->imu.stop();
+
+    if (d->imu.start())
+    {
+        // TODO: init
+    }
 }
 
 void SensorImuNode::exec()
 {
-    // TODO: impl
+    if (d->imu.isStarted() &&
+        d->imu.checkDevicePresent())
+    {
+        // TODO: process
+
+        d->pub.publish("status", QByteArray::number(true));
+    }
+    else
+    {
+        d->pub.publish("status", QByteArray::number(false));
+        this->init();
+    }
 }

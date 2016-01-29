@@ -28,6 +28,9 @@ bool I2cDevice::start(const char* filename)
     if (ioctl(m_file, I2C_SLAVE, this->i2cAddress()) < 0)
         return false;
 
+    if (!this->checkDevicePresent())
+        return false;
+
     return true;
 }
 
