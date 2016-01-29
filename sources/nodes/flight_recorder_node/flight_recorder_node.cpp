@@ -13,8 +13,8 @@
 namespace
 {
     const char* delimiter = ",";
+    const QString timeTopic = "time_stamp";
     const QStringList topics = {
-        "time_stamp",
         "alt_status", "alt_altitude", "alt_temperature",
         "sns_status", "sns_satellites", "sns_fix", "sns_latitude", "sns_longitude",
         "sns_course", "sns_velocity", "sns_altitude", "sns_climb" };
@@ -72,17 +72,17 @@ void FlightRecorderNode::exec()
             Config::end();
             return;
         }
-        if (!exists) stream << ::topics.join(::delimiter) << endl;
+        if (!exists) stream << ::timeTopic << ::delimiter <<
+                               ::topics.join(::delimiter) << endl;
     }
 
-    d->messages["time_stamp"] = QTime::currentTime().toString(
-                                    Config::setting("time_format").toString())
-                                .toLatin1();
-    QList<QByteArray> buffer;
-    for (const QString& topic: ::topics)
-        buffer.append(d->messages.value(topic));
+    stream << QTime::currentTime().toString(
+                  Config::setting("time_format").toString()).toLatin1();
 
-    stream << buffer.join(::delimiter) << endl;
+    for (const QString& topic: ::topics)
+        stream << ::delimiter << d->messages.value(topic);
+    stream << endl;
+
     Config::end();
 }
 
