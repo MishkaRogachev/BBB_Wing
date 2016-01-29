@@ -63,7 +63,7 @@ void FlightRecorderNode::exec()
         if (!QDir(path).exists()) QDir(path).mkpath(".");
 
         d->file.setFileName(path + QDateTime::currentDateTime().toString(
-                                "dd.MM.yyyy_hh:mm:ss") + ".csv");
+                           Config::setting("file_format").toString()) + ".csv");
 
         bool exists = d->file.exists();
         if (!d->file.open(QIODevice::Append | QIODevice::Text |

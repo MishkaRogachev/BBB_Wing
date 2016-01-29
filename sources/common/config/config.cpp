@@ -47,6 +47,7 @@ void Config::makeDefault()
     m_settings.beginGroup("FlightRecorder");
     m_settings.setValue("path", "/media/sd_card/records/");
     m_settings.setValue("max_record_size", 3.2e+7);
+    m_settings.setValue("file_format","ddMMyyyy_hhmm");
     m_settings.setValue("time_format","hh:mm:ss.zzz");
     m_settings.endGroup();
 }
