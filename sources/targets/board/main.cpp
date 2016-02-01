@@ -27,8 +27,8 @@ int main(int argc, char* argv[])
 
     debugNode.start(1);
     altimeterNode.start(2);
-    imuNode.start(40);
-    snsNode.start(10);
+    imuNode.start(5);
+    snsNode.start(5);
     flightRecorderNode.start(2);
 
     return app.exec();
