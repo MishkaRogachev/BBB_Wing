@@ -4,33 +4,39 @@
 using namespace devices;
 
 Lsm9ds1::Lsm9ds1():
-    gyroAcel(new GyroAccel()),
+    gyroAccel(new GyroAccel()),
     mag(new Mag())
 {}
 
 Lsm9ds1::~Lsm9ds1()
 {
-    delete gyroAcel;
+    delete gyroAccel;
     delete mag;
 }
 
 bool Lsm9ds1::start(const char* filename)
 {
-    return gyroAcel->start(filename) && mag->start(filename);
+    if (!gyroAccel->start(filename) || !mag->start(filename)) return false;
+    
+    gyroAccel->initGyro();
+    gyroAccel->initAccel();
+    mag->initMag();
+
+    return true;
 }
 
 void Lsm9ds1::stop()
 {
-    gyroAcel->stop();
+    gyroAccel->stop();
     mag->stop();
 }
 
 bool Lsm9ds1::isStarted() const
 {
-    return gyroAcel->isStarted() && mag->isStarted();
+    return gyroAccel->isStarted() && mag->isStarted();
 }
 
 bool Lsm9ds1::checkDevicePresent()
 {
-    return gyroAcel->checkDevicePresent() && mag->checkDevicePresent();
+    return gyroAccel->checkDevicePresent() && mag->checkDevicePresent();
 }

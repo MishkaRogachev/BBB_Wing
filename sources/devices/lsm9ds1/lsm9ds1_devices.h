@@ -19,6 +19,16 @@ namespace devices
         {
             return this->i2cRead(WHO_AM_I_XG) == WHO_AM_I_AG_RSP;
         }
+
+        void initGyro()
+        {
+
+        }
+
+        void initAccel()
+        {
+
+        }
     };
 
     class Lsm9ds1::Mag: public I2cDevice
@@ -32,6 +42,11 @@ namespace devices
         bool checkDevicePresent() override
         {
             return this->i2cRead(WHO_AM_I_M) == WHO_AM_I_M_RSP;
+        }
+
+        void initMag()
+        {
+
         }
     };
 }

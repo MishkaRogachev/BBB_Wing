@@ -19,7 +19,7 @@ namespace devices
     private:
         class GyroAccel;
         class Mag;
-        GyroAccel* gyroAcel;
+        GyroAccel* gyroAccel;
         Mag* mag;
     };
 }
