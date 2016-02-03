@@ -7,6 +7,9 @@ namespace devices
 {
     class Lsm9ds1
     {
+        class GyroAccel;
+        class Mag;
+
     public:
         Lsm9ds1();
         ~Lsm9ds1();
@@ -16,8 +19,6 @@ namespace devices
         bool isStarted() const;
         bool checkDevicePresent();
 
-        class GyroAccel;
-        class Mag;
         GyroAccel* gyroAccel() const;
         Mag* mag() const;
 

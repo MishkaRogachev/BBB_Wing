@@ -5,6 +5,13 @@
 
 namespace devices
 {
+    enum Axes: uint8_t
+    {
+        AxisX = 0x3,
+        AxisY = 0x4,
+        AxisZ = 0X5
+    };
+
     enum GyroSampleRate: uint8_t
     {
         GyroSampleNone = 0x0,
@@ -55,19 +62,12 @@ namespace devices
         void setGyroSampleRate(GyroSampleRate rate);
         void setGyroScale(GyroScale scale);
         void setGyroLowPowerEnabled(bool enabled);
-        void setGyroAxisXEnabled(bool enabled);
-        void setGyroAxisYEnabled(bool enabled);
-        void setGyroAxisZEnabled(bool enabled);
-        void setGyroFlipXEnabled(bool enabled);
-        void setGyroFlipYEnabled(bool enabled);
-        void setGyroFlipZEnabled(bool enabled);
+        void setGyroAxisEnabled(Axes axis, bool enabled);
 
         void initAccel();
         void setAccelSampleRate(AccelSampleRate rate);
         void setAccelScale(AccelScale scale);
-        void setAccelAxisXEnabled(bool enabled);
-        void setAccelAxisYEnabled(bool enabled);
-        void setAccelAxisZEnabled(bool enabled);
+        void setAccelAxisEnabled(Axes axis, bool enabled);
     };
 }
 

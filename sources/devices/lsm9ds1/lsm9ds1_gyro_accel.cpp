@@ -26,12 +26,9 @@ void Lsm9ds1::GyroAccel::initGyro()
 
     this->setGyroSampleRate(GyroSampleRate952);
     this->setGyroScale(GyroScale245);
-    this->setGyroAxisXEnabled(true);
-    this->setGyroAxisYEnabled(true);
-    this->setGyroAxisZEnabled(true);
-    this->setGyroFlipXEnabled(false);
-    this->setGyroFlipYEnabled(false);
-    this->setGyroFlipZEnabled(false);
+    this->setGyroAxisEnabled(AxisX, true);
+    this->setGyroAxisEnabled(AxisY, true);
+    this->setGyroAxisEnabled(AxisZ, true);
 }
 
 void Lsm9ds1::GyroAccel::setGyroSampleRate(GyroSampleRate rate)
@@ -57,46 +54,11 @@ void Lsm9ds1::GyroAccel::setGyroLowPowerEnabled(bool enabled)
     this->i2cWrite(CTRL_REG3_G, ctrl);
 }
 
-void Lsm9ds1::GyroAccel::setGyroAxisXEnabled(bool enabled)
+void Lsm9ds1::GyroAccel::setGyroAxisEnabled(Axes axis, bool enabled)
 {
     uint8_t ctrl = this->i2cRead(CTRL_REG4);
-    ctrl |= (enabled << 3);
+    ctrl |= (enabled << axis);
     this->i2cWrite(CTRL_REG4, ctrl);
-}
-
-void Lsm9ds1::GyroAccel::setGyroAxisYEnabled(bool enabled)
-{
-    uint8_t ctrl = this->i2cRead(CTRL_REG4);
-    ctrl |= (enabled << 4);
-    this->i2cWrite(CTRL_REG4, ctrl);
-}
-
-void Lsm9ds1::GyroAccel::setGyroAxisZEnabled(bool enabled)
-{
-    uint8_t ctrl = this->i2cRead(CTRL_REG4);
-    ctrl |= (enabled << 5);
-    this->i2cWrite(CTRL_REG4, ctrl);
-}
-
-void Lsm9ds1::GyroAccel::setGyroFlipXEnabled(bool enabled)
-{
-    uint8_t ctrl = this->i2cRead(ORIENT_CFG_G);
-    ctrl |= (enabled << 5);
-    this->i2cWrite(ORIENT_CFG_G, ctrl);
-}
-
-void Lsm9ds1::GyroAccel::setGyroFlipYEnabled(bool enabled)
-{
-    uint8_t ctrl = this->i2cRead(ORIENT_CFG_G);
-    ctrl |= (enabled << 4);
-    this->i2cWrite(ORIENT_CFG_G, ctrl);
-}
-
-void Lsm9ds1::GyroAccel::setGyroFlipZEnabled(bool enabled)
-{
-    uint8_t ctrl = this->i2cRead(ORIENT_CFG_G);
-    ctrl |= (enabled << 3);
-    this->i2cWrite(ORIENT_CFG_G, ctrl);
 }
 
 void Lsm9ds1::GyroAccel::initAccel()
@@ -107,9 +69,9 @@ void Lsm9ds1::GyroAccel::initAccel()
 
     this->setAccelSampleRate(AccelSampleRate952);
     this->setAccelScale(AccelScale2);
-    this->setAccelAxisXEnabled(true);
-    this->setAccelAxisYEnabled(true);
-    this->setAccelAxisZEnabled(true);
+    this->setAccelAxisEnabled(AxisX, true);
+    this->setAccelAxisEnabled(AxisY, true);
+    this->setAccelAxisEnabled(AxisZ, true);
 }
 
 void Lsm9ds1::GyroAccel::setAccelSampleRate(AccelSampleRate rate)
@@ -128,23 +90,9 @@ void Lsm9ds1::GyroAccel::setAccelScale(AccelScale scale)
     this->i2cWrite(CTRL_REG6_XL, ctrl);
 }
 
-void Lsm9ds1::GyroAccel::setAccelAxisXEnabled(bool enabled)
+void Lsm9ds1::GyroAccel::setAccelAxisEnabled(Axes axis, bool enabled)
 {
     uint8_t ctrl = this->i2cRead(CTRL_REG5_XL);
-    ctrl |= (enabled << 3);
-    this->i2cWrite(CTRL_REG5_XL, ctrl);
-}
-
-void Lsm9ds1::GyroAccel::setAccelAxisYEnabled(bool enabled)
-{
-    uint8_t ctrl = this->i2cRead(CTRL_REG5_XL);
-    ctrl |= (enabled << 4);
-    this->i2cWrite(CTRL_REG5_XL, ctrl);
-}
-
-void Lsm9ds1::GyroAccel::setAccelAxisZEnabled(bool enabled)
-{
-    uint8_t ctrl = this->i2cRead(CTRL_REG5_XL);
-    ctrl |= (enabled << 5);
+    ctrl |= (enabled << axis);
     this->i2cWrite(CTRL_REG5_XL, ctrl);
 }
