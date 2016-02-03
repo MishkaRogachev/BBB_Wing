@@ -16,11 +16,14 @@ namespace devices
         bool isStarted() const;
         bool checkDevicePresent();
 
-    private:
         class GyroAccel;
         class Mag;
-        GyroAccel* gyroAccel;
-        Mag* mag;
+        GyroAccel* gyroAccel() const;
+        Mag* mag() const;
+
+    private:
+        GyroAccel* m_gyroAccel;
+        Mag* m_mag;
     };
 }
 
