@@ -1,5 +1,6 @@
 #include "lsm9ds1.h"
-#include "lsm9ds1_devices.h"
+#include "lsm9ds1_gyro_accel.h"
+#include "lsm9ds1_mag.h"
 
 using namespace devices;
 
@@ -17,7 +18,7 @@ Lsm9ds1::~Lsm9ds1()
 bool Lsm9ds1::start(const char* filename)
 {
     if (!gyroAccel->start(filename) || !mag->start(filename)) return false;
-    
+
     gyroAccel->initGyro();
     gyroAccel->initAccel();
     mag->initMag();

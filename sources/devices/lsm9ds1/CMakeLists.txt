@@ -15,7 +15,10 @@ set(SOURCES
     ${SOURCES} 
     ${CMAKE_CURRENT_SOURCE_DIR}/lsm9ds1.h
     ${CMAKE_CURRENT_SOURCE_DIR}/lsm9ds1_registers.h
-    ${CMAKE_CURRENT_SOURCE_DIR}/lsm9ds1_devices.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/lsm9ds1_gyro_accel.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/lsm9ds1_mag.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/lsm9ds1_gyro_accel.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/lsm9ds1_mag.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/lsm9ds1.cpp
 PARENT_SCOPE)
 
