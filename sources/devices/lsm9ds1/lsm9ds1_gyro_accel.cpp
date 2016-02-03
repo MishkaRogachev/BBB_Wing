@@ -30,6 +30,9 @@ void Lsm9ds1::GyroAccel::initGyro()
     this->setGyroAxisXEnabled(true);
     this->setGyroAxisYEnabled(true);
     this->setGyroAxisZEnabled(true);
+    this->setGyroFlipXEnabled(false);
+    this->setGyroFlipYEnabled(false);
+    this->setGyroFlipZEnabled(false);
 }
 
 void Lsm9ds1::GyroAccel::setGyroSampleRate(GyroSampleRate rate)
@@ -74,6 +77,27 @@ void Lsm9ds1::GyroAccel::setGyroAxisZEnabled(bool enabled)
     uint8_t ctrl = this->i2cRead(CTRL_REG4);
     ctrl |= (enabled << 5);
     this->i2cWrite(CTRL_REG4, ctrl);
+}
+
+void Lsm9ds1::GyroAccel::setGyroFlipXEnabled(bool enabled)
+{
+    uint8_t ctrl = this->i2cRead(ORIENT_CFG_G);
+    ctrl |= (enabled << 5);
+    this->i2cWrite(ORIENT_CFG_G, ctrl);
+}
+
+void Lsm9ds1::GyroAccel::setGyroFlipYEnabled(bool enabled)
+{
+    uint8_t ctrl = this->i2cRead(ORIENT_CFG_G);
+    ctrl |= (enabled << 4);
+    this->i2cWrite(ORIENT_CFG_G, ctrl);
+}
+
+void Lsm9ds1::GyroAccel::setGyroFlipZEnabled(bool enabled)
+{
+    uint8_t ctrl = this->i2cRead(ORIENT_CFG_G);
+    ctrl |= (enabled << 3);
+    this->i2cWrite(ORIENT_CFG_G, ctrl);
 }
 
 void Lsm9ds1::GyroAccel::initAccel()

@@ -40,6 +40,9 @@ namespace devices
         void setGyroAxisXEnabled(bool enabled);
         void setGyroAxisYEnabled(bool enabled);
         void setGyroAxisZEnabled(bool enabled);
+        void setGyroFlipXEnabled(bool enabled);
+        void setGyroFlipYEnabled(bool enabled);
+        void setGyroFlipZEnabled(bool enabled);
 
         void initAccel();
     };
