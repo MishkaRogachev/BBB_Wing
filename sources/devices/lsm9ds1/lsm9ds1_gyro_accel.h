@@ -7,13 +7,13 @@ namespace devices
 {
     enum GyroSampleRate: uint8_t
     {
-        GyroSampleRate0 = 0,
-        GyroSampleRate14d9 = 1,
-        GyroSampleRate59d5 = 2,
-        GyroSampleRate119 = 3,
-        GyroSampleRate238 = 4,
-        GyroSampleRate476 = 5,
-        GyroSampleRate952 = 6
+        GyroSampleNone = 0x0,
+        GyroSampleRate14d9 = 0x1,
+        GyroSampleRate59d5 = 0x2,
+        GyroSampleRate119 = 0x3,
+        GyroSampleRate238 = 0x4,
+        GyroSampleRate476 = 0x5,
+        GyroSampleRate952 = 0x6
     };
 
     enum GyroScale: uint8_t
@@ -22,6 +22,25 @@ namespace devices
         GyroScale500 = 0x1,
         GyroScaleNone = 0x2,
         GyroScale2000 = 0x3
+    };
+
+    enum AccelSampleRate: uint8_t
+    {
+        AccelSampleNone = 0x0,
+        AccelSampleRate10 = 0x1,
+        AccelSampleRate50 = 0x2,
+        AccelSampleRate119 = 0x3,
+        AccelSampleRate238 = 0x4,
+        AccelSampleRate476 = 0x5,
+        AccelSampleRate952 = 0x6
+    };
+
+    enum AccelScale: uint8_t
+    {
+        AccelScale2 = 0x0,
+        AccelScale16 = 0x1,
+        AccelScale4 = 0x2,
+        AccelScale8 = 0x3
     };
 
     class Lsm9ds1::GyroAccel: public I2cDevice
@@ -33,7 +52,6 @@ namespace devices
         bool checkDevicePresent() override;
 
         void initGyro();
-
         void setGyroSampleRate(GyroSampleRate rate);
         void setGyroScale(GyroScale scale);
         void setGyroLowPowerEnabled(bool enabled);
@@ -45,6 +63,11 @@ namespace devices
         void setGyroFlipZEnabled(bool enabled);
 
         void initAccel();
+        void setAccelSampleRate(AccelSampleRate rate);
+        void setAccelScale(AccelScale scale);
+        void setAccelAxisXEnabled(bool enabled);
+        void setAccelAxisYEnabled(bool enabled);
+        void setAccelAxisZEnabled(bool enabled);
     };
 }
 

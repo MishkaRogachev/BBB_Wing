@@ -2,11 +2,8 @@
 #define LSM9DS1_REGISTERS_H
 
 // Based on https://github.com/sparkfun/LSM9DS1_Breakout/blob/master/Libraries/Particle/firmware/examples/LSM9DS1_Basic_I2C.cpp
+// and https://github.com/jmeed/teamRocket/blob/master/src/sensors/LSM9DS1.cpp
 
-///////////////////////
-// Example I2C Setup //
-///////////////////////
-// SDO_XM and SDO_G are both pulled high, so our addresses are:
 #define LSM9DS1_M	0x1E // Would be 0x1C if SDO_M is LOW
 #define LSM9DS1_AG	0x6B // Would be 0x6A if SDO_AG is LOW
 
