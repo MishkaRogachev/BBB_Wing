@@ -45,13 +45,13 @@ void SensorImuNode::exec()
     {
         d->pub.publish("status", QByteArray::number(true));
 
-        d->pub.publish("gx", QByteArray::number(d->imu.gyroAccel()->readGyroRaw(devices::AxisX)));
-        d->pub.publish("gy", QByteArray::number(d->imu.gyroAccel()->readGyroRaw(devices::AxisY)));
-        d->pub.publish("gz", QByteArray::number(d->imu.gyroAccel()->readGyroRaw(devices::AxisZ)));
+        d->pub.publish("gx", QByteArray::number(d->imu.gyroAccel()->readGyro(devices::AxisX)));
+        d->pub.publish("gy", QByteArray::number(d->imu.gyroAccel()->readGyro(devices::AxisY)));
+        d->pub.publish("gz", QByteArray::number(d->imu.gyroAccel()->readGyro(devices::AxisZ)));
 
-        d->pub.publish("ax", QByteArray::number(d->imu.gyroAccel()->readAccelRaw(devices::AxisX)));
-        d->pub.publish("ay", QByteArray::number(d->imu.gyroAccel()->readAccelRaw(devices::AxisY)));
-        d->pub.publish("az", QByteArray::number(d->imu.gyroAccel()->readAccelRaw(devices::AxisZ)));
+        d->pub.publish("ax", QByteArray::number(d->imu.gyroAccel()->readAccel(devices::AxisX)));
+        d->pub.publish("ay", QByteArray::number(d->imu.gyroAccel()->readAccel(devices::AxisY)));
+        d->pub.publish("az", QByteArray::number(d->imu.gyroAccel()->readAccel(devices::AxisZ)));
     }
     else
     {
