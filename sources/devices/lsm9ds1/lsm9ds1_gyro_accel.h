@@ -63,11 +63,13 @@ namespace devices
         void setGyroScale(GyroScale scale);
         void setGyroLowPowerEnabled(bool enabled);
         void setGyroAxisEnabled(Axes axis, bool enabled);
+        float readGyroRaw(Axes axis);
 
         void initAccel();
         void setAccelSampleRate(AccelSampleRate rate);
         void setAccelScale(AccelScale scale);
         void setAccelAxisEnabled(Axes axis, bool enabled);
+        float readAccelRaw(Axes axis);
     };
 }
 

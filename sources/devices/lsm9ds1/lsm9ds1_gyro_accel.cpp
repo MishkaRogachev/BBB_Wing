@@ -61,6 +61,29 @@ void Lsm9ds1::GyroAccel::setGyroAxisEnabled(Axes axis, bool enabled)
     this->i2cWrite(CTRL_REG4, ctrl);
 }
 
+float Lsm9ds1::GyroAccel::readGyroRaw(Axes axis)
+{
+    uint8_t regAddrL, regAddrH;
+
+    switch (axis) {
+    case AxisX:
+        regAddrL = OUT_X_L_G;
+        regAddrH = OUT_X_H_G;
+        break;
+    case AxisY:
+        regAddrL = OUT_Y_L_G;
+        regAddrH = OUT_Y_H_G;
+        break;
+    case AxisZ:
+        regAddrL = OUT_Z_L_G;
+        regAddrH = OUT_Z_H_G;
+        break;
+    }
+
+    return static_cast<float>(this->i2cRead(regAddrH) << 8 |
+                              this->i2cRead(regAddrL));
+}
+
 void Lsm9ds1::GyroAccel::initAccel()
 {
     this->i2cWrite(CTRL_REG5_XL, 0x38);
@@ -95,4 +118,27 @@ void Lsm9ds1::GyroAccel::setAccelAxisEnabled(Axes axis, bool enabled)
     uint8_t ctrl = this->i2cRead(CTRL_REG5_XL);
     ctrl |= (enabled << axis);
     this->i2cWrite(CTRL_REG5_XL, ctrl);
+}
+
+float Lsm9ds1::GyroAccel::readAccelRaw(Axes axis)
+{
+    uint8_t regAddrL, regAddrH;
+
+    switch (axis) {
+    case AxisX:
+        regAddrL = OUT_X_L_XL;
+        regAddrH = OUT_X_H_XL;
+        break;
+    case AxisY:
+        regAddrL = OUT_Y_L_XL;
+        regAddrH = OUT_Y_H_XL;
+        break;
+    case AxisZ:
+        regAddrL = OUT_Z_L_XL;
+        regAddrH = OUT_Z_H_XL;
+        break;
+    }
+
+    return static_cast<float>(this->i2cRead(regAddrH) << 8 |
+                              this->i2cRead(regAddrL));
 }

@@ -5,6 +5,9 @@
 
 // Internal
 #include "lsm9ds1.h"
+#include "lsm9ds1_gyro_accel.h"
+#include "lsm9ds1_mag.h"
+
 #include "publisher.h"
 
 using namespace domain;
@@ -32,11 +35,7 @@ SensorImuNode::~SensorImuNode()
 void SensorImuNode::init()
 {
     if (d->imu.isStarted()) d->imu.stop();
-
-    if (d->imu.start())
-    {
-        // TODO: init
-    }
+    d->imu.start();
 }
 
 void SensorImuNode::exec()
@@ -44,9 +43,15 @@ void SensorImuNode::exec()
     if (d->imu.isStarted() &&
         d->imu.checkDevicePresent())
     {
-        // TODO: process
-
         d->pub.publish("status", QByteArray::number(true));
+
+        d->pub.publish("gx", QByteArray::number(d->imu.gyroAccel()->readGyroRaw(devices::AxisX)));
+        d->pub.publish("gy", QByteArray::number(d->imu.gyroAccel()->readGyroRaw(devices::AxisY)));
+        d->pub.publish("gz", QByteArray::number(d->imu.gyroAccel()->readGyroRaw(devices::AxisZ)));
+
+        d->pub.publish("ax", QByteArray::number(d->imu.gyroAccel()->readAccelRaw(devices::AxisX)));
+        d->pub.publish("ay", QByteArray::number(d->imu.gyroAccel()->readAccelRaw(devices::AxisY)));
+        d->pub.publish("az", QByteArray::number(d->imu.gyroAccel()->readAccelRaw(devices::AxisZ)));
     }
     else
     {
