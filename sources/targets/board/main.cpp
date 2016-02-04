@@ -3,6 +3,7 @@
 #include <QDebug>
 
 // Internal
+#include "scheduler_node.h"
 #include "debug_node.h"
 #include "sensor_altimeter_node.h"
 #include "sensor_imu_node.h"
@@ -13,23 +14,18 @@ int main(int argc, char* argv[])
 {
     QCoreApplication app(argc, argv);
 
-    domain::DebugNode debugNode;
-    domain::SensorAltimeterNode altimeterNode;
-    domain::SensorImuNode imuNode;
-    domain::SensorSnsNode snsNode;
-    domain::FlightRecorderNode flightRecorderNode;
+    using namespace domain;
 
-    debugNode.init();
-    altimeterNode.init();
-    imuNode.init();
-    snsNode.init();
-    flightRecorderNode.init();
+    SchedulerNode scheduler;
 
-    debugNode.start(1);
-    altimeterNode.start(2);
-    imuNode.start(5);
-    snsNode.start(5);
-    flightRecorderNode.start(2);
+    scheduler.addNodeFrequency(new DebugNode(), 1);
+    scheduler.addNodeFrequency(new SensorAltimeterNode(), 5);
+    scheduler.addNodeFrequency(new SensorImuNode(), 10);
+    scheduler.addNodeFrequency(new SensorSnsNode(), 5);
+    scheduler.addNodeFrequency(new FlightRecorderNode(), 4);
+
+    scheduler.init();
+    scheduler.exec();
 
     return app.exec();
 }

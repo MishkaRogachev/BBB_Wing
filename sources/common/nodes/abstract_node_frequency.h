@@ -7,6 +7,8 @@ namespace domain
 {
     class AbstractNodeFrequency: public AbstractNode
     {
+        Q_OBJECT
+
     public:
         AbstractNodeFrequency(QObject* parent = nullptr);
 
