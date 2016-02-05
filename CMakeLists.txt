@@ -17,4 +17,5 @@ add_subdirectory(sources/nodes/flight_recorder_node)
 
 # Target subdirectories
 add_subdirectory(sources/targets/board)
+add_subdirectory(sources/targets/workstation)
 
