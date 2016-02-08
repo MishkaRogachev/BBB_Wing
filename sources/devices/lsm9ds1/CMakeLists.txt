@@ -21,8 +21,3 @@ set(SOURCES
     ${CMAKE_CURRENT_SOURCE_DIR}/lsm9ds1_mag.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/lsm9ds1.cpp
 PARENT_SCOPE)
-
-# Tests
-#if (NOT TARGET lsm9ds1_test)
-#    add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/tests)
-#endif()

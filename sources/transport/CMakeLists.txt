@@ -27,6 +27,5 @@ PARENT_SCOPE
 )
 
 # Tests
-if (NOT TARGET transport_tests)
-    add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/tests)
-endif()
+add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/tests)
+
