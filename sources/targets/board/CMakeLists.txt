@@ -5,12 +5,6 @@ cmake_minimum_required(VERSION 2.8.11)
 set(PROJECT board)
 project(${PROJECT})
 
-# CMake modules
-include(${CMAKE_CURRENT_SOURCE_DIR}/../../../cmake/RecurseSubdirs.cmake)
-
-# External dirs
-add_subdirectory(../../common ${CMAKE_CURRENT_BINARY_DIR}/common)
-
 # Enable Qt modules
 find_package(Qt5 COMPONENTS Core)
 

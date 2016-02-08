@@ -5,17 +5,12 @@ cmake_minimum_required(VERSION 2.8.11)
 set(PROJECT sensor_imu_node)
 project(${PROJECT})
 
-# CMake modules
-include(${CMAKE_CURRENT_SOURCE_DIR}/../../../cmake/RecurseSubdirs.cmake)
-
 # Find includes in corresponding build directories
 set(CMAKE_INCLUDE_CURRENT_DIR ON)
 # Instruct CMake to run moc automatically when needed.
 set(CMAKE_AUTOMOC ON)
 
 # External dirs
-add_subdirectory(../../common ${CMAKE_CURRENT_BINARY_DIR}/common)
-add_subdirectory(../../transport ${CMAKE_CURRENT_BINARY_DIR}/transport)
 add_subdirectory(../../devices/lsm9ds1 ${CMAKE_CURRENT_BINARY_DIR}/devices/lsm9ds1)
 
 # Enable Qt modules
