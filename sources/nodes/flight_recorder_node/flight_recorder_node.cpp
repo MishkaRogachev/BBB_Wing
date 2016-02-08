@@ -16,7 +16,8 @@ namespace
     const QString timeTopic = "time_stamp";
     const QStringList topics = {
         "alt_status", "alt_altitude", "alt_temperature",
-        "imu_status",
+        "imu_status", "imu_gx", "imu_gy", "imu_gz",
+        "imu_ax", "imu_ay", "imu_az", "imu_mx", "imu_my", "imu_mz",
         "sns_status", "sns_satellites", "sns_fix", "sns_latitude", "sns_longitude",
         "sns_course", "sns_velocity", "sns_altitude", "sns_climb" };
 }
