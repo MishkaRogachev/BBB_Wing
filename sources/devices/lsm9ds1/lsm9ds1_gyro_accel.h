@@ -58,6 +58,7 @@ namespace devices
         uint8_t i2cAddress() const override;
         bool checkDevicePresent() override;
 
+        static float calcGyroResolution(GyroScale scale);
         void initGyro();
         void setGyroSampleRate(GyroSampleRate rate);
         void setGyroScale(GyroScale scale);
@@ -66,6 +67,7 @@ namespace devices
         uint16_t readGyroRaw(Axes axis);
         float readGyro(Axes axis);
 
+        static float calcAccelResolution(AccelScale scale);
         void initAccel();
         void setAccelSampleRate(AccelSampleRate rate);
         void setAccelScale(AccelScale scale);
