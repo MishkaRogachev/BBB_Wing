@@ -46,11 +46,11 @@ void SensorImuNode::exec()
         d->pub.publish("status", QByteArray::number(true));
 
         float gx = d->imu.gyroAccel()->readGyro(devices::AxisX);
-        float gy = d->imu.gyroAccel()->readGyro(devices::AxisX);
-        float gz = d->imu.gyroAccel()->readGyro(devices::AxisX);
+        float gy = d->imu.gyroAccel()->readGyro(devices::AxisY);
+        float gz = d->imu.gyroAccel()->readGyro(devices::AxisZ);
         float ax = d->imu.gyroAccel()->readAccel(devices::AxisX);
-        float ay = d->imu.gyroAccel()->readAccel(devices::AxisX);
-        float az = d->imu.gyroAccel()->readAccel(devices::AxisX);
+        float ay = d->imu.gyroAccel()->readAccel(devices::AxisY);
+        float az = d->imu.gyroAccel()->readAccel(devices::AxisZ);
         float pitch = 180.0f * atan2(-ax, sqrt(ay * ay + az * az)) / M_PI;
         float roll = 180.0f * atan2(ay, az) / M_PI;
 
