@@ -61,6 +61,7 @@ void SensorImuNode::exec()
         float mz = d->imu.mag()->readMag(devices::AxisZ);
         float temperature = d->imu.mag()->readTempearture();
 
+        // TODO: separate this code to INS class. Rename Iimu node to ins node
         float pitch = atan2(-ax, sqrt(ay * ay + az * az)) * 180.0f / M_PI;
         float roll = atan2(ay, az) * 180.0 / M_PI;
 
