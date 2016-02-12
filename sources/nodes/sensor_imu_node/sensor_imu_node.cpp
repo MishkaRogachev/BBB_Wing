@@ -62,10 +62,10 @@ void SensorImuNode::exec()
         float temperature = d->imu.mag()->readTempearture();
 
         float pitch = atan2(-ax, sqrt(ay * ay + az * az)) * 180.0f / M_PI;
-        float roll = fatan2(ay, az) * 180.0 / M_PI;
+        float roll = atan2(ay, az) * 180.0 / M_PI;
 
         float yaw = qFuzzyCompare(my, 0.0f) ?
-                        (mx < 0 ? 180.0.f : 0.0f) :
+                        (mx < 0 ? 180.0f : 0.0f) :
                         atan2(mx ,my);
         if (yaw > M_PI) yaw -= 2 * M_PI;
         else if (yaw < 0) yaw += 2 * M_PI;
