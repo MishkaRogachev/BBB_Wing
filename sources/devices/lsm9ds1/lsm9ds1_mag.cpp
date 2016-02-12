@@ -79,21 +79,10 @@ int16_t Lsm9ds1::Mag::readMagRaw(Axes axis)
         break;
     }
 
-    return int16_t(this->i2cRead(regAddrH) << 8 | this->i2cRead(regAddrL));
+    return this->i2cRead(regAddrH) << 8 | this->i2cRead(regAddrL);
 }
 
 float Lsm9ds1::Mag::readMag(Axes axis)
 {
     return m_resolution * this->readMagRaw(axis);
-}
-
-int16_t Lsm9ds1::Mag::readTempeartureRaw()
-{
-    return (int16_t(this->i2cRead(OUT_TEMP_H) << 12) |
-            (this->i2cRead(OUT_TEMP_L) << 4)) >> 4;
-}
-
-float Lsm9ds1::Mag::readTempearture()
-{
-    return this->readTempeartureRaw();
 }

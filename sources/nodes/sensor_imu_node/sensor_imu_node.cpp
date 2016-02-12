@@ -56,10 +56,10 @@ void SensorImuNode::exec()
         float ax = d->imu.gyroAccel()->readAccel(devices::AxisX);
         float ay = d->imu.gyroAccel()->readAccel(devices::AxisY);
         float az = d->imu.gyroAccel()->readAccel(devices::AxisZ);
+        float temperature = d->imu.gyroAccel()->readTempearture();
         float mx = d->imu.mag()->readMag(devices::AxisX);
         float my = d->imu.mag()->readMag(devices::AxisY);
         float mz = d->imu.mag()->readMag(devices::AxisZ);
-        float temperature = d->imu.mag()->readTempearture();
 
         // TODO: separate this code to INS class. Rename Iimu node to ins node
         float pitch = atan2(-ax, sqrt(ay * ay + az * az)) * 180.0f / M_PI;

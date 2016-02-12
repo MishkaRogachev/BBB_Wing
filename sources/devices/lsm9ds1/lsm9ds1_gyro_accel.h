@@ -70,6 +70,9 @@ namespace devices
         int16_t readAccelRaw(Axes axis);
         float readAccel(Axes axis);
 
+        int16_t readTempeartureRaw();
+        float readTempearture();
+
     private:
         float m_gyroResolution;
         float m_accelResolution;

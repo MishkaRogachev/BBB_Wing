@@ -41,9 +41,6 @@ namespace devices
         int16_t readMagRaw(Axes axis);
         float readMag(Axes axis);
 
-        int16_t readTempeartureRaw();
-        float readTempearture();
-
     private:
         float m_resolution;
     };
