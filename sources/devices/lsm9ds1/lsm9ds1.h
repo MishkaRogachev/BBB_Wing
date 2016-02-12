@@ -5,6 +5,13 @@
 
 namespace devices
 {
+    enum Axes: uint8_t
+    {
+        AxisX = 0x3,
+        AxisY = 0x4,
+        AxisZ = 0X5
+    };
+
     class Lsm9ds1
     {
         class GyroAccel;

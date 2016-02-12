@@ -5,13 +5,6 @@
 
 namespace devices
 {
-    enum Axes: uint8_t
-    {
-        AxisX = 0x3,
-        AxisY = 0x4,
-        AxisZ = 0X5
-    };
-
     enum GyroSampleRate: uint8_t
     {
         GyroSampleNone = 0x0,
@@ -64,7 +57,7 @@ namespace devices
         void setGyroScale(GyroScale scale);
         void setGyroLowPowerEnabled(bool enabled);
         void setGyroAxisEnabled(Axes axis, bool enabled);
-        uint16_t readGyroRaw(Axes axis);
+        int16_t readGyroRaw(Axes axis);
         float readGyro(Axes axis);
 
         static float calcAccelResolution(AccelScale scale);
@@ -72,7 +65,7 @@ namespace devices
         void setAccelSampleRate(AccelSampleRate rate);
         void setAccelScale(AccelScale scale);
         void setAccelAxisEnabled(Axes axis, bool enabled);
-        uint16_t readAccelRaw(Axes axis);
+        int16_t readAccelRaw(Axes axis);
         float readAccel(Axes axis);
 
     private:

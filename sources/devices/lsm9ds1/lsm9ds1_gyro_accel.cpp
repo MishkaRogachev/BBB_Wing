@@ -68,7 +68,7 @@ void Lsm9ds1::GyroAccel::setGyroLowPowerEnabled(bool enabled)
 {
     uint8_t ctrl = this->i2cRead(CTRL_REG3_G);
     ctrl |= (enabled << 7);
-    this->i2cWrite(CTRL_REG3_G, ctrl);
+    this->i2cWrite(CTRL_REG3_G, ctrlSensorImuNode);
 }
 
 void Lsm9ds1::GyroAccel::setGyroAxisEnabled(Axes axis, bool enabled)
@@ -78,9 +78,9 @@ void Lsm9ds1::GyroAccel::setGyroAxisEnabled(Axes axis, bool enabled)
     this->i2cWrite(CTRL_REG4, ctrl);
 }
 
-uint16_t Lsm9ds1::GyroAccel::readGyroRaw(Axes axis)
+int16_t Lsm9ds1::GyroAccel::readGyroRaw(Axes axis)
 {
-    uint8_t regAddrL, regAddrH;
+    int8_t regAddrL, regAddrH;
 
     switch (axis) {
     case AxisX:
@@ -97,7 +97,7 @@ uint16_t Lsm9ds1::GyroAccel::readGyroRaw(Axes axis)
         break;
     }
 
-    return uint16_t(this->i2cRead(regAddrH) << 8 | this->i2cRead(regAddrL));
+    return int16_t(this->i2cRead(regAddrH) << 8 | this->i2cRead(regAddrL));
 }
 
 float Lsm9ds1::GyroAccel::readGyro(Axes axis)
@@ -156,9 +156,9 @@ void Lsm9ds1::GyroAccel::setAccelAxisEnabled(Axes axis, bool enabled)
     this->i2cWrite(CTRL_REG5_XL, ctrl);
 }
 
-uint16_t Lsm9ds1::GyroAccel::readAccelRaw(Axes axis)
+int16_t Lsm9ds1::GyroAccel::readAccelRaw(Axes axis)
 {
-    uint8_t regAddrL, regAddrH;
+    int8_t regAddrL, regAddrH;
 
     switch (axis) {
     case AxisX:
@@ -175,7 +175,7 @@ uint16_t Lsm9ds1::GyroAccel::readAccelRaw(Axes axis)
         break;
     }
 
-    return uint16_t(this->i2cRead(regAddrH) << 8 | this->i2cRead(regAddrL));
+    return int16_t(this->i2cRead(regAddrH) << 8 | this->i2cRead(regAddrL));
 }
 
 float Lsm9ds1::GyroAccel::readAccel(Axes axis)
