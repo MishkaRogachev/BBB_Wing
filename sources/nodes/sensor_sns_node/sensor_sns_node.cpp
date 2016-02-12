@@ -62,7 +62,7 @@ void SensorSnsNode::exec()
 
     d->pub.publish("latitude", QByteArray::number(data->fix.latitude));
     d->pub.publish("longitude", QByteArray::number(data->fix.longitude));
-    d->pub.publish("course", QByteArray::number(data->fix.track));
+    d->pub.publish("yaw", QByteArray::number(data->fix.track));
     d->pub.publish("velocity", QByteArray::number(data->fix.speed));
 
     if (data->fix.mode < 3) return;
