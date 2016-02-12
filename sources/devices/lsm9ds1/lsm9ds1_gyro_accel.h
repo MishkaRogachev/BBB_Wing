@@ -52,6 +52,7 @@ namespace devices
         bool checkDevicePresent() override;
 
         static float calcGyroResolution(GyroScale scale);
+
         void initGyro();
         void setGyroSampleRate(GyroSampleRate rate);
         void setGyroScale(GyroScale scale);
@@ -61,6 +62,7 @@ namespace devices
         float readGyro(Axes axis);
 
         static float calcAccelResolution(AccelScale scale);
+
         void initAccel();
         void setAccelSampleRate(AccelSampleRate rate);
         void setAccelScale(AccelScale scale);

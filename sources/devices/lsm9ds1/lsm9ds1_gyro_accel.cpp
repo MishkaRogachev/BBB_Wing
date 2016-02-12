@@ -68,7 +68,7 @@ void Lsm9ds1::GyroAccel::setGyroLowPowerEnabled(bool enabled)
 {
     uint8_t ctrl = this->i2cRead(CTRL_REG3_G);
     ctrl |= (enabled << 7);
-    this->i2cWrite(CTRL_REG3_G, ctrlSensorImuNode);
+    this->i2cWrite(CTRL_REG3_G, ctrl);
 }
 
 void Lsm9ds1::GyroAccel::setGyroAxisEnabled(Axes axis, bool enabled)
@@ -80,7 +80,7 @@ void Lsm9ds1::GyroAccel::setGyroAxisEnabled(Axes axis, bool enabled)
 
 int16_t Lsm9ds1::GyroAccel::readGyroRaw(Axes axis)
 {
-    int8_t regAddrL, regAddrH;
+    uint8_t regAddrL, regAddrH;
 
     switch (axis) {
     case AxisX:
@@ -158,7 +158,7 @@ void Lsm9ds1::GyroAccel::setAccelAxisEnabled(Axes axis, bool enabled)
 
 int16_t Lsm9ds1::GyroAccel::readAccelRaw(Axes axis)
 {
-    int8_t regAddrL, regAddrH;
+    uint8_t regAddrL, regAddrH;
 
     switch (axis) {
     case AxisX:
