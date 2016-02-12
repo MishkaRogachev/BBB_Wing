@@ -13,7 +13,7 @@ namespace domain
         AbstractNodeFrequency(QObject* parent = nullptr);
 
     public slots:
-        void start(int frequency);
+        void start(float frequency);
         void stop();
 
     protected:

@@ -18,7 +18,7 @@ namespace domain
         void init() override;
         void exec() override;
 
-        void addNodeFrequency(AbstractNodeFrequency* node, int frequency);
+        void addNodeFrequency(AbstractNodeFrequency* node, float frequency);
 
     private:
         class Impl;

@@ -11,7 +11,7 @@ using namespace domain;
 class SchedulerNode::Impl
 {
 public:
-    QMultiMap<int, AbstractNodeFrequency*> nodesFrequency;
+    QMultiMap<float, AbstractNodeFrequency*> nodesFrequency;
 };
 
 SchedulerNode::SchedulerNode(QObject* parent):
@@ -37,7 +37,7 @@ void SchedulerNode::exec()
         it.value()->start(it.key());
 }
 
-void SchedulerNode::addNodeFrequency(AbstractNodeFrequency* node, int frequency)
+void SchedulerNode::addNodeFrequency(AbstractNodeFrequency* node, float frequency)
 {
     d->nodesFrequency.insert(frequency, node);
     node->setParent(this);

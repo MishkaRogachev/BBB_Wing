@@ -10,7 +10,7 @@ AbstractNodeFrequency::AbstractNodeFrequency(QObject* parent):
     m_timerId(0)
 {}
 
-void AbstractNodeFrequency::start(int frequency)
+void AbstractNodeFrequency::start(float frequency)
 {
     if (m_timerId) this->stop();
 
