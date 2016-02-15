@@ -1,4 +1,4 @@
-#include "sensor_imu_node.h"
+#include "sensor_ins_node.h"
 
 // Qt
 #include <QDebug>
@@ -17,33 +17,33 @@ namespace
 
 using namespace domain;
 
-class SensorImuNode::Impl
+class SensorInsNode::Impl
 {
 public:
     devices::Lsm9ds1 imu;
     Publisher pub;
 };
 
-SensorImuNode::SensorImuNode(QObject* parent):
+SensorInsNode::SensorInsNode(QObject* parent):
     AbstractNodeFrequency(parent),
     d(new Impl())
 {
-    d->pub.bind("ipc://imu");
-    d->pub.setTopic("imu_");
+    d->pub.bind("ipc://ins");
+    d->pub.setTopic("ins_");
 }
 
-SensorImuNode::~SensorImuNode()
+SensorInsNode::~SensorInsNode()
 {
     delete d;
 }
 
-void SensorImuNode::init()
+void SensorInsNode::init()
 {
     if (d->imu.isStarted()) d->imu.stop();
     d->imu.start();
 }
 
-void SensorImuNode::exec()
+void SensorInsNode::exec()
 {
     if (d->imu.isStarted() &&
         d->imu.checkDevicePresent())

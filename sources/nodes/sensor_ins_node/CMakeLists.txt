@@ -2,7 +2,7 @@
 cmake_minimum_required(VERSION 2.8.11)
 
 # Project
-set(PROJECT sensor_imu_node)
+set(PROJECT sensor_ins_node)
 project(${PROJECT})
 
 # Find includes in corresponding build directories
@@ -33,8 +33,8 @@ include_directories(${INCLUDES})
 
 # Sources
 set(INTERNAL_SOURCES
-    sensor_imu_node.h
-    sensor_imu_node.cpp
+    sensor_ins_node.h
+    sensor_ins_node.cpp
 )
 
 set(SOURCES
