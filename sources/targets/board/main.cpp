@@ -6,7 +6,7 @@
 #include "scheduler_node.h"
 #include "debug_node.h"
 #include "sensor_altimeter_node.h"
-#include "sensor_imu_node.h"
+#include "sensor_ins_node.h"
 #include "sensor_sns_node.h"
 #include "flight_recorder_node.h"
 
