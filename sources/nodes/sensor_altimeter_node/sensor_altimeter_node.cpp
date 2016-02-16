@@ -32,14 +32,7 @@ SensorAltimeterNode::~SensorAltimeterNode()
 void SensorAltimeterNode::init()
 {
     if (d->altimeter.isStarted()) d->altimeter.stop();
-
-    if (d->altimeter.start())
-    {
-        // Set Oversample to the recommended 128
-        d->altimeter.setOversampleRate(7);
-        d->altimeter.enableEventFlags();
-        d->altimeter.setModeAltimeter();
-    }
+    d->altimeter.start();
 }
 
 void SensorAltimeterNode::exec()

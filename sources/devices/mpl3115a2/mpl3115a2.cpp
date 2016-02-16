@@ -18,6 +18,18 @@ Mpl3115A2::Mpl3115A2():
     m_pressure(std::numeric_limits<float>::quiet_NaN())
 {}
 
+bool Mpl3115A2::start(const char* filename)
+{
+    if (!I2cDevice::start(filename)) return false;
+
+    // Set Oversample to the recommended 128
+    this->setOversampleRate(7);
+    this->enableEventFlags();
+    this->setModeAltimeter();
+
+    return true;
+}
+
 uint8_t Mpl3115A2::i2cAddress() const
 {
     return MPL3115A2_ADRESS;
