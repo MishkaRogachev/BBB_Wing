@@ -1,5 +1,6 @@
 <RCC>
     <qresource prefix="/">
+        <file>qml/Controls/Clickable.qml</file>
         <file>qml/Views/Main.qml</file>
         <file>qml/Views/Status.qml</file>
     </qresource>
