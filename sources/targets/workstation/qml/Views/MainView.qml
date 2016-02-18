@@ -4,7 +4,13 @@ Rectangle {
     id: main
     color: "#2c3e50"
 
-    Status {
+    MapView {
+        id: map
+        anchors.fill: parent
+        anchors.margins: 4
+    }
+
+    StatusView {
         id: status
         anchors.top: parent.top
         anchors.left: parent.left

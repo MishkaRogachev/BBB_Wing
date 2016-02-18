@@ -1,7 +1,8 @@
 <RCC>
     <qresource prefix="/">
         <file>qml/Controls/Clickable.qml</file>
-        <file>qml/Views/Main.qml</file>
-        <file>qml/Views/Status.qml</file>
+        <file>qml/Views/MainView.qml</file>
+        <file>qml/Views/StatusView.qml</file>
+        <file>qml/Views/MapView.qml</file>
     </qresource>
 </RCC>
