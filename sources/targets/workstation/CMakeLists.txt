@@ -30,18 +30,23 @@ set(INCLUDES
 include_directories(${INCLUDES})
 
 # Sources
-file(GLOB_RECURSE INTERNAL_SOURCES "*.cpp" "*.h")
-
+file(GLOB_RECURSE INTERNAL_SOURCES "*.cpp" "*.h" "*.qml")
 set(SOURCES
     ${SOURCES}
     ${INTERNAL_SOURCES}
 )
 
+# Resources
+file(GLOB QRC_FILES "*.qrc")
+
+# Qt5 add resources
+qt5_add_resources(QRC_SOURCES ${QRC_FILES})
+
 # Add compiler flags
 add_compile_options(-std=c++11 -Wall)
 
 # Executable target
-add_executable(${PROJECT} ${SOURCES})
+add_executable(${PROJECT} ${SOURCES} ${QRC_SOURCES})
 
 # Link Libraries
 target_link_libraries (${PROJECT} ${LIBRARIES})
