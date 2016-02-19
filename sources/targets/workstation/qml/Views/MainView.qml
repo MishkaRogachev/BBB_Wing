@@ -7,6 +7,12 @@ Rectangle {
     MapView {
         id: map
         anchors.fill: parent
+    }
+
+    FlightDirectorView {
+        id: flightDirector
+        anchors.left: parent.left
+        anchors.top: status.bottom
         anchors.margins: 4
     }
 
