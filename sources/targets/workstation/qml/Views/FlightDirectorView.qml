@@ -7,11 +7,22 @@ Column {
     Row {
         anchors.horizontalCenter: parent.horizontalCenter
 
-        Horizont {
-            id: horizont
+        Item {
+            id: pithRoll
             anchors.verticalCenter: parent.verticalCenter
             width: 240
             height: 240
+
+            Horizont {
+                id: horizont
+                anchors.fill: parent
+            }
+
+            Image {
+                id: planeMark
+                anchors.centerIn: parent
+                source: "qrc:/resources/indicators/plane_horizont_mark.svg"
+            }
         }
     }
 }
