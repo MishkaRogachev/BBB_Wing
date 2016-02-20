@@ -6,7 +6,7 @@ set(PROJECT workstation)
 project(${PROJECT})
 
 # Enable Qt modules
-find_package(Qt5 COMPONENTS Core Gui Quick Location)
+find_package(Qt5 COMPONENTS Core Gui Quick Positioning Location REQUIRED)
 
 # Libs
 set(LIBRARIES
@@ -14,6 +14,7 @@ set(LIBRARIES
     Qt5::Core
     Qt5::Gui
     Qt5::Quick
+    Qt5::Positioning
     Qt5::Location
 # Internal
     debug_node
