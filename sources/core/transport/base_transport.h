@@ -2,7 +2,6 @@
 #define BASE_TRANSPORT_H
 
 #include <QObject>
-// TODO: move transport to core(common)
 
 namespace domain
 {

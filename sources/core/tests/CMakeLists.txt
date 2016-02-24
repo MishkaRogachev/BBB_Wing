@@ -2,7 +2,7 @@
 cmake_minimum_required(VERSION 2.8.11)
 
 # Project
-set(PROJECT common_tests)
+set(PROJECT core_tests)
 project(${PROJECT})
 
 # Find includes in corresponding build directories
