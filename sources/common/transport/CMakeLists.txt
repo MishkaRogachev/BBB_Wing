@@ -25,7 +25,3 @@ set(LIBRARIES
     zmq
 PARENT_SCOPE
 )
-
-# Tests
-add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/tests)
-

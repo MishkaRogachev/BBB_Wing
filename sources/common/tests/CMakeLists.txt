@@ -19,6 +19,8 @@ set(LIBRARIES
 # Qt5
     Qt5::Core
     Qt5::Test
+# ZeroMQ
+    zmq
 )
 
 # Includes

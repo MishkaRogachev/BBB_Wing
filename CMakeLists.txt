@@ -20,9 +20,8 @@ set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${CMAKE_SOURCE_DIR}/result)
 # Add fPIC flag globaly
 set(CMAKE_CXX_FLAGS "-fPIC")
 
-# Common & framework-specific tagrets
+# Common
 add_subdirectory(sources/common)
-add_subdirectory(sources/transport)
 
 # Nodes targets
 if (TARGET_TYPE STREQUAL "board" OR TARGET_TYPE STREQUAL "all")

@@ -3,6 +3,7 @@
 
 // Tests
 #include "packets_test.h"
+#include "pubsub_test.h"
 
 int main(int argc, char* argv[])
 {
@@ -10,6 +11,9 @@ int main(int argc, char* argv[])
 
     domain::PacketsTest packetsTest;
     QTest::qExec(&packetsTest);
+
+    domain::PubsubTest pubsubTest;
+    QTest::qExec(&pubsubTest);
 
     return 0;
 }
