@@ -28,7 +28,6 @@ include_directories(${TEST_INCLUDES})
 # Test sources
 file(GLOB_RECURSE TEST_SOURCES "../*.h" "../*.cpp")
 
-message(${TEST_SOURCES})
 # Add compiler flags
 add_definitions(-std=c++11 -Wall)
 
