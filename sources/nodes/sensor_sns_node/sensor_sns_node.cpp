@@ -14,8 +14,8 @@ using namespace domain;
 class SensorSnsNode::Impl
 {
 public:
-    Publisher pub;
     gpsmm handle = gpsmm("localhost", DEFAULT_GPSD_PORT);
+    Publisher pub;
 };
 
 SensorSnsNode::SensorSnsNode(QObject* parent):

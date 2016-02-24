@@ -28,9 +28,9 @@ using namespace domain;
 class FlightRecorderNode::Impl
 {
 public:
-    Subscriber sub;
     QFile file;
     QMap<QString, QByteArray> messages;
+    Subscriber sub;
 };
 
 FlightRecorderNode::FlightRecorderNode(QObject* parent):

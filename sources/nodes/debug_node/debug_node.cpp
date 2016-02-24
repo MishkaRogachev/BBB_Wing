@@ -11,8 +11,8 @@ using namespace domain;
 class DebugNode::Impl
 {
 public:
-    Subscriber sub;
     QByteArray messages;
+    Subscriber sub;
 };
 
 DebugNode::DebugNode(QObject* parent):

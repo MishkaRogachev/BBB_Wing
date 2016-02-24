@@ -5,6 +5,7 @@
 
 // Internal
 #include "config.h"
+#include "abstract_transceiver.h"
 #include "subscriber.h"
 #include "publisher.h"
 
@@ -13,6 +14,7 @@ using namespace domain;
 class BoardTransceiverNode::Impl
 {
 public:
+    AbstractTransceiver* transceiver;
     Subscriber sub;
     Publisher pub;
 };
@@ -21,12 +23,15 @@ BoardTransceiverNode::BoardTransceiverNode(QObject* parent):
     AbstractNodeFrequency(parent),
     d(new Impl())
 {
+    //d->transceiver = n
+
     d->pub.bind("ipc://transceiver");
     d->pub.setTopic("tr_");
 }
 
 BoardTransceiverNode::~BoardTransceiverNode()
 {
+    delete d->transceiver;
     delete d;
 }
 

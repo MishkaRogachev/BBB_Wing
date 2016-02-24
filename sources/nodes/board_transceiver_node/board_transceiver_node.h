@@ -1,5 +1,5 @@
-#ifndef BOARDTRANSCEIVERNODE_H
-#define BOARDTRANSCEIVERNODE_H
+#ifndef BOARD_TRANSCEIVER_NODE_H
+#define BOARD_TRANSCEIVER_NODE_H
 
 #include "abstract_node_frequency.h"
 
@@ -23,4 +23,4 @@ namespace domain
     };
 }
 
-#endif // BOARDTRANSCEIVERNODE_H
+#endif // BOARD_TRANSCEIVER_NODE_H
