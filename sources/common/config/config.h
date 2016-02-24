@@ -3,6 +3,7 @@
 
 // Qt
 #include <QSettings>
+// TODO: rename common to core
 
 namespace domain
 {

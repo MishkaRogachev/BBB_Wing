@@ -6,6 +6,7 @@
 // Internal
 #include "config.h"
 #include "abstract_transceiver.h"
+#include "board_packet.h"
 #include "subscriber.h"
 #include "publisher.h"
 

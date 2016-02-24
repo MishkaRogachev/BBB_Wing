@@ -9,6 +9,7 @@
 #include "sensor_ins_node.h"
 #include "sensor_sns_node.h"
 #include "flight_recorder_node.h"
+#include "board_transceiver_node.h"
 
 int main(int argc, char* argv[])
 {

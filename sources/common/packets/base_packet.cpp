@@ -1,19 +1,29 @@
 #include "base_packet.h"
 
 using namespace domain;
-
-QDataStream& operator <<(QDataStream& stream, const BasePacket& packet)
+/*
+QDataStream& BasePacket::operator >>(QDataStream& stream)
 {
-    stream << static_cast<int>(packet.type);
-    stream << packet.crc;
+//    stream >> static_cast<int>(type);
+    stream >> crc;
     return stream;
+}
+
+QDataStream& BasePacket::operator <<(QDataStream& stream)
+{
+//    stream << static_cast<int>(type);
+    stream << crc;
+    return stream;
+}
+
+QDataStream& operator <<(QDataStream& stream, BasePacket& packet)
+{
+    return (packet << stream);
 }
 
 QDataStream& operator >>(QDataStream& stream, BasePacket& packet)
 {
-    int type;
-    stream >> type;
-    packet.type = static_cast<PacketType>(type);
-    stream >> packet.crc;
-    return stream;
+    return (packet >> stream);
 }
+
+*/

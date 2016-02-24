@@ -16,10 +16,29 @@ namespace domain
     {
         PacketType type;
         quint16 crc;
+
+        inline virtual QDataStream& operator >>(QDataStream& stream)
+        {
+        //    stream >> static_cast<int>(type);
+            stream >> crc;
+            return stream;
+        }
+        inline virtual QDataStream& operator <<(QDataStream& stream)
+        {
+            //    stream << static_cast<int>(type);
+            stream << crc;
+            return stream;
+        }
     };
 
-    QDataStream& operator <<(QDataStream& stream, const BasePacket& packet);
-    QDataStream& operator >>(QDataStream& stream, BasePacket& packet);
+    inline QDataStream& operator <<(QDataStream& stream, BasePacket& packet)
+    {
+        return (packet << stream);
+    }
+    inline QDataStream& operator >>(QDataStream& stream, BasePacket& packet)
+    {
+        return (packet >> stream);
+    }
 }
 
 #endif // BASE_PACKET_H

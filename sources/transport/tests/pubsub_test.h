@@ -1,5 +1,5 @@
-#ifndef ABSTRACT_AREA_TEST_H
-#define ABSTRACT_AREA_TEST_H
+#ifndef PUB_SUB_TEST_H
+#define PUB_SUB_TEST_H
 
 #include <QtTest/QTest>
 
@@ -17,4 +17,4 @@ namespace domain
     };
 }
 
-#endif // ABSTRACT_AREA_TEST_H
+#endif // PUB_SUB_TEST_H
