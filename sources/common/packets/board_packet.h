@@ -24,8 +24,8 @@ namespace domain
         bool insStatus;
         bool snsStatus;
 
-//        QDataStream& operator >>(QDataStream& stream) override;
-//        QDataStream& operator <<(QDataStream& stream) override;
+        QDataStream& operator >>(QDataStream& stream) const override;
+        QDataStream& operator <<(QDataStream& stream) override;
     };
 }
 

@@ -1,5 +1,8 @@
 #include "packets_test.h"
 
+// Qt
+#include <QDebug>
+
 // Internal
 #include "board_packet.h"
 
@@ -9,15 +12,14 @@ void PacketsTest::testBasePacket()
 {
     BasePacket packet;
 
-    packet.type = PacketType::Base;
     packet.crc = 666;
 
     QByteArray data;
-    QDataStream stream(data);
+    QDataStream stream(&data, QIODevice::ReadWrite);
 
-    stream << packet;
+    stream >> packet;
     BasePacket converted;
-    stream >> converted;
+    stream << converted;
 
     QCOMPARE(packet.type, converted.type);
     QCOMPARE(packet.crc, converted.crc);
