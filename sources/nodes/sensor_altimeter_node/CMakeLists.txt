@@ -49,4 +49,4 @@ add_compile_options(-std=c++11 -Wall)
 add_library(${PROJECT} STATIC ${SOURCES})
 
 # Link Libraries
-target_link_libraries (${PROJECT} ${LIBRARIES})
+target_link_libraries(${PROJECT} ${LIBRARIES})

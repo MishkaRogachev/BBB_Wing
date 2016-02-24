@@ -31,6 +31,7 @@ if (TARGET_TYPE STREQUAL "board" OR TARGET_TYPE STREQUAL "all")
     add_subdirectory(sources/nodes/sensor_ins_node)
     add_subdirectory(sources/nodes/sensor_sns_node)
     add_subdirectory(sources/nodes/flight_recorder_node)
+    add_subdirectory(sources/nodes/board_transceiver_node)
 
     add_subdirectory(sources/targets/board)
 endif()

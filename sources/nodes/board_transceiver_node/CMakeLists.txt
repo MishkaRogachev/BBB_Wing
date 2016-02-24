@@ -2,7 +2,7 @@
 cmake_minimum_required(VERSION 2.8.11)
 
 # Project
-set(PROJECT debug_node)
+set(PROJECT board_transceiver_node)
 project(${PROJECT})
 
 # Find includes in corresponding build directories
@@ -30,8 +30,8 @@ include_directories(${INCLUDES})
 
 # Sources
 set(INTERNAL_SOURCES
-    debug_node.h
-    debug_node.cpp
+    board_transceiver_node.h
+    board_transceiver_node.cpp
 )
 
 set(SOURCES
