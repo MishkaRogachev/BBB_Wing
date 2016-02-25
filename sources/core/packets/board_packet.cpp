@@ -2,10 +2,32 @@
 
 using namespace domain;
 
+bool BoardPacket::validateCrc()
+{
+    return crc == data.calcCrc();
+}
+
+void BoardPacket::calcCrc()
+{
+    crc = data.calcCrc();
+}
+
 QDataStream& BoardPacket::operator >>(QDataStream& stream) const
 {
-    BasePacket::operator >>(stream);
+    stream << crc;
+    stream << data;
+    return stream;
+}
 
+QDataStream& BoardPacket::operator <<(QDataStream& stream)
+{
+    stream >> crc;
+    stream >> data;
+    return stream;
+}
+
+QDataStream& BoardPacket::BoardDataPacket::operator >>(QDataStream& stream) const
+{
     stream << latitude;
     stream << longitude;
     stream << altitude;
@@ -26,10 +48,8 @@ QDataStream& BoardPacket::operator >>(QDataStream& stream) const
     return stream;
 }
 
-QDataStream& BoardPacket::operator <<(QDataStream& stream)
+QDataStream& BoardPacket::BoardDataPacket::operator <<(QDataStream& stream)
 {
-    BasePacket::operator <<(stream);
-
     stream >> latitude;
     stream >> longitude;
     stream >> altitude;

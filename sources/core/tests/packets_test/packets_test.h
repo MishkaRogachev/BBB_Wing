@@ -10,7 +10,6 @@ namespace domain
         Q_OBJECT
 
     private slots:
-        void testBasePacket();
         void testBoardPacket();
     };
 }
