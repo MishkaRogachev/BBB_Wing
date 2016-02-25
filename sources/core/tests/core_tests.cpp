@@ -3,7 +3,7 @@
 
 // Tests
 #include "packets_test.h"
-#include "pubsub_test.h"
+#include "pub_sub_test.h"
 
 int main(int argc, char* argv[])
 {
