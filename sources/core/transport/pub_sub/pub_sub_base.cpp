@@ -1,11 +1,11 @@
-#include "base_transport.h"
+#include "pub_sub_base.h"
 
 // ZeroMQ
 #include <zmq.hpp>
 
 using namespace domain;
 
-class BaseTransport::Impl
+class PubSubBase::Impl
 {
 public:
     static zmq::context_t context;
@@ -16,36 +16,36 @@ public:
     {}
 };
 
-zmq::context_t BaseTransport::Impl::context(1);
+zmq::context_t PubSubBase::Impl::context(1);
 
-BaseTransport::BaseTransport(int type, QObject* parent):
+PubSubBase::PubSubBase(int type, QObject* parent):
     QObject(parent),
     d(new Impl(type))
 {}
 
-BaseTransport::~BaseTransport()
+PubSubBase::~PubSubBase()
 {
     d->socket.close();
     delete d;
 }
 
-void BaseTransport::connectTo(const QString& endpoint)
+void PubSubBase::connectTo(const QString& endpoint)
 {
     d->socket.connect(endpoint.toStdString().c_str());
 }
 
-void BaseTransport::bind(const QString& endpoint)
+void PubSubBase::bind(const QString& endpoint)
 {
     d->socket.bind(endpoint.toStdString().c_str());
 }
 
-void BaseTransport::setOption(int option, const QString& value)
+void PubSubBase::setOption(int option, const QString& value)
 {
     auto stdString = value.toStdString();
     d->socket.setsockopt(option, stdString.c_str(), stdString.length());
 }
 
-qint32 BaseTransport::fileDescriptor() const
+qint32 PubSubBase::fileDescriptor() const
 {
     qint32 fd;
     size_t size = sizeof(fd);
@@ -53,7 +53,7 @@ qint32 BaseTransport::fileDescriptor() const
     return fd;
 }
 
-QByteArray BaseTransport::recv(int flags)
+QByteArray PubSubBase::recv(int flags)
 {
     zmq::message_t message;
     d->socket.recv(&message, flags);
@@ -61,7 +61,7 @@ QByteArray BaseTransport::recv(int flags)
     return QByteArray(static_cast<char*>(message.data()), message.size());
 }
 
-void BaseTransport::send(const QByteArray& data, int flags)
+void PubSubBase::send(const QByteArray& data, int flags)
 {
      zmq::message_t message(data.size());
      memcpy(message.data(), data.data(), data.size());

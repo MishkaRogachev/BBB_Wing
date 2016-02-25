@@ -1,11 +1,11 @@
 #ifndef PUBLISHER_H
 #define PUBLISHER_H
 
-#include "base_transport.h"
+#include "pub_sub_base.h"
 
 namespace domain
 {
-    class Publisher: public BaseTransport
+    class Publisher: public PubSubBase
     {
         Q_OBJECT
 

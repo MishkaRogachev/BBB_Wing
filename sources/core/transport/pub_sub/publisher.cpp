@@ -6,7 +6,7 @@
 using namespace domain;
 
 Publisher::Publisher(QObject* parent):
-    BaseTransport(ZMQ_PUB, parent)
+    PubSubBase(ZMQ_PUB, parent)
 {}
 
 Publisher::Publisher(const QString& endpoint, QObject* parent):

@@ -3,7 +3,6 @@ cmake_minimum_required(VERSION 2.8.11)
 
 add_subdirectory(config)
 add_subdirectory(nodes)
-add_subdirectory(transceivers)
 add_subdirectory(transport)
 add_subdirectory(packets)
 

@@ -10,7 +10,7 @@
 using namespace domain;
 
 Subscriber::Subscriber(QObject* parent):
-    BaseTransport(ZMQ_SUB, parent)
+    PubSubBase(ZMQ_SUB, parent)
 {
     QSocketNotifier* notifier = new QSocketNotifier(this->fileDescriptor(),
                                     QSocketNotifier::Read, this);

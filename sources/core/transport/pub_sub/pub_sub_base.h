@@ -1,17 +1,17 @@
-#ifndef BASE_TRANSPORT_H
-#define BASE_TRANSPORT_H
+#ifndef PUB_SUB_BASE_H
+#define PUB_SUB_BASE_H
 
 #include <QObject>
 
 namespace domain
 {
-    class BaseTransport: public QObject
+    class PubSubBase: public QObject
     {
         Q_OBJECT
 
     public:
-        BaseTransport(int type, QObject* parent = nullptr);
-        ~BaseTransport() override;
+        PubSubBase(int type, QObject* parent = nullptr);
+        ~PubSubBase() override;
 
         void connectTo(const QString& endpoint);
         void bind(const QString& endpoint);
@@ -31,4 +31,4 @@ namespace domain
     };
 }
 
-#endif // BASE_TRANSPORT_H
+#endif // PUB_SUB_BASE_H

@@ -1,11 +1,11 @@
 #ifndef SUBSCRIBER_H
 #define SUBSCRIBER_H
 
-#include "base_transport.h"
+#include "pub_sub_base.h"
 
 namespace domain
 {
-    class Subscriber: public BaseTransport
+    class Subscriber: public PubSubBase
     {
         Q_OBJECT
 
