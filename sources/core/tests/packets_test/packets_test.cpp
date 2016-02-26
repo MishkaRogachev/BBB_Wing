@@ -12,14 +12,14 @@ void PacketsTest::testBoardPacket()
 {
     BoardPacket packet;
 
-    packet.data.latitude = 44.564133;
-    packet.data.longitude = 35.31455;
+    packet.data.latitude = 44.564;
+    packet.data.longitude = 35.314;
     packet.data.altitude = 5679.435;
 
-    packet.data.velocity = 56.0034;
+    packet.data.velocity = 56.034;
     packet.data.climb = -4.324;
 
-    packet.data.pitch = 5.4556;
+    packet.data.pitch = 5.455;
     packet.data.roll = -11.567;
     packet.data.yaw = 356.645;
 
@@ -32,20 +32,21 @@ void PacketsTest::testBoardPacket()
     packet.calcCrc();
 
     QByteArray data;
-    QDataStream stream(&data, QIODevice::ReadWrite);
-
-    stream << packet;
+    {
+        QDataStream stream(&data, QIODevice::WriteOnly);
+        stream.setFloatingPointPrecision(QDataStream::DoublePrecision);
+        stream << packet;
+    }
     BoardPacket converted;
+    {
+        QDataStream stream(&data, QIODevice::ReadOnly);
+        stream.setFloatingPointPrecision(QDataStream::DoublePrecision);
+        stream >> converted;
+    }
 
-    qDebug() << data;
-
-    stream << converted;
-
-    qDebug() << data;
-
-    QCOMPARE(converted.data.latitude, 44.564133);
-    QCOMPARE(converted.data.velocity, 56.0034);
-    QCOMPARE(converted.data.roll, -11.567);
+    QVERIFY(qFuzzyCompare(converted.data.latitude, packet.data.latitude));
+    QCOMPARE(converted.data.velocity, packet.data.velocity);
+    QCOMPARE(converted.data.roll, packet.data.roll);
 
     QCOMPARE(packet.crc, converted.crc);
     QVERIFY(converted.validateCrc());
