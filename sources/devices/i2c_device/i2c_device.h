@@ -9,7 +9,7 @@ namespace devices
     class I2cDevice
     {
     public:
-        static const char* defaultI2cPath;
+        static const char* defaultI2cPath; // TODO: i2c path to config
 
         I2cDevice();
         virtual ~I2cDevice();

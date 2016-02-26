@@ -44,11 +44,17 @@ void Config::end()
 
 void Config::makeDefault()
 {
+    // TODO: make target's own configs
     m_settings.beginGroup("FlightRecorder");
     m_settings.setValue("path", "/media/sd_card/records/");
     m_settings.setValue("max_record_size", 3.2e+7);
     m_settings.setValue("file_format","ddMMyyyy_hhmm");
     m_settings.setValue("time_format","hh:mm:ss.zzz");
+    m_settings.endGroup();
+
+    m_settings.beginGroup("BoardTransceiver");
+    m_settings.setValue("udp_address", "192.168.7.1");
+    m_settings.setValue("udp_port", 50000);
     m_settings.endGroup();
 }
 

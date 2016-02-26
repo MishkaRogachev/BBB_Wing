@@ -23,7 +23,8 @@ int main(int argc, char* argv[])
     scheduler.addNodeFrequency(new SensorAltimeterNode(), 5);
     scheduler.addNodeFrequency(new SensorInsNode(), 10);
     scheduler.addNodeFrequency(new SensorSnsNode(), 5);
-    scheduler.addNodeFrequency(new FlightRecorderNode(), 4);
+    scheduler.addNodeFrequency(new FlightRecorderNode(), 5);
+    scheduler.addNodeFrequency(new BoardTransceiverNode(), 5);
 
     scheduler.init();
     scheduler.exec();
