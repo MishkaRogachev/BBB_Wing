@@ -5,18 +5,13 @@ cmake_minimum_required(VERSION 2.8.11)
 set(PROJECT mpl3115a2_test)
 project(${PROJECT})
 
-# Find includes in corresponding build directories
-set(CMAKE_INCLUDE_CURRENT_DIR ON)
-# Instruct CMake to run moc automatically when needed.
-set(CMAKE_AUTOMOC ON)
-
 # Enable Qt modules
-find_package(Qt5 COMPONENTS Core Test)
+find_package(Qt5 COMPONENTS Test)
 
 # Libs
 set(LIBRARIES
+    ${LIBRARIES}
 # Qt5
-    Qt5::Core
     Qt5::Test
 )
 

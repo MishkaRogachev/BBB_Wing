@@ -7,11 +7,7 @@ project(${PROJECT})
 
 # Includes
 HEADER_DIRECTORIES(INTERNAL_INCLUDES ${CMAKE_CURRENT_SOURCE_DIR})
-set(INCLUDES
-    ${INCLUDES}
-    ${INTERNAL_INCLUDES}
-)
-include_directories(${INCLUDES})
+include_directories(${INCLUDES} ${INTERNAL_INCLUDES})
 
 # Sources
 set(INTERNAL_SOURCES
@@ -19,13 +15,8 @@ set(INTERNAL_SOURCES
     board_transceiver_node.cpp
 )
 
-set(SOURCES
-    ${SOURCES}
-    ${INTERNAL_SOURCES}
-)
-
 # Static Library target
-add_library(${PROJECT} STATIC ${SOURCES})
+add_library(${PROJECT} STATIC ${SOURCES} ${INTERNAL_SOURCES})
 
 # Link Libraries
 target_link_libraries(${PROJECT} ${LIBRARIES})
