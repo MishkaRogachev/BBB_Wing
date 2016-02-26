@@ -5,11 +5,6 @@ cmake_minimum_required(VERSION 2.8.11)
 set(PROJECT sensor_altimeter_node)
 project(${PROJECT})
 
-# Find includes in corresponding build directories
-set(CMAKE_INCLUDE_CURRENT_DIR ON)
-# Instruct CMake to run moc automatically when needed.
-set(CMAKE_AUTOMOC ON)
-
 # External dirs
 add_subdirectory(../../devices/mpl3115a2 ${CMAKE_CURRENT_BINARY_DIR}/devices/mpl3115a2)
 

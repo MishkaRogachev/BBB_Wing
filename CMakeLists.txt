@@ -7,15 +7,14 @@ project(BBB_Wing)
 # CMake modules
 include(cmake/RecurseSubdirs.cmake)
 
-# Tagret type. Avalible values: all, workstation, board
-if (NOT TARGET_TYPE)
-    set(TARGET_TYPE "all")
-endif (NOT TARGET_TYPE)
-message("Tagret type: " ${TARGET_TYPE})
-
 # Set default output directory
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_SOURCE_DIR}/result)
 set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${CMAKE_SOURCE_DIR}/result)
+
+# Find includes in corresponding build directories
+set(CMAKE_INCLUDE_CURRENT_DIR ON)
+# Instruct CMake to run moc automatically when needed.
+set(CMAKE_AUTOMOC ON)
 
 # Add globaly compiler flags
 add_compile_options(-std=c++11 -Wall -fPIC)
@@ -32,6 +31,12 @@ set(LIBRARIES
 
 # Core
 add_subdirectory(sources/core)
+
+# Tagret type. Avalible values: all, workstation, board
+if (NOT TARGET_TYPE)
+    set(TARGET_TYPE "all")
+endif (NOT TARGET_TYPE)
+message("Tagret type: " ${TARGET_TYPE})
 
 # Nodes targets
 if (TARGET_TYPE STREQUAL "board" OR TARGET_TYPE STREQUAL "all")

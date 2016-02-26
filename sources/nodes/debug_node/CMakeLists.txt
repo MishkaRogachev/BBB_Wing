@@ -5,11 +5,6 @@ cmake_minimum_required(VERSION 2.8.11)
 set(PROJECT debug_node)
 project(${PROJECT})
 
-# Find includes in corresponding build directories
-set(CMAKE_INCLUDE_CURRENT_DIR ON)
-# Instruct CMake to run moc automatically when needed.
-set(CMAKE_AUTOMOC ON)
-
 # Includes
 HEADER_DIRECTORIES(INTERNAL_INCLUDES ${CMAKE_CURRENT_SOURCE_DIR})
 set(INCLUDES

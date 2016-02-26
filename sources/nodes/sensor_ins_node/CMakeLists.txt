@@ -5,11 +5,6 @@ cmake_minimum_required(VERSION 2.8.11)
 set(PROJECT sensor_ins_node)
 project(${PROJECT})
 
-# Find includes in corresponding build directories
-set(CMAKE_INCLUDE_CURRENT_DIR ON)
-# Instruct CMake to run moc automatically when needed.
-set(CMAKE_AUTOMOC ON)
-
 # External dirs
 add_subdirectory(../../devices/lsm9ds1 ${CMAKE_CURRENT_BINARY_DIR}/devices/lsm9ds1)
 
