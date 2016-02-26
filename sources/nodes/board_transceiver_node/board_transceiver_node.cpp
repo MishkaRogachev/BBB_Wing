@@ -25,10 +25,12 @@ BoardTransceiverNode::BoardTransceiverNode(QObject* parent):
     AbstractNodeFrequency(parent),
     d(new Impl())
 {
-    Config::begin("BoardTransceiver");
+    Config::begin("Transceiver");
     d->transceiver = new UdpTransceiver(
-                         QHostAddress(Config::setting("udp_address").toString()),
-                         Config::setting("udp_port").toInt(), this);
+                         QHostAddress(Config::setting("udp_board_address").toString()),
+                         Config::setting("udp_board_port").toInt(),
+                         QHostAddress(Config::setting("udp_workstation_address").toString()),
+                         Config::setting("udp_workstation_port").toInt(), this);
 
     d->pub.bind("ipc://transceiver");
     d->pub.setTopic("tr_");

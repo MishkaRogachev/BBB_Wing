@@ -15,13 +15,26 @@ namespace domain
         Q_OBJECT
 
     public:
-        UdpTransceiver(QHostAddress address, int port, QObject* parent = nullptr);
+        UdpTransceiver(const QHostAddress& address, int port,
+                       const QHostAddress& transmitAdress, int transmitPort,
+                       QObject* parent = nullptr);
+
+        QHostAddress transmitAdress() const;
+        int transmitPort() const;
 
     public slots:
         void transmit(const QByteArray& packet) override;
 
+        void setTransmitAdress(const QHostAddress& transmitAdress);
+        void setTransmitPort(int transmitPort);
+
+    private slots:
+        void readPendingDatagrams();
+
     private:
         QUdpSocket* m_socket;
+        QHostAddress m_transmitAdress;
+        int m_transmitPort;
     };
 }
 

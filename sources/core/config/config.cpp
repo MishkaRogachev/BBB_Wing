@@ -52,9 +52,11 @@ void Config::makeDefault()
     m_settings.setValue("time_format","hh:mm:ss.zzz");
     m_settings.endGroup();
 
-    m_settings.beginGroup("BoardTransceiver");
-    m_settings.setValue("udp_address", "192.168.7.1");
-    m_settings.setValue("udp_port", 50000);
+    m_settings.beginGroup("Transceiver");
+    m_settings.setValue("udp_workstation_address", "192.168.7.1");
+    m_settings.setValue("udp_workstation_port", 50000);
+    m_settings.setValue("udp_board_address", "192.168.7.2");
+    m_settings.setValue("udp_board_port", 50001);
     m_settings.endGroup();
 }
 
