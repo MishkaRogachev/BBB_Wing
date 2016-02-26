@@ -10,16 +10,6 @@ set(CMAKE_INCLUDE_CURRENT_DIR ON)
 # Instruct CMake to run moc automatically when needed.
 set(CMAKE_AUTOMOC ON)
 
-# Enable Qt modules
-find_package(Qt5 COMPONENTS Core)
-
-# Libraries
-set(LIBRARIES
-    ${LIBRARIES}
-# Qt5
-    Qt5::Core
-)
-
 # Includes
 HEADER_DIRECTORIES(INTERNAL_INCLUDES ${CMAKE_CURRENT_SOURCE_DIR})
 set(INCLUDES

@@ -17,8 +17,18 @@ message("Tagret type: " ${TARGET_TYPE})
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_SOURCE_DIR}/result)
 set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${CMAKE_SOURCE_DIR}/result)
 
-# Add fPIC flag globaly
-set(CMAKE_CXX_FLAGS "-fPIC")
+# Add globaly compiler flags
+add_compile_options(-std=c++11 -Wall -fPIC)
+
+# Enable globaly some Qt modules
+find_package(Qt5 COMPONENTS Core Network REQUIRED)
+
+# Global libraries
+set(LIBRARIES
+# Qt5
+    Qt5::Core
+    Qt5::Network
+)
 
 # Core
 add_subdirectory(sources/core)

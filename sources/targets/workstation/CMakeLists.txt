@@ -6,12 +6,12 @@ set(PROJECT workstation)
 project(${PROJECT})
 
 # Enable Qt modules
-find_package(Qt5 COMPONENTS Core Gui Quick Positioning Location REQUIRED)
+find_package(Qt5 COMPONENTS Gui Quick Positioning Location REQUIRED)
 
 # Libs
 set(LIBRARIES
+    ${LIBRARIES}
 # Qt5
-    Qt5::Core
     Qt5::Gui
     Qt5::Quick
     Qt5::Positioning

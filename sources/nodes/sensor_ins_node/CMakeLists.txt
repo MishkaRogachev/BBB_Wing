@@ -13,16 +13,6 @@ set(CMAKE_AUTOMOC ON)
 # External dirs
 add_subdirectory(../../devices/lsm9ds1 ${CMAKE_CURRENT_BINARY_DIR}/devices/lsm9ds1)
 
-# Enable Qt modules
-find_package(Qt5 COMPONENTS Core)
-
-# Libraries
-set(LIBRARIES
-    ${LIBRARIES}
-# Qt5
-    Qt5::Core
-)
-
 # Includes
 HEADER_DIRECTORIES(INTERNAL_INCLUDES ${CMAKE_CURRENT_SOURCE_DIR})
 set(INCLUDES

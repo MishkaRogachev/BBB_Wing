@@ -5,13 +5,9 @@ cmake_minimum_required(VERSION 2.8.11)
 set(PROJECT board)
 project(${PROJECT})
 
-# Enable Qt modules
-find_package(Qt5 COMPONENTS Core)
-
 # Libs
 set(LIBRARIES
-# Qt5
-    Qt5::Core
+    ${LIBRARIES}
 # Internal
     debug_node
     sensor_altimeter_node
