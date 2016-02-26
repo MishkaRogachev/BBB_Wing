@@ -18,6 +18,7 @@ set(LIBRARIES
     Qt5::Location
 # Internal
     debug_node
+    workstation_transceiver_node
 )
 
 # Includes

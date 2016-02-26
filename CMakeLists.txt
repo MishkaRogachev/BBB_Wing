@@ -39,8 +39,9 @@ endif (NOT TARGET_TYPE)
 message("Tagret type: " ${TARGET_TYPE})
 
 # Nodes targets
+add_subdirectory(sources/nodes/debug_node)
+
 if (TARGET_TYPE STREQUAL "board" OR TARGET_TYPE STREQUAL "all")
-    add_subdirectory(sources/nodes/debug_node)
     add_subdirectory(sources/nodes/sensor_altimeter_node)
     add_subdirectory(sources/nodes/sensor_ins_node)
     add_subdirectory(sources/nodes/sensor_sns_node)
@@ -51,8 +52,7 @@ if (TARGET_TYPE STREQUAL "board" OR TARGET_TYPE STREQUAL "all")
 endif()
 
 if (TARGET_TYPE STREQUAL "workstation" OR TARGET_TYPE STREQUAL "all")
-    if (NOT TARGET debug_node)
-        add_subdirectory(sources/nodes/debug_node)
-    endif()
+    add_subdirectory(sources/nodes/workstation_transceiver_node)
+
     add_subdirectory(sources/targets/workstation)
 endif()

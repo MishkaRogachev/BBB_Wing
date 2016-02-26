@@ -50,21 +50,22 @@ void BoardTransceiverNode::init()
      d->sub.connectTo("ipc://sns");
 
      d->sub.subscribe("");
-     connect(&d->sub, &Subscriber::received, this, &BoardTransceiverNode::onReceived);
+     connect(&d->sub, &Subscriber::received, this,
+             &BoardTransceiverNode::onSubReceived);
 }
 
 void BoardTransceiverNode::exec()
 {
     d->packet.calcCrc();
 
-    QByteArray packet;
-    QDataStream stream(&packet, QIODevice::WriteOnly);
+    QByteArray packetData;
+    QDataStream stream(&packetData, QIODevice::WriteOnly);
     stream << d->packet;
 
-    d->transceiver->transmit(packet);
+    d->transceiver->transmit(packetData);
 }
 
-void BoardTransceiverNode::onReceived(const QString& topic, const QByteArray& msg)
+void BoardTransceiverNode::onSubReceived(const QString& topic, const QByteArray& msg)
 {
     QDataStream stream(msg);
 

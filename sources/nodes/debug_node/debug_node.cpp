@@ -33,7 +33,7 @@ void DebugNode::init()
      d->sub.connectTo("ipc://sns");
 
      d->sub.subscribe("");
-     connect(&d->sub, &Subscriber::received, this, &DebugNode::onReceived);
+     connect(&d->sub, &Subscriber::received, this, &DebugNode::onSubReceived);
 }
 
 void DebugNode::exec()
@@ -42,7 +42,7 @@ void DebugNode::exec()
     d->messages.clear();
 }
 
-void DebugNode::onReceived(const QString& topic, const QByteArray& data)
+void DebugNode::onSubReceived(const QString& topic, const QByteArray& data)
 {
     d->messages.append(topic.toLatin1() + QByteArray(":") +
                        data + QByteArray("; "));

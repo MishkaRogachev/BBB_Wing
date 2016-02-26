@@ -15,7 +15,7 @@ namespace domain
         void exec() override;
 
     private slots:
-        void onReceived(const QString& topic, const QByteArray& msg);
+        void onSubReceived(const QString& topic, const QByteArray& msg);
 
     private:
         class Impl;

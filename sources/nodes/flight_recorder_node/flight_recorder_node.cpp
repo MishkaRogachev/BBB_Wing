@@ -50,7 +50,8 @@ void FlightRecorderNode::init()
      d->sub.connectTo("ipc://sns");
 
      d->sub.subscribe("");
-     connect(&d->sub, &Subscriber::received, this, &FlightRecorderNode::onReceived);
+     connect(&d->sub, &Subscriber::received, this,
+             &FlightRecorderNode::onSubReceived);
 }
 
 void FlightRecorderNode::exec()
@@ -90,7 +91,8 @@ void FlightRecorderNode::exec()
     Config::end();
 }
 
-void FlightRecorderNode::onReceived(const QString& topic, const QByteArray& msg)
+void FlightRecorderNode::onSubReceived(const QString& topic,
+                                       const QByteArray& msg)
 {
     d->messages[topic] = msg;
 }
