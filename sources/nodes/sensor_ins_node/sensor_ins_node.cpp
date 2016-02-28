@@ -61,7 +61,7 @@ void SensorInsNode::exec()
         float my = d->imu.mag()->readMag(devices::AxisY);
         float mz = d->imu.mag()->readMag(devices::AxisZ);
 
-        // TODO: separate this code to INS class. Rename Iimu node to ins node
+        // TODO: separate this code to INS class
         float pitch = atan2(-ax, sqrt(ay * ay + az * az)) * 180.0f / M_PI;
         float roll = atan2(ay, az) * 180.0 / M_PI;
 

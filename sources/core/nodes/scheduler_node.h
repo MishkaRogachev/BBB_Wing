@@ -18,6 +18,7 @@ namespace domain
         void init() override;
         void exec() override;
 
+        void addNode(AbstractNode* node);
         void addNodeFrequency(AbstractNodeFrequency* node, float frequency);
 
     private:

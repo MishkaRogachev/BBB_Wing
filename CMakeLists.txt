@@ -53,6 +53,7 @@ endif()
 
 if (TARGET_TYPE STREQUAL "workstation" OR TARGET_TYPE STREQUAL "all")
     add_subdirectory(sources/nodes/workstation_transceiver_node)
+    add_subdirectory(sources/nodes/ui_node)
 
     add_subdirectory(sources/targets/workstation)
 endif()
