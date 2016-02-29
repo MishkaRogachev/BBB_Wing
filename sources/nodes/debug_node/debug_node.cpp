@@ -28,12 +28,12 @@ DebugNode::~DebugNode()
 void DebugNode::init()
 {
     // Using ipc instead inproc becouse https://github.com/zeromq/libzmq/issues/1434
-     d->sub.connectTo("ipc://altimeter");
-     d->sub.connectTo("ipc://ins");
-     d->sub.connectTo("ipc://sns");
+    d->sub.connectTo("ipc://altimeter");
+    d->sub.connectTo("ipc://ins");
+    d->sub.connectTo("ipc://sns");
 
-     d->sub.subscribe("");
-     connect(&d->sub, &Subscriber::received, this, &DebugNode::onSubReceived);
+    d->sub.subscribe("");
+    connect(&d->sub, &Subscriber::received, this, &DebugNode::onSubReceived);
 }
 
 void DebugNode::exec()

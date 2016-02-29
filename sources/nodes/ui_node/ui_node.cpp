@@ -37,6 +37,7 @@ UiNode::~UiNode()
 void UiNode::init()
 {
     initResources();
+
     d->view.setSource(QUrl(QStringLiteral("qrc:/qml/Views/MainView.qml")));
     d->view.setResizeMode(QQuickView::SizeRootObjectToView);
 
