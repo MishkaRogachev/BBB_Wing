@@ -14,6 +14,8 @@ UdpTransceiver::UdpTransceiver(const QHostAddress& address, int port,
     m_transmitPort(transmitPort)
 {
     m_socket->bind(address, port);
+    connect(m_socket, &QUdpSocket::readyRead, this,
+            &UdpTransceiver::readPendingDatagrams);
 }
 
 void UdpTransceiver::transmit(const QByteArray& packet)
