@@ -7,9 +7,11 @@
 #include <QDebug>
 
 // Internal
+#include "board_service.h"
+
 #include "subscriber.h"
 
-void initResources()
+inline void initResources()
 {
     Q_INIT_RESOURCE(qml);
     Q_INIT_RESOURCE(resources);
@@ -20,6 +22,7 @@ using namespace domain;
 class UiNode::Impl
 {
 public:
+    BoardService boardService;
     QQuickView view;
     Subscriber sub;
 };
@@ -57,5 +60,18 @@ void UiNode::exec()
 
 void UiNode::onSubReceived(const QString& topic, const QByteArray& data)
 {
+//    if (topic == "alt_status")
+//    else if (topic == "alt_altitude")
+//    else if (topic == "alt_temperature")
+//    else if (topic == "ins_status")
+    if (topic == "ins_pitch") d->boardService.setPitch(data.toFloat());
+    else if (topic == "ins_roll") d->boardService.setRoll(data.toFloat());
+    else if (topic == "ins_yaw") d->boardService.setYaw(data.toFloat());
+//    else if (topic == "sns_status")
+//    else if (topic == "sns_latitude")
+//    else if (topic == "sns_longitude")
+//    else if (topic == "sns_velocity")
+//    else if (topic == "sns_climb")
+
     // TODO: impl
 }
