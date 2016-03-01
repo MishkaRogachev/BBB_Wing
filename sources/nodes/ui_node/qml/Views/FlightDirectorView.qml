@@ -4,8 +4,18 @@ import "../Indicators"
 Column {
     id: flightDirector
 
+    property real pitch: 0.0
+    property real roll: 0.0
+    property real yaw: 0.0
+    property real velocity: 0.0
+    property real altitude: 0.0
+    property bool pitchInverted: true
+    property bool rollInverted: true
+
     Row {
         anchors.horizontalCenter: parent.horizontalCenter
+
+        // TODO: velocity scale
 
         Item {
             id: pithRoll
@@ -16,13 +26,20 @@ Column {
             Horizont {
                 id: horizont
                 anchors.fill: parent
+                pitch: pitchInverted ? -flightDirector.pitch : 0
+                roll: rollInverted ? -flightDirector.roll : 0
             }
 
-            Image {
+            PlaneMark {
                 id: planeMark
-                anchors.centerIn: parent
-                source: "qrc:/resources/indicators/plane_horizont_mark.svg"
+                anchors.fill: parent
+                pitch: pitchInverted ? 0 : flightDirector.pitch
+                roll: rollInverted ? 0 : flightDirector.roll
             }
         }
+
+        // TODO: altitude scale
     }
+
+    // TODO: yaw scale
 }

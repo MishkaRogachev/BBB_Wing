@@ -4,6 +4,7 @@
 #include <QtGui/QGuiApplication>
 #include <QtQuick/QQuickView>
 #include <QtQml/QQmlEngine>
+#include <QtQml/QQmlContext>
 #include <QDebug>
 
 // Internal
@@ -30,7 +31,16 @@ public:
 UiNode::UiNode(QObject* parent):
     AbstractNode(parent),
     d(new Impl())
-{}
+{
+    initResources();
+
+    d->view.rootContext()->setContextProperty("boardService", &d->boardService);
+    d->view.setSource(QUrl(QStringLiteral("qrc:/qml/Views/MainView.qml")));
+    d->view.setResizeMode(QQuickView::SizeRootObjectToView);
+
+    QObject::connect(d->view.engine(), &QQmlEngine::quit,
+                     qApp, &QGuiApplication::quit);
+}
 
 UiNode::~UiNode()
 {
@@ -39,14 +49,6 @@ UiNode::~UiNode()
 
 void UiNode::init()
 {
-    initResources();
-
-    d->view.setSource(QUrl(QStringLiteral("qrc:/qml/Views/MainView.qml")));
-    d->view.setResizeMode(QQuickView::SizeRootObjectToView);
-
-    QObject::connect(d->view.engine(), &QQmlEngine::quit,
-                     qApp, &QGuiApplication::quit);
-
     d->sub.connectTo("ipc://transceiver");
      
     d->sub.subscribe("");

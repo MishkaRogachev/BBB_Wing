@@ -14,6 +14,9 @@ Rectangle {
         anchors.left: parent.left
         anchors.top: status.bottom
         anchors.margins: 4
+        pitch: boardService.pitch
+        roll: boardService.roll
+        yaw: boardService.yaw
     }
 
     StatusView {
