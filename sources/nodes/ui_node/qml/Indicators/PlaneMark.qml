@@ -9,7 +9,7 @@ Item {
 
     Image {
         anchors.centerIn: parent
-        anchors.verticalCenterOffset: pitch * pitchScale
+        anchors.verticalCenterOffset: -pitch * pitchScale
         rotation: roll
         source: "qrc:/resources/indicators/plane_horizont_mark.svg"
     }

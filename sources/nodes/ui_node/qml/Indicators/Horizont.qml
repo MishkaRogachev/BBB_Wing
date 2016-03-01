@@ -20,7 +20,7 @@ Item {
 
         Column {
             anchors.centerIn: parent
-            anchors.verticalCenterOffset: pitch * pitchScale
+            anchors.verticalCenterOffset: -pitch * pitchScale
             rotation: roll
 
             Rectangle {
