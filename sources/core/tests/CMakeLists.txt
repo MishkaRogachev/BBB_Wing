@@ -25,7 +25,8 @@ include_directories(${TEST_INCLUDES})
 file(GLOB_RECURSE TEST_SOURCES "../*.h" "../*.cpp")
 
 # Executable
-add_executable(${PROJECT_NAME} ${TEST_SOURCES})
+add_executable(${PROJECT} ${TEST_SOURCES})
+set_target_properties(${PROJECT} PROPERTIES AUTOMOC TRUE)
 
 # Link Libraries
 target_link_libraries (${PROJECT} ${LIBRARIES})

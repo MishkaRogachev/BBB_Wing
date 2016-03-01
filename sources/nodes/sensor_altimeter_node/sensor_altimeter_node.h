@@ -7,6 +7,8 @@ namespace domain
 {
     class SensorAltimeterNode: public AbstractNodeFrequency
     {
+        Q_OBJECT
+
     public:
         SensorAltimeterNode(QObject* parent = nullptr);
         ~SensorAltimeterNode() override;

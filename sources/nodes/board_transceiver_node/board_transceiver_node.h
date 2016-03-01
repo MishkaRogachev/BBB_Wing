@@ -7,6 +7,8 @@ namespace domain
 {
     class BoardTransceiverNode: public AbstractNodeFrequency
     {
+        Q_OBJECT
+
     public:
         BoardTransceiverNode(QObject* parent = nullptr);
         ~BoardTransceiverNode() override;

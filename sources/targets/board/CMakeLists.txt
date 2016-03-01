@@ -27,6 +27,7 @@ file(GLOB_RECURSE INTERNAL_SOURCES "*.cpp" "*.h")
 
 # Executable target
 add_executable(${PROJECT} ${SOURCES} ${INTERNAL_SOURCES})
+set_target_properties(${PROJECT} PROPERTIES AUTOMOC TRUE)
 
 # Link Libraries
 target_link_libraries (${PROJECT} ${LIBRARIES})

@@ -7,6 +7,8 @@ namespace domain
 {
     class FlightRecorderNode: public AbstractNodeFrequency
     {
+        Q_OBJECT
+
     public:
         FlightRecorderNode(QObject* parent = nullptr);
         ~FlightRecorderNode() override;

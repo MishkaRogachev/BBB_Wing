@@ -15,8 +15,11 @@ set(INTERNAL_SOURCES
     debug_node.cpp
 )
 
+# Qt5 wrap node's headers
+qt5_wrap_cpp(MOC_SOURCES debug_node.h)
+
 # Static Library target
-add_library(${PROJECT} STATIC ${SOURCES} ${INTERNAL_SOURCES})
+add_library(${PROJECT} STATIC ${SOURCES} ${INTERNAL_SOURCES} ${MOC_SOURCES})
 
 # Link Libraries
 target_link_libraries(${PROJECT} ${LIBRARIES})

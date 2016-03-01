@@ -7,6 +7,8 @@ namespace domain
 {
     class DebugNode: public AbstractNodeFrequency
     {
+        Q_OBJECT
+
     public:
         DebugNode(QObject* parent = nullptr);
         ~DebugNode() override;

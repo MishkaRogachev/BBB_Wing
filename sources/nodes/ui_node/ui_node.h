@@ -7,6 +7,8 @@ namespace domain
 {
     class UiNode: public AbstractNode
     {
+        Q_OBJECT
+
     public:
         UiNode(QObject* parent = nullptr);
         ~UiNode() override;

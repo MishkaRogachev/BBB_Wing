@@ -21,8 +21,10 @@ set(LIBRARIES
 HEADER_DIRECTORIES(INTERNAL_INCLUDES ${CMAKE_CURRENT_SOURCE_DIR})
 include_directories(${INCLUDES} ${INTERNAL_INCLUDES})
 
-# Sources
-file(GLOB_RECURSE INTERNAL_SOURCES "*.cpp" "*.h" "*.qml")
+# Sources and headrers
+file(GLOB_RECURSE INTERNAL_HEADERS "*.h")
+file(GLOB_RECURSE INTERNAL_SOURCES "*.cpp")
+file(GLOB_RECURSE INTERNAL_QML "*.qml")
 
 # Resources
 file(GLOB QRC_FILES "*.qrc")
@@ -30,8 +32,12 @@ file(GLOB QRC_FILES "*.qrc")
 # Qt5 add resources
 qt5_add_resources(QRC_SOURCES ${QRC_FILES})
 
+# Qt5 wrap node's headers
+qt5_wrap_cpp(MOC_SOURCES ${INTERNAL_HEADERS})
+
 # Static Library target
-add_library(${PROJECT} STATIC ${SOURCES} ${INTERNAL_SOURCES} ${QRC_SOURCES})
+add_library(${PROJECT} STATIC ${SOURCES} ${INTERNAL_SOURCES} ${INTERNAL_HEADERS}
+            ${INTERNAL_QML} ${QRC_SOURCES} ${MOC_SOURCES})
 
 # Link Libraries
 target_link_libraries(${PROJECT} ${LIBRARIES})

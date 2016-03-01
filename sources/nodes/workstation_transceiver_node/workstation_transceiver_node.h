@@ -7,6 +7,8 @@ namespace domain
 {
     class WorkstationTransceiverNode: public AbstractNodeFrequency
     {
+        Q_OBJECT
+
     public:
         WorkstationTransceiverNode(QObject* parent = nullptr);
         ~WorkstationTransceiverNode() override;
