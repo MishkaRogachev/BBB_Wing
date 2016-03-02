@@ -4,7 +4,6 @@ import QtPositioning 5.5
 
 Map {
     id: map
-    anchors.fill: parent
     plugin: Plugin {
         name: "osm"
     }
