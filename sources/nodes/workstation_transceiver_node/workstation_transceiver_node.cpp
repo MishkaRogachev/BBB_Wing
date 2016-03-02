@@ -61,6 +61,7 @@ void WorkstationTransceiverNode::exec()
 
 void WorkstationTransceiverNode::onPacketReceived(const QByteArray& packetData)
 {
+
     QDataStream stream(packetData);
     BoardPacket packet;
     stream >> packet;
@@ -70,22 +71,20 @@ void WorkstationTransceiverNode::onPacketReceived(const QByteArray& packetData)
         d->pub.publish("status", QByteArray::number(false));
         return;
     }
+
     d->pub.publish("status", QByteArray::number(true));
 
+    //  TODO: topics string constants to header
     d->pub.publish("alt_status", QByteArray::number(packet.data.altimeterStatus));
-
-
-//    //  TODO: topics string constants to header
-//    if (topic == "alt_status") stream >> d->packet.data.altimeterStatus;
-//    else if (topic == "alt_altitude") stream >> d->packet.data.altitude;
-//    else if (topic == "alt_temperature") stream >> d->packet.data.temperature;
-//    else if (topic == "ins_status") stream >> d->packet.data.insStatus;
-//    else if (topic == "ins_pitch") stream >> d->packet.data.pitch;
-//    else if (topic == "ins_roll") stream >> d->packet.data.roll;
-//    else if (topic == "ins_yaw") stream >> d->packet.data.yaw;
-//    else if (topic == "sns_status") stream >> d->packet.data.snsStatus;
-//    else if (topic == "sns_latitude") stream >> d->packet.data.latitude;
-//    else if (topic == "sns_longitude") stream >> d->packet.data.longitude;
-//    else if (topic == "sns_velocity") stream >> d->packet.data.velocity;
-//    else if (topic == "sns_climb") stream >> d->packet.data.climb;
+    d->pub.publish("altitude", QByteArray::number(packet.data.altitude));
+    d->pub.publish("temperature", QByteArray::number(packet.data.temperature));
+    d->pub.publish("ins_status", QByteArray::number(packet.data.insStatus));
+    d->pub.publish("pitch", QByteArray::number(packet.data.pitch));
+    d->pub.publish("roll", QByteArray::number(packet.data.roll));
+    d->pub.publish("yaw", QByteArray::number(packet.data.yaw));
+    d->pub.publish("sns_status", QByteArray::number(packet.data.snsStatus));
+    d->pub.publish("latitude", QByteArray::number(packet.data.latitude));
+    d->pub.publish("longitude", QByteArray::number(packet.data.longitude));
+    d->pub.publish("velocity", QByteArray::number(packet.data.velocity));
+    d->pub.publish("climb", QByteArray::number(packet.data.climb));
 }
