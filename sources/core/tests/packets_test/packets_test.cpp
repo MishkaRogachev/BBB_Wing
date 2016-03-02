@@ -34,13 +34,11 @@ void PacketsTest::testBoardPacket()
     QByteArray data;
     {
         QDataStream stream(&data, QIODevice::WriteOnly);
-        stream.setFloatingPointPrecision(QDataStream::DoublePrecision);
         stream << packet;
     }
     BoardPacket converted;
     {
         QDataStream stream(&data, QIODevice::ReadOnly);
-        stream.setFloatingPointPrecision(QDataStream::DoublePrecision);
         stream >> converted;
     }
 
