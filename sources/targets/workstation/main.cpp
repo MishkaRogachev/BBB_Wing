@@ -15,7 +15,7 @@ int main(int argc, char* argv[])
 
     SchedulerNode scheduler;
 
-    scheduler.addNodeFrequency(new DebugNode(), 10);
+//    scheduler.addNodeFrequency(new DebugNode(), 10);
     scheduler.addNodeFrequency(new WorkstationTransceiverNode(), 5);
     scheduler.addNode(new UiNode());
 

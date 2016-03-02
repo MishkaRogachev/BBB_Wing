@@ -19,7 +19,7 @@ int main(int argc, char* argv[])
 
     SchedulerNode scheduler;
 
-    scheduler.addNodeFrequency(new DebugNode(), 10);
+//    scheduler.addNodeFrequency(new DebugNode(), 10);
     scheduler.addNodeFrequency(new SensorAltimeterNode(), 5);
     scheduler.addNodeFrequency(new SensorInsNode(), 10);
     scheduler.addNodeFrequency(new SensorSnsNode(), 5);
