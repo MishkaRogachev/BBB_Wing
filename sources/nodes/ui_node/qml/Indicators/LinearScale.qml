@@ -7,16 +7,20 @@ Item {
     property int minValue: 0
     property int maxValue: 100
     property int valueStep: 20
-    property alias contentsRotation: canvas.rotation
+    property alias canvasRotation: canvas.rotation
 
+    property bool vertical: (canvasRotation >=90 && canvasRotation < 180) ||
+                            (canvasRotation <= -90 && canvasRotation > -180)
+
+    width: 96
     height: 64
     onValueChanged: canvas.requestPaint()
 
     Canvas {
         id: canvas
         anchors.centerIn: parent
-        width: parent.width
-        height: parent.height
+        width: vertical ? parent.height : parent.width
+        height: vertical ? parent.width : parent.height
         onPaint:{
             var ctx = canvas.getContext('2d');
 
@@ -27,33 +31,45 @@ Item {
             ctx.strokeStyle = '#ecf0f1';
             ctx.fillStyle = '#ecf0f1';
 
-            ctx.font = '14pt Open Sans';
-            ctx.textAlign = 'center';
-            ctx.textBaseline = 'bottom';
-            ctx.fillText(value, width / 2, height / 2 - 8);
-
             ctx.beginPath();
-            ctx.moveTo(width / 2 - 8, height / 2 - 10);
-            ctx.lineTo(width / 2, height / 2 - 2);
-            ctx.lineTo(width / 2 + 8, height / 2 - 10);
+
+            ctx.font = '11pt Open Sans';
+            ctx.textAlign = vertical ?
+                        (canvasRotation > 0 ? 'left' :'right') : 'center';
+            ctx.textBaseline = vertical ? 'middle' : 'bottom';
 
             ctx.moveTo(0, height / 2);
             ctx.lineTo(width, height / 2);
-
-            ctx.stroke();
-
-            ctx.font = '11pt Open Sans';
-            ctx.textAlign = 'center';
-            ctx.textBaseline = 'top';
 
             var counter = 0;
             for (var i = minValue - (minValue % valueStep); i < maxValue;
                  i += (valueStep / 2)) {
                 var major = (counter++ % 2) == 0;
                 ctx.moveTo(mapToPixel(i), height / 2);
-                ctx.lineTo(mapToPixel(i), height / 2 + (major ? 8 : 6));
-                if (major) ctx.fillText(i, mapToPixel(i), height / 2 + 8);
+                ctx.lineTo(mapToPixel(i), height / 2 - (major ? 8 : 6));
+                if (major) {
+                    ctx.save();
+                    ctx.translate(mapToPixel(i), height / 2 - 8);
+                    ctx.rotate(-canvasRotation * Math.PI / 180);
+                    ctx.fillText(i, 0, 2);
+                    ctx.restore();
+                }
             }
+            ctx.stroke();
+
+            ctx.moveTo(width / 2 - 10, height / 2 + 8);
+            ctx.lineTo(width / 2, height / 2 + 2);
+            ctx.lineTo(width / 2 + 10, height / 2 + 8);
+
+            ctx.font = '14pt Open Sans';
+            ctx.textAlign = vertical ?
+                        (canvasRotation < 0 ? 'left' :'right') : 'center';
+            ctx.textBaseline = vertical ? 'middle' : 'top';
+            ctx.save();
+            ctx.translate(width / 2, height / 2 + (vertical ? 8 : 2));
+            ctx.rotate(-canvasRotation * Math.PI / 180);
+            ctx.fillText(value, 0, 2);
+            ctx.restore();
 
             ctx.stroke();
             ctx.restore();

@@ -15,7 +15,14 @@ Column {
     Row {
         anchors.horizontalCenter: parent.horizontalCenter
 
-        // TODO: velocity scale
+        LinearScale {
+            value: flightDirector.velocity
+            minValue: flightDirector.velocity - 50
+            maxValue: flightDirector.velocity + 50
+            anchors.verticalCenter: parent.verticalCenter
+            height: pithRoll.height - 16
+            canvasRotation: 90
+        }
 
         Item {
             id: pithRoll
@@ -38,13 +45,24 @@ Column {
             }
         }
 
+        LinearScale {
+            value: flightDirector.altitude
+            minValue: flightDirector.altitude - 25
+            maxValue: flightDirector.altitude + 25
+            valueStep: 10
+            anchors.verticalCenter: parent.verticalCenter
+            height: pithRoll.height - 16
+            canvasRotation: -90
+        }
+
         // TODO: altitude scale
     }
 
     LinearScale {
         value: flightDirector.yaw
-        minValue: flightDirector.yaw - 40
-        maxValue: flightDirector.yaw + 40
+        minValue: flightDirector.yaw - 90
+        maxValue: flightDirector.yaw + 90
+        valueStep: 30
         anchors.horizontalCenter: parent.horizontalCenter
         width: flightDirector.width - 16
     }
