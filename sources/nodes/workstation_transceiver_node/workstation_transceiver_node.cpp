@@ -61,7 +61,6 @@ void WorkstationTransceiverNode::exec()
 
 void WorkstationTransceiverNode::onPacketReceived(const QByteArray& packetData)
 {
-
     QDataStream stream(packetData);
     BoardPacket packet;
     stream >> packet;

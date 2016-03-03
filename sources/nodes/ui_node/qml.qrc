@@ -3,6 +3,7 @@
         <file>qml/Controls/Clickable.qml</file>
         <file>qml/Indicators/Horizont.qml</file>
         <file>qml/Indicators/PlaneMark.qml</file>
+        <file>qml/Indicators/LinearScale.qml</file>
         <file>qml/Views/MainView.qml</file>
         <file>qml/Views/StatusView.qml</file>
         <file>qml/Views/MapView.qml</file>

@@ -41,5 +41,11 @@ Column {
         // TODO: altitude scale
     }
 
-    // TODO: yaw scale
+    LinearScale {
+        value: flightDirector.yaw
+        minValue: flightDirector.yaw - 40
+        maxValue: flightDirector.yaw + 40
+        anchors.horizontalCenter: parent.horizontalCenter
+        width: flightDirector.width - 16
+    }
 }
