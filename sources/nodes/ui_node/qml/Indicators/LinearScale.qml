@@ -2,6 +2,7 @@ import QtQuick 2.0
 
 Item {
     id: scale
+    // TODO: invertion for 90 angle scale
 
     property int value: 0
     property int minValue: 0

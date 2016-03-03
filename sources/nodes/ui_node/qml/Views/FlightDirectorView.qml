@@ -54,15 +54,13 @@ Column {
             height: pithRoll.height - 16
             canvasRotation: -90
         }
-
-        // TODO: altitude scale
     }
 
     LinearScale {
         value: flightDirector.yaw
-        minValue: flightDirector.yaw - 90
-        maxValue: flightDirector.yaw + 90
-        valueStep: 30
+        minValue: flightDirector.yaw - 17
+        maxValue: flightDirector.yaw + 17
+        valueStep: 5
         anchors.horizontalCenter: parent.horizontalCenter
         width: flightDirector.width - 16
     }
