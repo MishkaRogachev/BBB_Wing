@@ -70,8 +70,8 @@ void UiNode::onSubReceived(const QString& topic, const QByteArray& data)
     else if (topic == "tr_roll") d->boardService.setRoll(data.toFloat());
     else if (topic == "tr_yaw") d->boardService.setYaw(data.toFloat());
 //    else if (topic == "sns_status")
-//    else if (topic == "sns_latitude")
-//    else if (topic == "sns_longitude")
+    else if (topic == "tr_latitude") d->boardService.setLatitude(data.toFloat());
+    else if (topic == "tr_longitude") d->boardService.setLongitude(data.toFloat());
     else if (topic == "tr_velocity") d->boardService.setVelocity(data.toFloat());
 //    else if (topic == "sns_climb")
 

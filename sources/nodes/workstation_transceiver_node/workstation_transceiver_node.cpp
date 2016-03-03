@@ -74,6 +74,7 @@ void WorkstationTransceiverNode::onPacketReceived(const QByteArray& packetData)
     d->pub.publish("status", QByteArray::number(true));
 
     //  TODO: topics string constants to header
+    //  TODO: topics must be grouped and minimized(local packets)
     d->pub.publish("alt_status", QByteArray::number(packet.data.altimeterStatus));
     d->pub.publish("altitude", QByteArray::number(packet.data.altitude));
     d->pub.publish("temperature", QByteArray::number(packet.data.temperature));

@@ -10,6 +10,8 @@ public:
     float yaw = 0.0f;
     float velocity = 0.0f;
     float altitude = 0.0f;
+    float latitude = 0.0f; // TODO: convert to QGeoCoordinate, after topics grouping
+    float longitude = 0.0f;
 };
 
 BoardService::BoardService(QObject* parent):
@@ -45,6 +47,16 @@ float BoardService::velocity() const
 float BoardService::altitude() const
 {
     return d->altitude;
+}
+
+float BoardService::latitude() const
+{
+    return d->latitude;
+}
+
+float BoardService::longitude() const
+{
+    return d->longitude;
 }
 
 void BoardService::setPitch(float pitch)
@@ -85,4 +97,20 @@ void BoardService::setAltitude(float altitude)
 
     d->altitude = altitude;
     emit altitudeChanged(altitude);
+}
+
+void BoardService::setLatitude(float latitude)
+{
+    if (d->latitude == latitude) return;
+
+    d->latitude = latitude;
+    emit latitudeChanged(latitude);
+}
+
+void BoardService::setLongitude(float longitude)
+{
+    if (d->longitude == longitude) return;
+
+    d->longitude = longitude;
+    emit longitudeChanged(longitude);
 }

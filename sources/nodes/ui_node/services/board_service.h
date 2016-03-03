@@ -14,6 +14,8 @@ namespace domain
         Q_PROPERTY(float yaw READ yaw WRITE setYaw NOTIFY yawChanged)
         Q_PROPERTY(float velocity READ velocity WRITE setVelocity NOTIFY velocityChanged)
         Q_PROPERTY(float altitude READ altitude WRITE setAltitude NOTIFY altitudeChanged)
+        Q_PROPERTY(float latitude READ latitude WRITE setLatitude NOTIFY latitudeChanged)
+        Q_PROPERTY(float longitude READ longitude WRITE setLongitude NOTIFY longitudeChanged)
 
     public:
         explicit BoardService(QObject* parent = nullptr);
@@ -24,6 +26,8 @@ namespace domain
         float yaw() const;
         float velocity() const;
         float altitude() const;
+        float latitude() const;
+        float longitude() const;
 
     public slots:
         void setPitch(float pitch);
@@ -31,15 +35,17 @@ namespace domain
         void setYaw(float yaw);
         void setVelocity(float velocity);
         void setAltitude(float altitude);
+        void setLatitude(float latitude);
+        void setLongitude(float longitude);
 
     signals:
         void pitchChanged(float pitch);
         void rollChanged(float roll);
         void yawChanged(float yaw);
-
         void velocityChanged(float velocity);
-
         void altitudeChanged(float altitude);
+        void latitudeChanged(float latitude);
+        void longitudeChanged(float longitude);
 
     private:
         class Impl;
