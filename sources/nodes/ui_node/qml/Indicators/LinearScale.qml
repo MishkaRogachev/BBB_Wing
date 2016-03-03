@@ -21,7 +21,7 @@ Item {
         anchors.centerIn: parent
         width: vertical ? parent.height : parent.width
         height: vertical ? parent.width : parent.height
-        onPaint:{
+        onPaint: {
             var ctx = canvas.getContext('2d');
 
             ctx.save();
