@@ -1,6 +1,7 @@
 import QtQuick 2.5
 import QtLocation 5.5
 import QtPositioning 5.5
+import "../Controls"
 
 Map {
     id: map
@@ -25,5 +26,13 @@ Map {
             rotation: boardService.yaw
             source: "qrc:/resources/indicators/plane_map_mark.svg"
         }
+    }
+
+    Button {
+        icon: "qrc:/resources/icons/fit.svg"
+        onClicked: map.fitViewportToMapItems()
+        anchors.right: parent.right
+        anchors.bottom: parent.bottom
+        anchors.margins: 15
     }
 }
