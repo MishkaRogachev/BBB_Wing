@@ -63,16 +63,16 @@ void UiNode::exec()
 void UiNode::onSubReceived(const QString& topic, const QByteArray& data)
 {
 //    if (topic == "alt_status")
-//    else if (topic == "alt_altitude")
+    if (topic == "tr_altitude") d->boardService.setAltitude(data.toFloat());
 //    else if (topic == "alt_temperature")
 //    else if (topic == "ins_status")
-    if (topic == "tr_pitch") d->boardService.setPitch(data.toFloat());
+    else if (topic == "tr_pitch") d->boardService.setPitch(data.toFloat());
     else if (topic == "tr_roll") d->boardService.setRoll(data.toFloat());
     else if (topic == "tr_yaw") d->boardService.setYaw(data.toFloat());
 //    else if (topic == "sns_status")
 //    else if (topic == "sns_latitude")
 //    else if (topic == "sns_longitude")
-//    else if (topic == "sns_velocity")
+    else if (topic == "tr_velocity") d->boardService.setVelocity(data.toFloat());
 //    else if (topic == "sns_climb")
 
     // TODO: impl

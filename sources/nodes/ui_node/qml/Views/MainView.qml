@@ -25,6 +25,8 @@ Rectangle {
                 pitch: boardService.pitch
                 roll: boardService.roll
                 yaw: boardService.yaw
+                velocity: boardService.velocity
+                altitude: boardService.altitude
             }
         }
 
