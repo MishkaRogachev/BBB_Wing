@@ -1,57 +1,17 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<!-- Created with Inkscape (http://www.inkscape.org/) -->
-
 <svg
    xmlns:dc="http://purl.org/dc/elements/1.1/"
    xmlns:cc="http://creativecommons.org/ns#"
    xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
    xmlns:svg="http://www.w3.org/2000/svg"
    xmlns="http://www.w3.org/2000/svg"
-   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
-   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
-   width="240"
-   height="64"
-   viewBox="0 0 240 64"
-   id="svg2"
    version="1.1"
-   inkscape:version="0.91 r13725"
-   sodipodi:docname="plane_horizont_mark.svg">
+   id="svg2"
+   viewBox="0 0 240 64"
+   height="64"
+   width="240">
   <defs
      id="defs4" />
-  <sodipodi:namedview
-     id="base"
-     pagecolor="#ffffff"
-     bordercolor="#666666"
-     borderopacity="1.0"
-     inkscape:pageopacity="0.0"
-     inkscape:pageshadow="2"
-     inkscape:zoom="4.3099997"
-     inkscape:cx="115.24333"
-     inkscape:cy="10.143931"
-     inkscape:document-units="px"
-     inkscape:current-layer="layer1"
-     showgrid="false"
-     units="px"
-     showguides="true"
-     inkscape:guide-bbox="true"
-     inkscape:window-width="1920"
-     inkscape:window-height="1036"
-     inkscape:window-x="0"
-     inkscape:window-y="44"
-     inkscape:window-maximized="1">
-    <sodipodi:guide
-       position="139.59821,32.053572"
-       orientation="0,1"
-       id="guide4136" />
-    <sodipodi:guide
-       position="119.95536,12.1875"
-       orientation="1,0"
-       id="guide4138" />
-    <sodipodi:guide
-       position="141.42136,48.890449"
-       orientation="0,1"
-       id="guide4179" />
-  </sodipodi:namedview>
   <metadata
      id="metadata7">
     <rdf:RDF>
@@ -65,14 +25,11 @@
     </rdf:RDF>
   </metadata>
   <g
-     inkscape:label="Layer 1"
-     inkscape:groupmode="layer"
-     id="layer1"
-     transform="translate(0,-988.3621)">
+     transform="translate(0,-988.3621)"
+     id="layer1">
     <path
-       style="fill:#2c3e50;fill-opacity:1;stroke:none;stroke-width:0;stroke-linecap:round;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
-       d="m 119.9541,1003.3925 -14.91992,14.9199 -87.021487,0 -4.789063,-14.8574 1.558594,18.8027 0,0.1563 90.251956,0 14.91992,14.9199 14.91992,-14.9199 90.32227,0 0,-0.01 0.01,0 1.57032,-18.9434 -4.78516,14.8496 -87.11719,0 -14.91992,-14.9199 z m 0,5.4707 11.5,11.5 -11.5,11.5 -11.43555,-11.4355 0,-0.129 11.43555,-11.4355 z"
        id="rect4140"
-       inkscape:connector-curvature="0" />
+       d="m 119.9541,1003.3925 -14.91992,14.9199 -87.021487,0 -4.789063,-14.8574 1.558594,18.8027 0,0.1563 90.251956,0 14.91992,14.9199 14.91992,-14.9199 90.32227,0 0,-0.01 0.01,0 1.57032,-18.9434 -4.78516,14.8496 -87.11719,0 -14.91992,-14.9199 z m 0,5.4707 11.5,11.5 -11.5,11.5 -11.43555,-11.4355 0,-0.129 11.43555,-11.4355 z"
+       style="fill:#2c3e50;fill-opacity:1;stroke:none;stroke-width:0;stroke-linecap:round;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
   </g>
 </svg>
