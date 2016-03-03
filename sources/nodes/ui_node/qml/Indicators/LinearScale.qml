@@ -2,7 +2,6 @@ import QtQuick 2.0
 
 Item {
     id: scale
-    // TODO: invertion for 90 angle scale
 
     property int value: 0
     property int minValue: 0
@@ -46,11 +45,13 @@ Item {
             for (var i = minValue - (minValue % valueStep); i < maxValue;
                  i += (valueStep / 2)) {
                 var major = (counter++ % 2) == 0;
-                ctx.moveTo(mapToPixel(i), height / 2);
-                ctx.lineTo(mapToPixel(i), height / 2 - (major ? 8 : 6));
+                var xPos = canvasRotation > 0 ? width - mapToPixel(i) :
+                                                mapToPixel(i);
+                ctx.moveTo(xPos, height / 2);
+                ctx.lineTo(xPos, height / 2 - (major ? 8 : 6));
                 if (major) {
                     ctx.save();
-                    ctx.translate(mapToPixel(i), height / 2 - 8);
+                    ctx.translate(xPos, height / 2 - 8);
                     ctx.rotate(-canvasRotation * Math.PI / 180);
                     ctx.fillText(i, 0, 2);
                     ctx.restore();
@@ -77,7 +78,7 @@ Item {
         }
 
         function mapToPixel(val) {
-            return (val - minValue) / (maxValue - minValue) * width ;
+            return (val - minValue) / (maxValue - minValue) * width;
         }
     }
 }
