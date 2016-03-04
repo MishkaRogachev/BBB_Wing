@@ -14,6 +14,10 @@ Map {
                             MapGestureArea.ZoomGesture
     gesture.flickDeceleration: 3000
     gesture.enabled: true
+    gesture.onPanStarted: fitButton.checked = false
+    MouseArea { // FIXME: touch gestures bug workaround, must be fixed since Qt 5.6
+        anchors.fill: parent
+    }
     activeMapType: supportedMapTypes[5] // TerrainMapType
 
     MapQuickItem {
