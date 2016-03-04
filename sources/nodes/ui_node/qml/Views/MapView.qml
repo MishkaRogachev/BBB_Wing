@@ -5,6 +5,7 @@ import "../Controls"
 
 Map {
     id: map
+
     plugin: Plugin {
         name: "osm"
     }
@@ -17,20 +18,29 @@ Map {
 
     MapQuickItem {
         id: boardMarker
-        anchorPoint.x: image.width / 2
-        anchorPoint.y: image.height
+        anchorPoint.x: mark.width / 2
+        anchorPoint.y: mark.height / 2
         coordinate: QtPositioning.coordinate(boardService.latitude,
                                              boardService.longitude)
-        sourceItem: Image {
-            id: image
-            rotation: boardService.yaw
-            source: "qrc:/resources/indicators/plane_map_mark.svg"
+        sourceItem: Item {
+            id: mark
+            width: 64
+            height: 64
+
+            Image {
+                anchors.centerIn: parent
+                rotation: boardService.yaw
+                source: "qrc:/resources/indicators/plane_map_mark.svg"
+            }
         }
+        onCoordinateChanged: if (fitButton.checked) map.fitViewportToMapItems()
     }
 
     Button {
+        id: fitButton
+        checkable: true
+        onCheckedChanged: if (checked) map.fitViewportToMapItems()
         icon: "qrc:/resources/icons/fit.svg"
-        onClicked: map.fitViewportToMapItems()
         anchors.right: parent.right
         anchors.bottom: parent.bottom
         anchors.margins: 15
