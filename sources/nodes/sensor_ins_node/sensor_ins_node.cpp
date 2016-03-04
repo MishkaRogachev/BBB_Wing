@@ -62,7 +62,7 @@ void SensorInsNode::exec()
         float mz = d->imu.mag()->readMag(devices::AxisZ);
 
         // TODO: separate this code to INS class
-        float pitch = atan2(-ax, sqrt(ay * ay + az * az)) * 180.0f / M_PI;
+        float pitch = atan2(ax, sqrt(ay * ay + az * az)) * 180.0f / M_PI;
         float roll = atan2(ay, az) * 180.0 / M_PI;
 
         float yaw = qFuzzyCompare(my, 0.0f) ?
