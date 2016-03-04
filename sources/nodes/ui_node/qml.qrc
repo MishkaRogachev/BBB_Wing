@@ -5,9 +5,11 @@
         <file>qml/Indicators/Horizont.qml</file>
         <file>qml/Indicators/PlaneMark.qml</file>
         <file>qml/Indicators/LinearScale.qml</file>
+        <file>qml/Indicators/PitchScale.qml</file>
         <file>qml/Views/MainView.qml</file>
         <file>qml/Views/StatusView.qml</file>
         <file>qml/Views/MapView.qml</file>
         <file>qml/Views/FlightDirectorView.qml</file>
+        <file>js/helpers/drawer_helper.js</file>
     </qresource>
 </RCC>

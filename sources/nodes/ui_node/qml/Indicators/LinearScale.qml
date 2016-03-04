@@ -1,4 +1,5 @@
 import QtQuick 2.0
+import "/js/helpers/drawer_helper.js" as Helper
 
 Item {
     id: scale
@@ -45,8 +46,9 @@ Item {
             for (var i = minValue - (minValue % valueStep); i < maxValue;
                  i += (valueStep / 2)) {
                 var major = (counter++ % 2) == 0;
-                var xPos = canvasRotation > 0 ? width - mapToPixel(i) :
-                                                mapToPixel(i);
+                var xPos = canvasRotation > 0 ?
+                            width - Helper.mapToPixel(i, minValue, maxValue, width) :
+                            Helper.mapToPixel(i, minValue, maxValue, width);
                 ctx.moveTo(xPos, height / 2);
                 ctx.lineTo(xPos, height / 2 - (major ? 8 : 6));
                 if (major) {
@@ -57,7 +59,6 @@ Item {
                     ctx.restore();
                 }
             }
-            ctx.stroke();
 
             ctx.moveTo(width / 2 - 10, height / 2 + 8);
             ctx.lineTo(width / 2, height / 2 + 2);
@@ -75,10 +76,6 @@ Item {
 
             ctx.stroke();
             ctx.restore();
-        }
-
-        function mapToPixel(val) {
-            return (val - minValue) / (maxValue - minValue) * width;
         }
     }
 }

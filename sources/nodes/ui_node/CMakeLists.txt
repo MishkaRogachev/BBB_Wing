@@ -24,7 +24,7 @@ include_directories(${INCLUDES} ${INTERNAL_INCLUDES})
 # Sources and headrers
 file(GLOB_RECURSE INTERNAL_HEADERS "*.h")
 file(GLOB_RECURSE INTERNAL_SOURCES "*.cpp")
-file(GLOB_RECURSE INTERNAL_QML "*.qml")
+file(GLOB_RECURSE INTERNAL_QML "*.qml" "*.js")
 
 # Resources
 file(GLOB QRC_FILES "*.qrc")

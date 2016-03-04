@@ -28,6 +28,7 @@ Item {
                 width: skyGround.size * 1.5
                 height: skyGround.size * 1.5
                 color: "#3498db"
+                antialiasing: true
             }
 
             Rectangle {
@@ -35,6 +36,7 @@ Item {
                 width: skyGround.size * 1.5
                 height: skyGround.size * 1.5
                 color: "#e67e22"
+                antialiasing: true
             }
         }
     }

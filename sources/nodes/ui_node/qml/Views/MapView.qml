@@ -20,7 +20,7 @@ Map {
     }
     activeMapType: supportedMapTypes[5] // TerrainMapType
 
-    MapQuickItem {
+    MapQuickItem { // TODO: raw board route
         id: boardMarker
         anchorPoint.x: mark.width / 2
         anchorPoint.y: mark.height / 2

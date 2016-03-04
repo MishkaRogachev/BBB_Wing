@@ -31,14 +31,21 @@ Column {
             height: 240
 
             Horizont {
-                id: horizont
                 anchors.fill: parent
                 pitch: pitchInverted ? -flightDirector.pitch : 0
                 roll: rollInverted ? -flightDirector.roll : 0
             }
 
+            PitchScale {
+                anchors.centerIn: parent
+                rotation: -flightDirector.roll
+                height: parent.height
+                value: flightDirector.pitch
+                minValue: flightDirector.pitch - 25
+                maxValue: flightDirector.pitch + 25
+            }
+
             PlaneMark {
-                id: planeMark
                 anchors.fill: parent
                 pitch: pitchInverted ? 0 : flightDirector.pitch
                 roll: rollInverted ? 0 : flightDirector.roll
@@ -64,4 +71,6 @@ Column {
         anchors.horizontalCenter: parent.horizontalCenter
         width: flightDirector.width - 16
     }
+
+    onPitchChanged: console.log(pitch)
 }
