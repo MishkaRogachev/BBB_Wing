@@ -1,4 +1,4 @@
-import QtQuick 2.5
+﻿import QtQuick 2.5
 import "../Indicators"
 
 Column {
@@ -17,8 +17,9 @@ Column {
 
         LinearScale {
             value: flightDirector.velocity
-            minValue: flightDirector.velocity - 50
-            maxValue: flightDirector.velocity + 50
+            minValue: flightDirector.velocity - 17
+            maxValue: flightDirector.velocity + 17
+            valueStep: 5
             anchors.verticalCenter: parent.verticalCenter
             height: pithRoll.height - 16
             canvasRotation: 90
@@ -32,17 +33,17 @@ Column {
 
             Horizont {
                 anchors.fill: parent
-                pitch: pitchInverted ? -flightDirector.pitch : 0
-                roll: rollInverted ? -flightDirector.roll : 0
+                pitch: pitchInverted ? flightDirector.pitch : 0
+                roll: rollInverted ? flightDirector.roll : 0
             }
 
             PitchScale {
                 anchors.centerIn: parent
-                rotation: -flightDirector.roll
                 height: parent.height
-                value: flightDirector.pitch
-                minValue: flightDirector.pitch - 25
-                maxValue: flightDirector.pitch + 25
+                pitch: flightDirector.pitch
+                roll: flightDirector.roll
+                minPitch: flightDirector.pitch - 25
+                maxPitch: flightDirector.pitch + 25
             }
 
             PlaneMark {
@@ -71,6 +72,4 @@ Column {
         anchors.horizontalCenter: parent.horizontalCenter
         width: flightDirector.width - 16
     }
-
-    onPitchChanged: console.log(pitch)
 }

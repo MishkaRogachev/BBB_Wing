@@ -26,7 +26,7 @@ Item {
             var ctx = canvas.getContext('2d');
 
             ctx.save();
-            context.clearRect(0, 0, width, height);
+            ctx.clearRect(0, 0, width, height);
 
             ctx.lineWidth = 2;
             ctx.strokeStyle = '#ecf0f1';

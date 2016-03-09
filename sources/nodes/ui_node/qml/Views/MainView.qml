@@ -19,6 +19,7 @@ Rectangle {
         Column {
             id: dashboard
             anchors.top: parent.top
+            anchors.topMargin: 8
 
             FlightDirectorView {
                 id: flightDirector

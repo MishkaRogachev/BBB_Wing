@@ -1,56 +1,52 @@
 import QtQuick 2.5
 import QtGraphicalEffects 1.0
+import "/js/helpers/drawer_helper.js" as Helper
 
 Item {
     id: horizont
 
-    property real pitch: 0.0
-    property real roll: 0.0
-    property real pitchScale: 2.5
+    property int pitch: 0
+    property int roll: 0
+    property int minPitch: -25
+    property int maxPitch: 25
     property alias radius: mask.radius
-    property alias skyColor: sky.color
-    property alias groundColor: sky.color
 
-    Item {
-        id: skyGround
+    Canvas {
+        id: canvas
+        width: horizont.width
+        height: horizont.height
         visible: false
-        anchors.fill: parent
-        property real size: Math.sqrt(Math.pow(horizont.width, 2) +
-                                      Math.pow(horizont.height, 2))
+        onPaint: {
+            var ctx = canvas.getContext('2d');
+            var size = 10000;
+            var offset = Helper.mapToPixel(pitch, minPitch, maxPitch, horizont.height);
 
-        Column {
-            anchors.centerIn: parent
-            anchors.verticalCenterOffset: -pitch * pitchScale
-            rotation: roll
+            ctx.save();
+            ctx.translate(width / 2, height / 2);
+            ctx.rotate(-roll * Math.PI / 180);
+            ctx.translate(0, offset - height / 2);
 
-            Rectangle {
-                id: sky
-                width: skyGround.size * 1.5
-                height: skyGround.size * 1.5
-                color: "#3498db"
-                antialiasing: true
-            }
+            ctx.fillStyle = '#3498db';
+            ctx.fillRect(-size / 2, -size / 2, size, size / 2);
 
-            Rectangle {
-                id: ground
-                width: skyGround.size * 1.5
-                height: skyGround.size * 1.5
-                color: "#e67e22"
-                antialiasing: true
-            }
+            ctx.fillStyle = '#e67e22';
+            ctx.fillRect(-size / 2, 0, size, size / 2);
+
+            ctx.stroke();
+            ctx.restore();
         }
     }
 
     OpacityMask {
-        anchors.fill: skyGround
-        source: skyGround
+        anchors.fill: parent
+        source: canvas
         maskSource: mask
     }
 
     Rectangle {
         id: mask
-        width: skyGround.width
-        height: skyGround.height
+        width: horizont.width
+        height: horizont.height
         radius: 36
         visible: false
     }
