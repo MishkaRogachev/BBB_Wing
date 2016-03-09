@@ -13,13 +13,16 @@ Rectangle {
 
     Row {
         anchors.top: status.bottom
+        anchors.left: parent.left
+        anchors.margins: 4
+        spacing: 4
         width: parent.width
         height: parent.height - status.height
 
         Column {
             id: dashboard
             anchors.top: parent.top
-            anchors.topMargin: 8
+            spacing: 4
 
             FlightDirectorView {
                 id: flightDirector
@@ -28,6 +31,12 @@ Rectangle {
                 yaw: boardService.yaw
                 velocity: boardService.velocity
                 altitude: boardService.altitude
+            }
+
+            VideoView {
+                id: video
+                width: parent.width
+                height: width * 3 / 4
             }
         }
 
