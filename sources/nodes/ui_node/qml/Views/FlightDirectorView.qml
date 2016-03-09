@@ -1,4 +1,5 @@
 ﻿import QtQuick 2.5
+import QtGraphicalEffects 1.0
 import "../Indicators"
 
 Column {
@@ -11,63 +12,97 @@ Column {
     property real altitude: 0.0
     property bool pitchInverted: true
     property bool rollInverted: true
+    property int minVelocity: -13
+    property int maxVelocity: 13
+    property int minPitch: -37
+    property int maxPitch: 37
+    property int minAltitude: -27
+    property int maxAltitude: 27
+    property int minYaw: -17
+    property int maxYaw: 17
+    property alias radius: mask.radius
 
     Row {
         anchors.horizontalCenter: parent.horizontalCenter
 
         LinearScale {
             value: flightDirector.velocity
-            minValue: flightDirector.velocity - 17
-            maxValue: flightDirector.velocity + 17
+            minValue: flightDirector.velocity + flightDirector.minVelocity
+            maxValue: flightDirector.velocity + flightDirector.maxVelocity
             valueStep: 5
             anchors.verticalCenter: parent.verticalCenter
-            height: pithRoll.height - 16
+            height: picthRoll.height - 16
             canvasRotation: 90
         }
 
         Item {
-            id: pithRoll
+            id: picthRoll
             anchors.verticalCenter: parent.verticalCenter
             width: 240
             height: 240
 
-            Horizont {
+            Item {
+                id: pitchRollContents
                 anchors.fill: parent
-                pitch: pitchInverted ? flightDirector.pitch : 0
-                roll: rollInverted ? flightDirector.roll : 0
+                visible: false
+
+                Horizont {
+                    id: horizont
+                    anchors.centerIn: parent
+                    width: parent.width
+                    height: parent.height + 100
+                    pitch: pitchInverted ? flightDirector.pitch : 0
+                    roll: rollInverted ? flightDirector.roll : 0
+                    minPitch: flightDirector.minPitch
+                    maxPitch: flightDirector.maxPitch
+                }
+
+                PitchScale {
+                    anchors.centerIn: parent
+                    height: parent.height + 100
+                    pitch: flightDirector.pitch
+                    roll: flightDirector.roll
+                    minPitch: flightDirector.pitch + flightDirector.minPitch
+                    maxPitch: flightDirector.pitch + flightDirector.maxPitch
+                }
+
+                PlaneMark { // TODO: plane mark pitch & roll
+                    anchors.centerIn: parent
+                    pitch: pitchInverted ? 0 : flightDirector.pitch
+                    roll: rollInverted ? 0 : flightDirector.roll
+                }
             }
 
-            PitchScale {
-                anchors.centerIn: parent
+            OpacityMask {
+                anchors.fill: parent
+                source: pitchRollContents
+                maskSource: mask
+            }
+
+            Rectangle {
+                id: mask
+                width: parent.width
                 height: parent.height
-                pitch: flightDirector.pitch
-                roll: flightDirector.roll
-                minPitch: flightDirector.pitch - 25
-                maxPitch: flightDirector.pitch + 25
-            }
-
-            PlaneMark {
-                anchors.fill: parent
-                pitch: pitchInverted ? 0 : flightDirector.pitch
-                roll: rollInverted ? 0 : flightDirector.roll
+                radius: 36
+                visible: false
             }
         }
 
         LinearScale {
             value: flightDirector.altitude
-            minValue: flightDirector.altitude - 25
-            maxValue: flightDirector.altitude + 25
+            minValue: flightDirector.altitude + flightDirector.minAltitude
+            maxValue: flightDirector.altitude + flightDirector.maxAltitude
             valueStep: 10
             anchors.verticalCenter: parent.verticalCenter
-            height: pithRoll.height - 16
+            height: picthRoll.height - 16
             canvasRotation: -90
         }
     }
 
     LinearScale {
         value: flightDirector.yaw
-        minValue: flightDirector.yaw - 17
-        maxValue: flightDirector.yaw + 17
+        minValue: flightDirector.yaw + flightDirector.minYaw
+        maxValue: flightDirector.yaw + flightDirector.maxYaw
         valueStep: 5
         anchors.horizontalCenter: parent.horizontalCenter
         width: flightDirector.width - 16

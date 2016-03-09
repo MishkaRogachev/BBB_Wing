@@ -1,5 +1,4 @@
 import QtQuick 2.5
-import QtGraphicalEffects 1.0
 import "/js/helpers/drawer_helper.js" as Helper
 
 Item {
@@ -9,13 +8,11 @@ Item {
     property int roll: 0
     property int minPitch: -25
     property int maxPitch: 25
-    property alias radius: mask.radius
 
     Canvas {
         id: canvas
         width: horizont.width
         height: horizont.height
-        visible: false
         onPaint: {
             var ctx = canvas.getContext('2d');
             var size = 10000;
@@ -35,19 +32,5 @@ Item {
             ctx.stroke();
             ctx.restore();
         }
-    }
-
-    OpacityMask {
-        anchors.fill: parent
-        source: canvas
-        maskSource: mask
-    }
-
-    Rectangle {
-        id: mask
-        width: horizont.width
-        height: horizont.height
-        radius: 36
-        visible: false
     }
 }
