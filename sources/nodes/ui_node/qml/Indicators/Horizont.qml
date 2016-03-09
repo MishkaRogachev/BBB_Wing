@@ -9,6 +9,9 @@ Item {
     property int minPitch: -25
     property int maxPitch: 25
 
+    onRollChanged: canvas.requestPaint()
+    onPitchChanged: canvas.requestPaint()
+
     Canvas {
         id: canvas
         width: horizont.width
