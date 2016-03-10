@@ -55,3 +55,9 @@ if (TARGET_TYPE STREQUAL "workstation" OR TARGET_TYPE STREQUAL "all")
 
     add_subdirectory(sources/targets/workstation)
 endif()
+
+# Copy config
+# Qt
+file(COPY ${CMAKE_SOURCE_DIR}/config/settings.ini
+    DESTINATION ${CMAKE_RUNTIME_OUTPUT_DIRECTORY})
+

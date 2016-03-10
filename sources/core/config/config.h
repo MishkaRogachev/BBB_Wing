@@ -17,8 +17,6 @@ namespace domain
         static void begin(const QString& prefix);
         static void end();
 
-        void makeDefault();
-
     private:
         Config();
         Config(const Config&) = delete;
