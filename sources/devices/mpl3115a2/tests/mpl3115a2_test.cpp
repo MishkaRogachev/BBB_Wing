@@ -7,7 +7,7 @@ int main(int argc, char *argv[])
 {
     devices::Mpl3115A2 altimeter;
 
-    altimeter.start();
+    altimeter.start("/dev/i2c-2");
 
     altimeter.setOversampleRate(7); // Set Oversample to the recommended 128
     altimeter.enableEventFlags();

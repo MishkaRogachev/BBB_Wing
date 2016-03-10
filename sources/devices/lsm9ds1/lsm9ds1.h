@@ -21,7 +21,7 @@ namespace devices
         Lsm9ds1();
         ~Lsm9ds1();
 
-        bool start(const char* filename = I2cDevice::defaultI2cPath);
+        bool start(const char* filename);
         void stop();
         bool isStarted() const;
         bool checkDevicePresent();

@@ -10,7 +10,7 @@ namespace devices
     public:
         Mpl3115A2();
 
-        bool start(const char* filename = defaultI2cPath) override;
+        bool start(const char* filename) override;
         uint8_t i2cAddress() const override;
 
         bool checkDevicePresent() override;

@@ -8,6 +8,7 @@
 #include "lsm9ds1_gyro_accel.h"
 #include "lsm9ds1_mag.h"
 
+#include "config.h"
 #include "publisher.h"
 
 namespace
@@ -39,8 +40,12 @@ SensorInsNode::~SensorInsNode()
 
 void SensorInsNode::init()
 {
+    Config::begin("SensorIns");
+
     if (d->imu.isStarted()) d->imu.stop();
-    d->imu.start();
+    d->imu.start(Config::setting("i2c_path").toString().toLatin1().data());
+
+    Config::end();
 }
 
 void SensorInsNode::exec()

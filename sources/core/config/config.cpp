@@ -45,6 +45,15 @@ void Config::end()
 void Config::makeDefault()
 {
     // TODO: make target's own configs
+
+    m_settings.beginGroup("SensorAltimeter");
+    m_settings.setValue("i2c_path","/dev/i2c-2");
+    m_settings.endGroup();
+
+    m_settings.beginGroup("SensorIns");
+    m_settings.setValue("i2c_path","/dev/i2c-2");
+    m_settings.endGroup();
+
     m_settings.beginGroup("FlightRecorder");
     m_settings.setValue("path", "/media/sd_card/records/");
     m_settings.setValue("max_record_size", 3.2e+7);

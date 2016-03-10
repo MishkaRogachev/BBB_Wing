@@ -5,6 +5,8 @@
 
 // Internal
 #include "mpl3115a2.h"
+
+#include "config.h"
 #include "publisher.h"
 
 using namespace domain;
@@ -31,8 +33,12 @@ SensorAltimeterNode::~SensorAltimeterNode()
 
 void SensorAltimeterNode::init()
 {
+    Config::begin("SensorAltimeter");
+
     if (d->altimeter.isStarted()) d->altimeter.stop();
-    d->altimeter.start();
+    d->altimeter.start(Config::setting("i2c_path").toString().toLatin1().data());
+
+    Config::end();
 }
 
 void SensorAltimeterNode::exec()
