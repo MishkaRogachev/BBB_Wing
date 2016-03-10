@@ -6,7 +6,7 @@
 
 namespace domain
 {
-    class Config
+    class Config // TODO: separate config by targets files
     {
     public:
         static Config& instance();
