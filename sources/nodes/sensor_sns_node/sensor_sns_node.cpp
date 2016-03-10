@@ -3,10 +3,9 @@
 // Gpsd
 #include "libgpsmm.h"
 
-// Qt
-#include <QDebug>
-
 // Internal
+#include "topics.h"
+
 #include "publisher.h"
 
 using namespace domain;
@@ -22,8 +21,7 @@ SensorSnsNode::SensorSnsNode(QObject* parent):
     AbstractNodeFrequency(parent),
     d(new Impl())
 {
-    d->pub.bind("ipc://sns"); //inproc://altimeter
-    d->pub.setTopic("sns_");
+    d->pub.bind("ipc://sns");
 }
 
 SensorSnsNode::~SensorSnsNode()
@@ -41,32 +39,33 @@ void SensorSnsNode::exec()
     struct gps_data_t* data = nullptr;
     if ((data = d->handle.read()) == nullptr)
     {
-        d->pub.publish("status", QByteArray::number(false));
+        d->pub.publish(topics::snsStatus, QByteArray::number(false));
         this->init();
         return;
     }
 
-    d->pub.publish("status", QByteArray::number(true));
-    d->pub.publish("satellites", QByteArray::number(data->satellites_used) +
-                   "/" + QByteArray::number(data->satellites_visible));
+    d->pub.publish(topics::snsStatus, QByteArray::number(true));
+    d->pub.publish(topics::snsSatellites,
+                   QByteArray::number(data->satellites_used) + "/" +
+                   QByteArray::number(data->satellites_visible));
 
     if (!data->status)
     {
-        d->pub.publish("fix", QByteArray::number(0));
+        d->pub.publish(topics::snsFix, QByteArray::number(0));
         return;
     }
 
-    d->pub.publish("fix", QByteArray::number(data->fix.mode));
+    d->pub.publish(topics::snsFix, QByteArray::number(data->fix.mode));
 
     if (data->fix.mode < 2) return;
 
-    d->pub.publish("latitude", QByteArray::number(data->fix.latitude));
-    d->pub.publish("longitude", QByteArray::number(data->fix.longitude));
-    d->pub.publish("yaw", QByteArray::number(data->fix.track));
-    d->pub.publish("velocity", QByteArray::number(data->fix.speed));
+    d->pub.publish(topics::snsLatitude, QByteArray::number(data->fix.latitude));
+    d->pub.publish(topics::snsLongitude, QByteArray::number(data->fix.longitude));
+    d->pub.publish(topics::snsYaw, QByteArray::number(data->fix.track));
+    d->pub.publish(topics::snsVelocity, QByteArray::number(data->fix.speed));
 
     if (data->fix.mode < 3) return;
 
-    d->pub.publish("altitude", QByteArray::number(data->fix.altitude));
-    d->pub.publish("climb", QByteArray::number(data->fix.climb));
+    d->pub.publish(topics::snsAltitude, QByteArray::number(data->fix.altitude));
+    d->pub.publish(topics::snsClimb, QByteArray::number(data->fix.climb));
 }

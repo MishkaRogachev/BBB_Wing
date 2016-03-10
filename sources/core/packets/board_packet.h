@@ -20,7 +20,7 @@ namespace domain
         public:
             float latitude;
             float longitude;
-            float altitude;
+            float altimeterAltitude;
 
             float velocity;
             float climb;

@@ -5,8 +5,11 @@
 
 // Internal
 #include "config.h"
+#include "topics.h"
+
 #include "udp_transceiver.h"
 #include "board_packet.h"
+
 #include "subscriber.h"
 #include "publisher.h"
 
@@ -30,9 +33,7 @@ WorkstationTransceiverNode::WorkstationTransceiverNode(QObject* parent):
                          Config::setting("udp_workstation_port").toInt(),
                          QHostAddress(Config::setting("udp_board_address").toString()),
                          Config::setting("udp_board_port").toInt(), this);
-
     d->pub.bind("ipc://transceiver");
-    d->pub.setTopic("tr_");
     Config::end();
 }
 
@@ -67,24 +68,23 @@ void WorkstationTransceiverNode::onPacketReceived(const QByteArray& packetData)
 
     if (!packet.validateCrc())
     {
-        d->pub.publish("status", QByteArray::number(false));
+        d->pub.publish(topics::transceiverStatus, QByteArray::number(false));
         return;
     }
 
-    d->pub.publish("status", QByteArray::number(true));
+    d->pub.publish(topics::transceiverStatus, QByteArray::number(true));
 
-    //  TODO: topics string constants to header
     //  TODO: topics must be grouped and minimized(local packets)
-    d->pub.publish("alt_status", QByteArray::number(packet.data.altimeterStatus));
-    d->pub.publish("altitude", QByteArray::number(packet.data.altitude));
-    d->pub.publish("temperature", QByteArray::number(packet.data.temperature));
-    d->pub.publish("ins_status", QByteArray::number(packet.data.insStatus));
-    d->pub.publish("pitch", QByteArray::number(packet.data.pitch));
-    d->pub.publish("roll", QByteArray::number(packet.data.roll));
-    d->pub.publish("yaw", QByteArray::number(packet.data.yaw));
-    d->pub.publish("sns_status", QByteArray::number(packet.data.snsStatus));
-    d->pub.publish("latitude", QByteArray::number(packet.data.latitude));
-    d->pub.publish("longitude", QByteArray::number(packet.data.longitude));
-    d->pub.publish("velocity", QByteArray::number(packet.data.velocity));
-    d->pub.publish("climb", QByteArray::number(packet.data.climb));
+    d->pub.publish(topics::altimeterStatus, QByteArray::number(packet.data.altimeterStatus));
+    d->pub.publish(topics::altimeterAltitude, QByteArray::number(packet.data.altimeterAltitude));
+    d->pub.publish(topics::altimeterTemperature, QByteArray::number(packet.data.temperature));
+    d->pub.publish(topics::insStatus, QByteArray::number(packet.data.insStatus));
+    d->pub.publish(topics::insPitch, QByteArray::number(packet.data.pitch));
+    d->pub.publish(topics::insRoll, QByteArray::number(packet.data.roll));
+    d->pub.publish(topics::insYaw, QByteArray::number(packet.data.yaw));
+    d->pub.publish(topics::snsStatus, QByteArray::number(packet.data.snsStatus));
+    d->pub.publish(topics::snsLatitude, QByteArray::number(packet.data.latitude));
+    d->pub.publish(topics::snsLongitude, QByteArray::number(packet.data.longitude));
+    d->pub.publish(topics::snsVelocity, QByteArray::number(packet.data.velocity));
+    d->pub.publish(topics::snsClimb, QByteArray::number(packet.data.climb));
 }

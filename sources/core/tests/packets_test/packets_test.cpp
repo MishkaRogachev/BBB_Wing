@@ -14,7 +14,7 @@ void PacketsTest::testBoardPacket()
 
     packet.data.latitude = 44.564;
     packet.data.longitude = 35.314;
-    packet.data.altitude = 5679.435;
+    packet.data.altimeterAltitude = 5679.435;
 
     packet.data.velocity = 56.034;
     packet.data.climb = -4.324;
@@ -49,7 +49,7 @@ void PacketsTest::testBoardPacket()
     QCOMPARE(packet.crc, converted.crc);
     QVERIFY(converted.validateCrc());
 
-    converted.data.altitude = 2334.456;
+    converted.data.altimeterAltitude = 2334.456;
 
     QVERIFY(!converted.validateCrc());
     converted.calcCrc();

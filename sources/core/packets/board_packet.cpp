@@ -30,7 +30,7 @@ QDataStream& BoardPacket::BoardDataPacket::operator >>(QDataStream& stream) cons
 {
     stream << latitude;
     stream << longitude;
-    stream << altitude;
+    stream << altimeterAltitude;
 
     stream << velocity;
     stream << climb;
@@ -52,7 +52,7 @@ QDataStream& BoardPacket::BoardDataPacket::operator <<(QDataStream& stream)
 {
     stream >> latitude;
     stream >> longitude;
-    stream >> altitude;
+    stream >> altimeterAltitude;
 
     stream >> velocity;
     stream >> climb;

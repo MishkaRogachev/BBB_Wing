@@ -6,9 +6,19 @@ add_subdirectory(nodes)
 add_subdirectory(transport)
 add_subdirectory(packets)
 
-# Parent scoping
-set(INCLUDES ${INCLUDES} PARENT_SCOPE)
-set(SOURCES ${SOURCES} PARENT_SCOPE)
+# Includes
+set(INCLUDES
+    ${INCLUDES}
+    ${CMAKE_CURRENT_SOURCE_DIR}
+PARENT_SCOPE)
+
+# Sources
+set(SOURCES
+    ${SOURCES}
+    ${CMAKE_CURRENT_SOURCE_DIR}/topics.h
+PARENT_SCOPE)
+
+# Libraries
 set(LIBRARIES ${LIBRARIES} PARENT_SCOPE)
 
 # Tests

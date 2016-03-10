@@ -6,6 +6,7 @@
 // Internal
 #include "mpl3115a2.h"
 
+#include "topics.h"
 #include "config.h"
 #include "publisher.h"
 
@@ -22,8 +23,7 @@ SensorAltimeterNode::SensorAltimeterNode(QObject* parent):
     AbstractNodeFrequency(parent),
     d(new Impl())
 {
-    d->pub.bind("ipc://altimeter"); //inproc://altimeter
-    d->pub.setTopic("alt_");
+    d->pub.bind("ipc://altimeter");
 }
 
 SensorAltimeterNode::~SensorAltimeterNode()
@@ -48,13 +48,15 @@ void SensorAltimeterNode::exec()
     {
         d->altimeter.processMeasurement();
 
-        d->pub.publish("status", QByteArray::number(true));
-        d->pub.publish("altitude", QByteArray::number(d->altimeter.altitude()));
-        d->pub.publish("temperature", QByteArray::number(d->altimeter.temperature()));
+        d->pub.publish(topics::altimeterStatus, QByteArray::number(true));
+        d->pub.publish(topics::altimeterAltitude,
+                       QByteArray::number(d->altimeter.altitude()));
+        d->pub.publish(topics::altimeterTemperature,
+                       QByteArray::number(d->altimeter.temperature()));
     }
     else
     {
-        d->pub.publish("status", QByteArray::number(false));
+        d->pub.publish(topics::altimeterStatus, QByteArray::number(false));
         this->init();
     }
 }

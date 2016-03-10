@@ -7,6 +7,7 @@
 #include <QDateTime>
 
 // Internal
+#include "topics.h"
 #include "config.h"
 #include "subscriber.h"
 
@@ -14,13 +15,6 @@ namespace
 {
     const char* delimiter = ",";
     const QString timeTopic = "time_stamp";
-    const QStringList topics = {
-        "alt_status", "alt_altitude", "alt_temperature",
-        "ins_status", "ins_gx", "ins_gy", "ins_gz",
-        "ins_ax", "ins_ay", "ins_az", "ins_mx", "ins_my", "ins_mz",
-        "ins_temperature", "ins_pitch", "ins_roll", "ins_yaw",
-        "sns_status", "sns_satellites", "sns_fix", "sns_latitude", "sns_longitude",
-        "sns_yaw", "sns_velocity", "sns_altitude", "sns_climb" };
 }
 
 using namespace domain;
@@ -78,13 +72,13 @@ void FlightRecorderNode::exec()
             return;
         }
         if (!exists) stream << ::timeTopic << ::delimiter <<
-                               ::topics.join(::delimiter) << endl;
+                               topics::all.join(::delimiter) << endl;
     }
 
     stream << QTime::currentTime().toString(
                   Config::setting("time_format").toString()).toLatin1();
 
-    for (const QString& topic: ::topics)
+    for (const QString& topic: topics::all)
         stream << ::delimiter << d->messages.value(topic);
     stream << endl;
 

@@ -4,6 +4,7 @@
 #include <QDebug>
 
 // Internal
+#include "topics.h"
 #include "config.h"
 #include "udp_transceiver.h"
 #include "board_packet.h"
@@ -33,7 +34,6 @@ BoardTransceiverNode::BoardTransceiverNode(QObject* parent):
                          Config::setting("udp_workstation_port").toInt(), this);
 
     d->pub.bind("ipc://transceiver");
-    d->pub.setTopic("tr_");
     Config::end();
 }
 
@@ -67,17 +67,16 @@ void BoardTransceiverNode::exec()
 
 void BoardTransceiverNode::onSubReceived(const QString& topic, const QByteArray& msg)
 {
-    //  TODO: topics string constants to header
-    if (topic == "alt_status") d->packet.data.altimeterStatus = msg.toInt();
-    else if (topic == "alt_altitude") d->packet.data.altitude = msg.toFloat();
-    else if (topic == "alt_temperature") d->packet.data.temperature = msg.toFloat();
-    else if (topic == "ins_status") d->packet.data.insStatus = msg.toInt();
-    else if (topic == "ins_pitch") d->packet.data.pitch = msg.toFloat();
-    else if (topic == "ins_roll") d->packet.data.roll = msg.toFloat();
-    else if (topic == "ins_yaw") d->packet.data.yaw = msg.toFloat();
-    else if (topic == "sns_status") d->packet.data.snsStatus = msg.toInt();
-    else if (topic == "sns_latitude") d->packet.data.latitude = msg.toFloat();
-    else if (topic == "sns_longitude") d->packet.data.longitude = msg.toFloat();
-    else if (topic == "sns_velocity") d->packet.data.velocity = msg.toFloat();
-    else if (topic == "sns_climb") d->packet.data.climb = msg.toFloat();
+    if (topic == topics::altimeterStatus) d->packet.data.altimeterStatus = msg.toInt();
+    else if (topic == topics::altimeterAltitude) d->packet.data.altimeterAltitude = msg.toFloat();
+    else if (topic == topics::altimeterTemperature) d->packet.data.temperature = msg.toFloat();
+    else if (topic == topics::insStatus) d->packet.data.insStatus = msg.toInt();
+    else if (topic == topics::insPitch) d->packet.data.pitch = msg.toFloat();
+    else if (topic == topics::insRoll) d->packet.data.roll = msg.toFloat();
+    else if (topic == topics::insYaw) d->packet.data.yaw = msg.toFloat();
+    else if (topic == topics::snsStatus) d->packet.data.snsStatus = msg.toInt();
+    else if (topic == topics::snsLatitude) d->packet.data.latitude = msg.toFloat();
+    else if (topic == topics::snsLongitude) d->packet.data.longitude = msg.toFloat();
+    else if (topic == topics::snsVelocity) d->packet.data.velocity = msg.toFloat();
+    else if (topic == topics::snsClimb) d->packet.data.climb = msg.toFloat();
 }

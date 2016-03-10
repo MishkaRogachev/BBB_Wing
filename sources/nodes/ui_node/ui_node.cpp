@@ -8,6 +8,7 @@
 #include <QDebug>
 
 // Internal
+#include "topics.h"
 #include "board_service.h"
 
 #include "subscriber.h"
@@ -50,7 +51,6 @@ UiNode::~UiNode()
 void UiNode::init()
 {
     d->sub.connectTo("ipc://transceiver");
-     
     d->sub.subscribe("");
     connect(&d->sub, &Subscriber::received, this, &UiNode::onSubReceived);
 }
@@ -62,18 +62,18 @@ void UiNode::exec()
 
 void UiNode::onSubReceived(const QString& topic, const QByteArray& data)
 {
-//    if (topic == "alt_status")
-    if (topic == "tr_altitude") d->boardService.setAltitude(data.toFloat());
-//    else if (topic == "alt_temperature")
-//    else if (topic == "ins_status")
-    else if (topic == "tr_pitch") d->boardService.setPitch(data.toFloat());
-    else if (topic == "tr_roll") d->boardService.setRoll(data.toFloat());
-    else if (topic == "tr_yaw") d->boardService.setYaw(data.toFloat());
-//    else if (topic == "sns_status")
-    else if (topic == "tr_latitude") d->boardService.setLatitude(data.toFloat());
-    else if (topic == "tr_longitude") d->boardService.setLongitude(data.toFloat());
-    else if (topic == "tr_velocity") d->boardService.setVelocity(data.toFloat());
-//    else if (topic == "sns_climb")
+//    if (topic == topics::altimeterStatus)
+    if (topic == topics::altimeterAltitude) d->boardService.setAltitude(data.toFloat());
+//    else if (topic == topics::altimeterTemperature)
+//    else if (topic == topics::insStatus)
+    else if (topic == topics::insPitch) d->boardService.setPitch(data.toFloat());
+    else if (topic == topics::insRoll) d->boardService.setRoll(data.toFloat());
+    else if (topic == topics::insYaw) d->boardService.setYaw(data.toFloat());
+//    else if (topic == topics::snsStatus)
+    else if (topic == topics::snsLatitude) d->boardService.setLatitude(data.toFloat());
+    else if (topic == topics::snsLongitude) d->boardService.setLongitude(data.toFloat());
+    else if (topic == topics::snsVelocity) d->boardService.setVelocity(data.toFloat());
+//    else if (topic == topics::snsClimb)
 
-    // TODO: impl
+    // TODO: board service noverto to uiService(?) with dynamic properties
 }
