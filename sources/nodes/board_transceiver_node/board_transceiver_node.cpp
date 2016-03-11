@@ -6,17 +6,22 @@
 // Internal
 #include "topics.h"
 #include "config.h"
-#include "udp_transceiver.h"
-#include "board_packet.h"
+
 #include "subscriber.h"
 #include "publisher.h"
+
+#include "udp_transceiver.h"
+#include "serial_port_transceiver.h"
+
+#include "board_packet.h"
+
 
 using namespace domain;
 
 class BoardTransceiverNode::Impl
 {
 public:
-    AbstractTransceiver* transceiver;
+    QList<AbstractTransceiver*> transceivers;
     BoardPacket packet;
     Subscriber sub;
     Publisher pub;
@@ -27,11 +32,14 @@ BoardTransceiverNode::BoardTransceiverNode(float frequency, QObject* parent):
     d(new Impl())
 {
     Config::begin("Transceiver");
-    d->transceiver = new UdpTransceiver(
-                         QHostAddress(Config::setting("udp_board_address").toString()),
-                         Config::setting("udp_board_port").toInt(),
-                         QHostAddress(Config::setting("udp_workstation_address").toString()),
-                         Config::setting("udp_workstation_port").toInt(), this);
+    d->transceivers.append(new UdpTransceiver(
+        QHostAddress(Config::setting("udp_board_address").toString()),
+        Config::setting("udp_board_port").toInt(),
+        QHostAddress(Config::setting("udp_workstation_address").toString()),
+        Config::setting("udp_workstation_port").toInt(), this);
+
+    d->transceivers.append(new SerialPortTransceiver(
+        Config::setting("serial_port_board").toString(), this));
 
     d->pub.bind("ipc://transceiver");
     Config::end();
@@ -39,7 +47,6 @@ BoardTransceiverNode::BoardTransceiverNode(float frequency, QObject* parent):
 
 BoardTransceiverNode::~BoardTransceiverNode()
 {
-    delete d->transceiver;
     delete d;
 }
 
@@ -62,7 +69,8 @@ void BoardTransceiverNode::exec()
     QDataStream stream(&packetData, QIODevice::WriteOnly);
     stream << d->packet;
 
-    d->transceiver->transmit(packetData);
+    for (AbstractTransceiver* transceiver: d->transceivers)
+        transceiver->transmit(packetData);
 }
 
 void BoardTransceiverNode::onSubReceived(const QString& topic, const QByteArray& msg)

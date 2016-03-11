@@ -4,21 +4,23 @@
 #include <QDebug>
 
 // Internal
-#include "config.h"
 #include "topics.h"
-
-#include "udp_transceiver.h"
-#include "board_packet.h"
+#include "config.h"
 
 #include "subscriber.h"
 #include "publisher.h"
+
+#include "udp_transceiver.h"
+#include "serial_port_transceiver.h"
+
+#include "board_packet.h"
 
 using namespace domain;
 
 class WorkstationTransceiverNode::Impl
 {
 public:
-    AbstractTransceiver* transceiver;
+    QList<AbstractTransceiver*> transceivers;
     Subscriber sub;
     Publisher pub;
 };
@@ -28,18 +30,22 @@ WorkstationTransceiverNode::WorkstationTransceiverNode(float frequency, QObject*
     d(new Impl())
 {
     Config::begin("Transceiver");
-    d->transceiver = new UdpTransceiver(
-                         QHostAddress(Config::setting("udp_workstation_address").toString()),
-                         Config::setting("udp_workstation_port").toInt(),
-                         QHostAddress(Config::setting("udp_board_address").toString()),
-                         Config::setting("udp_board_port").toInt(), this);
+
+    d->transceivers.append(new UdpTransceiver(
+        QHostAddress(Config::setting("udp_workstation_address").toString()),
+        Config::setting("udp_workstation_port").toInt(),
+        QHostAddress(Config::setting("udp_board_address").toString()),
+        Config::setting("udp_board_port").toInt(), this));
+
+    d->transceivers.append(new SerialPortTransceiver(
+        Config::setting("serial_port_workstation").toString(), this));
+
     d->pub.bind("ipc://transceiver");
     Config::end();
 }
 
 WorkstationTransceiverNode::~WorkstationTransceiverNode()
 {
-    delete d->transceiver;
     delete d;
 }
 
@@ -51,8 +57,9 @@ void WorkstationTransceiverNode::init()
 //     connect(&d->sub, &Subscriber::received, this,
 //             &WorkstationTransceiverNode::onReceived);
 
-    connect(d->transceiver, &AbstractTransceiver::received,
-            this, &WorkstationTransceiverNode::onPacketReceived);
+    for (AbstractTransceiver* transceiver: d->transceivers)
+        connect(transceiver, &AbstractTransceiver::received,
+                this, &WorkstationTransceiverNode::onPacketReceived);
 }
 
 void WorkstationTransceiverNode::exec()
