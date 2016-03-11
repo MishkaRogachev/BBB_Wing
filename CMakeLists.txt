@@ -18,13 +18,14 @@ set(CMAKE_INCLUDE_CURRENT_DIR ON)
 add_compile_options(-std=c++11 -Wall -fPIC)
 
 # Enable globaly some Qt modules
-find_package(Qt5 COMPONENTS Core Network REQUIRED)
+find_package(Qt5 COMPONENTS Core Network SerialPort REQUIRED)
 
 # Global libraries
 set(LIBRARIES
 # Qt5
     Qt5::Core
     Qt5::Network
+    Qt5::SerialPort
 )
 
 # Core
