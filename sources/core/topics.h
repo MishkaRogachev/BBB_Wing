@@ -1,7 +1,7 @@
 #ifndef TOPICS_H
 #define TOPICS_H
 
-#include <QString>
+#include <QStringList>
 
 namespace topics
 {
