@@ -27,7 +27,7 @@ int main(int argc, char* argv[])
     scheduler.addNodeFrequency(new BoardTransceiverNode(), 25);
 
     scheduler.init();
-    scheduler.exec();
+    scheduler.start();
 
     return app.exec();
 }

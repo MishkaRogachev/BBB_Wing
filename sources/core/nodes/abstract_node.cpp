@@ -11,3 +11,6 @@ AbstractNode::~AbstractNode()
 
 void AbstractNode::init()
 {}
+
+void AbstractNode::stop()
+{}

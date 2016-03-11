@@ -59,13 +59,14 @@ void UiNode::init()
     connect(&d->sub, &Subscriber::received, this, &UiNode::onSubReceived);
 }
 
-void UiNode::exec()
+void UiNode::start()
 {
     d->view.showFullScreen();
 }
 
 void UiNode::onSubReceived(const QString& topic, const QByteArray& data)
 {
+    qDebug() << topic << data;
     auto service = d->view.rootObject()->findChild<QObject*>(::topicsService);
     QQmlProperty::write(service, topic, data);
 }

@@ -12,10 +12,16 @@ void BranchNode::init()
         node->init();
 }
 
-void BranchNode::exec()
+void BranchNode::start()
 {
     for (AbstractNode* node: m_nodes)
-        node->exec();
+        node->start();
+}
+
+void BranchNode::stop()
+{
+    for (AbstractNode* node: m_nodes)
+        node->stop();
 }
 
 void BranchNode::addNode(AbstractNode* node)

@@ -15,7 +15,8 @@ namespace domain
 
     public slots:
         virtual void init();
-        virtual void exec() = 0;
+        virtual void start() = 0;
+        virtual void stop();
     };
 }
 

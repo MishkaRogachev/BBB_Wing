@@ -12,15 +12,22 @@ namespace domain
     public:
         AbstractNodeFrequency(QObject* parent = nullptr);
 
+        float frequency() const;
+
     public slots:
-        void start(float frequency);
-        void stop();
+        void start() override;
+        void stop() override;
+
+        virtual void exec() = 0;
+
+        void setFrequency(float frequency);
 
     protected:
         void timerEvent(QTimerEvent* event) override;
 
     private:
         int m_timerId;
+        float m_frequency;
     };
 }
 

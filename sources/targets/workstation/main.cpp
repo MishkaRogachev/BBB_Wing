@@ -20,7 +20,7 @@ int main(int argc, char* argv[])
     scheduler.addNode(new UiNode());
 
     scheduler.init();
-    scheduler.exec();
+    scheduler.start();
 
     return app.exec();
 }

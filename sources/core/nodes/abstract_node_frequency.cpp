@@ -7,20 +7,31 @@ using namespace domain;
 
 AbstractNodeFrequency::AbstractNodeFrequency(QObject* parent):
     AbstractNode(parent),
-    m_timerId(0)
+    m_timerId(0),
+    m_frequency(1)
 {}
 
-void AbstractNodeFrequency::start(float frequency)
+float AbstractNodeFrequency::frequency() const
+{
+    return m_frequency;
+}
+
+void AbstractNodeFrequency::start()
 {
     if (m_timerId) this->stop();
 
-    m_timerId = this->startTimer(1000 / frequency, Qt::PreciseTimer);
+    m_timerId = this->startTimer(1000 / m_frequency, Qt::PreciseTimer);
 }
 
 void AbstractNodeFrequency::stop()
 {
     this->killTimer(m_timerId);
     m_timerId = 0;
+}
+
+void AbstractNodeFrequency::setFrequency(float frequency)
+{
+    m_frequency = frequency;
 }
 
 void AbstractNodeFrequency::timerEvent(QTimerEvent* event)

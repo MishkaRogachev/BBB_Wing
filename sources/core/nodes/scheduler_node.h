@@ -12,18 +12,9 @@ namespace domain
 
     public:
         SchedulerNode(QObject* parent = nullptr);
-        ~SchedulerNode() override;
 
     public slots:
-        void init() override;
-        void exec() override;
-
         void addNodeFrequency(AbstractNodeFrequency* node, float frequency);
-        void removeNodeFrequency(AbstractNodeFrequency* node);
-
-    private:
-        class Impl;
-        Impl* const d;
     };
 }
 

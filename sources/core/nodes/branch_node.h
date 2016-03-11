@@ -16,7 +16,8 @@ namespace domain
 
     public slots:
         void init() override;
-        void exec() override;
+        void start() override;
+        void stop() override;
 
         void addNode(AbstractNode* node);
         void removeNode(AbstractNode* node);
