@@ -12,11 +12,10 @@ class SchedulerNode::Impl
 {
 public:
     QMultiMap<float, AbstractNodeFrequency*> nodesFrequency;
-    QList<AbstractNode*> nodes;
 };
 
 SchedulerNode::SchedulerNode(QObject* parent):
-    AbstractNode(parent),
+    BranchNode(parent),
     d(new Impl())
 {}
 
@@ -27,8 +26,7 @@ SchedulerNode::~SchedulerNode()
 
 void SchedulerNode::init()
 {
-    for (AbstractNode* node: d->nodes)
-        node->init();
+    BranchNode::init();
 
     for (AbstractNode* node: d->nodesFrequency)
         node->init();
@@ -36,22 +34,25 @@ void SchedulerNode::init()
 
 void SchedulerNode::exec()
 {
-    for (AbstractNode* node: d->nodes)
-        node->exec();
+    BranchNode::exec();
 
     for (auto it = d->nodesFrequency.begin();
          it != d->nodesFrequency.end(); ++it)
         it.value()->start(it.key());
 }
 
-void SchedulerNode::addNode(AbstractNode* node)
-{
-    d->nodes.append(node);
-    node->setParent(this);
-}
-
 void SchedulerNode::addNodeFrequency(AbstractNodeFrequency* node, float frequency)
 {
     d->nodesFrequency.insert(frequency, node);
     node->setParent(this);
+}
+
+void SchedulerNode::removeNodeFrequency(AbstractNodeFrequency* node)
+{
+    auto it = d->nodesFrequency.find(d->nodesFrequency.key(node), node);
+
+    if (it == d->nodesFrequency.end()) return;
+
+    d->nodesFrequency.erase(it);
+    node->setParent(nullptr);
 }

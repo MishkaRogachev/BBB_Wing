@@ -1,12 +1,12 @@
 #ifndef SCHEDULER_NODE_H
 #define SCHEDULER_NODE_H
 
-#include "abstract_node.h"
+#include "branch_node.h"
 
 namespace domain
 {
     class AbstractNodeFrequency;
-    class SchedulerNode: public AbstractNode
+    class SchedulerNode: public BranchNode
     {
         Q_OBJECT
 
@@ -18,8 +18,8 @@ namespace domain
         void init() override;
         void exec() override;
 
-        void addNode(AbstractNode* node);
         void addNodeFrequency(AbstractNodeFrequency* node, float frequency);
+        void removeNodeFrequency(AbstractNodeFrequency* node);
 
     private:
         class Impl;

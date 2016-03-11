@@ -1,5 +1,5 @@
-#ifndef I_NODE_H
-#define I_NODE_H
+#ifndef ABSTRACT_NODE_H
+#define ABSTRACT_NODE_H
 
 #include <QObject>
 
@@ -19,4 +19,4 @@ namespace domain
     };
 }
 
-#endif // I_NODE_H
+#endif // ABSTRACT_NODE_H
