@@ -36,7 +36,7 @@ BoardTransceiverNode::BoardTransceiverNode(float frequency, QObject* parent):
         QHostAddress(Config::setting("udp_board_address").toString()),
         Config::setting("udp_board_port").toInt(),
         QHostAddress(Config::setting("udp_workstation_address").toString()),
-        Config::setting("udp_workstation_port").toInt(), this);
+        Config::setting("udp_workstation_port").toInt(), this));
 
     d->transceivers.append(new SerialPortTransceiver(
         Config::setting("serial_port_board").toString(), this));
