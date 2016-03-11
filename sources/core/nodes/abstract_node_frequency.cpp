@@ -5,10 +5,10 @@
 
 using namespace domain;
 
-AbstractNodeFrequency::AbstractNodeFrequency(QObject* parent):
+AbstractNodeFrequency::AbstractNodeFrequency(float frequency, QObject* parent):
     AbstractNode(parent),
     m_timerId(0),
-    m_frequency(1)
+    m_frequency(frequency)
 {}
 
 float AbstractNodeFrequency::frequency() const

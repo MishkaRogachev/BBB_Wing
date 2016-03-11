@@ -37,8 +37,6 @@ endif (NOT TARGET_TYPE)
 message("Tagret type: " ${TARGET_TYPE})
 
 # Nodes targets
-add_subdirectory(sources/nodes/debug_node)
-
 if (TARGET_TYPE STREQUAL "board" OR TARGET_TYPE STREQUAL "all")
     add_subdirectory(sources/nodes/sensor_altimeter_node)
     add_subdirectory(sources/nodes/sensor_ins_node)

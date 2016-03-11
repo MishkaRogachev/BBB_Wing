@@ -22,8 +22,8 @@ public:
     Publisher pub;
 };
 
-BoardTransceiverNode::BoardTransceiverNode(QObject* parent):
-    AbstractNodeFrequency(parent),
+BoardTransceiverNode::BoardTransceiverNode(float frequency, QObject* parent):
+    AbstractNodeFrequency(frequency, parent),
     d(new Impl())
 {
     Config::begin("Transceiver");

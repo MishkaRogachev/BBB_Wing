@@ -3,8 +3,7 @@
 #include <QDebug>
 
 // Internal
-#include "scheduler_node.h"
-#include "debug_node.h"
+#include "branch_node.h"
 #include "sensor_altimeter_node.h"
 #include "sensor_ins_node.h"
 #include "sensor_sns_node.h"
@@ -17,14 +16,13 @@ int main(int argc, char* argv[])
 
     using namespace domain;
 
-    SchedulerNode scheduler;
+    BranchNode scheduler;
 
-//    scheduler.addNodeFrequency(new DebugNode(), 10);
-    scheduler.addNodeFrequency(new SensorAltimeterNode(), 5);
-    scheduler.addNodeFrequency(new SensorInsNode(), 100);
-    scheduler.addNodeFrequency(new SensorSnsNode(), 5);
-    scheduler.addNodeFrequency(new FlightRecorderNode(), 25);
-    scheduler.addNodeFrequency(new BoardTransceiverNode(), 25);
+    scheduler.addNode(new SensorAltimeterNode(5));
+    scheduler.addNode(new SensorInsNode(100));
+    scheduler.addNode(new SensorSnsNode(5));
+    scheduler.addNode(new FlightRecorderNode(25));
+    scheduler.addNode(new BoardTransceiverNode(25));
 
     scheduler.init();
     scheduler.start();

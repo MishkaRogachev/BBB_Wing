@@ -23,8 +23,8 @@ public:
     Publisher pub;
 };
 
-WorkstationTransceiverNode::WorkstationTransceiverNode(QObject* parent):
-    AbstractNodeFrequency(parent),
+WorkstationTransceiverNode::WorkstationTransceiverNode(float frequency, QObject* parent):
+    AbstractNodeFrequency(frequency, parent),
     d(new Impl())
 {
     Config::begin("Transceiver");

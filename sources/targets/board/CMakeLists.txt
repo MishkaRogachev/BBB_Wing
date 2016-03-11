@@ -9,7 +9,6 @@ project(${PROJECT})
 set(LIBRARIES
     ${LIBRARIES}
 # Internal
-    debug_node
     sensor_altimeter_node
     sensor_ins_node
     sensor_sns_node

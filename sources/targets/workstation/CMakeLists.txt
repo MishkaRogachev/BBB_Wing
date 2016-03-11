@@ -14,7 +14,6 @@ set(LIBRARIES
 # Qt5
     Qt5::Gui
 # Internal
-    debug_node
     workstation_transceiver_node
     ui_node
 )

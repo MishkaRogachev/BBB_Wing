@@ -27,8 +27,8 @@ public:
     Subscriber sub;
 };
 
-FlightRecorderNode::FlightRecorderNode(QObject* parent):
-    AbstractNodeFrequency(parent),
+FlightRecorderNode::FlightRecorderNode(float frequency, QObject* parent):
+    AbstractNodeFrequency(frequency, parent),
     d(new Impl())
 {}
 

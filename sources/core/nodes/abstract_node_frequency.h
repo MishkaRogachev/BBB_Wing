@@ -10,7 +10,7 @@ namespace domain
         Q_OBJECT
 
     public:
-        AbstractNodeFrequency(QObject* parent = nullptr);
+        AbstractNodeFrequency(float frequency, QObject* parent = nullptr);
 
         float frequency() const;
 

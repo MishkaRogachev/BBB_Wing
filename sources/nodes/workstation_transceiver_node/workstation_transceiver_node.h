@@ -10,7 +10,7 @@ namespace domain
         Q_OBJECT
 
     public:
-        WorkstationTransceiverNode(QObject* parent = nullptr);
+        WorkstationTransceiverNode(float frequency, QObject* parent = nullptr);
         ~WorkstationTransceiverNode() override;
 
         void init() override;

@@ -17,8 +17,8 @@ public:
     Publisher pub;
 };
 
-SensorSnsNode::SensorSnsNode(QObject* parent):
-    AbstractNodeFrequency(parent),
+SensorSnsNode::SensorSnsNode(float frequency, QObject* parent):
+    AbstractNodeFrequency(frequency, parent),
     d(new Impl())
 {
     d->pub.bind("ipc://sns");

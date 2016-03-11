@@ -10,7 +10,7 @@ namespace domain
         Q_OBJECT
 
     public:
-        BoardTransceiverNode(QObject* parent = nullptr);
+        BoardTransceiverNode(float frequency, QObject* parent = nullptr);
         ~BoardTransceiverNode() override;
 
         void init() override;
