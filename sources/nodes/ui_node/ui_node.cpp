@@ -66,7 +66,6 @@ void UiNode::start()
 
 void UiNode::onSubReceived(const QString& topic, const QByteArray& data)
 {
-    qDebug() << topic << data;
     auto service = d->view.rootObject()->findChild<QObject*>(::topicsService);
     QQmlProperty::write(service, topic, data);
 }
