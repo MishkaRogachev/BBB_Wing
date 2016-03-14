@@ -6,9 +6,7 @@ import "../Controls"
 Map {
     id: map
 
-    plugin: Plugin {
-        name: "osm"
-    }
+    plugin: Plugin { name: "osm" }
     gesture.activeGestures: MapGestureArea.PanGesture |
                             MapGestureArea.FlickGesture |
                             MapGestureArea.ZoomGesture
@@ -20,11 +18,24 @@ Map {
     }
     activeMapType: supportedMapTypes[5] // TerrainMapType
 
-    MapQuickItem { // TODO: raw board route
+    property variant boardPosition:
+        QtPositioning.coordinate(nodeService.sns_latitude,
+                                 nodeService.sns_longitude,
+                                 nodeService.alt_altitude)
+
+    onBoardPositionChanged: track.addCoordinate(boardPosition)
+
+    MapPolyline {
+        id: track
+        line.width: 3
+        line.color: "#1abc9c"
+    }
+
+    MapQuickItem {
         id: boardMarker
         anchorPoint.x: mark.width / 2
         anchorPoint.y: mark.height / 2
-        coordinate: nodeService.position
+        coordinate: boardPosition
         sourceItem: Item {
             id: mark
             width: 64

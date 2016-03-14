@@ -1,5 +1,4 @@
 import QtQuick 2.5
-import QtPositioning 5.5
 
 QtObject {
     id: nodeService
@@ -16,7 +15,4 @@ QtObject {
     property real sns_latitude: 0.0
     property real sns_longitude: 0.0
     property real sns_velocity: 0.0
-
-    property variant boardPosition:
-        QtPositioning.coordinate(sns_latitude, sns_longitude, alt_altitude)
 }
