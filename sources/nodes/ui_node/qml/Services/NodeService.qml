@@ -1,0 +1,22 @@
+import QtQuick 2.5
+import QtPositioning 5.5
+
+QtObject {
+    id: nodeService
+
+    property bool alt_status: false
+    property real alt_altitude: 0.0
+    property real alt_temperature: 0.0
+    property bool ins_status: false
+    property real ins_pitch: 0.0
+    property real ins_roll: 0.0
+    property real ins_yaw: 0.0
+    property bool sns_status: false
+    property int sns_fix: 0
+    property real sns_latitude: 0.0
+    property real sns_longitude: 0.0
+    property real sns_velocity: 0.0
+
+    property variant boardPosition:
+        QtPositioning.coordinate(sns_latitude, sns_longitude, alt_altitude)
+}

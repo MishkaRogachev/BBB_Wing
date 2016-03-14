@@ -1,6 +1,7 @@
 <RCC>
     <qresource prefix="/">
         <file>js/helpers/drawer_helper.js</file>
+        <file>qml/Services/NodeService.qml</file>
         <file>qml/Controls/Clickable.qml</file>
         <file>qml/Controls/Button.qml</file>
         <file>qml/Indicators/Horizont.qml</file>

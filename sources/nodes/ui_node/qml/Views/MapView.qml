@@ -24,8 +24,7 @@ Map {
         id: boardMarker
         anchorPoint.x: mark.width / 2
         anchorPoint.y: mark.height / 2
-        coordinate: QtPositioning.coordinate(topicsService.sns_latitude,
-                                             topicsService.sns_longitude)
+        coordinate: nodeService.position
         sourceItem: Item {
             id: mark
             width: 64
@@ -33,7 +32,7 @@ Map {
 
             Image {
                 anchors.centerIn: parent
-                rotation: topicsService.ins_yaw
+                rotation: nodeService.ins_yaw
                 source: "qrc:/resources/indicators/plane_map_mark.svg"
             }
         }

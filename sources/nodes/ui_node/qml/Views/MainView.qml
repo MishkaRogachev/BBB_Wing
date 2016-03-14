@@ -1,25 +1,13 @@
 import QtQuick 2.5
+import "../Services"
 
 Rectangle {
     id: main
     color: "#2c3e50"
 
-    QtObject {
-        id: topicsService
-        objectName: "topicsService"
-
-        property bool alt_status: false
-        property real alt_altitude: 0.0
-        property real alt_temperature: 0.0
-        property bool ins_status: false
-        property real ins_pitch: 0.0
-        property real ins_roll: 0.0
-        property real ins_yaw: 0.0
-        property bool sns_status: false
-        property int sns_fix: 0
-        property real sns_latitude: 0.0
-        property real sns_longitude: 0.0
-        property real sns_velocity: 0.0
+    NodeService {
+        id: nodeService
+        objectName: "nodeService"
     }
 
     StatusView {
@@ -44,11 +32,11 @@ Rectangle {
 
             FlightDirectorView {
                 id: flightDirector
-                pitch: topicsService.ins_pitch
-                roll: topicsService.ins_roll
-                yaw: topicsService.ins_yaw
-                velocity: topicsService.sns_velocity
-                altitude: topicsService.alt_altitude
+                pitch: nodeService.ins_pitch
+                roll: nodeService.ins_roll
+                yaw: nodeService.ins_yaw
+                velocity: nodeService.sns_velocity
+                altitude: nodeService.alt_altitude
             }
 
             VideoView {
