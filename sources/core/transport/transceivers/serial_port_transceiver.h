@@ -12,7 +12,7 @@ namespace domain
         Q_OBJECT
 
     public:
-        SerialPortTransceiver(const QString& device, QObject* parent = nullptr);
+        SerialPortTransceiver(const QString& device, int packetSize, QObject* parent = nullptr);
 
     public slots:
         void transmit(const QByteArray& packet) override;
@@ -22,6 +22,8 @@ namespace domain
 
     private:
         QSerialPort* m_port;
+        int m_packetSize;
+        QByteArray m_data;
     };
 }
 

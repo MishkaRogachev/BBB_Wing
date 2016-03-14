@@ -6,8 +6,10 @@
 using namespace domain;
 
 SerialPortTransceiver::SerialPortTransceiver(const QString& device,
+                                             int packetSize,
                                              QObject* parent):
-    AbstractTransceiver(parent)
+    AbstractTransceiver(parent),
+    m_packetSize(packetSize)
 {
     m_port = new QSerialPort(device, this);
     m_port->open(QIODevice::ReadWrite);
@@ -22,9 +24,11 @@ void SerialPortTransceiver::transmit(const QByteArray& packet)
 
 void SerialPortTransceiver::readSerialData()
 {
-    while (!m_port->atEnd())
+    m_data.append(m_port->readAll());
+
+    if (m_data.size() >= m_packetSize)
     {
-        QByteArray data = m_port->readAll();
-        emit received(data);
+        emit received(m_data);
+        m_data.clear();
     }
 }
