@@ -16,7 +16,7 @@
 
 namespace
 {
-    const char* topicsService = "topicsService";
+    const char* nodeService = "nodeService";
 }
 
 inline void initResources()
@@ -66,6 +66,6 @@ void UiNode::start()
 
 void UiNode::onSubReceived(const QString& topic, const QByteArray& data)
 {
-    auto service = d->view.rootObject()->findChild<QObject*>(::topicsService);
+    auto service = d->view.rootObject()->findChild<QObject*>(::nodeService);
     QQmlProperty::write(service, topic, data);
 }
