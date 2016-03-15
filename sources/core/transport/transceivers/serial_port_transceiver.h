@@ -12,17 +12,17 @@ namespace domain
         Q_OBJECT
 
     public:
-        SerialPortTransceiver(const QString& device, int packetSize, QObject* parent = nullptr);
+        SerialPortTransceiver(const QString& device, QObject* parent = nullptr);
 
     public slots:
         void transmit(const QByteArray& packet) override;
 
     private slots:
         void readSerialData();
+        void processFramgent(const QByteArray& fragment);
 
     private:
         QSerialPort* m_port;
-        int m_packetSize;
         QByteArray m_data;
     };
 }

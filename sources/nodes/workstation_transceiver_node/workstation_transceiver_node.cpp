@@ -38,8 +38,7 @@ WorkstationTransceiverNode::WorkstationTransceiverNode(float frequency, QObject*
         Config::setting("udp_board_port").toInt(), this));
 
     d->transceivers.append(new SerialPortTransceiver(
-        Config::setting("serial_port_workstation").toString(),
-                               sizeof(BoardPacket), this)); // TODO: different board packets
+        Config::setting("serial_port_workstation").toString(), this));
 
     d->pub.bind("ipc://transceiver");
     Config::end();
