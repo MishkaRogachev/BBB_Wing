@@ -14,7 +14,7 @@ int main(int argc, char* argv[])
 
     BranchNode scheduler;
 
-    scheduler.addNode(new WorkstationTransceiverNode(5));
+    scheduler.addNode(new WorkstationTransceiverNode(25));
     scheduler.addNode(new UiNode());
 
     scheduler.init();

@@ -37,7 +37,7 @@ void SerialPortTransceiver::readSerialData()
     for (int start = 0;;)
     {
         int pos = m_data.indexOf(::separator, start) + ::separator.length();
-        if (pos == -1) break;
+        if (pos == -1 || pos < start) break;
 
         this->processFramgent(m_data.mid(start, pos - start - ::separator.length()));
         start = pos;
