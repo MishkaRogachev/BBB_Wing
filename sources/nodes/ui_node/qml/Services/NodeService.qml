@@ -15,4 +15,8 @@ QtObject {
     property real sns_latitude: 0.0
     property real sns_longitude: 0.0
     property real sns_velocity: 0.0
+
+    property bool tr_status: false
+    property int tr_pps: 0
+    property int tr_bad: 0
 }

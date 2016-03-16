@@ -5,6 +5,7 @@
 
 namespace domain
 {
+    // TODO: separate transmit and receive nodes from TransceiverNode
     class WorkstationTransceiverNode: public AbstractNodeFrequency
     {
         Q_OBJECT

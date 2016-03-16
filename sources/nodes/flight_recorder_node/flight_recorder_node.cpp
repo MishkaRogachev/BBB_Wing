@@ -72,13 +72,13 @@ void FlightRecorderNode::exec()
             return;
         }
         if (!exists) stream << ::timeTopic << ::delimiter <<
-                               topics::all.join(::delimiter) << endl;
+                               topics::boardTopics.join(::delimiter) << endl;
     }
 
     stream << QTime::currentTime().toString(
                   Config::setting("time_format").toString()).toLatin1();
 
-    for (const QString& topic: topics::all)
+    for (const QString& topic: topics::boardTopics)
         stream << ::delimiter << d->messages.value(topic);
     stream << endl;
 

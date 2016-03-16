@@ -23,6 +23,9 @@ public:
     QList<AbstractTransceiver*> transceivers;
     Subscriber sub;
     Publisher pub;
+    bool status = false;
+    int badCount = 0;
+    int goodCount = 0;
 };
 
 WorkstationTransceiverNode::WorkstationTransceiverNode(float frequency, QObject* parent):
@@ -64,7 +67,18 @@ void WorkstationTransceiverNode::init()
 
 void WorkstationTransceiverNode::exec()
 {
-    // TODO: send command packet
+    d->pub.publish(topics::transceiverStatus, QByteArray::number(d->status));
+    d->pub.publish(topics::transceiverPps, QByteArray::number(d->goodCount));
+    if (d->goodCount + d->badCount)
+    {
+        d->pub.publish(topics::transceiverBad, QByteArray::number(
+                           100 * d->badCount / (d->goodCount + d->badCount)));
+    }
+    else d->pub.publish(topics::transceiverBad, QByteArray::number(0));
+
+    d->badCount = 0;
+    d->goodCount = 0;
+    d->status = false;
 }
 
 void WorkstationTransceiverNode::onPacketReceived(const QByteArray& packetData)
@@ -75,11 +89,11 @@ void WorkstationTransceiverNode::onPacketReceived(const QByteArray& packetData)
 
     if (!packet.validateCrc())
     {
-        d->pub.publish(topics::transceiverStatus, QByteArray::number(false));
+        d->badCount++;
         return;
     }
-
-    d->pub.publish(topics::transceiverStatus, QByteArray::number(true));
+    d->goodCount++;
+    d->status = true;
 
     //  TODO: topics must be grouped and minimized(local packets)
     d->pub.publish(topics::altimeterStatus, QByteArray::number(packet.data.altimeterStatus));

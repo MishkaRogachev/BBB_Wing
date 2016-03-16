@@ -26,8 +26,10 @@ namespace topics
     const QString snsClimb = "sns_climb";
 
     const QString transceiverStatus = "tr_status";
+    const QString transceiverPps = "tr_pps";
+    const QString transceiverBad = "tr_bad";
 
-    const QStringList all = {
+    const QStringList boardTopics = {
         altimeterStatus, altimeterAltitude, altimeterTemperature,
         insStatus, insTemperature, insPitch, insRoll, insYaw,
         snsStatus, snsSatellites, snsFix, snsLatitude, snsLongitude,
