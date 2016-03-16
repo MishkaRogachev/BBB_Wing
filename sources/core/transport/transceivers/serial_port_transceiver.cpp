@@ -37,13 +37,15 @@ void SerialPortTransceiver::readSerialData()
     for (int start = 0;;)
     {
         int pos = m_data.indexOf(::separator, start) + ::separator.length();
-        if (pos == -1 || pos < start) break;
+        if (pos == -1 || pos < start)
+        {
+            m_data = m_data.right(m_data.size() - start);
+            return;
+        }
 
         this->processFramgent(m_data.mid(start, pos - start - ::separator.length()));
         start = pos;
     }
-
-    m_data.clear();
 }
 
 void SerialPortTransceiver::processFramgent(const QByteArray& fragment)
