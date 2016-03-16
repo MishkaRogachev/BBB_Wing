@@ -22,7 +22,7 @@ int main(int argc, char* argv[])
     scheduler.addNode(new SensorInsNode(100));
     scheduler.addNode(new SensorSnsNode(5));
     scheduler.addNode(new FlightRecorderNode(25));
-    scheduler.addNode(new BoardTransceiverNode(11));
+    scheduler.addNode(new BoardTransceiverNode(10));
 
     scheduler.init();
     scheduler.start();
