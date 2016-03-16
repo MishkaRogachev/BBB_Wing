@@ -5,7 +5,7 @@
 
 namespace domain
 {
-    class BoardPacket: public Packet {
+    class BoardPacket: public Packet { // TODO: template CrcPacket<BoardDataPacket>
     public:
         quint16 crc;
 

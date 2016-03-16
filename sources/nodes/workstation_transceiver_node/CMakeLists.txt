@@ -10,10 +10,7 @@ HEADER_DIRECTORIES(INTERNAL_INCLUDES ${CMAKE_CURRENT_SOURCE_DIR})
 include_directories(${INCLUDES} ${INTERNAL_INCLUDES})
 
 # Sources
-set(INTERNAL_SOURCES
-    workstation_transceiver_node.h
-    workstation_transceiver_node.cpp
-)
+file(GLOB_RECURSE INTERNAL_SOURCES "*.cpp" "*.h")
 
 # Qt5 wrap node's headers
 qt5_wrap_cpp(MOC_SOURCES workstation_transceiver_node.h)
