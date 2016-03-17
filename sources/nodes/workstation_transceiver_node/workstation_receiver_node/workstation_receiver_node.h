@@ -6,7 +6,6 @@
 namespace domain
 {
     class Publisher;
-    class AbstractTransceiver;
 
     class WorkstationReceiverNode: public AbstractNodeFrequency
     {
@@ -15,8 +14,6 @@ namespace domain
     public:
         WorkstationReceiverNode(float frequency, Publisher* pub,
                                 QObject* parent = nullptr);
-
-        AbstractTransceiver* transceiver() const;
 
     public slots:
         void exec() override;

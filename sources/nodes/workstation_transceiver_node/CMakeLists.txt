@@ -15,7 +15,8 @@ file(GLOB_RECURSE INTERNAL_SOURCES "*.cpp" "*.h")
 # Qt5 wrap node's headers
 qt5_wrap_cpp(MOC_SOURCES
     workstation_transceiver_node.h
-    workstation_receiver_node.h
+    workstation_receiver_node/workstation_receiver_node.h
+    workstation_transmitter_node/workstation_transmitter_node.h
 )
 
 # Static Library target

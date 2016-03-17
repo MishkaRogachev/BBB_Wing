@@ -5,7 +5,7 @@
 
 namespace domain
 {
-    class AbstractTransceiver: public QObject
+    class AbstractTransceiver: public QObject // Rename to exchanger
     {
         Q_OBJECT
 

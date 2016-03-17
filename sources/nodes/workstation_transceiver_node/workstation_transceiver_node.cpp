@@ -11,6 +11,7 @@
 #include "publisher.h"
 
 #include "workstation_receiver_node.h"
+#include "workstation_transmitter_node.h"
 
 #include "udp_transceiver.h"
 #include "serial_port_transceiver.h"
@@ -28,7 +29,7 @@ public:
     AbstractTransceiver* activeTransceiver = nullptr;
 
     WorkstationReceiverNode* receiver;
-//    WorkstationTransmitterNode* transmitter; TODO: transmitter
+    WorkstationTransmitterNode* transmitter;
 };
 
 WorkstationTransceiverNode::WorkstationTransceiverNode(QObject* parent):
@@ -52,10 +53,15 @@ WorkstationTransceiverNode::WorkstationTransceiverNode(QObject* parent):
             this, &WorkstationTransceiverNode::onPacketReceived);
 
     // 1 Hz for receive statistics & timeout
-    d->receiver = new WorkstationReceiverNode(1, &d->pub, this);
+    d->receiver = new WorkstationReceiverNode(1, &d->pub);
     connect(d->receiver, &WorkstationReceiverNode::timeout,
             this, &WorkstationTransceiverNode::setInactiveLine);
     this->addNode(d->receiver);
+
+    d->transmitter = new WorkstationTransmitterNode(10);
+    connect(d->transmitter, &WorkstationTransmitterNode::transmit,
+            this, &WorkstationTransceiverNode::transmitPacket);
+    this->addNode(d->transmitter);
 
     Config::end();
 }
@@ -72,8 +78,8 @@ void WorkstationTransceiverNode::init()
     d->sub.connectTo("ipc://ui");
     d->sub.subscribe("");
 
-//    connect(&d->sub, &Subscriber::received, d->transmitter,
-//                 &WorkstationTransmitterNode::onReceived);
+    connect(&d->sub, &Subscriber::received,
+            d->transmitter, &WorkstationTransmitterNode::onSubReceived);
 }
 
 void WorkstationTransceiverNode::onPacketReceived(const QByteArray& packet)
@@ -89,6 +95,12 @@ void WorkstationTransceiverNode::onPacketReceived(const QByteArray& packet)
         this->setActiveAirLine();
         d->receiver->onPacketReceived(packet);
     }
+}
+
+void WorkstationTransceiverNode::transmitPacket(const QByteArray& packet)
+{
+    if (!d->activeTransceiver) return;
+    d->activeTransceiver->transmit(packet);
 }
 
 void WorkstationTransceiverNode::setActiveWireLine()

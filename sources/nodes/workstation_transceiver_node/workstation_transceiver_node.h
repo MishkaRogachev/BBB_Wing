@@ -18,6 +18,7 @@ namespace domain
 
     private slots:
         void onPacketReceived(const QByteArray& packet);
+        void transmitPacket(const QByteArray& packet);
 
         void setActiveWireLine();
         void setActiveAirLine();
