@@ -13,6 +13,7 @@ namespace domain
         FlightRecorderNode(float frequency, QObject* parent = nullptr);
         ~FlightRecorderNode() override;
 
+    public slots:
         void init() override;
         void exec() override;
 

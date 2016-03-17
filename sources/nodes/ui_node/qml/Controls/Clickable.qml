@@ -3,7 +3,7 @@ import QtQuick 2.5
 Item {
     id: clickable
 
-    property alias text: lable.text
+    property alias text: label.text
     property alias icon: image.source
     property alias pressed: mouseArea.pressed
 
@@ -29,7 +29,8 @@ Item {
         }
 
         Text {
-            id: lable
+            id: label
+            font.pointSize: 11
             color: "#ecf0f1"
             anchors.verticalCenter: parent.verticalCenter
         }

@@ -4,46 +4,59 @@
 #include <QDebug>
 
 // Internal
-#include "topics.h"
 #include "config.h"
+#include "topics.h"
 
 #include "subscriber.h"
 #include "publisher.h"
 
+#include "workstation_receiver_node.h"
+
 #include "udp_transceiver.h"
 #include "serial_port_transceiver.h"
-
-#include "board_packet.h"
 
 using namespace domain;
 
 class WorkstationTransceiverNode::Impl
 {
 public:
-    QList<AbstractTransceiver*> transceivers;
     Subscriber sub;
     Publisher pub;
-    bool status = false;
-    int badCount = 0;
-    int goodCount = 0;
+
+    AbstractTransceiver* wireTransceiver;
+    AbstractTransceiver* airTransceiver;
+    AbstractTransceiver* activeTransceiver = nullptr;
+
+    WorkstationReceiverNode* receiver;
+//    WorkstationTransmitterNode* transmitter; TODO: transmitter
 };
 
-WorkstationTransceiverNode::WorkstationTransceiverNode(float frequency, QObject* parent):
-    AbstractNodeFrequency(frequency, parent),
+WorkstationTransceiverNode::WorkstationTransceiverNode(QObject* parent):
+    BranchNode(parent),
     d(new Impl())
 {
     Config::begin("Transceiver");
+    d->pub.bind("ipc://transceiver");
 
-    d->transceivers.append(new UdpTransceiver(
+    d->wireTransceiver = new UdpTransceiver(
         QHostAddress(Config::setting("udp_workstation_address").toString()),
         Config::setting("udp_workstation_port").toInt(),
         QHostAddress(Config::setting("udp_board_address").toString()),
-        Config::setting("udp_board_port").toInt(), this));
+        Config::setting("udp_board_port").toInt(), this);
+    connect(d->wireTransceiver, &AbstractTransceiver::received,
+            this, &WorkstationTransceiverNode::onPacketReceived);
 
-    d->transceivers.append(new SerialPortTransceiver(
-        Config::setting("serial_port_workstation").toString(), this));
+    d->airTransceiver = new SerialPortTransceiver(
+        Config::setting("serial_port_workstation").toString(), this);
+    connect(d->airTransceiver, &AbstractTransceiver::received,
+            this, &WorkstationTransceiverNode::onPacketReceived);
 
-    d->pub.bind("ipc://transceiver");
+    // 1 Hz for receive statistics & timeout
+    d->receiver = new WorkstationReceiverNode(1, &d->pub, this);
+    connect(d->receiver, &WorkstationReceiverNode::timeout,
+            this, &WorkstationTransceiverNode::onTimeout);
+    this->addNode(d->receiver);
+
     Config::end();
 }
 
@@ -54,58 +67,34 @@ WorkstationTransceiverNode::~WorkstationTransceiverNode()
 
 void WorkstationTransceiverNode::init()
 {
-//     d->sub.connectTo("ipc://???"); TODO: command line
+    BranchNode::init();
 
-//     d->sub.subscribe("");
-//     connect(&d->sub, &Subscriber::received, this,
-//             &WorkstationTransceiverNode::onReceived);
+    d->sub.connectTo("ipc://ui");
+    d->sub.subscribe("");
 
-    for (AbstractTransceiver* transceiver: d->transceivers)
-        connect(transceiver, &AbstractTransceiver::received,
-                this, &WorkstationTransceiverNode::onPacketReceived);
+//    connect(&d->sub, &Subscriber::received, d->transmitter,
+//                 &WorkstationTransmitterNode::onReceived);
 }
 
-void WorkstationTransceiverNode::exec()
+void WorkstationTransceiverNode::onPacketReceived(const QByteArray& packet)
 {
-    d->pub.publish(topics::transceiverStatus, QByteArray::number(d->status));
-    d->pub.publish(topics::transceiverPps, QByteArray::number(d->goodCount));
-    if (d->goodCount + d->badCount)
+    if (this->sender() == d->wireTransceiver)
     {
-        d->pub.publish(topics::transceiverBad, QByteArray::number(
-                           100 * d->badCount / (d->goodCount + d->badCount)));
+        d->activeTransceiver = d->wireTransceiver;
+        d->pub.publish(topics::transceiverLine, "wire");
+        d->receiver->onPacketReceived(packet);
     }
-    else d->pub.publish(topics::transceiverBad, QByteArray::number(0));
-
-    d->badCount = 0;
-    d->goodCount = 0;
-    d->status = false;
+    else if (this->sender() == d->airTransceiver &&
+             d->activeTransceiver != d->wireTransceiver)
+    {
+        d->activeTransceiver = d->airTransceiver;
+        d->pub.publish(topics::transceiverLine, "air");
+        d->receiver->onPacketReceived(packet);
+    }
 }
 
-void WorkstationTransceiverNode::onPacketReceived(const QByteArray& packetData)
+void WorkstationTransceiverNode::onTimeout()
 {
-    QDataStream stream(packetData);
-    BoardPacket packet;
-    stream >> packet;
-
-    if (!packet.validateCrc())
-    {
-        d->badCount++;
-        return;
-    }
-    d->goodCount++;
-    d->status = true;
-
-    //  TODO: topics must be grouped and minimized(local packets)
-    d->pub.publish(topics::altimeterStatus, QByteArray::number(packet.data.altimeterStatus));
-    d->pub.publish(topics::altimeterAltitude, QByteArray::number(packet.data.altimeterAltitude));
-    d->pub.publish(topics::altimeterTemperature, QByteArray::number(packet.data.temperature));
-    d->pub.publish(topics::insStatus, QByteArray::number(packet.data.insStatus));
-    d->pub.publish(topics::insPitch, QByteArray::number(packet.data.pitch));
-    d->pub.publish(topics::insRoll, QByteArray::number(packet.data.roll));
-    d->pub.publish(topics::insYaw, QByteArray::number(packet.data.yaw));
-    d->pub.publish(topics::snsStatus, QByteArray::number(packet.data.snsStatus));
-    d->pub.publish(topics::snsLatitude, QByteArray::number(packet.data.latitude));
-    d->pub.publish(topics::snsLongitude, QByteArray::number(packet.data.longitude));
-    d->pub.publish(topics::snsVelocity, QByteArray::number(packet.data.velocity));
-    d->pub.publish(topics::snsClimb, QByteArray::number(packet.data.climb));
+    d->activeTransceiver = nullptr;
+    d->pub.publish(topics::transceiverLine, "none");
 }

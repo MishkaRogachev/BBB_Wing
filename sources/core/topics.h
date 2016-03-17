@@ -5,6 +5,7 @@
 
 namespace topics
 {
+//    TODO: topics must be grouped and minimized(local packets)1
     const QString altimeterStatus = "alt_status";
     const QString altimeterTemperature = "alt_temperature";
     const QString altimeterAltitude = "alt_altitude";
@@ -25,7 +26,7 @@ namespace topics
     const QString snsAltitude = "sns_altitude";
     const QString snsClimb = "sns_climb";
 
-    const QString transceiverStatus = "tr_status";
+    const QString transceiverLine = "tr_line";
     const QString transceiverPps = "tr_pps";
     const QString transceiverBad = "tr_bad";
 

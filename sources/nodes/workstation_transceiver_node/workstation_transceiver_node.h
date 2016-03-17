@@ -1,24 +1,24 @@
 #ifndef WORKSTATION_TRANSCEIVER_NODE_H
 #define WORKSTATION_TRANSCEIVER_NODE_H
 
-#include "abstract_node_frequency.h"
+#include "branch_node.h"
 
 namespace domain
 {
-    // TODO: separate transmit and receive nodes from TransceiverNode
-    class WorkstationTransceiverNode: public AbstractNodeFrequency
+    class WorkstationTransceiverNode: public BranchNode
     {
         Q_OBJECT
 
     public:
-        WorkstationTransceiverNode(float frequency, QObject* parent = nullptr);
+        WorkstationTransceiverNode(QObject* parent = nullptr);
         ~WorkstationTransceiverNode() override;
 
+    public slots:
         void init() override;
-        void exec() override;
 
     private slots:
-        void onPacketReceived(const QByteArray& packetData);
+        void onPacketReceived(const QByteArray& packet);
+        void onTimeout();
 
     private:
         class Impl;

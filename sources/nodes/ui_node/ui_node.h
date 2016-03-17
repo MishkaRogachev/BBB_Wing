@@ -13,6 +13,7 @@ namespace domain
         UiNode(QObject* parent = nullptr);
         ~UiNode() override;
 
+    public slots:
         void init() override;
         void start() override;
 

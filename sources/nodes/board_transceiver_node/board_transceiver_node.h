@@ -13,6 +13,7 @@ namespace domain
         BoardTransceiverNode(float frequency, QObject* parent = nullptr);
         ~BoardTransceiverNode() override;
 
+    public slots:
         void init() override;
         void exec() override;
 
