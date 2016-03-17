@@ -18,7 +18,10 @@ namespace domain
 
     private slots:
         void onPacketReceived(const QByteArray& packet);
-        void onTimeout();
+
+        void setActiveWireLine();
+        void setActiveAirLine();
+        void setInactiveLine();
 
     private:
         class Impl;
