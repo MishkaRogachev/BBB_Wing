@@ -10,11 +10,11 @@
 #include "subscriber.h"
 #include "publisher.h"
 
-#include "workstation_receiver_node.h"
-#include "workstation_transmitter_node.h"
-
 #include "udp_transceiver.h"
 #include "serial_port_transceiver.h"
+
+#include "workstation_receiver_node.h"
+#include "workstation_transmitter_node.h"
 
 using namespace domain;
 
@@ -36,7 +36,7 @@ WorkstationTransceiverNode::WorkstationTransceiverNode(QObject* parent):
     BranchNode(parent),
     d(new Impl())
 {
-    Config::begin("Transceiver");
+    Config::begin("Transceiver"); // TODO: unique board/workstation
     d->pub.bind("ipc://transceiver");
 
     d->wireTransceiver = new UdpTransceiver(

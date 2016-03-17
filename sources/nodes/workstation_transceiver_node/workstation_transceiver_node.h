@@ -5,6 +5,7 @@
 
 namespace domain
 {
+    // TODO: rename workstation -> groundstation
     class WorkstationTransceiverNode: public BranchNode
     {
         Q_OBJECT

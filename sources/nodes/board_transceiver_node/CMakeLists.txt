@@ -10,13 +10,13 @@ HEADER_DIRECTORIES(INTERNAL_INCLUDES ${CMAKE_CURRENT_SOURCE_DIR})
 include_directories(${INCLUDES} ${INTERNAL_INCLUDES})
 
 # Sources
-set(INTERNAL_SOURCES
-    board_transceiver_node.h
-    board_transceiver_node.cpp
-)
+file(GLOB_RECURSE INTERNAL_SOURCES "*.cpp" "*.h")
 
 # Qt5 wrap node's headers
-qt5_wrap_cpp(MOC_SOURCES board_transceiver_node.h)
+qt5_wrap_cpp(MOC_SOURCES
+    board_transceiver_node.h
+    board_transmitter_node/board_transmitter_node.h
+    board_receiver_node/board_receiver_node.h)
 
 # Static Library target
 add_library(${PROJECT} STATIC ${SOURCES} ${INTERNAL_SOURCES} ${MOC_SOURCES})

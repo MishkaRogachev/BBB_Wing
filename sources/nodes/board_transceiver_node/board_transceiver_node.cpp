@@ -4,8 +4,8 @@
 #include <QDebug>
 
 // Internal
-#include "topics.h"
 #include "config.h"
+#include "topics.h"
 
 #include "subscriber.h"
 #include "publisher.h"
@@ -13,35 +13,53 @@
 #include "udp_transceiver.h"
 #include "serial_port_transceiver.h"
 
-#include "board_packet.h"
-
+#include "board_receiver_node.h"
+#include "board_transmitter_node.h"
 
 using namespace domain;
 
 class BoardTransceiverNode::Impl
 {
 public:
-    QList<AbstractTransceiver*> transceivers;
-    BoardPacket packet;
     Subscriber sub;
     Publisher pub;
+
+    AbstractTransceiver* wireTransceiver;
+    AbstractTransceiver* airTransceiver;
+
+    BoardReceiverNode* receiver;
+    BoardTransmitterNode* transmitter;
 };
 
-BoardTransceiverNode::BoardTransceiverNode(float frequency, QObject* parent):
-    AbstractNodeFrequency(frequency, parent),
+BoardTransceiverNode::BoardTransceiverNode(QObject* parent):
+    BranchNode(parent),
     d(new Impl())
 {
     Config::begin("Transceiver");
-    d->transceivers.append(new UdpTransceiver(
+    d->pub.bind("ipc://transceiver");
+
+    d->wireTransceiver = new UdpTransceiver(
         QHostAddress(Config::setting("udp_board_address").toString()),
         Config::setting("udp_board_port").toInt(),
         QHostAddress(Config::setting("udp_workstation_address").toString()),
-        Config::setting("udp_workstation_port").toInt(), this));
+        Config::setting("udp_workstation_port").toInt(), this);
+    connect(d->wireTransceiver, &AbstractTransceiver::received,
+            this, &BoardTransceiverNode::onPacketReceived);
 
-    d->transceivers.append(new SerialPortTransceiver(
-        Config::setting("serial_port_board").toString(), this));
+    d->airTransceiver = new SerialPortTransceiver(
+        Config::setting("serial_port_board").toString(), this);
+    connect(d->airTransceiver, &AbstractTransceiver::received,
+            this, &BoardTransceiverNode::onPacketReceived);
 
-    d->pub.bind("ipc://transceiver");
+    // 1 Hz for timeout
+    d->receiver = new BoardReceiverNode(1, &d->pub);
+    this->addNode(d->receiver);
+
+    d->transmitter = new BoardTransmitterNode(10);
+    connect(d->transmitter, &BoardTransmitterNode::transmit,
+            this, &BoardTransceiverNode::transmitPacket);
+    this->addNode(d->transmitter);
+
     Config::end();
 }
 
@@ -57,34 +75,18 @@ void BoardTransceiverNode::init()
      d->sub.connectTo("ipc://sns");
 
      d->sub.subscribe("");
-     connect(&d->sub, &Subscriber::received, this,
-             &BoardTransceiverNode::onSubReceived);
+
+     connect(&d->sub, &Subscriber::received,
+             d->transmitter, &BoardTransmitterNode::onSubReceived);
 }
 
-void BoardTransceiverNode::exec()
+void BoardTransceiverNode::onPacketReceived(const QByteArray& packet)
 {
-    d->packet.calcCrc();
-
-    QByteArray packetData;
-    QDataStream stream(&packetData, QIODevice::WriteOnly);
-    stream << d->packet;
-
-    for (AbstractTransceiver* transceiver: d->transceivers)
-        transceiver->transmit(packetData);
+    d->receiver->onPacketReceived(packet);
 }
 
-void BoardTransceiverNode::onSubReceived(const QString& topic, const QByteArray& msg)
+void BoardTransceiverNode::transmitPacket(const QByteArray& packet)
 {
-    if (topic == topics::altimeterStatus) d->packet.data.altimeterStatus = msg.toInt();
-    else if (topic == topics::altimeterAltitude) d->packet.data.altimeterAltitude = msg.toFloat();
-    else if (topic == topics::altimeterTemperature) d->packet.data.temperature = msg.toFloat();
-    else if (topic == topics::insStatus) d->packet.data.insStatus = msg.toInt();
-    else if (topic == topics::insPitch) d->packet.data.pitch = msg.toFloat();
-    else if (topic == topics::insRoll) d->packet.data.roll = msg.toFloat();
-    else if (topic == topics::insYaw) d->packet.data.yaw = msg.toFloat();
-    else if (topic == topics::snsStatus) d->packet.data.snsStatus = msg.toInt();
-    else if (topic == topics::snsLatitude) d->packet.data.latitude = msg.toFloat();
-    else if (topic == topics::snsLongitude) d->packet.data.longitude = msg.toFloat();
-    else if (topic == topics::snsVelocity) d->packet.data.velocity = msg.toFloat();
-    else if (topic == topics::snsClimb) d->packet.data.climb = msg.toFloat();
+    d->wireTransceiver->transmit(packet);
+    d->airTransceiver->transmit(packet);
 }
