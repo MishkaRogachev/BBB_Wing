@@ -17,7 +17,8 @@ WorkstationReceiverNode::WorkstationReceiverNode(
 
 void WorkstationReceiverNode::exec()
 {
-    m_pub->publish(topics::transceiverPps, QByteArray::number(m_goodCount));
+    m_pub->publish(topics::transceiverPps,
+                   QByteArray::number(m_goodCount * this->frequency()));
     if (m_goodCount + m_badCount)
     {
         m_pub->publish(topics::transceiverBad, QByteArray::number(
