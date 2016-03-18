@@ -1,9 +1,12 @@
 #include "board_receiver_node.h"
 
+// Qt
+#include <QDebug>
+
 // Internal
 #include "topics.h"
-
 #include "publisher.h"
+#include "ground_packet.h"
 
 using namespace domain;
 
@@ -22,6 +25,14 @@ void BoardReceiverNode::exec()
 
 void BoardReceiverNode::onPacketReceived(const QByteArray& packetData)
 {
+    QDataStream stream(packetData);
+    GroundPacket packet;
+    stream >> packet;
+
+    qDebug() << packetData;
+
+    if (!packet.validateCrc()) return;
     m_status = true;
-    // TODO: receive ground station command
+
+    // TODO: publish ground packet data
 }

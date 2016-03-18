@@ -10,8 +10,8 @@ namespace domain
         Q_OBJECT
 
     public:
-        WorkstationTransmitterNode(float frequency,
-                                   QObject* parent = nullptr);
+        WorkstationTransmitterNode(float frequency, QObject* parent = nullptr);
+        ~WorkstationTransmitterNode() override;
 
     public slots:
         void exec() override;
@@ -20,6 +20,10 @@ namespace domain
 
     signals:
         void transmit(const QByteArray& packet);
+
+    private:
+        class Impl;
+        Impl* const d;
     };
 }
 

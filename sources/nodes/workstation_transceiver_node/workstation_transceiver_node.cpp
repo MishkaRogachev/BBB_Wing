@@ -58,7 +58,7 @@ WorkstationTransceiverNode::WorkstationTransceiverNode(QObject* parent):
             this, &WorkstationTransceiverNode::setInactiveLine);
     this->addNode(d->receiver);
 
-    d->transmitter = new WorkstationTransmitterNode(10);
+    d->transmitter = new WorkstationTransmitterNode(1);
     connect(d->transmitter, &WorkstationTransmitterNode::transmit,
             this, &WorkstationTransceiverNode::transmitPacket);
     this->addNode(d->transmitter);
