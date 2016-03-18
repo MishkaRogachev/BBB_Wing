@@ -11,6 +11,8 @@ namespace domain
 
     private slots:
         void testBoardPacket();
+        void testGroundPacketManual();
+        void testGroundPacketAutomatic();
     };
 }
 

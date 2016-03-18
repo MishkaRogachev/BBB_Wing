@@ -5,6 +5,7 @@
 
 // Internal
 #include "board_packet.h"
+#include "ground_packet.h"
 
 using namespace domain;
 
@@ -54,4 +55,75 @@ void PacketsTest::testBoardPacket()
     QVERIFY(!converted.validateCrc());
     converted.calcCrc();
     QVERIFY(converted.validateCrc());
+}
+
+void PacketsTest::testGroundPacketManual()
+{
+    GroundPacket packet;
+
+    packet.data.isManual = true;
+
+    packet.data.manual.setPitch = 3.23;
+    packet.data.manual.setRoll = -36.12;
+    packet.data.manual.setThrottle = 75;
+
+    packet.calcCrc();
+
+    QByteArray data;
+    {
+        QDataStream stream(&data, QIODevice::WriteOnly);
+        stream << packet;
+    }
+    GroundPacket converted;
+    {
+        QDataStream stream(&data, QIODevice::ReadOnly);
+        stream >> converted;
+    }
+
+    QCOMPARE(converted.data.isManual, packet.data.isManual);
+    QVERIFY(qFuzzyCompare(converted.data.manual.setPitch, packet.data.manual.setPitch));
+    QVERIFY(qFuzzyCompare(converted.data.manual.setRoll, packet.data.manual.setRoll));
+    QCOMPARE(converted.data.manual.setThrottle, packet.data.manual.setThrottle);
+}
+
+void PacketsTest::testGroundPacketAutomatic()
+{
+    GroundPacket packet;
+
+    packet.data.isManual = false;
+
+    packet.data.automatic.activePoint = 3;
+    packet.data.automatic.activeProgram = 1344;
+
+    packet.data.automatic.isAltitudeOverriden = false;
+    packet.data.automatic.isVelocityOverriden = true;
+    packet.data.automatic.isYawOverriden = true;
+    packet.data.automatic.overridenAltitude = -1;
+    packet.data.automatic.overridenVelocity = 57;
+    packet.data.automatic.overridenYaw = 234.23;
+
+    packet.calcCrc();
+
+    QByteArray data;
+    {
+        QDataStream stream(&data, QIODevice::WriteOnly);
+        stream << packet;
+    }
+    GroundPacket converted;
+    {
+        QDataStream stream(&data, QIODevice::ReadOnly);
+        stream >> converted;
+    }
+
+    QCOMPARE(converted.data.isManual, packet.data.isManual);
+
+    QCOMPARE(converted.data.automatic.activePoint, packet.data.automatic.activePoint);
+    QCOMPARE(converted.data.automatic.activeProgram, packet.data.automatic.activeProgram);
+
+    QCOMPARE(converted.data.automatic.isAltitudeOverriden, packet.data.automatic.isAltitudeOverriden);
+    QCOMPARE(converted.data.automatic.isVelocityOverriden, packet.data.automatic.isVelocityOverriden);
+    QCOMPARE(converted.data.automatic.isYawOverriden, packet.data.automatic.isYawOverriden);
+    QVERIFY(qFuzzyCompare(converted.data.automatic.overridenAltitude, packet.data.automatic.overridenAltitude));
+    QVERIFY(qFuzzyCompare(converted.data.automatic.overridenVelocity, packet.data.automatic.overridenVelocity));
+    QVERIFY(qFuzzyCompare(converted.data.automatic.overridenYaw, packet.data.automatic.overridenYaw));
 }
