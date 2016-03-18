@@ -2,31 +2,15 @@
 
 using namespace domain;
 
-bool BoardPacket::validateCrc()
+quint16 BoardDataPacket::crc()
 {
-    return crc == data.calcCrc();
+    QByteArray array;
+    QDataStream stream(&array, QIODevice::WriteOnly);
+    stream << *this;
+    return qChecksum(array.data(), array.length());
 }
 
-void BoardPacket::calcCrc()
-{
-    crc = data.calcCrc();
-}
-
-QDataStream& BoardPacket::operator >>(QDataStream& stream) const
-{
-    stream << crc;
-    stream << data;
-    return stream;
-}
-
-QDataStream& BoardPacket::operator <<(QDataStream& stream)
-{
-    stream >> crc;
-    stream >> data;
-    return stream;
-}
-
-QDataStream& BoardPacket::BoardDataPacket::operator >>(QDataStream& stream) const
+QDataStream& BoardDataPacket::operator >>(QDataStream& stream) const
 {
     stream << latitude;
     stream << longitude;
@@ -48,7 +32,7 @@ QDataStream& BoardPacket::BoardDataPacket::operator >>(QDataStream& stream) cons
     return stream;
 }
 
-QDataStream& BoardPacket::BoardDataPacket::operator <<(QDataStream& stream)
+QDataStream& BoardDataPacket::operator <<(QDataStream& stream)
 {
     stream >> latitude;
     stream >> longitude;

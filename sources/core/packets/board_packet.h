@@ -5,40 +5,33 @@
 
 namespace domain
 {
-    class BoardPacket: public Packet { // TODO: template CrcPacket<BoardDataPacket>
+    class BoardDataPacket: public Packet
+    {
     public:
-        quint16 crc;
+        float latitude;
+        float longitude;
+        float altimeterAltitude;
 
-        bool validateCrc();
-        void calcCrc();
+        float velocity;
+        float climb;
+
+        float pitch;
+        float roll;
+        float yaw;
+
+        float temperature;
+
+        bool altimeterStatus;
+        bool insStatus;
+        bool snsStatus;
+
+        quint16 crc();
 
         QDataStream& operator >>(QDataStream& stream) const override;
         QDataStream& operator <<(QDataStream& stream) override;
-
-        class BoardDataPacket: public DataPacket
-        {
-        public:
-            float latitude;
-            float longitude;
-            float altimeterAltitude;
-
-            float velocity;
-            float climb;
-
-            float pitch;
-            float roll;
-            float yaw;
-
-            float temperature;
-
-            bool altimeterStatus;
-            bool insStatus;
-            bool snsStatus;
-
-            QDataStream& operator >>(QDataStream& stream) const override;
-            QDataStream& operator <<(QDataStream& stream) override;
-        } data;
     };
+
+    using BoardPacket = DataPacket<BoardDataPacket>;
 }
 
 #endif // BOARD_PACKET_H
