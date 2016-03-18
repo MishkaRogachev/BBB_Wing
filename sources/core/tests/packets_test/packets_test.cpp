@@ -84,6 +84,9 @@ void PacketsTest::testGroundPacketManual()
     QVERIFY(qFuzzyCompare(converted.data.manual.setPitch, packet.data.manual.setPitch));
     QVERIFY(qFuzzyCompare(converted.data.manual.setRoll, packet.data.manual.setRoll));
     QCOMPARE(converted.data.manual.setThrottle, packet.data.manual.setThrottle);
+
+    QCOMPARE(packet.crc, converted.crc);
+    QVERIFY(converted.validateCrc());
 }
 
 void PacketsTest::testGroundPacketAutomatic()
@@ -126,4 +129,7 @@ void PacketsTest::testGroundPacketAutomatic()
     QVERIFY(qFuzzyCompare(converted.data.automatic.overridenAltitude, packet.data.automatic.overridenAltitude));
     QVERIFY(qFuzzyCompare(converted.data.automatic.overridenVelocity, packet.data.automatic.overridenVelocity));
     QVERIFY(qFuzzyCompare(converted.data.automatic.overridenYaw, packet.data.automatic.overridenYaw));
+
+    QCOMPARE(packet.crc, converted.crc);
+    QVERIFY(converted.validateCrc());
 }
