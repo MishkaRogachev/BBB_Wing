@@ -14,6 +14,7 @@ namespace domain
         ~AbstractTransceiver() override;
 
     public slots:
+        virtual bool start() = 0;
         virtual void transmit(const QByteArray& packet) = 0;
 
     signals:

@@ -16,12 +16,15 @@ SerialPortTransceiver::SerialPortTransceiver(const QString& device,
     AbstractTransceiver(parent)
 {
     m_port = new QSerialPort(device, this);
-    m_port->open(QIODevice::ReadWrite);
-
-    // m_port->setBaudRate(38400); TODO: setBaudRate, after hardware reconfiguration
 
     connect(m_port, &QSerialPort::readyRead,
             this, &SerialPortTransceiver::readSerialData);
+}
+
+bool SerialPortTransceiver::start()
+{
+    return m_port->open(QIODevice::ReadWrite);
+    // m_port->setBaudRate(38400); TODO: setBaudRate, after hardware reconfiguration
 }
 
 void SerialPortTransceiver::transmit(const QByteArray& packet)

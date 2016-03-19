@@ -22,6 +22,7 @@ namespace domain
         int transmitPort() const;
 
     public slots:
+        bool start() override;
         void transmit(const QByteArray& packet) override;
 
         void setTransmitAdress(const QHostAddress& transmitAdress);
@@ -32,6 +33,7 @@ namespace domain
 
     private:
         QUdpSocket* m_socket;
+        int m_port;
         QHostAddress m_transmitAdress;
         int m_transmitPort;
     };

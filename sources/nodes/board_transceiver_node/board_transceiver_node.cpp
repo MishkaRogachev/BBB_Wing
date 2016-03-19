@@ -44,11 +44,13 @@ BoardTransceiverNode::BoardTransceiverNode(QObject* parent):
         Config::setting("udp_workstation_port").toInt(), this);
     connect(d->wireTransceiver, &AbstractTransceiver::received,
             this, &BoardTransceiverNode::onPacketReceived);
+    d->wireTransceiver->start();
 
     d->airTransceiver = new SerialPortTransceiver(
         Config::setting("serial_port_board").toString(), this);
     connect(d->airTransceiver, &AbstractTransceiver::received,
             this, &BoardTransceiverNode::onPacketReceived);
+    d->airTransceiver->start();
 
     // 1 Hz for timeout
     d->receiver = new BoardReceiverNode(1, &d->pub);

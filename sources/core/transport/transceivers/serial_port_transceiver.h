@@ -15,6 +15,7 @@ namespace domain
         SerialPortTransceiver(const QString& device, QObject* parent = nullptr);
 
     public slots:
+        bool start() override;
         void transmit(const QByteArray& packet) override;
 
     private slots:

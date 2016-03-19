@@ -9,10 +9,10 @@ UdpTransceiver::UdpTransceiver(int port, const QHostAddress& transmitAdress, int
                                QObject* parent):
     AbstractTransceiver(parent),
     m_socket(new QUdpSocket(this)),
+    m_port(port),
     m_transmitAdress(transmitAdress),
     m_transmitPort(transmitPort)
 {
-    m_socket->bind(port);
     connect(m_socket, &QUdpSocket::readyRead, this,
             &UdpTransceiver::readPendingDatagrams);
 }
@@ -30,6 +30,11 @@ QHostAddress UdpTransceiver::transmitAdress() const
 int UdpTransceiver::transmitPort() const
 {
     return m_transmitPort;
+}
+
+bool UdpTransceiver::start()
+{
+    return m_socket->bind(m_port);
 }
 
 void UdpTransceiver::readPendingDatagrams()
