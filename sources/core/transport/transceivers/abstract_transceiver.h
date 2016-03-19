@@ -16,6 +16,7 @@ namespace domain
     public slots:
         virtual bool start() = 0;
         virtual void transmit(const QByteArray& packet) = 0;
+        virtual bool isAvailable() const = 0;
 
     signals:
         void received(const QByteArray& packet);

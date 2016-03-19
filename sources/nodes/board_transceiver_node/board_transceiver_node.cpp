@@ -90,5 +90,7 @@ void BoardTransceiverNode::onPacketReceived(const QByteArray& packet)
 void BoardTransceiverNode::transmitPacket(const QByteArray& packet)
 {
     d->wireTransceiver->transmit(packet);
-    d->airTransceiver->transmit(packet);
+
+    if (d->airTransceiver->isAvailable() || d->airTransceiver->start())
+        d->airTransceiver->transmit(packet);
 }

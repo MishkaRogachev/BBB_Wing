@@ -17,6 +17,7 @@ namespace domain
     public slots:
         bool start() override;
         void transmit(const QByteArray& packet) override;
+        bool isAvailable() const override;
 
     private slots:
         void readSerialData();

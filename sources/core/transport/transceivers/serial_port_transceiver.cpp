@@ -33,6 +33,11 @@ void SerialPortTransceiver::transmit(const QByteArray& packet)
     m_port->write(packet.data(), packet.size());
 }
 
+bool SerialPortTransceiver::isAvailable() const
+{
+    return m_port->isOpen();
+}
+
 void SerialPortTransceiver::readSerialData()
 {
     m_data.append(m_port->readAll());

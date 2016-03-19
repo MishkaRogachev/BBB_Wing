@@ -22,6 +22,11 @@ void UdpTransceiver::transmit(const QByteArray& packet)
     m_socket->writeDatagram(packet, m_transmitAdress, m_transmitPort);
 }
 
+bool UdpTransceiver::isAvailable() const
+{
+    return true; //TODO: isAvailable handling
+}
+
 QHostAddress UdpTransceiver::transmitAdress() const
 {
     return m_transmitAdress;

@@ -24,6 +24,7 @@ namespace domain
     public slots:
         bool start() override;
         void transmit(const QByteArray& packet) override;
+        bool isAvailable() const override;
 
         void setTransmitAdress(const QHostAddress& transmitAdress);
         void setTransmitPort(int transmitPort);
