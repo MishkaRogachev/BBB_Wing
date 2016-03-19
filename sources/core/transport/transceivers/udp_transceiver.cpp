@@ -5,15 +5,14 @@
 
 using namespace domain;
 
-UdpTransceiver::UdpTransceiver(const QHostAddress& address, int port,
-                               const QHostAddress& transmitAdress, int transmitPort,
+UdpTransceiver::UdpTransceiver(int port, const QHostAddress& transmitAdress, int transmitPort,
                                QObject* parent):
     AbstractTransceiver(parent),
     m_socket(new QUdpSocket(this)),
     m_transmitAdress(transmitAdress),
     m_transmitPort(transmitPort)
 {
-    m_socket->bind(address, port);
+    m_socket->bind(port);
     connect(m_socket, &QUdpSocket::readyRead, this,
             &UdpTransceiver::readPendingDatagrams);
 }

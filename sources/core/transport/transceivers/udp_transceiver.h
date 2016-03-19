@@ -15,8 +15,7 @@ namespace domain
         Q_OBJECT
 
     public:
-        UdpTransceiver(const QHostAddress& address, int port,
-                       const QHostAddress& transmitAdress, int transmitPort,
+        UdpTransceiver(int port, const QHostAddress& transmitAdress, int transmitPort,
                        QObject* parent = nullptr);
 
         QHostAddress transmitAdress() const;

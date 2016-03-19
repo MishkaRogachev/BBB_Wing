@@ -40,7 +40,6 @@ WorkstationTransceiverNode::WorkstationTransceiverNode(QObject* parent):
     d->pub.bind("ipc://transceiver");
 
     d->wireTransceiver = new UdpTransceiver(
-        QHostAddress(Config::setting("udp_workstation_address").toString()),
         Config::setting("udp_workstation_port").toInt(),
         QHostAddress(Config::setting("udp_board_address").toString()),
         Config::setting("udp_board_port").toInt(), this);
