@@ -22,6 +22,12 @@ Column {
     property int maxYaw: 17
     property alias radius: mask.radius
 
+    Behavior on pitch { PropertyAnimation { duration: 100 } }
+    Behavior on roll { PropertyAnimation { duration: 100 } }
+    Behavior on yaw { PropertyAnimation { duration: 100 } }
+    Behavior on velocity { PropertyAnimation { duration: 100 } }
+    Behavior on altitude { PropertyAnimation { duration: 100 } }
+
     Row {
         anchors.horizontalCenter: parent.horizontalCenter
 
