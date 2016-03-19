@@ -55,7 +55,8 @@ BoardTransceiverNode::BoardTransceiverNode(QObject* parent):
     d->receiver = new BoardReceiverNode(1, &d->pub);
     this->addNode(d->receiver);
 
-    d->transmitter = new BoardTransmitterNode(1);
+    d->transmitter = new BoardTransmitterNode(
+                         Config::setting("transmitter_frequency").toInt());
     connect(d->transmitter, &BoardTransmitterNode::transmit,
             this, &BoardTransceiverNode::transmitPacket);
     this->addNode(d->transmitter);
