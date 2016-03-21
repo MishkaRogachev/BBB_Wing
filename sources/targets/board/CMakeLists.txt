@@ -13,6 +13,7 @@ set(LIBRARIES
     sensor_ins_node
     sensor_sns_node
     flight_recorder_node
+    flight_navigator_node
     flight_controller_node
     board_transceiver_node
 )
