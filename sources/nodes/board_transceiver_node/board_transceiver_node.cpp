@@ -10,8 +10,8 @@
 #include "subscriber.h"
 #include "publisher.h"
 
-#include "udp_transceiver.h"
-#include "serial_port_transceiver.h"
+#include "udp_exchanger.h"
+#include "serial_port_exchanger.h"
 
 #include "board_receiver_node.h"
 #include "board_transmitter_node.h"
@@ -24,8 +24,8 @@ public:
     Subscriber sub;
     Publisher pub;
 
-    AbstractTransceiver* wireTransceiver;
-    AbstractTransceiver* airTransceiver;
+    AbstractExchanger* wireLine;
+    AbstractExchanger* airLine;
 
     BoardReceiverNode* receiver;
     BoardTransmitterNode* transmitter;
@@ -38,19 +38,19 @@ BoardTransceiverNode::BoardTransceiverNode(QObject* parent):
     Config::begin("Transceiver");
     d->pub.bind("ipc://transceiver");
 
-    d->wireTransceiver = new UdpTransceiver(
+    d->wireLine = new UdpExchanger(
         Config::setting("udp_board_port").toInt(),
         QHostAddress(Config::setting("udp_workstation_address").toString()),
         Config::setting("udp_workstation_port").toInt(), this);
-    connect(d->wireTransceiver, &AbstractTransceiver::received,
+    connect(d->wireLine, &AbstractExchanger::received,
             this, &BoardTransceiverNode::onPacketReceived);
-    d->wireTransceiver->start();
+    d->wireLine->start();
 
-    d->airTransceiver = new SerialPortTransceiver(
+    d->airLine = new SerialPortExchanger(
         Config::setting("serial_port_board").toString(), this);
-    connect(d->airTransceiver, &AbstractTransceiver::received,
+    connect(d->airLine, &AbstractExchanger::received,
             this, &BoardTransceiverNode::onPacketReceived);
-    d->airTransceiver->start();
+    d->airLine->start();
 
     // 1 Hz for timeout
     d->receiver = new BoardReceiverNode(1, &d->pub);
@@ -89,8 +89,8 @@ void BoardTransceiverNode::onPacketReceived(const QByteArray& packet)
 
 void BoardTransceiverNode::transmitPacket(const QByteArray& packet)
 {
-    d->wireTransceiver->transmit(packet);
+    d->wireLine->transmit(packet);
 
-    if (d->airTransceiver->isAvailable() || d->airTransceiver->start())
-        d->airTransceiver->transmit(packet);
+    if (d->airLine->isAvailable() || d->airLine->start())
+        d->airLine->transmit(packet);
 }

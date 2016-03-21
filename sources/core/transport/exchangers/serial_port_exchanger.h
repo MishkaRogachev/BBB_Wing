@@ -1,23 +1,24 @@
-#ifndef SERIAL_PORT_TRANSCEIVER_H
-#define SERIAL_PORT_TRANSCEIVER_H
+#ifndef SERIAL_PORT_EXCHANGER_H
+#define SERIAL_PORT_EXCHANGER_H
 
-#include "abstract_transceiver.h"
+#include "abstract_exchanger.h"
 
 class QSerialPort;
 
 namespace domain
 {
-    class SerialPortTransceiver: public AbstractTransceiver
+    class SerialPortExchanger: public AbstractExchanger
     {
         Q_OBJECT
 
     public:
-        SerialPortTransceiver(const QString& device, QObject* parent = nullptr);
+        SerialPortExchanger(const QString& device, QObject* parent = nullptr);
+
+        bool isAvailable() const override;
 
     public slots:
         bool start() override;
         void transmit(const QByteArray& packet) override;
-        bool isAvailable() const override;
 
     private slots:
         void readSerialData();
@@ -29,4 +30,4 @@ namespace domain
     };
 }
 
-#endif // SERIAL_PORT_TRANSCEIVER_H
+#endif // SERIAL_PORT_EXCHANGER_H

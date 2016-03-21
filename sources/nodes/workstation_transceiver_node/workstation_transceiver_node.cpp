@@ -10,8 +10,8 @@
 #include "subscriber.h"
 #include "publisher.h"
 
-#include "udp_transceiver.h"
-#include "serial_port_transceiver.h"
+#include "udp_exchanger.h"
+#include "serial_port_exchanger.h"
 
 #include "workstation_receiver_node.h"
 #include "workstation_transmitter_node.h"
@@ -24,9 +24,9 @@ public:
     Subscriber sub;
     Publisher pub;
 
-    AbstractTransceiver* wireTransceiver;
-    AbstractTransceiver* airTransceiver;
-    AbstractTransceiver* activeTransceiver = nullptr;
+    AbstractExchanger* wireLine;
+    AbstractExchanger* airLine;
+    AbstractExchanger* activeLine = nullptr;
 
     WorkstationReceiverNode* receiver;
     WorkstationTransmitterNode* transmitter;
@@ -39,19 +39,19 @@ WorkstationTransceiverNode::WorkstationTransceiverNode(QObject* parent):
     Config::begin("Transceiver"); // TODO: unique board/workstation
     d->pub.bind("ipc://transceiver");
 
-    d->wireTransceiver = new UdpTransceiver(
+    d->wireLine = new UdpExchanger(
         Config::setting("udp_workstation_port").toInt(),
         QHostAddress(Config::setting("udp_board_address").toString()),
         Config::setting("udp_board_port").toInt(), this);
-    connect(d->wireTransceiver, &AbstractTransceiver::received,
+    connect(d->wireLine, &AbstractExchanger::received,
             this, &WorkstationTransceiverNode::onPacketReceived);
-    d->wireTransceiver->start();
+    d->wireLine->start();
 
-    d->airTransceiver = new SerialPortTransceiver(
+    d->airLine = new SerialPortExchanger(
         Config::setting("serial_port_workstation").toString(), this);
-    connect(d->airTransceiver, &AbstractTransceiver::received,
+    connect(d->airLine, &AbstractExchanger::received,
             this, &WorkstationTransceiverNode::onPacketReceived);
-    d->airTransceiver->start();
+    d->airLine->start();
 
     // 1 Hz for receive statistics & timeout
     d->receiver = new WorkstationReceiverNode(1, &d->pub);
@@ -86,13 +86,13 @@ void WorkstationTransceiverNode::init()
 
 void WorkstationTransceiverNode::onPacketReceived(const QByteArray& packet)
 {
-    if (this->sender() == d->wireTransceiver)
+    if (this->sender() == d->wireLine)
     {
         this->setActiveWireLine();
         d->receiver->onPacketReceived(packet);
     }
-    else if (this->sender() == d->airTransceiver &&
-             d->activeTransceiver != d->wireTransceiver)
+    else if (this->sender() == d->airLine &&
+             d->activeLine != d->wireLine)
     {
         this->setActiveAirLine();
         d->receiver->onPacketReceived(packet);
@@ -101,24 +101,24 @@ void WorkstationTransceiverNode::onPacketReceived(const QByteArray& packet)
 
 void WorkstationTransceiverNode::transmitPacket(const QByteArray& packet)
 {
-    if (!d->activeTransceiver) return;
-    d->activeTransceiver->transmit(packet);
+    if (!d->activeLine) return;
+    d->activeLine->transmit(packet);
 }
 
 void WorkstationTransceiverNode::setActiveWireLine()
 {
-    d->activeTransceiver = d->wireTransceiver;
+    d->activeLine = d->wireLine;
     d->pub.publish(topics::transceiverLine, "wire");
 }
 
 void WorkstationTransceiverNode::setActiveAirLine()
 {
-    d->activeTransceiver = d->airTransceiver;
+    d->activeLine = d->airLine;
     d->pub.publish(topics::transceiverLine, "air");
 }
 
 void WorkstationTransceiverNode::setInactiveLine()
 {
-    d->activeTransceiver = nullptr;
+    d->activeLine = nullptr;
     d->pub.publish(topics::transceiverLine, "none");
 }
