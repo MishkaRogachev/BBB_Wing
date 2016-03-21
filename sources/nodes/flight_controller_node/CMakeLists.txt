@@ -2,7 +2,7 @@
 cmake_minimum_required(VERSION 2.8.11)
 
 # Project
-set(PROJECT flight_recorder_node)
+set(PROJECT flight_controller_node)
 project(${PROJECT})
 
 # Includes
@@ -13,7 +13,7 @@ include_directories(${INCLUDES} ${INTERNAL_INCLUDES})
 file(GLOB_RECURSE INTERNAL_SOURCES "*.cpp" "*.h")
 
 # Qt5 wrap node's headers
-qt5_wrap_cpp(MOC_SOURCES flight_recorder_node.h)
+qt5_wrap_cpp(MOC_SOURCES flight_controller_node.h)
 
 # Static Library target
 add_library(${PROJECT} STATIC ${SOURCES} ${INTERNAL_SOURCES} ${MOC_SOURCES})

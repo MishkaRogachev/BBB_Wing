@@ -8,6 +8,7 @@
 #include "sensor_ins_node.h"
 #include "sensor_sns_node.h"
 #include "flight_recorder_node.h"
+#include "flight_controller_node.h"
 #include "board_transceiver_node.h"
 
 int main(int argc, char* argv[])
@@ -22,6 +23,7 @@ int main(int argc, char* argv[])
     scheduler.addNode(new SensorInsNode(100));
     scheduler.addNode(new SensorSnsNode(5));
     scheduler.addNode(new FlightRecorderNode(25));
+    scheduler.addNode(new FlightControllerNode(25));
     scheduler.addNode(new BoardTransceiverNode());
 
     scheduler.init();
