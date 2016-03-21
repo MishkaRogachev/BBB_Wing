@@ -18,7 +18,7 @@ namespace domain
     public slots:
         void exec() override;
 
-        void onPacketReceived(const QByteArray& packetData);
+        void processPacket(const QByteArray& packetData);
 
     private:
         Publisher* m_pub;

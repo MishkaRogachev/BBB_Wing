@@ -23,7 +23,7 @@ void BoardReceiverNode::exec()
     m_status = false;
 }
 
-void BoardReceiverNode::onPacketReceived(const QByteArray& packetData)
+void BoardReceiverNode::processPacket(const QByteArray& packetData)
 {
     QDataStream stream(packetData);
     GroundPacket packet;

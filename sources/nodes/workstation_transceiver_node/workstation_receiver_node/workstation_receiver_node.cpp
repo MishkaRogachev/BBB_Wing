@@ -34,7 +34,7 @@ void WorkstationReceiverNode::exec()
     m_goodCount = 0;
 }
 
-void WorkstationReceiverNode::onPacketReceived(const QByteArray& packetData)
+void WorkstationReceiverNode::processPacket(const QByteArray& packetData)
 {
     QDataStream stream(packetData);
     BoardPacket packet;

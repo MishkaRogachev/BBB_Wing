@@ -89,13 +89,13 @@ void WorkstationTransceiverNode::onPacketReceived(const QByteArray& packet)
     if (this->sender() == d->wireLine)
     {
         this->setActiveWireLine();
-        d->receiver->onPacketReceived(packet);
+        d->receiver->processPacket(packet);
     }
     else if (this->sender() == d->airLine &&
              d->activeLine != d->wireLine)
     {
         this->setActiveAirLine();
-        d->receiver->onPacketReceived(packet);
+        d->receiver->processPacket(packet);
     }
 }
 

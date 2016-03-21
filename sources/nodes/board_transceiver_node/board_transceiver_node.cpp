@@ -84,13 +84,13 @@ void BoardTransceiverNode::init()
 
 void BoardTransceiverNode::onPacketReceived(const QByteArray& packet)
 {
-    d->receiver->onPacketReceived(packet);
+    d->receiver->processPacket(packet);
 }
 
 void BoardTransceiverNode::transmitPacket(const QByteArray& packet)
 {
-    d->wireLine->transmit(packet);
-
+    if (d->wireLine->isAvailable() || d->wireLine->start())
+        d->wireLine->transmit(packet);
     if (d->airLine->isAvailable() || d->airLine->start())
         d->airLine->transmit(packet);
 }
