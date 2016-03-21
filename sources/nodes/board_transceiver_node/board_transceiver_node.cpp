@@ -26,6 +26,7 @@ public:
 
     AbstractExchanger* wireLine;
     AbstractExchanger* airLine;
+    AbstractExchanger* activeLine = nullptr;
 
     BoardReceiverNode* receiver;
     BoardTransmitterNode* transmitter;
@@ -54,6 +55,8 @@ BoardTransceiverNode::BoardTransceiverNode(QObject* parent):
 
     // 1 Hz for timeout
     d->receiver = new BoardReceiverNode(1, &d->pub);
+    connect(d->receiver, &BoardReceiverNode::timeout,
+            this, &BoardTransceiverNode::onTimeout);
     this->addNode(d->receiver);
 
     d->transmitter = new BoardTransmitterNode(
@@ -84,13 +87,22 @@ void BoardTransceiverNode::init()
 
 void BoardTransceiverNode::onPacketReceived(const QByteArray& packet)
 {
+    d->activeLine == qobject_cast<AbstractExchanger*>(this->sender());
     d->receiver->processPacket(packet);
+}
+
+void BoardTransceiverNode::onTimeout()
+{
+    d->activeLine = nullptr;
 }
 
 void BoardTransceiverNode::transmitPacket(const QByteArray& packet)
 {
-    if (d->wireLine->isAvailable() || d->wireLine->start())
+    if (d->activeLine != d->airLine &&
+        (d->wireLine->isAvailable() || d->wireLine->start()))
         d->wireLine->transmit(packet);
-    if (d->airLine->isAvailable() || d->airLine->start())
+
+    if (d->activeLine != d->wireLine &&
+        (d->airLine->isAvailable() || d->airLine->start()))
         d->airLine->transmit(packet);
 }

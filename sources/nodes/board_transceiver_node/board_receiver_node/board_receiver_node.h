@@ -20,6 +20,9 @@ namespace domain
 
         void processPacket(const QByteArray& packetData);
 
+    signals:
+        void timeout();
+
     private:
         Publisher* m_pub;
         bool m_status;

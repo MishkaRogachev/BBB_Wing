@@ -18,6 +18,7 @@ namespace domain
 
     private slots:
         void onPacketReceived(const QByteArray& packet);
+        void onTimeout();
         void transmitPacket(const QByteArray& packet);
 
     private:
