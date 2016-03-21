@@ -23,7 +23,7 @@ SerialPortExchanger::SerialPortExchanger(const QString& device,
 
 bool SerialPortExchanger::isAvailable() const
 {
-    return m_port->isOpen();
+    return m_port->isOpen(); // TODO: handle serial port avalibility
 }
 
 bool SerialPortExchanger::start()

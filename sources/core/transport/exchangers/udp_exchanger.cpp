@@ -29,7 +29,7 @@ int UdpExchanger::port() const
 
 bool UdpExchanger::isAvailable() const
 {
-    return true; //TODO: isAvailable handling
+    return m_socket->isOpen(); // TODO: handle socket avalibility
 }
 
 bool UdpExchanger::start()
