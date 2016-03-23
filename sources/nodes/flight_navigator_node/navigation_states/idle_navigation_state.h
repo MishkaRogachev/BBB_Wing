@@ -7,11 +7,14 @@ namespace domain
 {
     class IdleNavigationState: public AbstractNavigationState
     {
+        Q_OBJECT
+
     public:
-        IdleNavigationState(Publisher* pub);
+        IdleNavigationState(QObject* parent = nullptr);
 
         QString stateId() const override;
 
+    public slots:
         void process() override;
     };
 }

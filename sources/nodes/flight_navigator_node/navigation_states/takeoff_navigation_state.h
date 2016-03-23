@@ -7,8 +7,10 @@ namespace domain
 {
     class TakeoffNavigationState: public AbstractNavigationState
     {
+        Q_OBJECT
+
     public:
-        TakeoffNavigationState(Publisher* pub);
+        TakeoffNavigationState(QObject* parent = nullptr);
 
         QString stateId() const override;
 

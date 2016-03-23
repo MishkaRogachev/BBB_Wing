@@ -1,19 +1,24 @@
 #include "abstract_navigation_state.h"
 
 // Internal
-#include "publisher.h"
 #include "topics.h"
 
 using namespace domain;
 
-AbstractNavigationState::AbstractNavigationState(Publisher* pub):
-    m_pub(pub)
+AbstractNavigationState::AbstractNavigationState(QObject* parent):
+    QObject(parent)
 {}
 
 AbstractNavigationState::~AbstractNavigationState()
 {}
 
+void AbstractNavigationState::onSubReceived(const QString& topic,
+                                            const QByteArray& msg)
+{
+
+}
+
 void AbstractNavigationState::process()
 {
-    m_pub->publish(topics::navigationState, this->stateId().toLatin1());
+    this->publish(topics::navigationState, this->stateId().toLatin1());
 }

@@ -13,7 +13,12 @@ include_directories(${INCLUDES} ${INTERNAL_INCLUDES})
 file(GLOB_RECURSE INTERNAL_SOURCES "*.cpp" "*.h")
 
 # Qt5 wrap node's headers
-qt5_wrap_cpp(MOC_SOURCES flight_navigator_node.h)
+qt5_wrap_cpp(MOC_SOURCES
+    flight_navigator_node.h
+    navigation_states/abstract_navigation_state.h
+    navigation_states/idle_navigation_state.h
+    navigation_states/takeoff_navigation_state.h
+)
 
 # Static Library target
 add_library(${PROJECT} STATIC ${SOURCES} ${INTERNAL_SOURCES} ${MOC_SOURCES})

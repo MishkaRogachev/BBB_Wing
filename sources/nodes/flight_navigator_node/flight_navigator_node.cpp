@@ -20,7 +20,7 @@ public:
     Subscriber sub;
     Publisher pub;
 
-    AbstractNavigationState* state = new IdleNavigationState(&pub);
+    AbstractNavigationState* state = nullptr;
 };
 
 FlightNavigatorNode::FlightNavigatorNode(float frequency, QObject* parent):
@@ -32,7 +32,6 @@ FlightNavigatorNode::FlightNavigatorNode(float frequency, QObject* parent):
 
 FlightNavigatorNode::~FlightNavigatorNode()
 {
-    delete d->state;
     delete d;
 }
 
@@ -44,8 +43,7 @@ void FlightNavigatorNode::init()
      d->sub.connectTo("ipc://transceiver");
 
      d->sub.subscribe("");
-     connect(&d->sub, &Subscriber::received, this,
-             &FlightNavigatorNode::onSubReceived);
+     this->onStateRequested(new IdleNavigationState(this));
 }
 
 void FlightNavigatorNode::exec()
@@ -53,8 +51,16 @@ void FlightNavigatorNode::exec()
     d->state->process();
 }
 
-void FlightNavigatorNode::onSubReceived(const QString& topic,
-                                        const QByteArray& msg)
+void FlightNavigatorNode::onStateRequested(AbstractNavigationState* state)
 {
-    // TODO:
+    if (d->state) delete d->state;
+
+    connect(&d->sub, &Subscriber::received,
+            state, &AbstractNavigationState::onSubReceived);
+    connect(state, SIGNAL(publish(QString,QByteArray)),
+            &d->pub, SLOT(publish(QString,QByteArray)));
+    connect(state, &AbstractNavigationState::requestNewState,
+            this, &FlightNavigatorNode::onStateRequested);
+
+    d->state = state;
 }

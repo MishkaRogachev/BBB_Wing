@@ -6,8 +6,8 @@
 
 using namespace domain;
 
-IdleNavigationState::IdleNavigationState(Publisher* pub):
-    AbstractNavigationState(pub)
+IdleNavigationState::IdleNavigationState(QObject* parent):
+    AbstractNavigationState(parent)
 {}
 
 QString IdleNavigationState::stateId() const
@@ -17,7 +17,7 @@ QString IdleNavigationState::stateId() const
 
 void IdleNavigationState::process()
 {
-    m_pub->publish(topics::controlPitch, QByteArray::number(0));
-    m_pub->publish(topics::controlRoll, QByteArray::number(0));
-    m_pub->publish(topics::controlVelocity, QByteArray::number(0));
+    this->publish(topics::controlPitch, QByteArray::number(0));
+    this->publish(topics::controlRoll, QByteArray::number(0));
+    this->publish(topics::controlVelocity, QByteArray::number(0));
 }

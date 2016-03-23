@@ -5,6 +5,8 @@
 
 namespace domain
 {
+    class AbstractNavigationState;
+
     class FlightNavigatorNode: public AbstractNodeFrequency
     {
         Q_OBJECT
@@ -18,7 +20,7 @@ namespace domain
         void exec() override;
 
     private slots:
-        void onSubReceived(const QString& topic, const QByteArray& msg);
+        void onStateRequested(AbstractNavigationState* state);
 
     private:
         class Impl;
