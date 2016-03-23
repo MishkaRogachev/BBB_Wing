@@ -8,6 +8,7 @@
 #include "sensor_ins_node.h"
 #include "sensor_sns_node.h"
 #include "flight_recorder_node.h"
+#include "flight_navigator_node.h"
 #include "flight_controller_node.h"
 #include "board_transceiver_node.h"
 

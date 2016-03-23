@@ -8,6 +8,8 @@ namespace domain
     public:
         AbstractNavigationState();
         virtual ~AbstractNavigationState();
+
+        virtual void process() = 0;
     };
 }
 

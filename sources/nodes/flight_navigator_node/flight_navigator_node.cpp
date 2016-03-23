@@ -8,12 +8,15 @@
 #include "config.h"
 #include "subscriber.h"
 
+#include "idle_navigation_state.h"
+
 using namespace domain;
 
 class FlightNavigatorNode::Impl
 {
 public:
     Subscriber sub;
+    AbstractNavigationState* state = new IdleNavigationState();
 };
 
 FlightNavigatorNode::FlightNavigatorNode(float frequency, QObject* parent):
@@ -23,6 +26,7 @@ FlightNavigatorNode::FlightNavigatorNode(float frequency, QObject* parent):
 
 FlightNavigatorNode::~FlightNavigatorNode()
 {
+    delete d->state;
     delete d;
 }
 
@@ -40,7 +44,7 @@ void FlightNavigatorNode::init()
 
 void FlightNavigatorNode::exec()
 {
-    // TODO:
+    d->state->process();
 }
 
 void FlightNavigatorNode::onSubReceived(const QString& topic,

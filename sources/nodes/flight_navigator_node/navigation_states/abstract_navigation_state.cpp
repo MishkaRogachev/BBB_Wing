@@ -6,4 +6,4 @@ AbstractNavigationState::AbstractNavigationState()
 {}
 
 AbstractNavigationState::~AbstractNavigationState()
-{
+{}
