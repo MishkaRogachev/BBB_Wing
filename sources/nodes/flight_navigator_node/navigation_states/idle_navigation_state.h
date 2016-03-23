@@ -8,7 +8,9 @@ namespace domain
     class IdleNavigationState: public AbstractNavigationState
     {
     public:
-        IdleNavigationState();
+        IdleNavigationState(Publisher* pub);
+
+        QString stateId() const override;
 
         void process() override;
     };

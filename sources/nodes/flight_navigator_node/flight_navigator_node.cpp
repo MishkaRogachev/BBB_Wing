@@ -6,7 +6,9 @@
 // Internal
 #include "topics.h"
 #include "config.h"
+
 #include "subscriber.h"
+#include "publisher.h"
 
 #include "idle_navigation_state.h"
 
@@ -16,13 +18,17 @@ class FlightNavigatorNode::Impl
 {
 public:
     Subscriber sub;
-    AbstractNavigationState* state = new IdleNavigationState();
+    Publisher pub;
+
+    AbstractNavigationState* state = new IdleNavigationState(&pub);
 };
 
 FlightNavigatorNode::FlightNavigatorNode(float frequency, QObject* parent):
     AbstractNodeFrequency(frequency, parent),
     d(new Impl())
-{}
+{
+    d->pub.bind("ipc://navigator");
+}
 
 FlightNavigatorNode::~FlightNavigatorNode()
 {

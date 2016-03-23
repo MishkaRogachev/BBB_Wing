@@ -26,6 +26,12 @@ namespace topics
     const QString snsAltitude = "sns_altitude";
     const QString snsClimb = "sns_climb";
 
+    const QString navigationState = "navi_state";
+
+    const QString controlPitch = "ctrl_pitch";
+    const QString controlRoll = "ctrl_roll";
+    const QString controlVelocity = "ctrl_velocity";
+
     const QString transceiverStatus = "tr_status";
     const QString transceiverLine = "tr_line";
     const QString transceiverPps = "tr_pps";
@@ -35,7 +41,10 @@ namespace topics
         altimeterStatus, altimeterAltitude, altimeterTemperature,
         insStatus, insTemperature, insPitch, insRoll, insYaw,
         snsStatus, snsSatellites, snsFix, snsLatitude, snsLongitude,
-        snsYaw, snsVelocity, snsAltitude, snsClimb, transceiverStatus
+        snsYaw, snsVelocity, snsAltitude, snsClimb,
+        navigationState,
+        controlPitch, controlRoll, controlVelocity,
+        transceiverStatus
     };
 }
 

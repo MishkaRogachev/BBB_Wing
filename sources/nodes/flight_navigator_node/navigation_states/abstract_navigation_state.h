@@ -1,15 +1,24 @@
 #ifndef ABSTRACT_NAVIGATION_STATE_H
 #define ABSTRACT_NAVIGATION_STATE_H
 
+// Qt
+#include <QString>
+
 namespace domain
 {
+    class Publisher;
+
     class AbstractNavigationState
     {
     public:
-        AbstractNavigationState();
+        AbstractNavigationState(Publisher* pub);
         virtual ~AbstractNavigationState();
 
-        virtual void process() = 0;
+        virtual QString stateId() const = 0;
+        virtual void process();
+
+    protected:
+        Publisher* m_pub;
     };
 }
 
