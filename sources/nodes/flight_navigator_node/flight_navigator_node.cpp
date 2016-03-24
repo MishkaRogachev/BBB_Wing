@@ -57,8 +57,8 @@ void FlightNavigatorNode::onStateRequested(AbstractNavigationState* state)
 
     connect(&d->sub, &Subscriber::received,
             state, &AbstractNavigationState::onSubReceived);
-    connect(state, SIGNAL(publish(QString,QByteArray)),
-            &d->pub, SLOT(publish(QString,QByteArray)));
+    connect(state, SIGNAL(publish(QString, QByteArray)),
+            &d->pub, SLOT(publish(QString, QByteArray)));
     connect(state, &AbstractNavigationState::requestNewState,
             this, &FlightNavigatorNode::onStateRequested);
 

@@ -27,6 +27,8 @@ QString TakeoffNavigationState::stateId() const
 
 void TakeoffNavigationState::process()
 {
+    AbstractNavigationState::process();
+
     this->publish(topics::controlPitch, QByteArray::number(m_takeoffPitch));
     this->publish(topics::controlRoll, QByteArray::number(m_takeoffRoll));
     this->publish(topics::controlVelocity, QByteArray::number(m_takeoffVelocity));
