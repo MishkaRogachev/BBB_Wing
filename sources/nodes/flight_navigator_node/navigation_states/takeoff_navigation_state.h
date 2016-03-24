@@ -10,7 +10,7 @@ namespace domain
         Q_OBJECT
 
     public:
-        TakeoffNavigationState(QObject* parent = nullptr);
+        TakeoffNavigationState(AbstractNavigationState&& other);
 
         QString stateId() const override;
 

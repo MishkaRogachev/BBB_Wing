@@ -7,7 +7,7 @@
 using namespace domain;
 
 IdleNavigationState::IdleNavigationState(QObject* parent):
-    AbstractNavigationState(parent)
+    AbstractNavigationState(new NavigationStateData(), parent)
 {}
 
 QString IdleNavigationState::stateId() const

@@ -5,7 +5,7 @@
 
 namespace domain
 {
-    class BoardTransmitterNode : public AbstractNodeFrequency
+    class BoardTransmitterNode: public AbstractNodeFrequency
     {
         Q_OBJECT
 

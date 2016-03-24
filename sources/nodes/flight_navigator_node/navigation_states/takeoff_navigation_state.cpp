@@ -7,8 +7,8 @@
 
 using namespace domain;
 
-TakeoffNavigationState::TakeoffNavigationState(QObject* parent):
-    AbstractNavigationState(parent)
+TakeoffNavigationState::TakeoffNavigationState(AbstractNavigationState&& other):
+    AbstractNavigationState(other.m_data.take(), other.parent())
 {
     Config::begin("Navigator");
 
@@ -33,5 +33,7 @@ void TakeoffNavigationState::process()
     this->publish(topics::controlRoll, QByteArray::number(m_takeoffRoll));
     this->publish(topics::controlVelocity, QByteArray::number(m_takeoffVelocity));
 
-    // TODO: if reached altitude request new state
+    // TODO: StabilizationState
+    //if (m_data->altimeterAltitude > m_takeoffAltitude)
+    //    emit requestNewState(new StabilizationState(*this));
 }
