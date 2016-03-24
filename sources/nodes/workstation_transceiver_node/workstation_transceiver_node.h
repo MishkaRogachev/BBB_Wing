@@ -23,7 +23,7 @@ namespace domain
 
         void setActiveWireLine();
         void setActiveAirLine();
-        void setInactiveLine();
+        void setLineInactive();
 
     private:
         class Impl;

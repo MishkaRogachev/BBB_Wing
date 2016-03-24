@@ -56,7 +56,7 @@ WorkstationTransceiverNode::WorkstationTransceiverNode(QObject* parent):
     // 1 Hz for receive statistics & timeout
     d->receiver = new WorkstationReceiverNode(1, &d->pub);
     connect(d->receiver, &WorkstationReceiverNode::timeout,
-            this, &WorkstationTransceiverNode::setInactiveLine);
+            this, &WorkstationTransceiverNode::setLineInactive);
     this->addNode(d->receiver);
 
     d->transmitter = new WorkstationTransmitterNode(
@@ -89,20 +89,26 @@ void WorkstationTransceiverNode::onPacketReceived(const QByteArray& packet)
     if (this->sender() == d->wireLine)
     {
         this->setActiveWireLine();
-        d->receiver->processPacket(packet);
     }
-    else if (this->sender() == d->airLine &&
-             d->activeLine != d->wireLine)
+    else if (d->activeLine != d->wireLine)
     {
         this->setActiveAirLine();
-        d->receiver->processPacket(packet);
     }
+
+    d->receiver->processPacket(packet);
 }
 
 void WorkstationTransceiverNode::transmitPacket(const QByteArray& packet)
 {
-    if (!d->activeLine) return;
-    d->activeLine->transmit(packet);
+    if (d->activeLine)
+    {
+        d->activeLine->transmit(packet);
+    }
+    else
+    {
+        d->wireLine->transmit(packet);
+        d->airLine->transmit(packet);
+    }
 }
 
 void WorkstationTransceiverNode::setActiveWireLine()
@@ -117,7 +123,7 @@ void WorkstationTransceiverNode::setActiveAirLine()
     d->pub.publish(topics::transceiverLine, "air");
 }
 
-void WorkstationTransceiverNode::setInactiveLine()
+void WorkstationTransceiverNode::setLineInactive()
 {
     d->activeLine = nullptr;
     d->pub.publish(topics::transceiverLine, "none");

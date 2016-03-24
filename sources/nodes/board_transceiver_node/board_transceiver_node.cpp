@@ -87,7 +87,7 @@ void BoardTransceiverNode::init()
 
 void BoardTransceiverNode::onPacketReceived(const QByteArray& packet)
 {
-    d->activeLine == qobject_cast<AbstractExchanger*>(this->sender());
+    d->activeLine = qobject_cast<AbstractExchanger*>(this->sender());
     d->receiver->processPacket(packet);
 }
 
@@ -98,11 +98,13 @@ void BoardTransceiverNode::onTimeout()
 
 void BoardTransceiverNode::transmitPacket(const QByteArray& packet)
 {
-    if (d->activeLine != d->airLine &&
-        (d->wireLine->isAvailable() || d->wireLine->start()))
+    if (d->activeLine)
+    {
+        d->activeLine->transmit(packet);
+    }
+    else
+    {
         d->wireLine->transmit(packet);
-
-    if (d->activeLine != d->wireLine &&
-        (d->airLine->isAvailable() || d->airLine->start()))
         d->airLine->transmit(packet);
+    }
 }
