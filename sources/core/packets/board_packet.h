@@ -1,25 +1,23 @@
 #ifndef BOARD_PACKET_H
 #define BOARD_PACKET_H
 
-#include "packets.h"
+// Internal
+#include "sns_packet.h"
 
 namespace domain
 {
     class BoardDataPacket: public Packet
     {
     public:
-        float latitude;
-        float longitude;
         float altimeterAltitude;
-
-        float velocity;
-        float climb;
 
         float pitch;
         float roll;
         float yaw;
 
         float temperature;
+
+        SnsPacket sns;
 
         bool altimeterStatus;
         bool insStatus;

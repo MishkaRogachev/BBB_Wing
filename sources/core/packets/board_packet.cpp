@@ -12,18 +12,15 @@ quint16 BoardDataPacket::crc()
 
 QDataStream& BoardDataPacket::operator >>(QDataStream& stream) const
 {
-    stream << latitude;
-    stream << longitude;
     stream << altimeterAltitude;
-
-    stream << velocity;
-    stream << climb;
 
     stream << pitch;
     stream << roll;
     stream << yaw;
 
     stream << temperature;
+
+    stream << sns;
 
     stream << altimeterStatus;
     stream << insStatus;
@@ -34,18 +31,15 @@ QDataStream& BoardDataPacket::operator >>(QDataStream& stream) const
 
 QDataStream& BoardDataPacket::operator <<(QDataStream& stream)
 {
-    stream >> latitude;
-    stream >> longitude;
     stream >> altimeterAltitude;
-
-    stream >> velocity;
-    stream >> climb;
 
     stream >> pitch;
     stream >> roll;
     stream >> yaw;
 
     stream >> temperature;
+
+    stream >> sns;
 
     stream >> altimeterStatus;
     stream >> insStatus;

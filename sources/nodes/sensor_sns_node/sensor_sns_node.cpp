@@ -5,6 +5,7 @@
 
 // Internal
 #include "topics.h"
+#include "sns_packet.h"
 
 #include "publisher.h"
 
@@ -44,28 +45,31 @@ void SensorSnsNode::exec()
         return;
     }
 
-    d->pub.publish(topics::snsStatus, QByteArray::number(true));
-    d->pub.publish(topics::snsSatellites,
-                   QByteArray::number(data->satellites_used) + "/" +
-                   QByteArray::number(data->satellites_visible));
-
     if (!data->status)
     {
-        d->pub.publish(topics::snsFix, QByteArray::number(0));
+        d->pub.publish(topics::snsStatus, QByteArray::number(false));
         return;
     }
 
-    d->pub.publish(topics::snsFix, QByteArray::number(data->fix.mode));
+    d->pub.publish(topics::snsStatus, QByteArray::number(true));
 
-    if (data->fix.mode < 2) return;
+    SnsPacket packet;
 
-    d->pub.publish(topics::snsLatitude, QByteArray::number(data->fix.latitude));
-    d->pub.publish(topics::snsLongitude, QByteArray::number(data->fix.longitude));
-    d->pub.publish(topics::snsYaw, QByteArray::number(data->fix.track));
-    d->pub.publish(topics::snsVelocity, QByteArray::number(data->fix.speed));
+    packet.fix = data->fix.mode;
 
-    if (data->fix.mode < 3) return;
+    if (data->fix.mode > 1)
+    {
+        packet.latitude = data->fix.latitude;
+        packet.longitude = data->fix.longitude;
+        packet.yaw = data->fix.track;
+        packet.velocity = data->fix.speed;
+    }
 
-    d->pub.publish(topics::snsAltitude, QByteArray::number(data->fix.altitude));
-    d->pub.publish(topics::snsClimb, QByteArray::number(data->fix.climb));
+    if (data->fix.mode > 2)
+    {
+        packet.altitude = data->fix.altitude;
+        packet.climb = data->fix.climb;
+    }
+
+    d->pub.publish(topics::snsPacket, packet.toByteArray());
 }

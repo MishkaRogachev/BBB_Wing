@@ -11,6 +11,8 @@ namespace domain
     public:
         virtual QDataStream& operator >>(QDataStream& stream) const = 0;
         virtual QDataStream& operator <<(QDataStream& stream) = 0;
+
+        QByteArray toByteArray();
     };
 
     template< class T >

@@ -17,14 +17,7 @@ namespace topics
     const QString insYaw = "ins_yaw";
 
     const QString snsStatus = "sns_status";
-    const QString snsSatellites = "sns_satellites";
-    const QString snsFix = "sns_fix";
-    const QString snsLatitude = "sns_latitude";
-    const QString snsLongitude = "sns_longitude";
-    const QString snsYaw = "sns_yaw";
-    const QString snsVelocity = "sns_velocity";
-    const QString snsAltitude = "sns_altitude";
-    const QString snsClimb = "sns_climb";
+    const QString snsPacket = "sns_packet";
 
     const QString navigationState = "navi_state";
 
@@ -40,8 +33,7 @@ namespace topics
     const QStringList boardTopics = {
         altimeterStatus, altimeterAltitude, altimeterTemperature,
         insStatus, insTemperature, insPitch, insRoll, insYaw,
-        snsStatus, snsSatellites, snsFix, snsLatitude, snsLongitude,
-        snsYaw, snsVelocity, snsAltitude, snsClimb,
+        snsStatus, snsPacket,
         navigationState,
         controlPitch, controlRoll, controlVelocity,
         transceiverStatus

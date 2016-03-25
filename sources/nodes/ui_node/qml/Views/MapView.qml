@@ -18,10 +18,7 @@ Map {
     }
     activeMapType: supportedMapTypes[5] // TerrainMapType
 
-    property variant boardPosition:
-        QtPositioning.coordinate(nodeService.sns_latitude,
-                                 nodeService.sns_longitude,
-                                 nodeService.alt_altitude)
+    property variant boardPosition: boardService.position
 
     onBoardPositionChanged: track.addCoordinate(boardPosition)
 
@@ -43,7 +40,7 @@ Map {
 
             Image {
                 anchors.centerIn: parent
-                rotation: nodeService.ins_yaw
+                rotation: boardService.yaw
                 source: "qrc:/resources/indicators/plane_map_mark.svg"
             }
         }

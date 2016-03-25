@@ -12,13 +12,13 @@ using namespace domain;
 void PacketsTest::testBoardPacket()
 {
     BoardPacket packet;
-
+/*
     packet.data.latitude = 44.564;
     packet.data.longitude = 35.314;
     packet.data.altimeterAltitude = 5679.435;
 
     packet.data.velocity = 56.034;
-    packet.data.climb = -4.324;
+    packet.data.climb = -4.324;*/
 
     packet.data.pitch = 5.455;
     packet.data.roll = -11.567;
@@ -43,8 +43,8 @@ void PacketsTest::testBoardPacket()
         stream >> converted;
     }
 
-    QVERIFY(qFuzzyCompare(converted.data.latitude, packet.data.latitude));
-    QCOMPARE(converted.data.velocity, packet.data.velocity);
+    //QVERIFY(qFuzzyCompare(converted.data.latitude, packet.data.latitude));
+    //QCOMPARE(converted.data.velocity, packet.data.velocity);
     QCOMPARE(converted.data.roll, packet.data.roll);
 
     QCOMPARE(packet.crc, converted.crc);

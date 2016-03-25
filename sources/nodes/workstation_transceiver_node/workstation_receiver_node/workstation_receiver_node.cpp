@@ -55,8 +55,5 @@ void WorkstationReceiverNode::processPacket(const QByteArray& packetData)
     m_pub->publish(topics::insRoll, QByteArray::number(packet.data.roll));
     m_pub->publish(topics::insYaw, QByteArray::number(packet.data.yaw));
     m_pub->publish(topics::snsStatus, QByteArray::number(packet.data.snsStatus));
-    m_pub->publish(topics::snsLatitude, QByteArray::number(packet.data.latitude));
-    m_pub->publish(topics::snsLongitude, QByteArray::number(packet.data.longitude));
-    m_pub->publish(topics::snsVelocity, QByteArray::number(packet.data.velocity));
-    m_pub->publish(topics::snsClimb, QByteArray::number(packet.data.climb));
+    m_pub->publish(topics::snsPacket, packet.data.sns.toByteArray());
 }

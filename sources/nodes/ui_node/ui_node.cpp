@@ -11,8 +11,9 @@
 
 // Internal
 #include "topics.h"
-
 #include "subscriber.h"
+
+#include "board_service.h"
 
 namespace
 {
@@ -32,6 +33,8 @@ class UiNode::Impl
 public:
     QQuickView view;
     Subscriber sub;
+
+    BoardService boardService;
 };
 
 UiNode::UiNode(QObject* parent):
@@ -40,6 +43,7 @@ UiNode::UiNode(QObject* parent):
 {
     initResources();
 
+    d->view.rootContext()->setContextProperty("boardService", &d->boardService);
     d->view.setSource(QUrl(QStringLiteral("qrc:/qml/Views/MainView.qml")));
     d->view.setResizeMode(QQuickView::SizeRootObjectToView);
 
@@ -66,6 +70,6 @@ void UiNode::start()
 
 void UiNode::onSubReceived(const QString& topic, const QByteArray& data)
 {
-    auto service = d->view.rootObject()->findChild<QObject*>(::nodeService);
-    QQmlProperty::write(service, topic, data);
+    if (topic == topics::snsPacket)
+        d->boardService.updateSnsData(SnsPacket::fromByteArray(data));
 }

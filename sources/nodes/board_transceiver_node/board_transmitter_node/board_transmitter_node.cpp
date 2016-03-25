@@ -47,8 +47,6 @@ void BoardTransmitterNode::onSubReceived(const QString& topic, const QByteArray&
     else if (topic == topics::insRoll) d->packet.data.roll = msg.toFloat();
     else if (topic == topics::insYaw) d->packet.data.yaw = msg.toFloat();
     else if (topic == topics::snsStatus) d->packet.data.snsStatus = msg.toInt();
-    else if (topic == topics::snsLatitude) d->packet.data.latitude = msg.toFloat();
-    else if (topic == topics::snsLongitude) d->packet.data.longitude = msg.toFloat();
-    else if (topic == topics::snsVelocity) d->packet.data.velocity = msg.toFloat();
-    else if (topic == topics::snsClimb) d->packet.data.climb = msg.toFloat();
+    else if (topic == topics::snsPacket) d->packet.data.sns = SnsPacket::fromByteArray(msg);
+
 }

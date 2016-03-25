@@ -35,7 +35,7 @@ Rectangle {
                 pitch: nodeService.ins_pitch
                 roll: nodeService.ins_roll
                 yaw: nodeService.ins_yaw
-                velocity: nodeService.sns_velocity
+                velocity: boardService.velocity
                 altitude: nodeService.alt_altitude
             }
 
