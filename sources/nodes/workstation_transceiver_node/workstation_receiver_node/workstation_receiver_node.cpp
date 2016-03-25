@@ -51,9 +51,7 @@ void WorkstationReceiverNode::processPacket(const QByteArray& packetData)
     m_pub->publish(topics::altimeterAltitude, QByteArray::number(packet.data.altimeterAltitude));
     m_pub->publish(topics::altimeterTemperature, QByteArray::number(packet.data.temperature));
     m_pub->publish(topics::insStatus, QByteArray::number(packet.data.insStatus));
-    m_pub->publish(topics::insPitch, QByteArray::number(packet.data.pitch));
-    m_pub->publish(topics::insRoll, QByteArray::number(packet.data.roll));
-    m_pub->publish(topics::insYaw, QByteArray::number(packet.data.yaw));
+    m_pub->publish(topics::insPacket, packet.data.ins.toByteArray());
     m_pub->publish(topics::snsStatus, QByteArray::number(packet.data.snsStatus));
     m_pub->publish(topics::snsPacket, packet.data.sns.toByteArray());
 }

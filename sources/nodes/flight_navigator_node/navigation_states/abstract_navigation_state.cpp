@@ -18,10 +18,8 @@ void AbstractNavigationState::onSubReceived(const QString& topic,
                                             const QByteArray& msg)
 {
     if (topic == topics::snsPacket) m_data->sns = SnsPacket::fromByteArray(msg);
+    else if (topic == topics::insPacket) m_data->ins = InsPacket::fromByteArray(msg);
     else if (topic == topics::altimeterAltitude) m_data->altimeterAltitude = msg.toFloat();
-    else if (topic == topics::insPitch) m_data->pitch = msg.toFloat();
-    else if (topic == topics::insRoll) m_data->roll = msg.toFloat();
-    else if (topic == topics::insYaw) m_data->yaw = msg.toFloat();
 }
 
 void AbstractNavigationState::process()

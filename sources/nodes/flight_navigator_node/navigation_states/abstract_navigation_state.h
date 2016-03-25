@@ -7,6 +7,7 @@
 
 // Internal
 #include "sns_packet.h"
+#include "ins_packet.h"
 
 namespace domain
 {
@@ -15,12 +16,9 @@ namespace domain
     struct NavigationStateData
     {
         SnsPacket sns;
+        InsPacket ins;
 
         float altimeterAltitude = 0.0f;
-
-        float pitch = 0.0f;
-        float roll = 0.0f;
-        float yaw = 0.0;
     };
 
     class AbstractNavigationState: public QObject

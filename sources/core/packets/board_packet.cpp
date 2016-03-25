@@ -14,13 +14,10 @@ QDataStream& BoardDataPacket::operator >>(QDataStream& stream) const
 {
     stream << altimeterAltitude;
 
-    stream << pitch;
-    stream << roll;
-    stream << yaw;
-
     stream << temperature;
 
     stream << sns;
+    stream << ins;
 
     stream << altimeterStatus;
     stream << insStatus;
@@ -33,13 +30,10 @@ QDataStream& BoardDataPacket::operator <<(QDataStream& stream)
 {
     stream >> altimeterAltitude;
 
-    stream >> pitch;
-    stream >> roll;
-    stream >> yaw;
-
     stream >> temperature;
 
     stream >> sns;
+    stream >> ins;
 
     stream >> altimeterStatus;
     stream >> insStatus;

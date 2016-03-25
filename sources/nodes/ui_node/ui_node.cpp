@@ -15,11 +15,6 @@
 
 #include "board_service.h"
 
-namespace
-{
-    const char* nodeService = "nodeService";
-}
-
 inline void initResources()
 {
     Q_INIT_RESOURCE(qml);

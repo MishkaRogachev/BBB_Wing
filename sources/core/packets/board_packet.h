@@ -3,6 +3,7 @@
 
 // Internal
 #include "sns_packet.h"
+#include "ins_packet.h"
 
 namespace domain
 {
@@ -11,13 +12,10 @@ namespace domain
     public:
         float altimeterAltitude;
 
-        float pitch;
-        float roll;
-        float yaw;
-
         float temperature;
 
         SnsPacket sns;
+        InsPacket ins;
 
         bool altimeterStatus;
         bool insStatus;

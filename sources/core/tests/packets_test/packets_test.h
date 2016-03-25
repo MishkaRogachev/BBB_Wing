@@ -9,7 +9,7 @@ namespace domain
     {
         Q_OBJECT
 
-    private slots:
+    private slots: // TODO: local packets
         void testBoardPacket();
         void testGroundPacketManual();
         void testGroundPacketAutomatic();
