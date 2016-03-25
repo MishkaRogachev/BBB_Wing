@@ -31,6 +31,16 @@ float BoardService::snsAltitude() const
     return m_snsAltitude;
 }
 
+float BoardService::pitch() const
+{
+    return m_pitch;
+}
+
+float BoardService::roll() const
+{
+    return m_roll;
+}
+
 float BoardService::yaw() const
 {
     return m_yaw;
@@ -61,6 +71,21 @@ void BoardService::updateSnsData(const SnsPacket& packet)
     {
         m_snsAltitude = packet.altitude;
         emit velocityChanged(packet.altitude);
+    }
+}
+
+void BoardService::updateInsData(const InsPacket& packet)
+{
+    if (!qFuzzyCompare(m_pitch, packet.pitch))
+    {
+        m_pitch = packet.pitch;
+        emit pitchChanged(packet.pitch);
+    }
+
+    if (!qFuzzyCompare(m_roll, packet.roll))
+    {
+        m_roll = packet.roll;
+        emit rollChanged(packet.roll);
     }
 
     if (!qFuzzyCompare(m_yaw, packet.yaw))

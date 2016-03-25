@@ -32,9 +32,9 @@ Rectangle {
 
             FlightDirectorView {
                 id: flightDirector
-                pitch: nodeService.ins_pitch
-                roll: nodeService.ins_roll
-                yaw: nodeService.ins_yaw
+                pitch: boardService.pitch
+                roll: boardService.roll
+                yaw: boardService.yaw
                 velocity: boardService.velocity
                 altitude: nodeService.alt_altitude
             }
