@@ -47,9 +47,8 @@ void WorkstationReceiverNode::processPacket(const QByteArray& packetData)
     }
     m_goodCount++;
 
-    m_pub->publish(topics::altimeterStatus, QByteArray::number(packet.data.altimeterStatus));
-    m_pub->publish(topics::altimeterAltitude, QByteArray::number(packet.data.altimeterAltitude));
-    m_pub->publish(topics::altimeterTemperature, QByteArray::number(packet.data.temperature));
+    m_pub->publish(topics::altStatus, QByteArray::number(packet.data.altimeterStatus));
+    m_pub->publish(topics::altPacket, packet.data.alt.toByteArray());
     m_pub->publish(topics::insStatus, QByteArray::number(packet.data.insStatus));
     m_pub->publish(topics::insPacket, packet.data.ins.toByteArray());
     m_pub->publish(topics::snsStatus, QByteArray::number(packet.data.snsStatus));

@@ -5,10 +5,8 @@
 
 namespace topics
 {
-//    TODO: topics must be grouped and minimized(local packets)1
-    const QString altimeterStatus = "alt_status";
-    const QString altimeterTemperature = "alt_temperature";
-    const QString altimeterAltitude = "alt_altitude";
+    const QString altStatus = "alt_status";
+    const QString altPacket = "alt_packet";
 
     const QString insStatus = "ins_status";
     const QString insPacket = "ins_packet";
@@ -16,7 +14,7 @@ namespace topics
     const QString snsStatus = "sns_status";
     const QString snsPacket = "sns_packet";
 
-    const QString navigationState = "navi_state";
+    const QString naviState = "navi_state";
 
     const QString controlPitch = "ctrl_pitch";
     const QString controlRoll = "ctrl_roll";
@@ -28,10 +26,10 @@ namespace topics
     const QString transceiverBad = "tr_bad";
 
     const QStringList boardTopics = {
-        altimeterStatus, altimeterAltitude, altimeterTemperature,
+        altStatus, altPacket,
         insStatus, insPacket,
         snsStatus, snsPacket,
-        navigationState,
+        naviState,
         controlPitch, controlRoll, controlVelocity,
         transceiverStatus
     };

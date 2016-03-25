@@ -6,6 +6,7 @@
 #include <QScopedPointer>
 
 // Internal
+#include "alt_packet.h"
 #include "sns_packet.h"
 #include "ins_packet.h"
 
@@ -15,10 +16,9 @@ namespace domain
 
     struct NavigationStateData
     {
+        AltPacket alt;
         SnsPacket sns;
         InsPacket ins;
-
-        float altimeterAltitude = 0.0f;
     };
 
     class AbstractNavigationState: public QObject

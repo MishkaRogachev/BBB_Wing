@@ -22,9 +22,9 @@ void PacketsTest::testBoardPacket()
 
     packet.data.pitch = 5.455;
     packet.data.roll = -11.567;
-    packet.data.yaw = 356.645;*/
+    packet.data.yaw = 356.645;
 
-    packet.data.temperature = -4.987;
+    packet.data.temperature = -4.987;*/
 
     packet.data.altimeterStatus = true;
     packet.data.insStatus = true;
@@ -50,7 +50,7 @@ void PacketsTest::testBoardPacket()
     QCOMPARE(packet.crc, converted.crc);
     QVERIFY(converted.validateCrc());
 
-    converted.data.altimeterAltitude = 2334.456;
+    //converted.data.altimeterAltitude = 2334.456;
 
     QVERIFY(!converted.validateCrc());
     converted.calcCrc();

@@ -10,6 +10,8 @@
 #include "config.h"
 #include "publisher.h"
 
+#include "alt_packet.h"
+
 using namespace domain;
 
 class SensorAltimeterNode::Impl
@@ -48,15 +50,17 @@ void SensorAltimeterNode::exec()
     {
         d->altimeter.processMeasurement();
 
-        d->pub.publish(topics::altimeterStatus, QByteArray::number(true));
-        d->pub.publish(topics::altimeterAltitude,
-                       QByteArray::number(d->altimeter.altitude()));
-        d->pub.publish(topics::altimeterTemperature,
-                       QByteArray::number(d->altimeter.temperature()));
+        d->pub.publish(topics::altStatus, QByteArray::number(true));
+
+        AltPacket packet;
+        packet.altitude = d->altimeter.altitude();
+        packet.temperature = d->altimeter.temperature();
+
+        d->pub.publish(topics::altPacket, packet.toByteArray());
     }
     else
     {
-        d->pub.publish(topics::altimeterStatus, QByteArray::number(false));
+        d->pub.publish(topics::altStatus, QByteArray::number(false));
         this->init();
     }
 }

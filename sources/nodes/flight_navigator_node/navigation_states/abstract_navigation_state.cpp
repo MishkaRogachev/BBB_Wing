@@ -17,12 +17,12 @@ AbstractNavigationState::~AbstractNavigationState()
 void AbstractNavigationState::onSubReceived(const QString& topic,
                                             const QByteArray& msg)
 {
-    if (topic == topics::snsPacket) m_data->sns = SnsPacket::fromByteArray(msg);
+    if (topic == topics::altPacket) m_data->alt = AltPacket::fromByteArray(msg);
+    else if (topic == topics::snsPacket) m_data->sns = SnsPacket::fromByteArray(msg);
     else if (topic == topics::insPacket) m_data->ins = InsPacket::fromByteArray(msg);
-    else if (topic == topics::altimeterAltitude) m_data->altimeterAltitude = msg.toFloat();
 }
 
 void AbstractNavigationState::process()
 {
-    this->publish(topics::navigationState, this->stateId().toLatin1());
+    this->publish(topics::naviState, this->stateId().toLatin1());
 }
