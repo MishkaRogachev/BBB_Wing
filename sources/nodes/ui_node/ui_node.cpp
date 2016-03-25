@@ -14,6 +14,7 @@
 #include "subscriber.h"
 
 #include "board_service.h"
+#include "ground_service.h"
 
 inline void initResources()
 {
@@ -30,6 +31,7 @@ public:
     Subscriber sub;
 
     BoardService boardService;
+    GroundService groundService;
 };
 
 UiNode::UiNode(QObject* parent):
@@ -39,6 +41,7 @@ UiNode::UiNode(QObject* parent):
     initResources();
 
     d->view.rootContext()->setContextProperty("boardService", &d->boardService);
+    d->view.rootContext()->setContextProperty("groundService", &d->groundService);
     d->view.setSource(QUrl(QStringLiteral("qrc:/qml/Views/MainView.qml")));
     d->view.setResizeMode(QQuickView::SizeRootObjectToView);
 
@@ -71,4 +74,7 @@ void UiNode::onSubReceived(const QString& topic, const QByteArray& data)
         d->boardService.updateSnsData(SnsPacket::fromByteArray(data));
     else if (topic == topics::insPacket)
         d->boardService.updateInsData(InsPacket::fromByteArray(data));
+    else if (topic == topics::connectionStatusPacket)
+        d->groundService.updateConnectionStatus(
+                    ConnectionStatusPacket::fromByteArray(data));
 }

@@ -20,6 +20,9 @@ void WorkstationReceiverNode::exec()
 {
     ConnectionStatusPacket packet;
 
+    packet.wireLine = false;
+    packet.airLine = false; // TODO: Transceivers to gateway
+
     packet.packetsPerSecond = (m_goodCount * this->frequency());
     if (m_goodCount + m_badCount)
     {

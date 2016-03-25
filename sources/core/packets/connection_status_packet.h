@@ -5,17 +5,11 @@
 
 namespace domain
 {
-    enum class ConnectionLine
-    {
-        None,
-        Wire,
-        Air
-    };
-
     class ConnectionStatusPacket: public Packet
     {
     public:
-        ConnectionLine line;
+        bool airLine;
+        bool wireLine;
         int packetsPerSecond;
         int badPackets;
 

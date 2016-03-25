@@ -1,14 +1,8 @@
 import QtQuick 2.5
-import "../Services"
 
 Rectangle {
     id: main
     color: "#2c3e50"
-
-    NodeService {
-        id: nodeService
-        objectName: "nodeService"
-    }
 
     StatusView {
         id: status
