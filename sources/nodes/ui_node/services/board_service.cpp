@@ -1,5 +1,8 @@
 #include "board_service.h"
 
+// Qt
+#include <QDebug>
+
 using namespace domain;
 
 BoardService::BoardService(QObject* parent):
@@ -70,7 +73,9 @@ void BoardService::updateSnsData(const SnsPacket& packet)
         emit snsFixChanged(packet.fix);
     }
 
-    QGeoCoordinate position(packet.latitude, packet.longitude, packet.altitude);
+    QGeoCoordinate position = packet.fix > 1 ? QGeoCoordinate(packet.latitude,
+                                           packet.longitude, packet.altitude) :
+                                           QGeoCoordinate();
     if (m_position != position)
     {
         m_position = position;

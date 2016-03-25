@@ -19,41 +19,14 @@ Rectangle {
         width: parent.width
         height: parent.height - status.height
 
-        Column {
-            id: dashboard
+        BoardView {
+            id: boardView
             anchors.top: parent.top
-            spacing: 4
-
-            FlightDirectorView {
-                id: flightDirector
-                pitch: boardService.pitch
-                roll: boardService.roll
-                yaw: boardService.yaw
-                velocity: boardService.velocity
-                altitude: boardService.barAltitude
-            }
-
-            Row {
-                anchors.horizontalCenter: parent.horizontalCenter
-
-                Text {
-                    text: qsTr("FIX: ") + boardService.snsFix
-                    font.pointSize: 14
-                    color: "#ecf0f1"
-                    anchors.verticalCenter: parent.verticalCenter
-                }
-            }
-
-            VideoView {
-                id: video
-                width: parent.width
-                height: width * 3 / 4
-            }
         }
 
         MapView {
             id: map
-            width: parent.width - dashboard.width
+            width: parent.width - boardView.width
             height: parent.height
         }
     }

@@ -18,10 +18,6 @@ Map {
     }
     activeMapType: supportedMapTypes[5] // TerrainMapType
 
-    property variant boardPosition: boardService.position
-
-    onBoardPositionChanged: track.addCoordinate(boardPosition)
-
     MapPolyline {
         id: track
         line.width: 3
@@ -32,7 +28,7 @@ Map {
         id: boardMarker
         anchorPoint.x: mark.width / 2
         anchorPoint.y: mark.height / 2
-        coordinate: boardPosition
+        coordinate: boardService.position
         sourceItem: Item {
             id: mark
             width: 64
@@ -44,7 +40,10 @@ Map {
                 source: "qrc:/resources/indicators/plane_map_mark.svg"
             }
         }
-        onCoordinateChanged: if (fitButton.checked) map.fitViewportToMapItems()
+        onCoordinateChanged: {
+            track.addCoordinate(coordinate);
+            if (fitButton.checked) map.fitViewportToMapItems()
+        }
     }
 
     Button {
