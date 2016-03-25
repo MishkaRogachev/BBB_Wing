@@ -114,17 +114,17 @@ void WorkstationTransceiverNode::transmitPacket(const QByteArray& packet)
 void WorkstationTransceiverNode::setActiveWireLine()
 {
     d->activeLine = d->wireLine;
-    d->pub.publish(topics::transceiverLine, "wire");
+    //d->pub.publish(topics::transceiverLine, "wire");
 }
 
 void WorkstationTransceiverNode::setActiveAirLine()
 {
     d->activeLine = d->airLine;
-    d->pub.publish(topics::transceiverLine, "air");
+    //d->pub.publish(topics::transceiverLine, "air");
 }
 
 void WorkstationTransceiverNode::setLineInactive()
 {
     d->activeLine = nullptr;
-    d->pub.publish(topics::transceiverLine, "none");
+    //d->pub.publish(topics::transceiverLine, "none");
 }

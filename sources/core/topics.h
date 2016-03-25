@@ -20,10 +20,7 @@ namespace topics
     const QString controlRoll = "ctrl_roll";
     const QString controlVelocity = "ctrl_velocity";
 
-    const QString transceiverStatus = "tr_status";
-    const QString transceiverLine = "tr_line";
-    const QString transceiverPps = "tr_pps";
-    const QString transceiverBad = "tr_bad";
+    const QString connectionStatusPacket = "cn_status_packet";
 
     const QStringList boardTopics = {
         altStatus, altPacket,
@@ -31,7 +28,6 @@ namespace topics
         snsStatus, snsPacket,
         naviState,
         controlPitch, controlRoll, controlVelocity,
-        transceiverStatus
     };
 }
 

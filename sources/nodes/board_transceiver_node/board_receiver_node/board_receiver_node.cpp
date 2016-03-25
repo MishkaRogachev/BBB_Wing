@@ -20,7 +20,7 @@ BoardReceiverNode::BoardReceiverNode(float frequency, Publisher* pub,
 void BoardReceiverNode::exec()
 {
     if (!m_status) emit timeout();
-    m_pub->publish(topics::transceiverStatus, QByteArray::number(m_status));
+    //m_pub->publish(topics::transceiverStatus, QByteArray::number(m_status));
 
     m_status = false;
 }

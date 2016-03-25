@@ -4,6 +4,7 @@
 #include "topics.h"
 #include "publisher.h"
 #include "board_packet.h"
+#include "connection_status_packet.h"
 
 using namespace domain;
 
@@ -17,21 +18,23 @@ WorkstationReceiverNode::WorkstationReceiverNode(
 
 void WorkstationReceiverNode::exec()
 {
-    m_pub->publish(topics::transceiverPps,
-                   QByteArray::number(m_goodCount * this->frequency()));
+    ConnectionStatusPacket packet;
+
+    packet.packetsPerSecond = (m_goodCount * this->frequency());
     if (m_goodCount + m_badCount)
     {
-        m_pub->publish(topics::transceiverBad, QByteArray::number(
-                           100 * m_badCount / (m_goodCount + m_badCount)));
+        packet.badPackets = 100 * m_badCount / (m_goodCount + m_badCount);
     }
     else
     {
-        m_pub->publish(topics::transceiverBad, QByteArray::number(0));
+        packet.badPackets = 0;
         emit timeout();
     }
 
     m_badCount = 0;
     m_goodCount = 0;
+
+    m_pub->publish(topics::connectionStatusPacket, packet.toByteArray());
 }
 
 void WorkstationReceiverNode::processPacket(const QByteArray& packetData)
