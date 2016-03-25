@@ -39,6 +39,17 @@ Rectangle {
                 altitude: boardService.barAltitude
             }
 
+            Row {
+                anchors.horizontalCenter: parent.horizontalCenter
+
+                Text {
+                    text: qsTr("FIX: ") + boardService.snsFix
+                    font.pointSize: 14
+                    color: "#ecf0f1"
+                    anchors.verticalCenter: parent.verticalCenter
+                }
+            }
+
             VideoView {
                 id: video
                 width: parent.width

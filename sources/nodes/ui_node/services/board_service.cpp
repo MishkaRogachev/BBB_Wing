@@ -4,12 +4,18 @@ using namespace domain;
 
 BoardService::BoardService(QObject* parent):
     QObject(parent),
+    m_snsFix(0),
     m_position(),
     m_velocity(0),
     m_climb(0),
     m_snsAltitude(0),
     m_yaw(0)
 {}
+
+int BoardService::snsFix() const
+{
+    return m_snsFix;
+}
 
 QGeoCoordinate BoardService::position() const
 {
@@ -58,6 +64,12 @@ float BoardService::temperature() const
 
 void BoardService::updateSnsData(const SnsPacket& packet)
 {
+    if (m_snsFix != packet.fix)
+    {
+        m_snsFix = packet.fix;
+        emit snsFixChanged(packet.fix);
+    }
+
     QGeoCoordinate position(packet.latitude, packet.longitude, packet.altitude);
     if (m_position != position)
     {

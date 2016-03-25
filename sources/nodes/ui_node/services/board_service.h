@@ -16,6 +16,7 @@ namespace domain
     {
         Q_OBJECT
 
+        Q_PROPERTY(int snsFix READ snsFix NOTIFY snsFixChanged)
         Q_PROPERTY(QGeoCoordinate position READ position NOTIFY positionChanged)
         Q_PROPERTY(float velocity READ velocity NOTIFY velocityChanged)
         Q_PROPERTY(float climb READ climb NOTIFY climbChanged)
@@ -31,6 +32,7 @@ namespace domain
     public:
         explicit BoardService(QObject* parent = nullptr);
 
+        int snsFix() const;
         QGeoCoordinate position() const;
         float velocity() const;
         float climb() const;
@@ -49,6 +51,7 @@ namespace domain
         void updateAltData(const AltPacket& packet);
 
     signals:
+        void snsFixChanged(int snsFix);
         void positionChanged(QGeoCoordinate position);
         void velocityChanged(float velocity);
         void climbChanged(float climb);
@@ -62,6 +65,7 @@ namespace domain
         void temperatureChanged(float temperature);
 
     private:
+        int m_snsFix;
         QGeoCoordinate m_position;
         float m_velocity;
         float m_climb;
