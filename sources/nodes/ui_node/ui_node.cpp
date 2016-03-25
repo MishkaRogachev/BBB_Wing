@@ -65,7 +65,9 @@ void UiNode::start()
 
 void UiNode::onSubReceived(const QString& topic, const QByteArray& data)
 {
-    if (topic == topics::snsPacket)
+    if (topic == topics::altPacket)
+        d->boardService.updateAltData(AltPacket::fromByteArray(data));
+    else if (topic == topics::snsPacket)
         d->boardService.updateSnsData(SnsPacket::fromByteArray(data));
     else if (topic == topics::insPacket)
         d->boardService.updateInsData(InsPacket::fromByteArray(data));

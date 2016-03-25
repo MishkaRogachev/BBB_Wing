@@ -4,8 +4,6 @@ QtObject {
     id: nodeService
 
     property bool alt_status: false
-    property real alt_altitude: 0.0
-    property real alt_temperature: 0.0
     property bool ins_status: false
     property bool sns_status: false
     property int sns_fix: 0

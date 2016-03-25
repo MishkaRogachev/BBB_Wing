@@ -36,7 +36,7 @@ Rectangle {
                 roll: boardService.roll
                 yaw: boardService.yaw
                 velocity: boardService.velocity
-                altitude: nodeService.alt_altitude
+                altitude: boardService.barAltitude
             }
 
             VideoView {

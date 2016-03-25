@@ -46,6 +46,16 @@ float BoardService::yaw() const
     return m_yaw;
 }
 
+float BoardService::barAltitude() const
+{
+    return m_barAltitude;
+}
+
+float BoardService::temperature() const
+{
+    return m_temperature;
+}
+
 void BoardService::updateSnsData(const SnsPacket& packet)
 {
     QGeoCoordinate position(packet.latitude, packet.longitude, packet.altitude);
@@ -92,5 +102,20 @@ void BoardService::updateInsData(const InsPacket& packet)
     {
         m_yaw = packet.yaw;
         emit yawChanged(packet.yaw);
+    }
+}
+
+void BoardService::updateAltData(const AltPacket& packet)
+{
+    if (!qFuzzyCompare(m_barAltitude, packet.altitude))
+    {
+        m_barAltitude = packet.altitude;
+        emit barAltitudeChanged(packet.altitude);
+    }
+
+    if (!qFuzzyCompare(m_temperature, packet.temperature))
+    {
+        m_temperature = packet.temperature;
+        emit temperatureChanged(packet.temperature);
     }
 }
