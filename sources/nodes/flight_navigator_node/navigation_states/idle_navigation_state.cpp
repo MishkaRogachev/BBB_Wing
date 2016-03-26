@@ -4,6 +4,8 @@
 #include "publisher.h"
 #include "topics.h"
 
+#include "flight_control_packet.h"
+
 using namespace domain;
 
 IdleNavigationState::IdleNavigationState(QObject* parent):
@@ -19,7 +21,11 @@ void IdleNavigationState::process()
 {
     AbstractNavigationState::process();
 
-    this->publish(topics::controlPitch, QByteArray::number(0));
-    this->publish(topics::controlRoll, QByteArray::number(0));
-    this->publish(topics::controlVelocity, QByteArray::number(0));
+    FlightControlPacket packet;
+
+    packet.pitch = 0.0;
+    packet.roll = 0.0;
+    packet.velocity = 0.0;
+
+    this->publish(topics::flightCtrlPacket, packet.toByteArray());
 }

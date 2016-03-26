@@ -16,9 +16,7 @@ namespace topics
 
     const QString naviState = "navi_state";
 
-    const QString controlPitch = "ctrl_pitch";
-    const QString controlRoll = "ctrl_roll";
-    const QString controlVelocity = "ctrl_velocity";
+    const QString flightCtrlPacket = "ctrl_packet";
 
     const QString connectionStatusPacket = "cn_status_packet";
 
@@ -27,7 +25,7 @@ namespace topics
         insStatus, insPacket,
         snsStatus, snsPacket,
         naviState,
-        controlPitch, controlRoll, controlVelocity,
+        flightCtrlPacket
     };
 }
 

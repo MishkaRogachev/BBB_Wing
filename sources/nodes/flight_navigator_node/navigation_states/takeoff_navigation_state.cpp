@@ -5,6 +5,8 @@
 #include "config.h"
 #include "topics.h"
 
+#include "flight_control_packet.h"
+
 using namespace domain;
 
 TakeoffNavigationState::TakeoffNavigationState(AbstractNavigationState&& other):
@@ -29,9 +31,13 @@ void TakeoffNavigationState::process()
 {
     AbstractNavigationState::process();
 
-    this->publish(topics::controlPitch, QByteArray::number(m_takeoffPitch));
-    this->publish(topics::controlRoll, QByteArray::number(m_takeoffRoll));
-    this->publish(topics::controlVelocity, QByteArray::number(m_takeoffVelocity));
+    FlightControlPacket packet;
+
+    packet.pitch = m_takeoffPitch;
+    packet.roll = m_takeoffRoll;
+    packet.velocity = m_takeoffVelocity;
+
+    this->publish(topics::flightCtrlPacket, packet.toByteArray());
 
     // TODO: StabilizationState
     //if (m_data->altimeterAltitude > m_takeoffAltitude)
