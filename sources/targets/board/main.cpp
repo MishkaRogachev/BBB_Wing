@@ -26,7 +26,7 @@ int main(int argc, char* argv[])
     scheduler.addNode(new FlightRecorderNode(25));
     scheduler.addNode(new FlightNavigatorNode(5));
     scheduler.addNode(new FlightControllerNode(25));
-    scheduler.addNode(new BoardGatewayNode(1));
+    scheduler.addNode(new BoardGatewayNode(10));
 
     scheduler.init();
     scheduler.start();
