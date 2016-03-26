@@ -14,7 +14,13 @@ Config& Config::instance()
 
 QVariant Config::setting(const QString& key)
 {
-    return Config::instance().m_settings.value(key);
+    if (Config::instance().m_settings.contains(key))
+        return Config::instance().m_settings.value(key);
+
+    qCritical("No key '%s'' in config group '%s'!",
+              qUtf8Printable(key),
+              qUtf8Printable(Config::instance().m_settings.group()));
+    return QVariant();
 }
 
 void Config::setSetting(const QString& key, const QVariant& value)
