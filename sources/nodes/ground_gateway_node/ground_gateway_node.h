@@ -10,16 +10,18 @@ namespace domain
         Q_OBJECT
 
     public:
-        GroundGatewayNode(float frequency, QObject* parent = nullptr);
+        GroundGatewayNode(QObject* parent = nullptr);
         ~GroundGatewayNode() override;
 
     public slots:
         void init() override;
+        void start() override;
         void exec() override;
 
     private slots:
-        void onSubReceived(const QString& topic, const QByteArray& msg);
-        void onLineReceived(const QByteArray& packet);
+        void onTimeout();
+        void onSubReceived(const QString& topic, const QByteArray& data);
+        void onLineReceived(const QByteArray& data);
 
     private:
         class Impl;

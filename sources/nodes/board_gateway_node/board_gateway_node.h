@@ -10,7 +10,7 @@ namespace domain
         Q_OBJECT
 
     public:
-        BoardGatewayNode(int frequency, QObject* parent = nullptr);
+        BoardGatewayNode(QObject* parent = nullptr);
         ~BoardGatewayNode() override;
 
     public slots:

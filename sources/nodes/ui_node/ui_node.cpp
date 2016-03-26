@@ -56,7 +56,7 @@ UiNode::~UiNode()
 
 void UiNode::init()
 {
-    d->sub.connectTo("ipc://transceiver");
+    d->sub.connectTo("ipc://ground_gateway");
     d->sub.subscribe("");
     connect(&d->sub, &Subscriber::received, this, &UiNode::onSubReceived);
 }

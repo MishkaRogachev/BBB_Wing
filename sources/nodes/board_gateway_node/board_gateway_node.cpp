@@ -35,28 +35,31 @@ public:
     QMap <QString, QByteArray> dataMap;
 };
 
-BoardGatewayNode::BoardGatewayNode(int frequency, QObject* parent):
-    AbstractNodeFrequency(frequency, parent),
+BoardGatewayNode::BoardGatewayNode(QObject* parent):
+    AbstractNodeFrequency(0, parent),
     d(new Impl())
 {
     Config::begin("BoardGateway");
     d->pub.bind("ipc://board_gateway");
 
+    this->setFrequency(Config::setting("frequency").toFloat());
+
     d->wireLine = new UdpExchanger(
-        Config::setting("udp_board_port").toInt(),
-        QHostAddress(Config::setting("udp_workstation_address").toString()),
-        Config::setting("udp_workstation_port").toInt(), this);
+                      Config::setting("udp_board_port").toInt(),
+                      QHostAddress(Config::setting("udp_ground_address").toString()),
+                      Config::setting("udp_ground_port").toInt(), this);
     connect(d->wireLine, &AbstractExchanger::received,
             this, &BoardGatewayNode::onLineReceived);
 
     d->airLine = new SerialPortExchanger(
-        Config::setting("serial_port_board").toString(), this);
+                     Config::setting("serial_port_board").toString(), this);
     connect(d->airLine, &AbstractExchanger::received,
             this, &BoardGatewayNode::onLineReceived);
 
     d->timoutTimer = new QTimer(this);
     d->timoutTimer->setInterval(Config::setting("timeout_interval").toInt());
     d->timoutTimer->setSingleShot(true);
+    connect(d->timoutTimer, &QTimer::timeout, this, &BoardGatewayNode::onTimeout);
 
     Config::end();
 }
@@ -90,7 +93,7 @@ void BoardGatewayNode::start()
 
 void BoardGatewayNode::exec()
 {
-    for (const QString& topic: d->dataMap)
+    for (const QString& topic: d->dataMap.keys())
     {
         TransmissionPacket packet;
 

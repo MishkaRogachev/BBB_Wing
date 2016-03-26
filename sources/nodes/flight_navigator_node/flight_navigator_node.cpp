@@ -40,7 +40,7 @@ void FlightNavigatorNode::init()
      d->sub.connectTo("ipc://alt");
      d->sub.connectTo("ipc://ins");
      d->sub.connectTo("ipc://sns");
-     d->sub.connectTo("ipc://transceiver");
+     d->sub.connectTo("ipc://board_gateway");
 
      d->sub.subscribe("");
      this->onStateRequested(new IdleNavigationState(this));

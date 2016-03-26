@@ -35,7 +35,7 @@ void FlightControllerNode::init()
      d->sub.connectTo("ipc://ins");
      d->sub.connectTo("ipc://sns");
      d->sub.connectTo("ipc://navigator");
-     d->sub.connectTo("ipc://transceiver");
+     d->sub.connectTo("ipc://board_gateway");
 
      d->sub.subscribe("");
      connect(&d->sub, &Subscriber::received, this,

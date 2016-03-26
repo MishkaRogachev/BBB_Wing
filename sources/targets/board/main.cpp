@@ -20,13 +20,14 @@ int main(int argc, char* argv[])
 
     BranchNode scheduler;
 
+    // TODO: nodes frequencies to config
     scheduler.addNode(new SensorAltimeterNode(5));
     scheduler.addNode(new SensorInsNode(100));
     scheduler.addNode(new SensorSnsNode(5));
     scheduler.addNode(new FlightRecorderNode(25));
     scheduler.addNode(new FlightNavigatorNode(5));
     scheduler.addNode(new FlightControllerNode(25));
-    scheduler.addNode(new BoardGatewayNode(10));
+    scheduler.addNode(new BoardGatewayNode());
 
     scheduler.init();
     scheduler.start();
