@@ -1,7 +1,7 @@
 #ifndef FLIGHT_CONTROL_PACKET_H
 #define FLIGHT_CONTROL_PACKET_H
 
-#include "packets.h"
+#include "packet.h"
 
 namespace domain
 {

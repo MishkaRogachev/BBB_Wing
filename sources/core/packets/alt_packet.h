@@ -1,7 +1,7 @@
 #ifndef ALT_PACKET_H
 #define ALT_PACKET_H
 
-#include "packets.h"
+#include "packet.h"
 
 namespace domain
 {

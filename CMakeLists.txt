@@ -46,14 +46,12 @@ if (TARGET_TYPE STREQUAL "board" OR TARGET_TYPE STREQUAL "all")
 
     add_subdirectory(sources/nodes/flight_navigator_node)
     add_subdirectory(sources/nodes/flight_controller_node)
-    add_subdirectory(sources/nodes/board_transceiver_node)
     add_subdirectory(sources/nodes/board_gateway_node)
 
     add_subdirectory(sources/targets/board)
 endif()
 
 if (TARGET_TYPE STREQUAL "workstation" OR TARGET_TYPE STREQUAL "all")
-    add_subdirectory(sources/nodes/workstation_transceiver_node)
     add_subdirectory(sources/nodes/ground_gateway_node)
     add_subdirectory(sources/nodes/ui_node)
 

@@ -14,7 +14,7 @@ set(LIBRARIES
 # Qt5
     Qt5::Gui
 # Internal
-    workstation_transceiver_node
+    workstation_gateway_node
     ui_node
 )
 

@@ -3,7 +3,7 @@
 
 // Internal
 #include "branch_node.h"
-#include "workstation_transceiver_node.h"
+#include "ground_gateway_node.h"
 #include "ui_node.h"
 
 int main(int argc, char* argv[])
@@ -14,7 +14,7 @@ int main(int argc, char* argv[])
 
     BranchNode scheduler;
 
-    scheduler.addNode(new WorkstationTransceiverNode());
+    scheduler.addNode(new GroundGatewayNode(1));
     scheduler.addNode(new UiNode());
 
     scheduler.init();

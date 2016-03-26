@@ -1,7 +1,7 @@
 #ifndef CONNECTION_STATUS_PACKET_H
 #define CONNECTION_STATUS_PACKET_H
 
-#include "packets.h"
+#include "packet.h"
 
 namespace domain
 {

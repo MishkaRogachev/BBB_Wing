@@ -1,7 +1,7 @@
 #ifndef SNS_PACKET_H
 #define SNS_PACKET_H
 
-#include "packets.h"
+#include "packet.h"
 
 namespace domain
 {

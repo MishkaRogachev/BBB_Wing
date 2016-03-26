@@ -10,7 +10,7 @@
 #include "flight_recorder_node.h"
 #include "flight_navigator_node.h"
 #include "flight_controller_node.h"
-#include "board_transceiver_node.h"
+#include "board_gateway_node.h"
 
 int main(int argc, char* argv[])
 {
@@ -26,7 +26,7 @@ int main(int argc, char* argv[])
     scheduler.addNode(new FlightRecorderNode(25));
     scheduler.addNode(new FlightNavigatorNode(5));
     scheduler.addNode(new FlightControllerNode(25));
-    scheduler.addNode(new BoardTransceiverNode());
+    scheduler.addNode(new BoardGatewayNode(1));
 
     scheduler.init();
     scheduler.start();

@@ -31,11 +31,7 @@ GroundGatewayNode::~GroundGatewayNode()
 
 void GroundGatewayNode::init()
 {
-     d->sub.connectTo("ipc://alt");
-     d->sub.connectTo("ipc://ins");
-     d->sub.connectTo("ipc://sns");
-     d->sub.connectTo("ipc://navigator");
-     d->sub.connectTo("ipc://controller");
+     d->sub.connectTo("ipc://ui");
 
      d->sub.subscribe("");
      connect(&d->sub, &Subscriber::received, this,
