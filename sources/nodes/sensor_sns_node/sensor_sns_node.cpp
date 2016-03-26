@@ -62,7 +62,7 @@ void SensorSnsNode::exec()
         packet.latitude = data->fix.latitude;
         packet.longitude = data->fix.longitude;
         packet.yaw = data->fix.track;
-        packet.velocity = data->fix.speed;
+        packet.groundSpeed = data->fix.speed;
     }
 
     if (data->fix.mode > 2)

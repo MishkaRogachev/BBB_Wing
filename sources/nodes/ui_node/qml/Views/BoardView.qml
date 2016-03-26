@@ -9,7 +9,7 @@ Column {
         pitch: boardService.pitch
         roll: boardService.roll
         yaw: boardService.yaw
-        velocity: boardService.velocity
+        velocity: boardService.groundSpeed
         altitude: boardService.barAltitude
     }
 

@@ -9,7 +9,7 @@ BoardService::BoardService(QObject* parent):
     QObject(parent),
     m_snsFix(0),
     m_position(),
-    m_velocity(0),
+    m_groundSpeed(0),
     m_climb(0),
     m_snsAltitude(0),
     m_yaw(0)
@@ -25,9 +25,9 @@ QGeoCoordinate BoardService::position() const
     return m_position;
 }
 
-float BoardService::velocity() const
+float BoardService::groundSpeed() const
 {
-    return m_velocity;
+    return m_groundSpeed;
 }
 
 float BoardService::climb() const
@@ -82,10 +82,10 @@ void BoardService::updateSnsData(const SnsPacket& packet)
         emit positionChanged(position);
     }
 
-    if (!qFuzzyCompare(m_velocity, packet.velocity))
+    if (!qFuzzyCompare(m_groundSpeed, packet.groundSpeed))
     {
-        m_velocity = packet.velocity;
-        emit velocityChanged(packet.velocity);
+        m_groundSpeed = packet.groundSpeed;
+        emit groundSpeedChanged(packet.groundSpeed);
     }
 
     if (!qFuzzyCompare(m_climb, packet.climb))
@@ -97,7 +97,7 @@ void BoardService::updateSnsData(const SnsPacket& packet)
     if (!qFuzzyCompare(m_snsAltitude, packet.altitude))
     {
         m_snsAltitude = packet.altitude;
-        emit velocityChanged(packet.altitude);
+        emit groundSpeedChanged(packet.altitude);
     }
 }
 

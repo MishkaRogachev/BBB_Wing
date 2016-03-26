@@ -12,7 +12,7 @@ namespace domain
 
         double latitude;
         double longitude;
-        float velocity;
+        float groundSpeed;
         float yaw;
 
         float altitude;

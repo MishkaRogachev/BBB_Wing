@@ -8,7 +8,7 @@ QDataStream& SnsPacket::operator >>(QDataStream& stream) const
 
     stream << latitude;
     stream << longitude;
-    stream << velocity;
+    stream << groundSpeed;
     stream << yaw;
 
     stream << altitude;
@@ -23,7 +23,7 @@ QDataStream& SnsPacket::operator <<(QDataStream& stream)
 
     stream >> latitude;
     stream >> longitude;
-    stream >> velocity;
+    stream >> groundSpeed;
     stream >> yaw;
 
     stream >> altitude;
