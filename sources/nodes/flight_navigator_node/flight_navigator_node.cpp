@@ -37,7 +37,7 @@ FlightNavigatorNode::~FlightNavigatorNode()
 
 void FlightNavigatorNode::init()
 {
-     d->sub.connectTo("ipc://altimeter");
+     d->sub.connectTo("ipc://alt");
      d->sub.connectTo("ipc://ins");
      d->sub.connectTo("ipc://sns");
      d->sub.connectTo("ipc://transceiver");

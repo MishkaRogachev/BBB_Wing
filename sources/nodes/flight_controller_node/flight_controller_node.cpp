@@ -5,8 +5,8 @@
 
 // Internal
 #include "topics.h"
-#include "config.h"
 #include "subscriber.h"
+#include "publisher.h"
 
 using namespace domain;
 
@@ -14,12 +14,15 @@ class FlightControllerNode::Impl
 {
 public:
     Subscriber sub;
+    Publisher pub;
 };
 
 FlightControllerNode::FlightControllerNode(float frequency, QObject* parent):
     AbstractNodeFrequency(frequency, parent),
     d(new Impl())
-{}
+{
+    d->pub.bind("ipc://navigator");
+}
 
 FlightControllerNode::~FlightControllerNode()
 {
@@ -28,9 +31,10 @@ FlightControllerNode::~FlightControllerNode()
 
 void FlightControllerNode::init()
 {
-     d->sub.connectTo("ipc://altimeter");
+     d->sub.connectTo("ipc://alt");
      d->sub.connectTo("ipc://ins");
      d->sub.connectTo("ipc://sns");
+     d->sub.connectTo("ipc://navigator");
      d->sub.connectTo("ipc://transceiver");
 
      d->sub.subscribe("");
