@@ -15,6 +15,7 @@
 #include "udp_exchanger.h"
 #include "serial_port_exchanger.h"
 
+#include "connection_status_packet.h"
 #include "transmission_packet.h"
 
 using namespace domain;
@@ -32,6 +33,9 @@ public:
 
     bool wireReceived = false;
     bool airReceived = false;
+    int count = 0;
+    int badCount = 0;
+
     QMap <QString, QByteArray> dataMap;
 };
 
@@ -106,6 +110,18 @@ void GroundGatewayNode::exec()
     }
 
     d->dataMap.clear();
+
+    ConnectionStatusPacket statusPacket;
+
+    statusPacket.airLine = d->airReceived;
+    statusPacket.wireLine = d->wireReceived;
+    statusPacket.packetsPerSecond = d->count * this->frequency();
+    statusPacket.badPackets = (d->count) ? 100 * d->badCount / d->count : 0;
+
+    d->pub.publish(topics::connectionStatusPacket, statusPacket.toByteArray());
+
+    d->count = 0;
+    d->badCount = 0;
 }
 
 void GroundGatewayNode::onTimeout()
@@ -124,11 +140,16 @@ void GroundGatewayNode::onLineReceived(const QByteArray& data)
 {
     if (this->sender() == d->wireLine) d->wireReceived = true;
     else if (this->sender() == d->airLine) d->airReceived = true;
+    d->count++;
 
     auto packet = TransmissionPacket::fromByteArray(data);
-    if (!packet.validateCrc()) return;
-    d->pub.publish(packet.topic, packet.data);
+    if (!packet.validateCrc())
+    {
+        d->badCount++;
+        return;
+    }
 
+    d->pub.publish(packet.topic, packet.data);
     d->timoutTimer->start();
 }
 
