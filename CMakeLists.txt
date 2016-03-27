@@ -31,7 +31,7 @@ set(LIBRARIES
 # Core
 add_subdirectory(sources/core)
 
-# Tagret type. Avalible values: all, workstation, board
+# Tagret type. Avalible values: all, board, ground
 if (NOT TARGET_TYPE)
     set(TARGET_TYPE "all")
 endif (NOT TARGET_TYPE)
@@ -51,11 +51,11 @@ if (TARGET_TYPE STREQUAL "board" OR TARGET_TYPE STREQUAL "all")
     add_subdirectory(sources/targets/board)
 endif()
 
-if (TARGET_TYPE STREQUAL "workstation" OR TARGET_TYPE STREQUAL "all")
+if (TARGET_TYPE STREQUAL "ground" OR TARGET_TYPE STREQUAL "all")
     add_subdirectory(sources/nodes/ground_gateway_node)
     add_subdirectory(sources/nodes/ui_node)
 
-    add_subdirectory(sources/targets/workstation)
+    add_subdirectory(sources/targets/ground)
 endif()
 
 # Copy config

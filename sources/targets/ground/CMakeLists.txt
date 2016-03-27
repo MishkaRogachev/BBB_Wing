@@ -2,7 +2,7 @@
 cmake_minimum_required(VERSION 2.8.11)
 
 # Project
-set(PROJECT workstation)
+set(PROJECT ground)
 project(${PROJECT})
 
 # Enable Qt modules
