@@ -21,8 +21,9 @@ public:
     Publisher pub;
 };
 
-SensorAltimeterNode::SensorAltimeterNode(float frequency, QObject* parent):
-    AbstractNodeFrequency(frequency, parent),
+SensorAltimeterNode::SensorAltimeterNode(QObject* parent):
+    AbstractNodeFrequency(Config::value("SensorAltimeter/frequency").toFloat(),
+                          parent),
     d(new Impl())
 {
     d->pub.bind("ipc://alt");

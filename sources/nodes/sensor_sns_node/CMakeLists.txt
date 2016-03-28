@@ -5,6 +5,10 @@ cmake_minimum_required(VERSION 2.8.11)
 set(PROJECT sensor_sns_node)
 project(${PROJECT})
 
+# Config
+file(READ ${CMAKE_CURRENT_SOURCE_DIR}/config.conf LOCAL_CONFIG)
+set(CONFIG ${CONFIG} "\n" ${LOCAL_CONFIG} PARENT_SCOPE)
+
 # Libraries
 set(LIBRARIES
     ${LIBRARIES}

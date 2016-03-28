@@ -40,13 +40,12 @@ public:
 };
 
 GroundGatewayNode::GroundGatewayNode(QObject* parent):
-    AbstractNodeFrequency(0, parent),
+    AbstractNodeFrequency(Config::value("GroundGateway/frequency").toFloat(),
+                          parent),
     d(new Impl())
 {
     Config::begin("GroundGateway");
     d->pub.bind("ipc://ground_gateway");
-
-    this->setFrequency(Config::value("frequency").toFloat());
 
     d->wireLine = new UdpExchanger(
                       Config::value("udp_ground_port").toInt(),

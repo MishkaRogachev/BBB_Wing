@@ -36,13 +36,12 @@ public:
 };
 
 BoardGatewayNode::BoardGatewayNode(QObject* parent):
-    AbstractNodeFrequency(0, parent),
+    AbstractNodeFrequency(Config::value("BoardGateway/frequency").toFloat(),
+                          parent),
     d(new Impl())
 {
     Config::begin("BoardGateway");
     d->pub.bind("ipc://board_gateway");
-
-    this->setFrequency(Config::value("frequency").toFloat());
 
     d->wireLine = new UdpExchanger(
                       Config::value("udp_board_port").toInt(),

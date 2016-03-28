@@ -4,6 +4,7 @@
 #include "libgpsmm.h"
 
 // Internal
+#include "config.h"
 #include "topics.h"
 #include "sns_packet.h"
 
@@ -18,8 +19,9 @@ public:
     Publisher pub;
 };
 
-SensorSnsNode::SensorSnsNode(float frequency, QObject* parent):
-    AbstractNodeFrequency(frequency, parent),
+SensorSnsNode::SensorSnsNode(QObject* parent):
+    AbstractNodeFrequency(Config::value("SensorSns/frequency").toFloat(),
+                          parent),
     d(new Impl())
 {
     d->pub.bind("ipc://sns");

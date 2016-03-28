@@ -12,7 +12,7 @@ namespace domain
         Q_OBJECT
 
     public:
-        FlightNavigatorNode(float frequency, QObject* parent = nullptr);
+        FlightNavigatorNode(QObject* parent = nullptr);
         ~FlightNavigatorNode() override;
 
     public slots:

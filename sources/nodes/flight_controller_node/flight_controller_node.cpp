@@ -4,6 +4,7 @@
 #include <QDebug>
 
 // Internal
+#include "config.h"
 #include "topics.h"
 #include "subscriber.h"
 #include "publisher.h"
@@ -17,11 +18,12 @@ public:
     Publisher pub;
 };
 
-FlightControllerNode::FlightControllerNode(float frequency, QObject* parent):
-    AbstractNodeFrequency(frequency, parent),
+FlightControllerNode::FlightControllerNode(QObject* parent):
+    AbstractNodeFrequency(Config::value("FlightController/frequency").toFloat(),
+                          parent),
     d(new Impl())
 {
-    d->pub.bind("ipc://navigator");
+    d->pub.bind("ipc://controller");
 }
 
 FlightControllerNode::~FlightControllerNode()

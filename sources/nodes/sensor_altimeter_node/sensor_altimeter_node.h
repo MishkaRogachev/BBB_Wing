@@ -10,7 +10,7 @@ namespace domain
         Q_OBJECT
 
     public:
-        SensorAltimeterNode(float frequency, QObject* parent = nullptr);
+        SensorAltimeterNode(QObject* parent = nullptr);
         ~SensorAltimeterNode() override;
 
     public slots:

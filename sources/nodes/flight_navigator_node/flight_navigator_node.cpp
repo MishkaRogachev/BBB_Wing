@@ -23,8 +23,9 @@ public:
     AbstractNavigationState* state = nullptr;
 };
 
-FlightNavigatorNode::FlightNavigatorNode(float frequency, QObject* parent):
-    AbstractNodeFrequency(frequency, parent),
+FlightNavigatorNode::FlightNavigatorNode(QObject* parent):
+    AbstractNodeFrequency(Config::value("FlightNavigator/frequency").toFloat(),
+                          parent),
     d(new Impl())
 {
     d->pub.bind("ipc://navigator");
