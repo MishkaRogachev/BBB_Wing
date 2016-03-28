@@ -53,16 +53,16 @@ void FlightRecorderNode::exec()
     Config::begin("FlightRecorder");
     QTextStream stream(&d->file);
 
-    if (d->file.isOpen() && (d->file.size() > Config::setting("max_record_size")
+    if (d->file.isOpen() && (d->file.size() > Config::value("max_record_size")
         .toInt() || !d->file.exists())) d->file.close();
 
     if (!d->file.isOpen())
     {
-        QString path = Config::setting("path").toString();
+        QString path = Config::value("path").toString();
         if (!QDir(path).exists()) QDir(path).mkpath(".");
 
         d->file.setFileName(path + QDateTime::currentDateTime().toString(
-                           Config::setting("file_format").toString()) + ".csv");
+                           Config::value("file_format").toString()) + ".csv");
 
         bool exists = d->file.exists();
         if (!d->file.open(QIODevice::Append | QIODevice::Text |
@@ -76,7 +76,7 @@ void FlightRecorderNode::exec()
     }
 
     stream << QTime::currentTime().toString(
-                  Config::setting("time_format").toString()).toLatin1();
+                  Config::value("time_format").toString()).toLatin1();
 
     for (const QString& topic: topics::boardTopics)
         stream << ::delimiter << d->messages.value(topic);

@@ -46,22 +46,22 @@ GroundGatewayNode::GroundGatewayNode(QObject* parent):
     Config::begin("GroundGateway");
     d->pub.bind("ipc://ground_gateway");
 
-    this->setFrequency(Config::setting("frequency").toFloat());
+    this->setFrequency(Config::value("frequency").toFloat());
 
     d->wireLine = new UdpExchanger(
-                      Config::setting("udp_ground_port").toInt(),
-                      QHostAddress(Config::setting("udp_board_address").toString()),
-                      Config::setting("udp_board_port").toInt(), this);
+                      Config::value("udp_ground_port").toInt(),
+                      QHostAddress(Config::value("udp_board_address").toString()),
+                      Config::value("udp_board_port").toInt(), this);
     connect(d->wireLine, &AbstractExchanger::received,
             this, &GroundGatewayNode::onLineReceived);
 
     d->airLine = new SerialPortExchanger(
-                     Config::setting("serial_port_ground").toString(), this);
+                     Config::value("serial_port_ground").toString(), this);
     connect(d->airLine, &AbstractExchanger::received,
             this, &GroundGatewayNode::onLineReceived);
 
     d->timoutTimer = new QTimer(this);
-    d->timoutTimer->setInterval(Config::setting("timeout_interval").toInt());
+    d->timoutTimer->setInterval(Config::value("timeout_interval").toInt());
     d->timoutTimer->setSingleShot(true);
     connect(d->timoutTimer, &QTimer::timeout, this, &GroundGatewayNode::onTimeout);
 

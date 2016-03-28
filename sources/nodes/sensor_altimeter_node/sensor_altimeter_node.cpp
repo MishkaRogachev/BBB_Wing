@@ -38,7 +38,7 @@ void SensorAltimeterNode::init()
     Config::begin("SensorAltimeter");
 
     if (d->altimeter.isStarted()) d->altimeter.stop();
-    d->altimeter.start(Config::setting("i2c_path").toString().toLatin1().data());
+    d->altimeter.start(Config::value("i2c_path").toString().toLatin1().data());
 
     Config::end();
 }

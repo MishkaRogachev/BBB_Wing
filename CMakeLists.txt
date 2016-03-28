@@ -4,6 +4,17 @@ cmake_minimum_required(VERSION 2.8.11)
 # Project
 project(BBB_Wing)
 
+# Version
+set(VERSION_MAJOR "0")
+set(VERSION_MINOR "1")
+set(VERSION_PATCH "0")
+
+# Config
+set(CONFIG "[GLOBAL]\n")
+list(APPEND CONFIG
+    "version=${VERSION_MAJOR}.${VERSION_MINOR}.${VERSION_PATCH}\n"
+)
+
 # CMake modules
 include(cmake/RecurseSubdirs.cmake)
 
@@ -32,9 +43,9 @@ set(LIBRARIES
 add_subdirectory(sources/core)
 
 # Tagret type. Avalible values: all, board, ground
-if (NOT TARGET_TYPE)
+if(NOT TARGET_TYPE)
     set(TARGET_TYPE "all")
-endif (NOT TARGET_TYPE)
+endif(NOT TARGET_TYPE)
 message("Tagret type: " ${TARGET_TYPE})
 
 # Nodes targets
@@ -58,6 +69,5 @@ if (TARGET_TYPE STREQUAL "ground" OR TARGET_TYPE STREQUAL "all")
     add_subdirectory(sources/targets/ground)
 endif()
 
-# Copy config
-file(COPY ${CMAKE_SOURCE_DIR}/config/settings.ini
-    DESTINATION ${CMAKE_RUNTIME_OUTPUT_DIRECTORY})
+# Create config file
+file(WRITE ${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/config.conf ${CONFIG})

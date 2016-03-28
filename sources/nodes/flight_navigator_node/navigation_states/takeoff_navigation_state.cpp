@@ -12,12 +12,12 @@ using namespace domain;
 TakeoffNavigationState::TakeoffNavigationState(AbstractNavigationState&& other):
     AbstractNavigationState(other.m_data.take(), other.parent())
 {
-    Config::begin("Navigator");
+    Config::begin("FlightNavigator");
 
-    m_takeoffPitch = Config::setting("takeoff_pitch").toFloat();
-    m_takeoffRoll = Config::setting("takeoff_roll").toFloat();
-    m_takeoffVelocity = Config::setting("takeoff_velocity").toFloat();
-    m_takeoffAltitude = Config::setting("takeoff_altitude").toFloat();
+    m_takeoffPitch = Config::value("takeoff_pitch").toFloat();
+    m_takeoffRoll = Config::value("takeoff_roll").toFloat();
+    m_takeoffVelocity = Config::value("takeoff_velocity").toFloat();
+    m_takeoffAltitude = Config::value("takeoff_altitude").toFloat();
 
     Config::end();
 }

@@ -5,6 +5,10 @@ cmake_minimum_required(VERSION 2.8.11)
 set(PROJECT sensor_altimeter_node)
 project(${PROJECT})
 
+# Config
+file(READ ${CMAKE_CURRENT_SOURCE_DIR}/config.conf LOCAL_CONFIG)
+set(CONFIG ${CONFIG} "\n" ${LOCAL_CONFIG} PARENT_SCOPE)
+
 # External dirs
 add_subdirectory(../../devices/mpl3115a2 ${CMAKE_CURRENT_BINARY_DIR}/devices/mpl3115a2)
 

@@ -3,7 +3,7 @@
 using namespace domain;
 
 Config::Config():
-    m_settings("settings.ini", QSettings::NativeFormat)
+    m_settings("config.conf", QSettings::NativeFormat)
 {}
 
 Config& Config::instance()
@@ -12,7 +12,7 @@ Config& Config::instance()
     return config;
 }
 
-QVariant Config::setting(const QString& key)
+QVariant Config::value(const QString& key)
 {
     if (Config::instance().m_settings.contains(key))
         return Config::instance().m_settings.value(key);
@@ -23,7 +23,7 @@ QVariant Config::setting(const QString& key)
     return QVariant();
 }
 
-void Config::setSetting(const QString& key, const QVariant& value)
+void Config::setValue(const QString& key, const QVariant& value)
 {
     Config::instance().m_settings.setValue(key, value);
 }

@@ -45,7 +45,7 @@ void SensorInsNode::init()
     Config::begin("SensorIns");
 
     if (d->imu.isStarted()) d->imu.stop();
-    d->imu.start(Config::setting("i2c_path").toString().toLatin1().data());
+    d->imu.start(Config::value("i2c_path").toString().toLatin1().data());
 
     Config::end();
 }
@@ -64,7 +64,7 @@ void SensorInsNode::exec()
         float ax = d->imu.gyroAccel()->readAccel(devices::AxisX);
         float ay = d->imu.gyroAccel()->readAccel(devices::AxisY);
         float az = d->imu.gyroAccel()->readAccel(devices::AxisZ);
-        float temperature = d->imu.gyroAccel()->readTempearture();
+//        float temperature = d->imu.gyroAccel()->readTempearture();
         float mx = d->imu.mag()->readMag(devices::AxisX);
         float my = d->imu.mag()->readMag(devices::AxisY);
 //        float mz = d->imu.mag()->readMag(devices::AxisZ);

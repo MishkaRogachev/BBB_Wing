@@ -6,13 +6,13 @@
 
 namespace domain
 {
-    class Config // TODO: separate config files by targets
+    class Config
     {
     public:
         static Config& instance();
 
-        static QVariant setting(const QString& key);
-        static void setSetting(const QString& key, const QVariant& setting);
+        static QVariant value(const QString& key);
+        static void setValue(const QString& key, const QVariant& value);
 
         static void begin(const QString& prefix);
         static void end();

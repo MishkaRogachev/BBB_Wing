@@ -5,6 +5,10 @@ cmake_minimum_required(VERSION 2.8.11)
 set(PROJECT sensor_ins_node)
 project(${PROJECT})
 
+# Config
+file(READ ${CMAKE_CURRENT_SOURCE_DIR}/config.conf LOCAL_CONFIG)
+set(CONFIG ${CONFIG} "\n" ${LOCAL_CONFIG} PARENT_SCOPE)
+
 # External dirs
 add_subdirectory(../../devices/lsm9ds1 ${CMAKE_CURRENT_BINARY_DIR}/devices/lsm9ds1)
 
