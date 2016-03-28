@@ -43,6 +43,9 @@ void FlightRecorderNode::init()
      d->sub.connectTo("ipc://alt");
      d->sub.connectTo("ipc://ins");
      d->sub.connectTo("ipc://sns");
+     d->sub.connectTo("ipc://navigator");
+     d->sub.connectTo("ipc://controller");
+     d->sub.connectTo("ipc://ground_gateway");
 
      d->sub.subscribe(topics::all);
      connect(&d->sub, &Subscriber::received, this,

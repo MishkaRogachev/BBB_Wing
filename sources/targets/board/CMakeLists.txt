@@ -12,6 +12,7 @@ set(LIBRARIES
     sensor_altimeter_node
     sensor_ins_node
     sensor_sns_node
+    failures_handler_node
     flight_recorder_node
     flight_navigator_node
     flight_controller_node
