@@ -5,21 +5,24 @@
 
 namespace topics
 {
-    // TODO: refactor topic names by role(e.g. data, status)
-    const QString altStatus = "alt_status";
-    const QString altPacket = "alt_packet";
+    const QString status = "status";
+    const QString data = "data";
+    const QString all = "all";
 
-    const QString insStatus = "ins_status";
-    const QString insPacket = "ins_packet";
+    const QString altStatus = "status_alt";
+    const QString altPacket = "data_alt";
 
-    const QString snsStatus = "sns_status";
-    const QString snsPacket = "sns_packet";
+    const QString insStatus = "status_ins";
+    const QString insPacket = "data_ins";
 
-    const QString naviState = "navi_state";
+    const QString snsStatus = "status_sns";
+    const QString snsPacket = "data_sns";
 
-    const QString flightCtrlPacket = "ctrl_packet";
+    const QString naviState = "state_navi";
 
-    const QString connectionStatusPacket = "cn_status_packet";
+    const QString flightCtrlPacket = "data_ctrl";
+
+    const QString connectionStatusPacket = "status_cn";
 
     const QStringList boardTopics = {
         altStatus, altPacket,

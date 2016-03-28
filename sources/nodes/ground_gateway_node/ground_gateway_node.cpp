@@ -76,8 +76,7 @@ GroundGatewayNode::~GroundGatewayNode()
 void GroundGatewayNode::init()
 {
      d->sub.connectTo("ipc://ui");
-
-     d->sub.subscribe("");
+     d->sub.subscribe(topics::data);
 }
 
 void GroundGatewayNode::start()

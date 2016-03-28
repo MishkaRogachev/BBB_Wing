@@ -77,7 +77,7 @@ void BoardGatewayNode::init()
      d->sub.connectTo("ipc://navigator");
      d->sub.connectTo("ipc://controller");
 
-     d->sub.subscribe("");
+     d->sub.subscribe(topics::data);
 }
 
 void BoardGatewayNode::start()

@@ -42,7 +42,7 @@ void FlightNavigatorNode::init()
      d->sub.connectTo("ipc://sns");
      d->sub.connectTo("ipc://board_gateway");
 
-     d->sub.subscribe("");
+     d->sub.subscribe(topics::data);
      this->onStateRequested(new IdleNavigationState(this));
 }
 

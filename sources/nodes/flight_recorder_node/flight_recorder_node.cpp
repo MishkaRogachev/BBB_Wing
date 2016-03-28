@@ -43,7 +43,7 @@ void FlightRecorderNode::init()
      d->sub.connectTo("ipc://ins");
      d->sub.connectTo("ipc://sns");
 
-     d->sub.subscribe("");
+     d->sub.subscribe(topics::all);
      connect(&d->sub, &Subscriber::received, this,
              &FlightRecorderNode::onSubReceived);
 }
