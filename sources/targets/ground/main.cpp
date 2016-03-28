@@ -14,6 +14,7 @@ int main(int argc, char* argv[])
 
     BranchNode scheduler;
 
+    // TODO: reduce target dependings(from core)
     scheduler.addNode(new GroundGatewayNode());
     scheduler.addNode(new UiNode());
 

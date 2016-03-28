@@ -26,6 +26,7 @@ void BranchNode::stop()
 
 void BranchNode::addNode(AbstractNode* node)
 {
+    // TODO: allow child node to work in other thread
     m_nodes.append(node);
     node->setParent(this);
 }

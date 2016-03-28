@@ -5,6 +5,7 @@
 
 namespace topics
 {
+    // TODO: refactor topic names by role(e.g. data, status)
     const QString altStatus = "alt_status";
     const QString altPacket = "alt_packet";
 
