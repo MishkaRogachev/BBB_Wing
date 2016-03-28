@@ -18,8 +18,8 @@ QVariant Config::value(const QString& key)
         return Config::instance().m_settings.value(key);
 
     qCritical("No key '%s'' in config group '%s'!",
-              qUtf8Printable(key),
-              qUtf8Printable(Config::instance().m_settings.group()));
+              qPrintable(key),
+              qPrintable(Config::instance().m_settings.group()));
     return QVariant();
 }
 
