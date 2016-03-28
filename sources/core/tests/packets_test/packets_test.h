@@ -5,13 +5,21 @@
 
 namespace domain
 {
+    class Packet;
+
     class PacketsTest: public QObject
     {
         Q_OBJECT
 
-    private slots:
-        // TODO: packets tests
+    protected:
+        template<typename T>
+        T testPacketSerialization(const T& packet);
 
+    private slots:
+        void testAltPacket();
+        void testInsPacket();
+        void testSnsPacket();
+        void testTransmissionPacket();
     };
 }
 
