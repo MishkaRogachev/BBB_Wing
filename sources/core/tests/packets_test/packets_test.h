@@ -19,6 +19,7 @@ namespace domain
         void testAltPacket();
         void testInsPacket();
         void testSnsPacket();
+        void testFailuresPacket();
         void testTransmissionPacket();
     };
 }

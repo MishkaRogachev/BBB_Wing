@@ -7,6 +7,7 @@
 #include "alt_packet.h"
 #include "ins_packet.h"
 #include "sns_packet.h"
+#include "failures_packet.h"
 #include "transmission_packet.h"
 
 using namespace domain;
@@ -80,6 +81,21 @@ void PacketsTest::testSnsPacket()
 
     QVERIFY(qFuzzyCompare(converted.altitude, packet.altitude));
     QVERIFY(qFuzzyCompare(converted.climb, packet.climb));
+}
+
+void PacketsTest::testFailuresPacket()
+{
+    FailuresPacket packet;
+
+    packet.altStatus = true;
+    packet.insStatus = false;
+    packet.snsStatus = true;
+
+    FailuresPacket converted = this->testPacketSerialization<FailuresPacket>(packet);
+
+    QCOMPARE(converted.altStatus, packet.altStatus);
+    QCOMPARE(converted.insStatus, packet.insStatus);
+    QCOMPARE(converted.snsStatus, packet.snsStatus);
 }
 
 void PacketsTest::testTransmissionPacket()

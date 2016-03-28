@@ -18,6 +18,8 @@ namespace topics
     const QString snsStatus = "status_sns";
     const QString snsPacket = "data_sns";
 
+    const QString failuresPacket = "data_failures";
+
     const QString naviState = "state_navi";
 
     const QString flightCtrlPacket = "data_ctrl";

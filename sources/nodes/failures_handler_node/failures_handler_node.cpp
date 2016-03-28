@@ -10,6 +10,8 @@
 #include "subscriber.h"
 #include "publisher.h"
 
+#include "failures_packet.h"
+
 using namespace domain;
 
 class FailuresHandlerNode::Impl
@@ -17,6 +19,8 @@ class FailuresHandlerNode::Impl
 public:
     Subscriber sub;
     Publisher pub;
+
+    FailuresPacket packet;
 };
 
 FailuresHandlerNode::FailuresHandlerNode(QObject* parent):
@@ -48,7 +52,15 @@ void FailuresHandlerNode::init()
 
 void FailuresHandlerNode::exec()
 {
+    d->pub.publish(topics::failuresPacket, d->packet.toByteArray());
 }
 
 void FailuresHandlerNode::onSubReceived(const QString& topic, const QByteArray& msg)
-{}
+{
+    if (topic == topics::altStatus)
+        d->packet.altStatus = msg.toInt();
+    else if (topic == topics::insPacket)
+        d->packet.insStatus = msg.toInt();
+    else if (topic == topics::snsPacket)
+        d->packet.snsStatus = msg.toInt();
+}
