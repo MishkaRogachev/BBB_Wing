@@ -1,4 +1,4 @@
-#include "ui_node.h"
+#include "gui_node.h"
 
 // Qt
 #include <QtGui/QGuiApplication>
@@ -24,7 +24,7 @@ inline void initResources()
 
 using namespace domain;
 
-class UiNode::Impl
+class GuiNode::Impl
 {
 public:
     QQuickView view;
@@ -35,7 +35,7 @@ public:
     GroundService groundService;
 };
 
-UiNode::UiNode(QObject* parent):
+GuiNode::GuiNode(QObject* parent):
     AbstractNode(parent),
     d(new Impl())
 {
@@ -52,24 +52,24 @@ UiNode::UiNode(QObject* parent):
                      qApp, &QGuiApplication::quit);
 }
 
-UiNode::~UiNode()
+GuiNode::~GuiNode()
 {
     delete d;
 }
 
-void UiNode::init()
+void GuiNode::init()
 {
     d->sub.connectTo(endpoints::groundGateway);
     d->sub.subscribe(topics::data);
-    connect(&d->sub, &Subscriber::received, this, &UiNode::onSubReceived);
+    connect(&d->sub, &Subscriber::received, this, &GuiNode::onSubReceived);
 }
 
-void UiNode::start()
+void GuiNode::start()
 {
     d->view.showFullScreen();
 }
 
-void UiNode::onSubReceived(const QString& topic, const QByteArray& data)
+void GuiNode::onSubReceived(const QString& topic, const QByteArray& data)
 {
     if (topic == topics::altPacket)
         d->boardService.updateAltData(AltPacket::fromByteArray(data));

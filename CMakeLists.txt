@@ -66,7 +66,7 @@ endif()
 
 if (TARGET_TYPE STREQUAL "ground" OR TARGET_TYPE STREQUAL "all")
     add_subdirectory(sources/nodes/ground_gateway_node)
-    add_subdirectory(sources/nodes/ui_node)
+    add_subdirectory(sources/nodes/gui_node)
 
     add_subdirectory(sources/targets/ground)
 endif()

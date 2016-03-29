@@ -2,7 +2,7 @@
 cmake_minimum_required(VERSION 2.8.11)
 
 # Project
-set(PROJECT ui_node)
+set(PROJECT gui_node)
 project(${PROJECT})
 
 # Enable required Qt modules

@@ -5,13 +5,13 @@
 
 namespace domain
 {
-    class UiNode: public AbstractNode
+    class GuiNode: public AbstractNode
     {
         Q_OBJECT
 
     public:
-        UiNode(QObject* parent = nullptr);
-        ~UiNode() override;
+        GuiNode(QObject* parent = nullptr);
+        ~GuiNode() override;
 
     public slots:
         void init() override;
