@@ -1,5 +1,5 @@
-#ifndef UI_NODE_H
-#define UI_NODE_H
+#ifndef GUI_NODE_H
+#define GUI_NODE_H
 
 #include "abstract_node.h"
 
@@ -26,4 +26,4 @@ namespace domain
     };
 }
 
-#endif // UI_NODE_H
+#endif // GUI_NODE_H

@@ -4,8 +4,8 @@ using namespace domain;
 
 QDataStream& ConnectionStatusPacket::operator >>(QDataStream& stream) const
 {
-    stream << airLine;
-    stream << wireLine;
+    stream << airLink;
+    stream << wireLink;
     stream << packetsPerSecond;
     stream << badPackets;
 
@@ -14,8 +14,8 @@ QDataStream& ConnectionStatusPacket::operator >>(QDataStream& stream) const
 
 QDataStream& ConnectionStatusPacket::operator <<(QDataStream& stream)
 {
-    stream >> airLine;
-    stream >> wireLine;
+    stream >> airLink;
+    stream >> wireLink;
     stream >> packetsPerSecond;
     stream >> badPackets;
 

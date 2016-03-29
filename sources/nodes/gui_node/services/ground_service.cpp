@@ -28,16 +28,16 @@ int GroundService::badPackets() const
 
 void GroundService::updateConnectionStatus(const ConnectionStatusPacket& packet)
 {
-    if (m_airEnabled != packet.airLine)
+    if (m_airEnabled != packet.airLink)
     {
-        m_airEnabled = packet.airLine;
-        emit airEnabledChanged(packet.airLine);
+        m_airEnabled = packet.airLink;
+        emit airEnabledChanged(packet.airLink);
     }
 
-    if (m_wireEnabled != packet.wireLine)
+    if (m_wireEnabled != packet.wireLink)
     {
-        m_wireEnabled = packet.wireLine;
-        emit wireEnabledChanged(packet.wireLine);
+        m_wireEnabled = packet.wireLink;
+        emit wireEnabledChanged(packet.wireLink);
     }
 
     if (m_pps != packet.packetsPerSecond)

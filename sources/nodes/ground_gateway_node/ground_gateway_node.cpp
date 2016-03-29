@@ -12,8 +12,8 @@
 #include "subscriber.h"
 #include "publisher.h"
 
-#include "udp_exchanger.h"
-#include "serial_port_exchanger.h"
+#include "udp_link.h"
+#include "serial_port_link.h"
 
 #include "connection_status_packet.h"
 #include "transmission_packet.h"
@@ -26,8 +26,8 @@ public:
     Subscriber sub;
     Publisher pub;
 
-    AbstractExchanger* wireLine;
-    AbstractExchanger* airLine;
+    AbstractLink* wireLink;
+    AbstractLink* airLink;
 
     QTimer* timoutTimer;
 
@@ -47,17 +47,17 @@ GroundGatewayNode::GroundGatewayNode(QObject* parent):
     Config::begin("GroundGateway");
     d->pub.bind(endpoints::groundGateway);
 
-    d->wireLine = new UdpExchanger(
+    d->wireLink = new UdpLink(
                       Config::value("udp_ground_port").toInt(),
                       QHostAddress(Config::value("udp_board_address").toString()),
                       Config::value("udp_board_port").toInt(), this);
-    connect(d->wireLine, &AbstractExchanger::received,
-            this, &GroundGatewayNode::onLineReceived);
+    connect(d->wireLink, &AbstractLink::received,
+            this, &GroundGatewayNode::onLinkReceived);
 
-    d->airLine = new SerialPortExchanger(
+    d->airLink = new SerialPortLink(
                      Config::value("serial_port_ground").toString(), this);
-    connect(d->airLine, &AbstractExchanger::received,
-            this, &GroundGatewayNode::onLineReceived);
+    connect(d->airLink, &AbstractLink::received,
+            this, &GroundGatewayNode::onLinkReceived);
 
     d->timoutTimer = new QTimer(this);
     d->timoutTimer->setInterval(Config::value("timeout_interval").toInt());
@@ -82,8 +82,8 @@ void GroundGatewayNode::start()
 {
     AbstractNodeFrequency::start();
 
-    d->wireLine->start();
-    d->airLine->start();
+    d->wireLink->start();
+    d->airLink->start();
 
     connect(&d->sub, &Subscriber::received, this,
             &GroundGatewayNode::onSubReceived);
@@ -102,17 +102,17 @@ void GroundGatewayNode::exec()
         packet.calcCrc();
 
         if (!d->airReceived || (d->wireReceived && d->airReceived))
-            d->wireLine->transmit(packet.toByteArray());
+            d->wireLink->transmit(packet.toByteArray());
         if (!d->wireReceived)
-            d->airLine->transmit(packet.toByteArray());
+            d->airLink->transmit(packet.toByteArray());
     }
 
     d->dataMap.clear();
 
     ConnectionStatusPacket statusPacket;
 
-    statusPacket.airLine = d->airReceived;
-    statusPacket.wireLine = d->wireReceived;
+    statusPacket.airLink = d->airReceived;
+    statusPacket.wireLink = d->wireReceived;
     statusPacket.packetsPerSecond = d->count * this->frequency();
     statusPacket.badPackets = (d->count) ? 100 * d->badCount / d->count : 0;
 
@@ -134,10 +134,10 @@ void GroundGatewayNode::onSubReceived(const QString& topic,
     d->dataMap[topic] = data;
 }
 
-void GroundGatewayNode::onLineReceived(const QByteArray& data)
+void GroundGatewayNode::onLinkReceived(const QByteArray& data)
 {
-    if (this->sender() == d->wireLine) d->wireReceived = true;
-    else if (this->sender() == d->airLine) d->airReceived = true;
+    if (this->sender() == d->wireLink) d->wireReceived = true;
+    else if (this->sender() == d->airLink) d->airReceived = true;
     d->count++;
 
     auto packet = TransmissionPacket::fromByteArray(data);

@@ -1,7 +1,7 @@
-#ifndef UDP_EXCHANGER_H
-#define UDP_EXCHANGER_H
+#ifndef UDP_LINK_H
+#define UDP_LINK_H
 
-#include "abstract_exchanger.h"
+#include "abstract_link.h"
 
 // Qt
 #include <QtNetwork/QHostAddress>
@@ -10,12 +10,12 @@ class QUdpSocket;
 
 namespace domain
 {
-    class UdpExchanger: public AbstractExchanger
+    class UdpLink: public AbstractLink
     {
         Q_OBJECT
 
     public:
-        UdpExchanger(int hostPort, const QHostAddress& adress, int port,
+        UdpLink(int hostPort, const QHostAddress& adress, int port,
                      QObject* parent = nullptr);
 
         QHostAddress adress() const;
@@ -40,4 +40,4 @@ namespace domain
     };
 }
 
-#endif // UDP_EXCHANGER_H
+#endif // UDP_LINK_H

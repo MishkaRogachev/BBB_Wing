@@ -1,17 +1,17 @@
-#ifndef ABSTRACT_EXCHANGER_H
-#define ABSTRACT_EXCHANGER_H
+#ifndef ABSTRACT_LINK_H
+#define ABSTRACT_LINK_H
 
 #include <QObject>
 
 namespace domain
 {
-    class AbstractExchanger: public QObject
+    class AbstractLink: public QObject
     {
         Q_OBJECT
 
     public:
-        explicit AbstractExchanger(QObject* parent = nullptr);
-        ~AbstractExchanger() override;
+        explicit AbstractLink(QObject* parent = nullptr);
+        ~AbstractLink() override;
 
         virtual bool isAvailable() const = 0;
 
@@ -24,4 +24,4 @@ namespace domain
     };
 }
 
-#endif // ABSTRACT_EXCHANGER_H
+#endif // ABSTRACT_LINK_H

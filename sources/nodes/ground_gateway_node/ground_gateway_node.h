@@ -21,7 +21,7 @@ namespace domain
     private slots:
         void onTimeout();
         void onSubReceived(const QString& topic, const QByteArray& data);
-        void onLineReceived(const QByteArray& data);
+        void onLinkReceived(const QByteArray& data);
 
     private:
         class Impl;

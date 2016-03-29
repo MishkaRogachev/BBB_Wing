@@ -12,8 +12,8 @@
 #include "subscriber.h"
 #include "publisher.h"
 
-#include "udp_exchanger.h"
-#include "serial_port_exchanger.h"
+#include "udp_link.h"
+#include "serial_port_link.h"
 
 #include "transmission_packet.h"
 
@@ -25,8 +25,8 @@ public:
     Subscriber sub;
     Publisher pub;
 
-    AbstractExchanger* wireLine;
-    AbstractExchanger* airLine;
+    AbstractLink* wireLink;
+    AbstractLink* airLink;
 
     QTimer* timoutTimer;
 
@@ -43,17 +43,17 @@ BoardGatewayNode::BoardGatewayNode(QObject* parent):
     Config::begin("BoardGateway");
     d->pub.bind(endpoints::boardGateway);
 
-    d->wireLine = new UdpExchanger(
+    d->wireLink = new UdpLink(
                       Config::value("udp_board_port").toInt(),
                       QHostAddress(Config::value("udp_ground_address").toString()),
                       Config::value("udp_ground_port").toInt(), this);
-    connect(d->wireLine, &AbstractExchanger::received,
-            this, &BoardGatewayNode::onLineReceived);
+    connect(d->wireLink, &AbstractLink::received,
+            this, &BoardGatewayNode::onLinkReceived);
 
-    d->airLine = new SerialPortExchanger(
+    d->airLink = new SerialPortLink(
                      Config::value("serial_port_board").toString(), this);
-    connect(d->airLine, &AbstractExchanger::received,
-            this, &BoardGatewayNode::onLineReceived);
+    connect(d->airLink, &AbstractLink::received,
+            this, &BoardGatewayNode::onLinkReceived);
 
     d->timoutTimer = new QTimer(this);
     d->timoutTimer->setInterval(Config::value("timeout_interval").toInt());
@@ -84,8 +84,8 @@ void BoardGatewayNode::start()
 {
     AbstractNodeFrequency::start();
 
-    d->wireLine->start();
-    d->airLine->start();
+    d->wireLink->start();
+    d->airLink->start();
 
     connect(&d->sub, &Subscriber::received, this,
             &BoardGatewayNode::onSubReceived);
@@ -101,8 +101,8 @@ void BoardGatewayNode::exec()
         packet.data = d->dataMap[topic];
         packet.calcCrc();
 
-        if (d->wireReceived) d->wireLine->transmit(packet.toByteArray());
-        if (d->airReceived) d->airLine->transmit(packet.toByteArray());
+        if (d->wireReceived) d->wireLink->transmit(packet.toByteArray());
+        if (d->airReceived) d->airLink->transmit(packet.toByteArray());
     }
 
     d->dataMap.clear();
@@ -120,10 +120,10 @@ void BoardGatewayNode::onSubReceived(const QString& topic,
     d->dataMap[topic] = data;
 }
 
-void BoardGatewayNode::onLineReceived(const QByteArray& data)
+void BoardGatewayNode::onLinkReceived(const QByteArray& data)
 {
-    if (this->sender() == d->wireLine) d->wireReceived = true;
-    else if (this->sender() == d->airLine) d->airReceived = true;
+    if (this->sender() == d->wireLink) d->wireReceived = true;
+    else if (this->sender() == d->airLink) d->airReceived = true;
 
     auto packet = TransmissionPacket::fromByteArray(data);
     if (!packet.validateCrc()) return;

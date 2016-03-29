@@ -1,4 +1,4 @@
-#include "serial_port_exchanger.h"
+#include "serial_port_link.h"
 
 // Qt
 #include <QtSerialPort/QSerialPort>
@@ -11,34 +11,34 @@ namespace
 
 using namespace domain;
 
-SerialPortExchanger::SerialPortExchanger(const QString& device,
+SerialPortLink::SerialPortLink(const QString& device,
                                              QObject* parent):
-    AbstractExchanger(parent)
+    AbstractLink(parent)
 {
     m_port = new QSerialPort(device, this);
 
     connect(m_port, &QSerialPort::readyRead,
-            this, &SerialPortExchanger::readSerialData);
+            this, &SerialPortLink::readSerialData);
 }
 
-bool SerialPortExchanger::isAvailable() const
+bool SerialPortLink::isAvailable() const
 {
     return m_port->isOpen(); // TODO: handle serial port avalibility
 }
 
-bool SerialPortExchanger::start()
+bool SerialPortLink::start()
 {
     return m_port->open(QIODevice::ReadWrite);
     // m_port->setBaudRate(38400); TODO: setBaudRate, after hardware reconfiguration
 }
 
-void SerialPortExchanger::transmit(const QByteArray& packet)
+void SerialPortLink::transmit(const QByteArray& packet)
 {
     m_port->write(::separator);
     m_port->write(packet.data(), packet.size());
 }
 
-void SerialPortExchanger::readSerialData()
+void SerialPortLink::readSerialData()
 {
     m_data.append(m_port->readAll());
 
@@ -58,7 +58,7 @@ void SerialPortExchanger::readSerialData()
     }
 }
 
-void SerialPortExchanger::processFramgent(const QByteArray& fragment)
+void SerialPortLink::processFramgent(const QByteArray& fragment)
 {
     if (fragment.isEmpty()) return;
     emit received(fragment);

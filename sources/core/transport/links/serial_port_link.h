@@ -1,18 +1,18 @@
-#ifndef SERIAL_PORT_EXCHANGER_H
-#define SERIAL_PORT_EXCHANGER_H
+#ifndef SERIAL_PORT_LINK_H
+#define SERIAL_PORT_LINK_H
 
-#include "abstract_exchanger.h"
+#include "abstract_link.h"
 
 class QSerialPort;
 
 namespace domain
 {
-    class SerialPortExchanger: public AbstractExchanger
+    class SerialPortLink: public AbstractLink
     {
         Q_OBJECT
 
     public:
-        SerialPortExchanger(const QString& device, QObject* parent = nullptr);
+        SerialPortLink(const QString& device, QObject* parent = nullptr);
 
         bool isAvailable() const override;
 
@@ -30,4 +30,4 @@ namespace domain
     };
 }
 
-#endif // SERIAL_PORT_EXCHANGER_H
+#endif // SERIAL_PORT_LINK_H

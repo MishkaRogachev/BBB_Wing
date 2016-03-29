@@ -8,8 +8,8 @@ namespace domain
     class ConnectionStatusPacket: public Packet
     {
     public:
-        bool airLine;
-        bool wireLine;
+        bool airLink;
+        bool wireLink;
         int packetsPerSecond;
         int badPackets;
 

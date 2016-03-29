@@ -1,48 +1,48 @@
-#include "udp_exchanger.h"
+#include "udp_link.h"
 
 // Qt
 #include <QtNetwork/QUdpSocket>
 
 using namespace domain;
 
-UdpExchanger::UdpExchanger(int hostPort, const QHostAddress& adress, int port,
+UdpLink::UdpLink(int hostPort, const QHostAddress& adress, int port,
                                QObject* parent):
-    AbstractExchanger(parent),
+    AbstractLink(parent),
     m_socket(new QUdpSocket(this)),
     m_hostPort(hostPort),
     m_adress(adress),
     m_port(port)
 {
     connect(m_socket, &QUdpSocket::readyRead, this,
-            &UdpExchanger::readPendingDatagrams);
+            &UdpLink::readPendingDatagrams);
 }
 
-QHostAddress UdpExchanger::adress() const
+QHostAddress UdpLink::adress() const
 {
     return m_adress;
 }
 
-int UdpExchanger::port() const
+int UdpLink::port() const
 {
     return m_port;
 }
 
-bool UdpExchanger::isAvailable() const
+bool UdpLink::isAvailable() const
 {
     return m_socket->isOpen(); // TODO: handle socket avalibility
 }
 
-bool UdpExchanger::start()
+bool UdpLink::start()
 {
     return m_socket->bind(m_hostPort);
 }
 
-void UdpExchanger::transmit(const QByteArray& packet)
+void UdpLink::transmit(const QByteArray& packet)
 {
     m_socket->writeDatagram(packet, m_adress, m_port);
 }
 
-void UdpExchanger::readPendingDatagrams()
+void UdpLink::readPendingDatagrams()
 {
     while (m_socket->hasPendingDatagrams())
     {
@@ -54,12 +54,12 @@ void UdpExchanger::readPendingDatagrams()
     }
 }
 
-void UdpExchanger::setPort(int port)
+void UdpLink::setPort(int port)
 {
     m_port = port;
 }
 
-void UdpExchanger::setAdress(const QHostAddress& adress)
+void UdpLink::setAdress(const QHostAddress& adress)
 {
     m_adress = adress;
 }
