@@ -3,15 +3,15 @@
 // Qt
 #include <QtGui/QGuiApplication>
 #include <QtQuick/QQuickView>
-#include <QtQuick/QQuickItem>
 #include <QtQml/QQmlEngine>
 #include <QtQml/QQmlContext>
-#include <QtQml/QQmlProperty>
 #include <QDebug>
 
 // Internal
-#include "topics.h"
+#include "core.h"
+
 #include "subscriber.h"
+#include "publisher.h"
 
 #include "board_service.h"
 #include "ground_service.h"
@@ -29,6 +29,7 @@ class UiNode::Impl
 public:
     QQuickView view;
     Subscriber sub;
+    Publisher pub;
 
     BoardService boardService;
     GroundService groundService;
@@ -39,6 +40,8 @@ UiNode::UiNode(QObject* parent):
     d(new Impl())
 {
     initResources();
+
+    d->pub.bind(endpoints::gui);
 
     d->view.rootContext()->setContextProperty("boardService", &d->boardService);
     d->view.rootContext()->setContextProperty("groundService", &d->groundService);
@@ -56,7 +59,7 @@ UiNode::~UiNode()
 
 void UiNode::init()
 {
-    d->sub.connectTo("ipc://ground_gateway");
+    d->sub.connectTo(endpoints::groundGateway);
     d->sub.subscribe(topics::data);
     connect(&d->sub, &Subscriber::received, this, &UiNode::onSubReceived);
 }

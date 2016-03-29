@@ -1,5 +1,5 @@
-#ifndef TOPICS_H
-#define TOPICS_H
+#ifndef CORE_H
+#define CORE_H
 
 #include <QStringList>
 
@@ -7,7 +7,7 @@ namespace topics
 {
     const QString status = "status";
     const QString data = "data";
-    const QString all = "all";
+    const QString all = "";
 
     const QString altStatus = "status_alt";
     const QString altPacket = "data_alt";
@@ -18,7 +18,7 @@ namespace topics
     const QString snsStatus = "status_sns";
     const QString snsPacket = "data_sns";
 
-    const QString failuresPacket = "data_failures";
+    const QString failuresPacket = "data_fails";
 
     const QString naviState = "state_navi";
 
@@ -35,4 +35,21 @@ namespace topics
     };
 }
 
-#endif // TOPICS_H
+namespace endpoints
+{
+    const QString altimeter = "ipc://alt";
+    const QString ins = "ipc://ins";
+    const QString sns = "ipc://sns";
+
+    const QString failuresHandler = "ipc://failurer";
+
+    const QString navigator = "ipc://navi";
+    const QString controller = "ipc://ctrl";
+
+    const QString boardGateway = "ipc://board_gw";
+    const QString groundGateway = "ipc://ground_gw";
+
+    const QString gui = "ipc://gui";
+} 
+
+#endif // CORE_H

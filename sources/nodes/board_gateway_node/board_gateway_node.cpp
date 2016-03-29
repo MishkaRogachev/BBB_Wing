@@ -7,7 +7,7 @@
 
 // Internal
 #include "config.h"
-#include "topics.h"
+#include "core.h"
 
 #include "subscriber.h"
 #include "publisher.h"
@@ -41,7 +41,7 @@ BoardGatewayNode::BoardGatewayNode(QObject* parent):
     d(new Impl())
 {
     Config::begin("BoardGateway");
-    d->pub.bind("ipc://board_gateway");
+    d->pub.bind(endpoints::boardGateway);
 
     d->wireLine = new UdpExchanger(
                       Config::value("udp_board_port").toInt(),
@@ -70,13 +70,14 @@ BoardGatewayNode::~BoardGatewayNode()
 
 void BoardGatewayNode::init()
 {
-     d->sub.connectTo("ipc://alt");
-     d->sub.connectTo("ipc://ins");
-     d->sub.connectTo("ipc://sns");
-     d->sub.connectTo("ipc://navigator");
-     d->sub.connectTo("ipc://controller");
+    d->sub.connectTo({ endpoints::altimeter,
+                       endpoints::ins,
+                       endpoints::sns,
+                       endpoints::failuresHandler,
+                       endpoints::navigator,
+                       endpoints::controller });
 
-     d->sub.subscribe(topics::data);
+    d->sub.subscribe(topics::data);
 }
 
 void BoardGatewayNode::start()

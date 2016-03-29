@@ -4,7 +4,7 @@
 #include <QDebug>
 
 // Internal
-#include "topics.h"
+#include "core.h"
 #include "config.h"
 
 #include "subscriber.h"
@@ -28,7 +28,7 @@ FlightNavigatorNode::FlightNavigatorNode(QObject* parent):
                           parent),
     d(new Impl())
 {
-    d->pub.bind("ipc://navigator");
+    d->pub.bind(endpoints::navigator);
 }
 
 FlightNavigatorNode::~FlightNavigatorNode()
@@ -38,13 +38,14 @@ FlightNavigatorNode::~FlightNavigatorNode()
 
 void FlightNavigatorNode::init()
 {
-     d->sub.connectTo("ipc://alt");
-     d->sub.connectTo("ipc://ins");
-     d->sub.connectTo("ipc://sns");
-     d->sub.connectTo("ipc://board_gateway");
+    d->sub.connectTo({ endpoints::altimeter,
+                       endpoints::ins,
+                       endpoints::sns,
+                       endpoints::controller,
+                       endpoints::boardGateway });
 
-     d->sub.subscribe(topics::data);
-     this->onStateRequested(new IdleNavigationState(this));
+    d->sub.subscribe(topics::data);
+    this->onStateRequested(new IdleNavigationState(this));
 }
 
 void FlightNavigatorNode::exec()

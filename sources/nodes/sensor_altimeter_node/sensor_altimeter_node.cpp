@@ -6,7 +6,7 @@
 // Internal
 #include "mpl3115a2.h"
 
-#include "topics.h"
+#include "core.h"
 #include "config.h"
 #include "publisher.h"
 
@@ -26,7 +26,7 @@ SensorAltimeterNode::SensorAltimeterNode(QObject* parent):
                           parent),
     d(new Impl())
 {
-    d->pub.bind("ipc://alt");
+    d->pub.bind(endpoints::altimeter);
 }
 
 SensorAltimeterNode::~SensorAltimeterNode()

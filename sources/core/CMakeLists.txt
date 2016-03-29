@@ -15,7 +15,7 @@ PARENT_SCOPE)
 # Sources
 set(SOURCES
     ${SOURCES}
-    ${CMAKE_CURRENT_SOURCE_DIR}/topics.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/core.h
 PARENT_SCOPE)
 
 # Libraries

@@ -1,7 +1,7 @@
 #include "abstract_navigation_state.h"
 
 // Internal
-#include "topics.h"
+#include "core.h"
 
 using namespace domain;
 

@@ -7,7 +7,7 @@
 
 // Internal
 #include "config.h"
-#include "topics.h"
+#include "core.h"
 
 #include "subscriber.h"
 #include "publisher.h"
@@ -45,7 +45,7 @@ GroundGatewayNode::GroundGatewayNode(QObject* parent):
     d(new Impl())
 {
     Config::begin("GroundGateway");
-    d->pub.bind("ipc://ground_gateway");
+    d->pub.bind(endpoints::groundGateway);
 
     d->wireLine = new UdpExchanger(
                       Config::value("udp_ground_port").toInt(),
@@ -74,7 +74,7 @@ GroundGatewayNode::~GroundGatewayNode()
 
 void GroundGatewayNode::init()
 {
-     d->sub.connectTo("ipc://ui");
+     d->sub.connectTo(endpoints::gui);
      d->sub.subscribe(topics::data);
 }
 

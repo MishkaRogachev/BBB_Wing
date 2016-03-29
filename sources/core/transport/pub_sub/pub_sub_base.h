@@ -1,7 +1,9 @@
 #ifndef PUB_SUB_BASE_H
 #define PUB_SUB_BASE_H
 
+// Qt
 #include <QObject>
+#include <QStringList>
 
 namespace domain
 {
@@ -14,6 +16,7 @@ namespace domain
         ~PubSubBase() override;
 
         void connectTo(const QString& endpoint);
+        void connectTo(const QStringList& endpoints);
         void bind(const QString& endpoint);
         void unbind();
 

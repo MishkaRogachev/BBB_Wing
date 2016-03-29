@@ -5,7 +5,7 @@
 
 // Internal
 #include "config.h"
-#include "topics.h"
+#include "core.h"
 
 #include "subscriber.h"
 #include "publisher.h"
@@ -28,7 +28,7 @@ FailuresHandlerNode::FailuresHandlerNode(QObject* parent):
                           parent),
     d(new Impl())
 {
-    d->pub.bind("ipc://failures");
+    d->pub.bind(endpoints::failuresHandler);
 }
 
 FailuresHandlerNode::~FailuresHandlerNode()
@@ -38,12 +38,12 @@ FailuresHandlerNode::~FailuresHandlerNode()
 
 void FailuresHandlerNode::init()
 {
-    d->sub.connectTo("ipc://alt");
-    d->sub.connectTo("ipc://ins");
-    d->sub.connectTo("ipc://sns");
-    d->sub.connectTo("ipc://navigator");
-    d->sub.connectTo("ipc://controller");
-    d->sub.connectTo("ipc://ground_gateway");
+    d->sub.connectTo({ endpoints::altimeter,
+                       endpoints::ins,
+                       endpoints::sns,
+                       endpoints::navigator,
+                       endpoints::controller,
+                       endpoints::boardGateway });
 
     d->sub.subscribe(topics::status);
     connect(&d->sub, &Subscriber::received, this,

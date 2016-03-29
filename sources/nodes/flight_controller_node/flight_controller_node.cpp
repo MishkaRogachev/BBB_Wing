@@ -5,7 +5,7 @@
 
 // Internal
 #include "config.h"
-#include "topics.h"
+#include "core.h"
 #include "subscriber.h"
 #include "publisher.h"
 
@@ -23,7 +23,7 @@ FlightControllerNode::FlightControllerNode(QObject* parent):
                           parent),
     d(new Impl())
 {
-    d->pub.bind("ipc://controller");
+    d->pub.bind(endpoints::controller);
 }
 
 FlightControllerNode::~FlightControllerNode()
@@ -33,15 +33,15 @@ FlightControllerNode::~FlightControllerNode()
 
 void FlightControllerNode::init()
 {
-     d->sub.connectTo("ipc://alt");
-     d->sub.connectTo("ipc://ins");
-     d->sub.connectTo("ipc://sns");
-     d->sub.connectTo("ipc://navigator");
-     d->sub.connectTo("ipc://board_gateway");
+    d->sub.connectTo({ endpoints::altimeter,
+                       endpoints::ins,
+                       endpoints::sns,
+                       endpoints::navigator,
+                       endpoints::boardGateway });
 
-     d->sub.subscribe(topics::data);
-     connect(&d->sub, &Subscriber::received, this,
-             &FlightControllerNode::onSubReceived);
+    d->sub.subscribe(topics::data);
+    connect(&d->sub, &Subscriber::received, this,
+            &FlightControllerNode::onSubReceived);
 }
 
 void FlightControllerNode::exec()

@@ -5,7 +5,7 @@
 
 // Internal
 #include "config.h"
-#include "topics.h"
+#include "core.h"
 #include "sns_packet.h"
 
 #include "publisher.h"
@@ -24,7 +24,7 @@ SensorSnsNode::SensorSnsNode(QObject* parent):
                           parent),
     d(new Impl())
 {
-    d->pub.bind("ipc://sns");
+    d->pub.bind(endpoints::sns);
 }
 
 SensorSnsNode::~SensorSnsNode()

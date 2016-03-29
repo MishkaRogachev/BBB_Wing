@@ -3,7 +3,7 @@
 // Internal
 #include "publisher.h"
 #include "config.h"
-#include "topics.h"
+#include "core.h"
 
 #include "flight_control_packet.h"
 

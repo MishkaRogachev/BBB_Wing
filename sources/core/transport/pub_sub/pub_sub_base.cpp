@@ -34,6 +34,12 @@ void PubSubBase::connectTo(const QString& endpoint)
     d->socket.connect(endpoint.toStdString().c_str());
 }
 
+void PubSubBase::connectTo(const QStringList& endpoints)
+{
+    for (const QString& endpoint: endpoints)
+        this->connectTo(endpoint);
+}
+
 void PubSubBase::bind(const QString& endpoint)
 {
     d->socket.bind(endpoint.toStdString().c_str());

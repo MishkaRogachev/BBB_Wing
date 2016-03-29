@@ -8,7 +8,7 @@
 #include "lsm9ds1_gyro_accel.h"
 #include "lsm9ds1_mag.h"
 
-#include "topics.h"
+#include "core.h"
 #include "config.h"
 #include "publisher.h"
 
@@ -33,7 +33,7 @@ SensorInsNode::SensorInsNode(QObject* parent):
                           parent),
     d(new Impl())
 {
-    d->pub.bind("ipc://ins");
+    d->pub.bind(endpoints::ins);
 }
 
 SensorInsNode::~SensorInsNode()

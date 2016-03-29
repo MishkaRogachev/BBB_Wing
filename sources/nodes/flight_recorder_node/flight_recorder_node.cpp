@@ -7,7 +7,7 @@
 #include <QDateTime>
 
 // Internal
-#include "topics.h"
+#include "core.h"
 #include "config.h"
 #include "subscriber.h"
 
@@ -40,16 +40,17 @@ FlightRecorderNode::~FlightRecorderNode()
 
 void FlightRecorderNode::init()
 {
-     d->sub.connectTo("ipc://alt");
-     d->sub.connectTo("ipc://ins");
-     d->sub.connectTo("ipc://sns");
-     d->sub.connectTo("ipc://navigator");
-     d->sub.connectTo("ipc://controller");
-     d->sub.connectTo("ipc://ground_gateway");
+    d->sub.connectTo({ endpoints::altimeter,
+                       endpoints::ins,
+                       endpoints::sns,
+                       endpoints::failuresHandler,
+                       endpoints::navigator,
+                       endpoints::controller,
+                       endpoints::boardGateway });
 
-     d->sub.subscribe(topics::all);
-     connect(&d->sub, &Subscriber::received, this,
-             &FlightRecorderNode::onSubReceived);
+    d->sub.subscribe(topics::all);
+    connect(&d->sub, &Subscriber::received, this,
+            &FlightRecorderNode::onSubReceived);
 }
 
 void FlightRecorderNode::exec()
