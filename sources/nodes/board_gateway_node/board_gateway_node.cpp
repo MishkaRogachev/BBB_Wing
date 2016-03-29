@@ -84,8 +84,8 @@ void BoardGatewayNode::start()
 {
     AbstractNodeFrequency::start();
 
-    d->wireLink->start();
-    d->airLink->start();
+    d->wireLink->connect();
+    d->airLink->connect();
 
     connect(&d->sub, &Subscriber::received, this,
             &BoardGatewayNode::onSubReceived);
@@ -101,8 +101,8 @@ void BoardGatewayNode::exec()
         packet.data = d->dataMap[topic];
         packet.calcCrc();
 
-        if (d->wireReceived) d->wireLink->transmit(packet.toByteArray());
-        if (d->airReceived) d->airLink->transmit(packet.toByteArray());
+        if (d->wireReceived) d->wireLink->tryTransmit(packet.toByteArray());
+        if (d->airReceived) d->airLink->tryTransmit(packet.toByteArray());
     }
 
     d->dataMap.clear();

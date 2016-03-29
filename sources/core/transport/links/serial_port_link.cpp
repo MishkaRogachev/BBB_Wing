@@ -11,25 +11,35 @@ namespace
 
 using namespace domain;
 
-SerialPortLink::SerialPortLink(const QString& device,
-                                             QObject* parent):
+SerialPortLink::SerialPortLink(const QString& device, QObject* parent):
     AbstractLink(parent)
 {
     m_port = new QSerialPort(device, this);
 
-    connect(m_port, &QSerialPort::readyRead,
-            this, &SerialPortLink::readSerialData);
+    QObject::connect(m_port, &QSerialPort::readyRead,
+                     this, &SerialPortLink::readSerialData);
 }
 
-bool SerialPortLink::isAvailable() const
+bool SerialPortLink::isConnected() const
 {
     return m_port->isOpen(); // TODO: handle serial port avalibility
 }
 
-bool SerialPortLink::start()
+bool SerialPortLink::connect()
 {
-    return m_port->open(QIODevice::ReadWrite);
+    if (m_port->open(QIODevice::ReadWrite))
+    {
     // m_port->setBaudRate(38400); TODO: setBaudRate, after hardware reconfiguration
+        return true;
+    }
+
+    m_port->close();
+    return false;
+}
+
+void SerialPortLink::disconnect()
+{
+    m_port->close();
 }
 
 void SerialPortLink::transmit(const QByteArray& packet)

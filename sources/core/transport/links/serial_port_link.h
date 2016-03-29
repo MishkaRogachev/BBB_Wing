@@ -14,10 +14,11 @@ namespace domain
     public:
         SerialPortLink(const QString& device, QObject* parent = nullptr);
 
-        bool isAvailable() const override;
+        bool isConnected() const override;
 
     public slots:
-        bool start() override;
+        bool connect() override;
+        void disconnect() override;
         void transmit(const QByteArray& packet) override;
 
     private slots:

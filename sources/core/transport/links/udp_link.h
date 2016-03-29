@@ -20,10 +20,11 @@ namespace domain
 
         QHostAddress adress() const;
         int port() const;
-        bool isAvailable() const override;
+        bool isConnected() const override;
 
     public slots:
-        bool start() override;
+        bool connect() override;
+        void disconnect() override;
         void transmit(const QByteArray& packet) override;
 
         void setAdress(const QHostAddress& adress);

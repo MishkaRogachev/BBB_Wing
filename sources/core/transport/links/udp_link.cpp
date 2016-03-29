@@ -6,15 +6,15 @@
 using namespace domain;
 
 UdpLink::UdpLink(int hostPort, const QHostAddress& adress, int port,
-                               QObject* parent):
+                 QObject* parent):
     AbstractLink(parent),
     m_socket(new QUdpSocket(this)),
     m_hostPort(hostPort),
     m_adress(adress),
     m_port(port)
 {
-    connect(m_socket, &QUdpSocket::readyRead, this,
-            &UdpLink::readPendingDatagrams);
+    QObject::connect(m_socket, &QUdpSocket::readyRead,
+                     this, &UdpLink::readPendingDatagrams);
 }
 
 QHostAddress UdpLink::adress() const
@@ -27,14 +27,23 @@ int UdpLink::port() const
     return m_port;
 }
 
-bool UdpLink::isAvailable() const
+bool UdpLink::isConnected() const
 {
-    return m_socket->isOpen(); // TODO: handle socket avalibility
+    return m_socket->state() == QAbstractSocket::BoundState;
 }
 
-bool UdpLink::start()
+bool UdpLink::connect()
 {
-    return m_socket->bind(m_hostPort);
+    if (m_socket->bind(m_hostPort))
+        return true;
+
+    m_socket->close();
+    return false;
+}
+
+void UdpLink::disconnect()
+{
+    m_socket->close();
 }
 
 void UdpLink::transmit(const QByteArray& packet)

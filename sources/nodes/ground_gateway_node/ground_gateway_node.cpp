@@ -82,8 +82,8 @@ void GroundGatewayNode::start()
 {
     AbstractNodeFrequency::start();
 
-    d->wireLink->start();
-    d->airLink->start();
+    d->wireLink->connect();
+    d->airLink->connect();
 
     connect(&d->sub, &Subscriber::received, this,
             &GroundGatewayNode::onSubReceived);
@@ -102,9 +102,9 @@ void GroundGatewayNode::exec()
         packet.calcCrc();
 
         if (!d->airReceived || (d->wireReceived && d->airReceived))
-            d->wireLink->transmit(packet.toByteArray());
+            d->wireLink->tryTransmit(packet.toByteArray());
         if (!d->wireReceived)
-            d->airLink->transmit(packet.toByteArray());
+            d->airLink->tryTransmit(packet.toByteArray());
     }
 
     d->dataMap.clear();
