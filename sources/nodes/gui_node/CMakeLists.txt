@@ -6,13 +6,14 @@ set(PROJECT gui_node)
 project(${PROJECT})
 
 # Enable required Qt modules
-find_package(Qt5 COMPONENTS Gui Quick Positioning Location REQUIRED)
+find_package(Qt5 COMPONENTS Gui Quick Multimedia Positioning Location REQUIRED)
 
 # Libraries
 set(LIBRARIES
 # Qt5
     Qt5::Gui
     Qt5::Quick
+    Qt5::Multimedia
     Qt5::Positioning
     Qt5::Location
 )

@@ -6,14 +6,9 @@ Rectangle {
 
     color: "black"
 
-    Camera { // TODO: impliment presenter for device/file video source
-        id: camera
-        deviceId: QtMultimedia.availableCameras[QtMultimedia.availableCameras.length - 1].deviceId
-    }
-
     VideoOutput {
         id: videoOutput
-        source: camera
+        source: videoService
         anchors.fill: parent
     }
 }
