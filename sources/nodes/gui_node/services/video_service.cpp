@@ -1,7 +1,6 @@
 #include "video_service.h"
 
 // Qt
-#include <QFileInfo>
 #include <QtMultimedia/QCamera>
 #include <QtMultimedia/QCameraInfo>
 #include <QDebug>

@@ -81,6 +81,8 @@ void GuiNode::onSubReceived(const QString& topic, const QByteArray& data)
         d->boardService.updateSnsData(SnsPacket::fromByteArray(data));
     else if (topic == topics::insPacket)
         d->boardService.updateInsData(InsPacket::fromByteArray(data));
+    else if (topic == topics::failuresPacket)
+        d->boardService.updateFailuresPacket(FailuresPacket::fromByteArray(data));
     else if (topic == topics::connectionStatusPacket)
         d->groundService.updateConnectionStatus(
                     ConnectionStatusPacket::fromByteArray(data));
