@@ -19,9 +19,14 @@ namespace domain
 
     public slots:
         void setVideoSurface(QAbstractVideoSurface* videoSurface);
+        void updateSource();
+
+    protected:
+        void updateCameraVideoSurface();
 
     private:
         QCamera* m_camera;
+        QAbstractVideoSurface* m_videoSurface;
     };
 }
 

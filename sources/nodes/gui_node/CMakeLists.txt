@@ -5,6 +5,10 @@ cmake_minimum_required(VERSION 2.8.11)
 set(PROJECT gui_node)
 project(${PROJECT})
 
+# Config
+file(READ ${CMAKE_CURRENT_SOURCE_DIR}/config.conf LOCAL_CONFIG)
+set(CONFIG ${CONFIG} "\n" ${LOCAL_CONFIG} PARENT_SCOPE)
+
 # Enable required Qt modules
 find_package(Qt5 COMPONENTS Gui Quick Multimedia Positioning Location REQUIRED)
 
