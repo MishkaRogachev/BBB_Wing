@@ -92,7 +92,8 @@ void GroundGatewayNode::start()
 void GroundGatewayNode::exec()
 {
     if (d->dataMap.isEmpty())
-        d->dataMap.insert("interview", QByteArray::number(true));// TODO: interview board
+        d->dataMap.insert(topics::interview, QByteArray());
+
     for (const QString& topic: d->dataMap)
     {
         TransmissionPacket packet;

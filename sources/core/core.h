@@ -9,6 +9,8 @@ namespace topics
     const QString data = "data";
     const QString all = "";
 
+    const QString interview = "iv";
+
     const QString altStatus = "status_alt";
     const QString altPacket = "data_alt";
 

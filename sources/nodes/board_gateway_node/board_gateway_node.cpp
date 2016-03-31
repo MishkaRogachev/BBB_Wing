@@ -127,7 +127,9 @@ void BoardGatewayNode::onLinkReceived(const QByteArray& data)
 
     auto packet = TransmissionPacket::fromByteArray(data);
     if (!packet.validateCrc()) return;
-    d->pub.publish(packet.topic, packet.data);
 
-    d->timoutTimer->start();
+    if (packet.topic == topics::interview)
+        d->timoutTimer->start();
+    else
+        d->pub.publish(packet.topic, packet.data);
 }
