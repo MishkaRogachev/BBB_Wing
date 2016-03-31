@@ -59,8 +59,8 @@ void FailuresHandlerNode::onSubReceived(const QString& topic, const QByteArray& 
 {
     if (topic == topics::altStatus)
         d->packet.altStatus = msg.toInt();
-    else if (topic == topics::insPacket)
+    else if (topic == topics::insStatus)
         d->packet.insStatus = msg.toInt();
-    else if (topic == topics::snsPacket)
+    else if (topic == topics::snsStatus)
         d->packet.snsStatus = msg.toInt();
 }

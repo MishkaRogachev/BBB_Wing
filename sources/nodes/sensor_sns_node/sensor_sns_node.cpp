@@ -1,7 +1,10 @@
 #include "sensor_sns_node.h"
 
 // Gpsd
-#include "libgpsmm.h"
+#include <libgpsmm.h>
+
+// Qt
+#include <QDebug>
 
 // Internal
 #include "config.h"
