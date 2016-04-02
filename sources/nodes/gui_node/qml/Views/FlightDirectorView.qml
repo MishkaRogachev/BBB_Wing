@@ -10,6 +10,8 @@ Column {
     property real yaw: 0.0
     property real velocity: 0.0
     property real altitude: 0.0
+
+    // TODO: to settings
     property bool pitchInverted: true
     property bool rollInverted: true
     property int minVelocity: -13
@@ -20,7 +22,9 @@ Column {
     property int maxAltitude: 27
     property int minYaw: -17
     property int maxYaw: 17
+
     property alias radius: mask.radius
+    property alias size: picthRoll.width
 
     Behavior on pitch { PropertyAnimation { duration: 100 } }
     Behavior on roll { PropertyAnimation { duration: 100 } }
@@ -44,8 +48,8 @@ Column {
         Item {
             id: picthRoll
             anchors.verticalCenter: parent.verticalCenter
-            width: 240
-            height: 240
+            width: 256
+            height: width
 
             Item {
                 id: pitchRollContents
@@ -72,6 +76,11 @@ Column {
                     maxPitch: flightDirector.pitch + flightDirector.maxPitch
                 }
 
+                RollScale {
+                    anchors.centerIn: parent
+                    height: parent.height
+                }
+
                 PlaneMark { // TODO: plane mark pitch & roll
                     anchors.centerIn: parent
                     pitch: pitchInverted ? 0 : flightDirector.pitch
@@ -89,7 +98,7 @@ Column {
                 id: mask
                 width: parent.width
                 height: parent.height
-                radius: 36
+                radius: width / 8
                 visible: false
             }
         }

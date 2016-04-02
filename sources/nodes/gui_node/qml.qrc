@@ -7,6 +7,7 @@
         <file>qml/Indicators/PlaneMark.qml</file>
         <file>qml/Indicators/LinearScale.qml</file>
         <file>qml/Indicators/PitchScale.qml</file>
+        <file>qml/Indicators/RollScale.qml</file>
         <file>qml/Views/MainView.qml</file>
         <file>qml/Views/StatusView.qml</file>
         <file>qml/Views/MapView.qml</file>

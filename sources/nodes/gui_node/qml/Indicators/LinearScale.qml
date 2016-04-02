@@ -10,7 +10,7 @@ Item {
     property int valueStep: 20
     property alias canvasRotation: canvas.rotation
 
-    property bool vertical: (canvasRotation >=90 && canvasRotation < 180) ||
+    property bool vertical: (canvasRotation >= 90 && canvasRotation < 180) ||
                             (canvasRotation <= -90 && canvasRotation > -180)
 
     width: 96
@@ -24,17 +24,12 @@ Item {
         height: vertical ? parent.width : parent.height
         onPaint: {
             var ctx = canvas.getContext('2d');
+            Helper.prepareContext(ctx);
 
             ctx.save();
             ctx.clearRect(0, 0, width, height);
 
-            ctx.lineWidth = 2;
-            ctx.strokeStyle = '#ecf0f1';
-            ctx.fillStyle = '#ecf0f1';
-
             ctx.beginPath();
-
-            ctx.font = '11pt Open Sans';
             ctx.textAlign = vertical ?
                         (canvasRotation > 0 ? 'left' :'right') : 'center';
             ctx.textBaseline = vertical ? 'middle' : 'bottom';
@@ -43,7 +38,7 @@ Item {
             ctx.lineTo(width, height / 2);
 
             var counter = 0;
-            for (var i = minValue - (minValue % valueStep); i < maxValue;
+            for (var i = minValue - (minValue % valueStep); i <= maxValue;
                  i += (valueStep / 2)) {
                 var major = (counter++ % 2) == 0;
                 var xPos = canvasRotation > 0 ?

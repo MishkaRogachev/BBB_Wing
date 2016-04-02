@@ -19,20 +19,15 @@ Item {
         rotation: -roll
         onPaint: {
             var ctx = canvas.getContext('2d');
+            Helper.prepareContext(ctx);
 
             ctx.save();
             ctx.clearRect(0, 0, width, height);
-
-            ctx.lineWidth = 2;
-            ctx.strokeStyle = '#ecf0f1';
-            ctx.fillStyle = '#ecf0f1';
-            ctx.font = '11pt Open Sans';
             ctx.textBaseline = 'middle';
-
             ctx.beginPath();
 
             var counter = 0;
-            for (var i = minPitch - (minPitch % valueStep); i < maxPitch;
+            for (var i = minPitch - (minPitch % valueStep); i <= maxPitch;
                  i += (valueStep / 2)) {
                 var major = (counter++ % 2) == 0;
                 var yPos = height - Helper.mapToPixel(i, minPitch, maxPitch, height);
@@ -47,7 +42,6 @@ Item {
                     ctx.fillText(i, width - 22, yPos);
                 }
             }
-
             ctx.stroke();
             ctx.restore();
         }
