@@ -26,6 +26,7 @@ namespace domain
 
         Q_PROPERTY(int snsFix READ snsFix NOTIFY snsFixChanged)
         Q_PROPERTY(QGeoCoordinate position READ position NOTIFY positionChanged)
+        Q_PROPERTY(float snsYaw READ snsYaw NOTIFY snsYawChanged)
         Q_PROPERTY(float groundSpeed READ groundSpeed NOTIFY groundSpeedChanged)
         Q_PROPERTY(float climb READ climb NOTIFY climbChanged)
         Q_PROPERTY(float snsAltitude READ snsAltitude NOTIFY snsAltitudeChanged)
@@ -46,6 +47,7 @@ namespace domain
 
         int snsFix() const;
         QGeoCoordinate position() const;
+        float snsYaw() const;
         float groundSpeed() const;
         float climb() const;
         float snsAltitude() const;
@@ -70,6 +72,7 @@ namespace domain
 
         void snsFixChanged(int snsFix);
         void positionChanged(QGeoCoordinate position);
+        void snsYawChanged(float snsYaw);
         void groundSpeedChanged(float groundSpeed);
         void climbChanged(float climb);
         void snsAltitudeChanged(float snsAltitude);
@@ -88,6 +91,7 @@ namespace domain
 
         int m_snsFix;
         QGeoCoordinate m_position;
+        float m_snsYaw;
         float m_groundSpeed;
         float m_climb;
         float m_snsAltitude;
