@@ -117,7 +117,7 @@ void BoardGatewayNode::onTimeout()
 void BoardGatewayNode::onSubReceived(const QString& topic,
                                      const QByteArray& data)
 {
-    d->dataMap[topic] = data;
+    d->dataMap.insert(topic, data);
 }
 
 void BoardGatewayNode::onLinkReceived(const QByteArray& data)

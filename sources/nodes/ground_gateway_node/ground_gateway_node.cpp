@@ -132,7 +132,7 @@ void GroundGatewayNode::onTimeout()
 void GroundGatewayNode::onSubReceived(const QString& topic,
                                      const QByteArray& data)
 {
-    d->dataMap[topic] = data;
+    d->dataMap.insert(topic, data);
 }
 
 void GroundGatewayNode::onLinkReceived(const QByteArray& data)
