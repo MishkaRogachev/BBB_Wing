@@ -92,7 +92,7 @@ void FlightRecorderNode::exec()
 }
 
 void FlightRecorderNode::onSubReceived(const QString& topic,
-                                       const QByteArray& msg)
+                                       const QByteArray& data)
 {
-    d->messages[topic] = msg;
+    d->messages.insert(topic, data);
 }
