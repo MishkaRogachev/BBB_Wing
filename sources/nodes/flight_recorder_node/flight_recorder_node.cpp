@@ -1,14 +1,15 @@
 #include "flight_recorder_node.h"
 
 // Qt
-#include <QDebug>
 #include <QDir>
 #include <QFile>
 #include <QDateTime>
+#include <QDebug>
 
 // Internal
 #include "core.h"
 #include "config.h"
+
 #include "subscriber.h"
 
 namespace
@@ -67,7 +68,7 @@ void FlightRecorderNode::exec()
         if (!QDir(path).exists()) QDir(path).mkpath(".");
 
         d->file.setFileName(path + QDateTime::currentDateTime().toString(
-                           Config::value("file_format").toString()) + ".csv");
+                            Config::value("file_format").toString()) + ".csv");
 
         bool exists = d->file.exists();
         if (!d->file.open(QIODevice::Append | QIODevice::Text |

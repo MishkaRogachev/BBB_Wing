@@ -48,6 +48,8 @@ namespace endpoints
     const QString navigator = "ipc://navi";
     const QString controller = "ipc://ctrl";
 
+    const QString player = "ipc://player";
+
     const QString boardGateway = "ipc://board_gw";
     const QString groundGateway = "ipc://ground_gw";
 

@@ -16,7 +16,9 @@ int main(int argc, char* argv[])
     BranchNode scheduler;
 
     // TODO: reduce target dependings(from core)
-    scheduler.addNode(new GroundGatewayNode());
+
+    // TODO: data source manager node
+//    scheduler.addNode(new GroundGatewayNode());
     scheduler.addNode(new FlightRecordPlayerNode());
     scheduler.addNode(new GuiNode());
 

@@ -63,7 +63,7 @@ GuiNode::~GuiNode()
 
 void GuiNode::init()
 {
-    d->sub.connectTo(endpoints::groundGateway);
+    d->sub.connectTo( { endpoints::groundGateway, endpoints::player } );
     d->sub.subscribe(topics::all);
     connect(&d->sub, &Subscriber::received, this, &GuiNode::onSubReceived);
 }
