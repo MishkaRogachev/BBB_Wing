@@ -4,6 +4,7 @@
 // Internal
 #include "branch_node.h"
 #include "ground_gateway_node.h"
+#include "flight_record_player_node.h"
 #include "gui_node.h"
 
 int main(int argc, char* argv[])
@@ -16,6 +17,7 @@ int main(int argc, char* argv[])
 
     // TODO: reduce target dependings(from core)
     scheduler.addNode(new GroundGatewayNode());
+    scheduler.addNode(new FlightRecordPlayerNode());
     scheduler.addNode(new GuiNode());
 
     scheduler.init();

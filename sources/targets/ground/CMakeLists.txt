@@ -15,6 +15,7 @@ set(LIBRARIES
     Qt5::Gui
 # Internal
     ground_gateway_node
+    flight_record_player_node
     gui_node
 )
 
