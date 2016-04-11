@@ -1,4 +1,4 @@
-#include "flight_recorder_node.h"
+﻿#include "flight_recorder_node.h"
 
 // Qt
 #include <QDir>
@@ -87,6 +87,7 @@ void FlightRecorderNode::exec()
 
     for (const QString& topic: topics::boardTopics)
         stream << delimiter << d->messages.value(topic);
+    // BUG: QByteArray wrong convertion through QTextStream
     stream << endl;
 
     Config::end();

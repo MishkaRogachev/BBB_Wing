@@ -46,11 +46,11 @@ void FlightControllerNode::init()
 
 void FlightControllerNode::exec()
 {
-    // TODO:
+    // TODO: FlightControllerNode::exec
 }
 
 void FlightControllerNode::onSubReceived(const QString& topic,
                                        const QByteArray& msg)
 {
-    // TODO:
+    // TODO: FlightControllerNode::onSubReceived
 }
