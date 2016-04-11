@@ -14,7 +14,6 @@
 
 namespace
 {
-    const char* delimiter = ",";
     const QString timeTopic = "time_stamp";
 }
 
@@ -59,6 +58,8 @@ void FlightRecorderNode::exec()
     Config::begin("FlightRecorder");
     QTextStream stream(&d->file);
 
+    const QString delimiter = Config::value("delimiter").toString();
+
     if (d->file.isOpen() && (d->file.size() > Config::value("max_record_size")
         .toInt() || !d->file.exists())) d->file.close();
 
@@ -77,15 +78,15 @@ void FlightRecorderNode::exec()
             Config::end();
             return;
         }
-        if (!exists) stream << ::timeTopic << ::delimiter <<
-                               topics::boardTopics.join(::delimiter) << endl;
+        if (!exists) stream << ::timeTopic << delimiter <<
+                               topics::boardTopics.join(delimiter) << endl;
     }
 
     stream << QTime::currentTime().toString(
                   Config::value("time_format").toString()).toLatin1();
 
     for (const QString& topic: topics::boardTopics)
-        stream << ::delimiter << d->messages.value(topic);
+        stream << delimiter << d->messages.value(topic);
     stream << endl;
 
     Config::end();
