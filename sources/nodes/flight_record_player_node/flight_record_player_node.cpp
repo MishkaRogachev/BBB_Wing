@@ -1,4 +1,4 @@
-#include "flight_record_player_node.h"
+﻿#include "flight_record_player_node.h"
 
 // Qt
 #include <QFile>
@@ -11,10 +11,7 @@
 
 #include "publisher.h"
 
-namespace
-{
-    const QString timeTopic = "time_stamp";
-}
+#include "transmission_packet.h"
 
 using namespace domain;
 
@@ -24,8 +21,6 @@ public:
     QFile file;
     Publisher pub;
     QDateTime dateTime;
-
-    QStringList headers;
 };
 
 FlightRecordPlayerNode::FlightRecordPlayerNode(QObject* parent):
@@ -33,7 +28,7 @@ FlightRecordPlayerNode::FlightRecordPlayerNode(QObject* parent):
                           parent),
     d(new Impl())
 {
-    d->file.setFileName("08042016_1918.csv");
+    d->file.setFileName(Config::value("FlightRecordPlayer/filename").toString());
 
     d->pub.bind(endpoints::player);
 }
@@ -45,58 +40,21 @@ FlightRecordPlayerNode::~FlightRecordPlayerNode()
 
 void FlightRecordPlayerNode::init()
 {
-    Config::begin("FlightRecordPlayer");
-    d->file.open(QIODevice::ReadOnly); // TODO: FlightRecordPlayerNode configuration
-    d->dateTime = QDateTime::fromString(d->file.fileName().split(".").first(),
-                                    Config::value("file_format").toString());
-
-    QString headerLine = d->file.readLine();
-    d->headers = headerLine.left(headerLine.length() - 1).split(
-                     Config::value("delimiter").toString());
-
-    Config::end();
+    d->file.open(QIODevice::ReadOnly);
+    d->dateTime = QDateTime::fromString(
+                      d->file.fileName().split(".").first(),
+                      Config::value("FlightRecordPlayer/file_format").toString());
 }
 
 void FlightRecordPlayerNode::exec()
 {
     if (!d->file.isOpen()) this->init();
-    if (!d->file.isOpen()) return;
+    if (!d->file.isOpen() || d->file.atEnd()) return;
 
-    Config::begin("FlightRecordPlayer");
+    QDataStream stream(&d->file);
 
-    QByteArray line = d->file.readLine();
+    TransmissionPacket packet;
+    stream >> packet;
 
-    for (int i = 0; i < d->headers.length(); ++i)
-    {
-        int pos = line.indexOf(Config::value("delimiter").toString());
-        if (pos == -1)
-        {
-            Config::end();
-            return;
-        }
-
-        if (pos > 0)
-        {
-            QByteArray data = line.left(pos);
-            if (i == 0)
-            {
-                QTime time = QTime::fromString(
-                                 data, Config::value("time_format").toString());
-                if (!time.isValid())
-                {
-                    Config::end();
-                    return; // ingnore line if time is wrong
-                }
-
-                d->dateTime.setTime(time);
-                // TODO: publish time
-            }
-            else
-            {
-                d->pub.publish(d->headers[i], data);
-            }
-        }
-        line = line.mid(pos + 1);
-    }
-    Config::end();
+    if (packet.validateCrc()) d->pub.publish(packet.topic, packet.data);
 }

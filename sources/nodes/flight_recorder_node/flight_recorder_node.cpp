@@ -4,6 +4,8 @@
 #include <QDir>
 #include <QFile>
 #include <QDateTime>
+#include <QDataStream>
+#include <QMap>
 #include <QDebug>
 
 // Internal
@@ -12,9 +14,11 @@
 
 #include "subscriber.h"
 
+#include "transmission_packet.h"
+
 namespace
 {
-    const QString timeTopic = "time_stamp";
+    const char* fileExtention = ".tlm";
 }
 
 using namespace domain;
@@ -23,8 +27,9 @@ class FlightRecorderNode::Impl
 {
 public:
     QFile file;
-    QMap<QString, QByteArray> messages;
     Subscriber sub;
+
+    QMap <QString, QByteArray> dataMap;
 };
 
 FlightRecorderNode::FlightRecorderNode(QObject* parent):
@@ -56,12 +61,10 @@ void FlightRecorderNode::init()
 void FlightRecorderNode::exec()
 {
     Config::begin("FlightRecorder");
-    QTextStream stream(&d->file);
 
-    const QString delimiter = Config::value("delimiter").toString();
-
-    if (d->file.isOpen() && (d->file.size() > Config::value("max_record_size")
-        .toInt() || !d->file.exists())) d->file.close();
+    if (d->file.isOpen() &&
+        (d->file.size() > Config::value("max_record_size").toInt() ||
+         !d->file.exists())) d->file.close();
 
     if (!d->file.isOpen())
     {
@@ -69,26 +72,27 @@ void FlightRecorderNode::exec()
         if (!QDir(path).exists()) QDir(path).mkpath(".");
 
         d->file.setFileName(path + QDateTime::currentDateTime().toString(
-                            Config::value("file_format").toString()) + ".csv");
+                            Config::value("file_format").toString()) +
+                            ::fileExtention);
 
-        bool exists = d->file.exists();
-        if (!d->file.open(QIODevice::Append | QIODevice::Text |
-                          QIODevice::Unbuffered))
-        {
-            Config::end();
-            return;
-        }
-        if (!exists) stream << ::timeTopic << delimiter <<
-                               topics::boardTopics.join(delimiter) << endl;
+        d->file.open(QIODevice::Append);
     }
 
-    stream << QTime::currentTime().toString(
-                  Config::value("time_format").toString()).toLatin1();
+    if (d->file.isOpen())
+    {
+        for (const QString& topic: d->dataMap.keys())
+        {
+            TransmissionPacket packet;
 
-    for (const QString& topic: topics::boardTopics)
-        stream << delimiter << d->messages.value(topic);
-    // BUG: QByteArray wrong convertion through QTextStream
-    stream << endl;
+            packet.topic = topic;
+            packet.data = d->dataMap[topic];
+            packet.calcCrc();
+
+            d->file.write(packet.toByteArray());
+        }
+
+        d->dataMap.clear();
+    }
 
     Config::end();
 }
@@ -96,5 +100,5 @@ void FlightRecorderNode::exec()
 void FlightRecorderNode::onSubReceived(const QString& topic,
                                        const QByteArray& data)
 {
-    d->messages.insert(topic, data);
+    d->dataMap.insert(topic, data);
 }

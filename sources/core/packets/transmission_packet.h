@@ -5,7 +5,7 @@
 
 namespace domain
 {
-    class TransmissionPacket: public Packet
+    class TransmissionPacket: public Packet // TODO: timestamp
     {
     public:
         QString topic;
