@@ -3,13 +3,17 @@
 
 #include "packet.h"
 
+// Qt
+#include <QTime>
+
 namespace domain
 {
-    class CrcPacket: public Packet // TODO: timestamp
+    class CrcPacket: public Packet
     {
     public:
         QString topic;
         QByteArray data;
+        QTime timeStamp;
         quint16 crc;
 
         bool validateCrc();

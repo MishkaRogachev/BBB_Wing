@@ -16,6 +16,7 @@ QDataStream& CrcPacket::operator >>(QDataStream& stream) const
 {
     stream << topic;
     stream << data;
+    stream << timeStamp;
     stream << crc;
 
     return stream;
@@ -25,6 +26,7 @@ QDataStream& CrcPacket::operator <<(QDataStream& stream)
 {
     stream >> topic;
     stream >> data;
+    stream >> timeStamp;
     stream >> crc;
 
     return stream;

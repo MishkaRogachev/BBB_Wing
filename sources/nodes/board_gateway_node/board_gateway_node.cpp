@@ -99,6 +99,7 @@ void BoardGatewayNode::exec()
 
         packet.topic = topic;
         packet.data = d->dataMap[topic];
+        packet.timeStamp = QTime::currentTime(); // TODO: recv time
         packet.calcCrc();
 
         if (d->wireReceived) d->wireLink->tryTransmit(packet.toByteArray());

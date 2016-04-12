@@ -29,7 +29,7 @@ public:
     QFile file;
     Subscriber sub;
 
-    QMap <QString, QByteArray> dataMap;
+    QMap <QString, CrcPacket> packets;
 };
 
 FlightRecorderNode::FlightRecorderNode(QObject* parent):
@@ -80,18 +80,11 @@ void FlightRecorderNode::exec()
 
     if (d->file.isOpen())
     {
-        for (const QString& topic: d->dataMap.keys())
+        for (const CrcPacket& packet: d->packets.values())
         {
-            CrcPacket packet;
-
-            packet.topic = topic;
-            packet.data = d->dataMap[topic];
-            packet.calcCrc();
-
-            d->file.write(packet.toByteArray());
+             d->file.write(packet.toByteArray());
         }
-
-        d->dataMap.clear();
+        d->packets.clear();
     }
 
     Config::end();
@@ -100,5 +93,12 @@ void FlightRecorderNode::exec()
 void FlightRecorderNode::onSubReceived(const QString& topic,
                                        const QByteArray& data)
 {
-    d->dataMap.insert(topic, data);
+    CrcPacket packet; // TODO: constructor
+
+    packet.topic = topic;
+    packet.data = data;
+    packet.timeStamp = QTime::currentTime();
+    packet.calcCrc();
+
+    d->packets.insert(topic, packet);
 }

@@ -12,7 +12,7 @@ namespace domain
         virtual QDataStream& operator >>(QDataStream& stream) const = 0;
         virtual QDataStream& operator <<(QDataStream& stream) = 0;
 
-        QByteArray toByteArray();
+        QByteArray toByteArray() const;
     };
 
     inline QDataStream& operator <<(QDataStream& stream, const Packet& packet)
