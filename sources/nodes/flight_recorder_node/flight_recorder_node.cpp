@@ -14,7 +14,7 @@
 
 #include "subscriber.h"
 
-#include "transmission_packet.h"
+#include "crc_packet.h"
 
 namespace
 {
@@ -82,7 +82,7 @@ void FlightRecorderNode::exec()
     {
         for (const QString& topic: d->dataMap.keys())
         {
-            TransmissionPacket packet;
+            CrcPacket packet;
 
             packet.topic = topic;
             packet.data = d->dataMap[topic];

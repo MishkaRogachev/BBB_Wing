@@ -16,7 +16,7 @@
 #include "serial_port_link.h"
 
 #include "connection_status_packet.h"
-#include "transmission_packet.h"
+#include "crc_packet.h"
 
 using namespace domain;
 
@@ -96,7 +96,7 @@ void GroundGatewayNode::exec()
 
     for (const QString& topic: d->dataMap)
     {
-        TransmissionPacket packet;
+        CrcPacket packet;
 
         packet.topic = topic;
         packet.data = d->dataMap[topic];
@@ -141,7 +141,7 @@ void GroundGatewayNode::onLinkReceived(const QByteArray& data)
     else if (this->sender() == d->airLink) d->airReceived = true;
     d->count++;
 
-    auto packet = TransmissionPacket::fromByteArray(data);
+    auto packet = CrcPacket::fromByteArray(data);
     if (!packet.validateCrc())
     {
         d->badCount++;

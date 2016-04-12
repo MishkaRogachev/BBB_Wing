@@ -8,7 +8,7 @@
 #include "ins_packet.h"
 #include "sns_packet.h"
 #include "failures_packet.h"
-#include "transmission_packet.h"
+#include "crc_packet.h"
 
 using namespace domain;
 
@@ -100,12 +100,12 @@ void PacketsTest::testFailuresPacket()
 
 void PacketsTest::testTransmissionPacket()
 {
-    TransmissionPacket packet;
+    CrcPacket packet;
 
     packet.data = QByteArray("somedata123");
     packet.calcCrc();
 
-    TransmissionPacket converted = this->testPacketSerialization<TransmissionPacket>(packet);
+    CrcPacket converted = this->testPacketSerialization<CrcPacket>(packet);
 
     QCOMPARE(converted.data, packet.data);
     QVERIFY(converted.crc);

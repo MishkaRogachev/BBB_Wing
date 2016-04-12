@@ -11,7 +11,7 @@
 
 #include "publisher.h"
 
-#include "transmission_packet.h"
+#include "crc_packet.h"
 
 using namespace domain;
 
@@ -53,7 +53,7 @@ void FlightRecordPlayerNode::exec()
 
     QDataStream stream(&d->file);
 
-    TransmissionPacket packet;
+    CrcPacket packet;
     stream >> packet;
 
     if (packet.validateCrc()) d->pub.publish(packet.topic, packet.data);

@@ -1,18 +1,18 @@
-#include "transmission_packet.h"
+#include "crc_packet.h"
 
 using namespace domain;
 
-bool TransmissionPacket::validateCrc()
+bool CrcPacket::validateCrc()
 {
     return crc == qChecksum(data.data(), data.length());
 }
 
-void TransmissionPacket::calcCrc()
+void CrcPacket::calcCrc()
 {
     crc = qChecksum(data.data(), data.length());
 }
 
-QDataStream& TransmissionPacket::operator >>(QDataStream& stream) const
+QDataStream& CrcPacket::operator >>(QDataStream& stream) const
 {
     stream << topic;
     stream << data;
@@ -21,7 +21,7 @@ QDataStream& TransmissionPacket::operator >>(QDataStream& stream) const
     return stream;
 }
 
-QDataStream& TransmissionPacket::operator <<(QDataStream& stream)
+QDataStream& CrcPacket::operator <<(QDataStream& stream)
 {
     stream >> topic;
     stream >> data;
@@ -30,10 +30,10 @@ QDataStream& TransmissionPacket::operator <<(QDataStream& stream)
     return stream;
 }
 
-TransmissionPacket TransmissionPacket::fromByteArray(const QByteArray& data)
+CrcPacket CrcPacket::fromByteArray(const QByteArray& data)
 {
     QDataStream stream(data);
-    TransmissionPacket packet;
+    CrcPacket packet;
     stream >> packet;
     return packet;
 }

@@ -15,7 +15,7 @@
 #include "udp_link.h"
 #include "serial_port_link.h"
 
-#include "transmission_packet.h"
+#include "crc_packet.h"
 
 using namespace domain;
 
@@ -95,7 +95,7 @@ void BoardGatewayNode::exec()
 {
     for (const QString& topic: d->dataMap.keys())
     {
-        TransmissionPacket packet;
+        CrcPacket packet;
 
         packet.topic = topic;
         packet.data = d->dataMap[topic];
@@ -125,7 +125,7 @@ void BoardGatewayNode::onLinkReceived(const QByteArray& data)
     if (this->sender() == d->wireLink) d->wireReceived = true;
     else if (this->sender() == d->airLink) d->airReceived = true;
 
-    auto packet = TransmissionPacket::fromByteArray(data);
+    auto packet = CrcPacket::fromByteArray(data);
     if (!packet.validateCrc()) return;
 
     if (packet.topic == topics::interview)

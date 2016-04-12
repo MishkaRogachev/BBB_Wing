@@ -1,11 +1,11 @@
-#ifndef TRANSMISSION_PACKET_H
-#define TRANSMISSION_PACKET_H
+#ifndef CRC_PACKET_H
+#define CRC_PACKET_H
 
 #include "packet.h"
 
 namespace domain
 {
-    class TransmissionPacket: public Packet // TODO: timestamp
+    class CrcPacket: public Packet // TODO: timestamp
     {
     public:
         QString topic;
@@ -18,8 +18,8 @@ namespace domain
         QDataStream& operator >>(QDataStream& stream) const override;
         QDataStream& operator <<(QDataStream& stream) override;
 
-        static TransmissionPacket fromByteArray(const QByteArray& data);
+        static CrcPacket fromByteArray(const QByteArray& data);
     };
 }
 
-#endif // TRANSMISSION_PACKET_H
+#endif // CRC_PACKET_H
