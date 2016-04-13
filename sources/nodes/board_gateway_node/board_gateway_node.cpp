@@ -95,12 +95,7 @@ void BoardGatewayNode::exec()
 {
     for (const QString& topic: d->dataMap.keys())
     {
-        CrcPacket packet;
-
-        packet.topic = topic;
-        packet.data = d->dataMap[topic];
-        packet.timeStamp = QTime::currentTime(); // TODO: recv time
-        packet.calcCrc();
+        CrcPacket packet(topic, d->dataMap[topic]);
 
         if (d->wireReceived) d->wireLink->tryTransmit(packet.toByteArray());
         if (d->airReceived) d->airLink->tryTransmit(packet.toByteArray());

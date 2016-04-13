@@ -2,6 +2,17 @@
 
 using namespace domain;
 
+CrcPacket::CrcPacket()
+{}
+
+CrcPacket::CrcPacket(const QString& topic, const QByteArray& data):
+    topic(topic),
+    data(data),
+    timeStamp(QTime::currentTime())
+{
+    this->calcCrc();
+}
+
 bool CrcPacket::validateCrc()
 {
     return crc == qChecksum(data.data(), data.length());

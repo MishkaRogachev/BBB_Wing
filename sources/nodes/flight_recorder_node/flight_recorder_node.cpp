@@ -93,12 +93,5 @@ void FlightRecorderNode::exec()
 void FlightRecorderNode::onSubReceived(const QString& topic,
                                        const QByteArray& data)
 {
-    CrcPacket packet; // TODO: constructor
-
-    packet.topic = topic;
-    packet.data = data;
-    packet.timeStamp = QTime::currentTime();
-    packet.calcCrc();
-
-    d->packets.insert(topic, packet);
+    d->packets.insert(topic, CrcPacket(topic, data));
 }

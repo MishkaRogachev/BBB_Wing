@@ -11,6 +11,9 @@ namespace domain
     class CrcPacket: public Packet
     {
     public:
+        CrcPacket();
+        CrcPacket(const QString& topic, const QByteArray& data);
+
         QString topic;
         QByteArray data;
         QTime timeStamp;

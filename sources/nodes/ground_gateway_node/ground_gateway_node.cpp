@@ -96,11 +96,7 @@ void GroundGatewayNode::exec()
 
     for (const QString& topic: d->dataMap)
     {
-        CrcPacket packet;
-
-        packet.topic = topic;
-        packet.data = d->dataMap[topic];
-        packet.calcCrc();
+        CrcPacket packet(topic, d->dataMap[topic]);
 
         if (!d->airReceived || (d->wireReceived && d->airReceived))
             d->wireLink->tryTransmit(packet.toByteArray());

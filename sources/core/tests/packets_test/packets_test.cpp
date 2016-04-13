@@ -100,13 +100,12 @@ void PacketsTest::testFailuresPacket()
 
 void PacketsTest::testTransmissionPacket()
 {
-    CrcPacket packet;
-
-    packet.data = QByteArray("somedata123");
-    packet.calcCrc();
+    CrcPacket packet("some_topic", "somedata123");
 
     CrcPacket converted = this->testPacketSerialization<CrcPacket>(packet);
 
+    QCOMPARE(converted.topic, packet.topic);
     QCOMPARE(converted.data, packet.data);
-    QVERIFY(converted.crc);
+    QCOMPARE(converted.timeStamp, packet.timeStamp);
+    QVERIFY(converted.validateCrc());
 }
