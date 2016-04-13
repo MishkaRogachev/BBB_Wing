@@ -17,7 +17,9 @@ namespace domain
 
     public slots:
         void subscribe(const QString& topic);
+        void subscribe(const QStringList& topics);
         void unsubscribe(const QString& topic);
+        void unsubscribe(const QStringList& topics);
 
     signals:
         void received(const QString& topic, const QByteArray& data);

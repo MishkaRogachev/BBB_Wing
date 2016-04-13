@@ -36,9 +36,21 @@ void Subscriber::subscribe(const QString& topic)
     this->setOption(ZMQ_SUBSCRIBE, topic);
 }
 
+void Subscriber::subscribe(const QStringList& topics)
+{
+    for (const QString& topic: topics)
+        this->subscribe(topic);
+}
+
 void Subscriber::unsubscribe(const QString& topic)
 {
     this->setOption(ZMQ_UNSUBSCRIBE, topic);
+}
+
+void Subscriber::unsubscribe(const QStringList& topics)
+{
+    for (const QString& topic: topics)
+        this->unsubscribe(topic);
 }
 
 void Subscriber::onActivated()
