@@ -50,7 +50,9 @@ GroundGatewayNode::GroundGatewayNode(QObject* parent):
             this, &GroundGatewayNode::onLinkReceived);
 
     d->airLink = new SerialPortLink(
-                     Config::value("serial_port_ground").toString(), this);
+                     Config::value("serial_port_ground").toString(),
+                     Config::value("serial_baud_rate").toInt(),
+                     this);
     connect(d->airLink, &AbstractLink::received,
             this, &GroundGatewayNode::onLinkReceived);
 
@@ -77,7 +79,7 @@ void GroundGatewayNode::exec()
     if (!d->wireLink->isConnected()) d->wireLink->connect();
     if (!d->airLink->isConnected()) d->airLink->connect();
 
-    if (d->packets.isEmpty())
+    if (d->packets.isEmpty()) // TODO: blanking command
         d->packets.insert(topics::interview,
                           CrcPacket(topics::interview, QByteArray()));
 

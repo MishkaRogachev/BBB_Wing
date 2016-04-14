@@ -46,7 +46,9 @@ BoardGatewayNode::BoardGatewayNode(QObject* parent):
             this, &BoardGatewayNode::onLinkReceived);
 
     d->airLink = new SerialPortLink(
-                     Config::value("serial_port_board").toString(), this);
+                     Config::value("serial_port_board").toString(),
+                     Config::value("serial_baud_rate").toInt(),
+                     this);
     connect(d->airLink, &AbstractLink::received,
             this, &BoardGatewayNode::onLinkReceived);
 
@@ -60,7 +62,7 @@ BoardGatewayNode::~BoardGatewayNode()
 
 void BoardGatewayNode::init()
 {
-    d->sub.connectTo({ endpoints::altimeter, // TODO: sensors
+    d->sub.connectTo({ endpoints::altimeter,
                        endpoints::ins,
                        endpoints::sns,
                        endpoints::failuresHandler,

@@ -12,7 +12,8 @@ namespace domain
         Q_OBJECT
 
     public:
-        SerialPortLink(const QString& device, QObject* parent = nullptr);
+        SerialPortLink(const QString& device, qint32 baudRate,
+                       QObject* parent = nullptr);
 
         bool isConnected() const override;
 

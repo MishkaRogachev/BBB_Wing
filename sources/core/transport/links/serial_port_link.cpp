@@ -11,10 +11,12 @@ namespace
 
 using namespace domain;
 
-SerialPortLink::SerialPortLink(const QString& device, QObject* parent):
+SerialPortLink::SerialPortLink(const QString& device, qint32 baudRate,
+                               QObject* parent):
     AbstractLink(parent)
 {
     m_port = new QSerialPort(device, this);
+    m_port->setBaudRate(baudRate);
 
     QObject::connect(m_port, &QSerialPort::readyRead,
                      this, &SerialPortLink::readSerialData);
@@ -27,11 +29,7 @@ bool SerialPortLink::isConnected() const
 
 bool SerialPortLink::connect()
 {
-    if (m_port->open(QIODevice::ReadWrite))
-    {
-    // m_port->setBaudRate(38400); TODO: setBaudRate, after hardware reconfiguration
-        return true;
-    }
+    if (m_port->open(QIODevice::ReadWrite)) return true;
 
     m_port->close();
     return false;
