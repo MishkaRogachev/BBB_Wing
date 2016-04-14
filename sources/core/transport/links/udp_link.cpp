@@ -46,7 +46,7 @@ void UdpLink::disconnect()
     m_socket->close();
 }
 
-void UdpLink::transmit(const QByteArray& packet)
+void UdpLink::send(const QByteArray& packet)
 {
     m_socket->writeDatagram(packet, m_adress, m_port);
 }
@@ -59,7 +59,7 @@ void UdpLink::readPendingDatagrams()
         packet.resize(m_socket->pendingDatagramSize());
         m_socket->readDatagram(packet.data(), packet.size());
 
-        emit received(packet);
+        this->onReceived(packet);
     }
 }
 

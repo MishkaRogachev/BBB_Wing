@@ -1,7 +1,6 @@
 #include "ground_gateway_node.h"
 
 // Qt
-#include <QTimer>
 #include <QMap>
 #include <QDebug>
 
@@ -15,8 +14,8 @@
 #include "udp_link.h"
 #include "serial_port_link.h"
 
-#include "connection_status_packet.h"
 #include "crc_packet.h"
+#include "connection_status_packet.h"
 
 using namespace domain;
 
@@ -29,14 +28,10 @@ public:
     AbstractLink* wireLink;
     AbstractLink* airLink;
 
-    QTimer* timoutTimer;
-
-    bool wireReceived = false;
-    bool airReceived = false;
     int count = 0;
-    int badCount = 0;
+    int packetsLost = 0;
 
-    QMap <QString, QByteArray> dataMap;
+    QMap <QString, CrcPacket> packets;
 };
 
 GroundGatewayNode::GroundGatewayNode(QObject* parent):
@@ -59,11 +54,6 @@ GroundGatewayNode::GroundGatewayNode(QObject* parent):
     connect(d->airLink, &AbstractLink::received,
             this, &GroundGatewayNode::onLinkReceived);
 
-    d->timoutTimer = new QTimer(this);
-    d->timoutTimer->setInterval(Config::value("timeout_interval").toInt());
-    d->timoutTimer->setSingleShot(true);
-    connect(d->timoutTimer, &QTimer::timeout, this, &GroundGatewayNode::onTimeout);
-
     Config::end();
 }
 
@@ -76,75 +66,67 @@ void GroundGatewayNode::init()
 {
      d->sub.connectTo(endpoints::gui);
      d->sub.subscribe(topics::data);
-}
 
-void GroundGatewayNode::start()
-{
-    AbstractNodeFrequency::start();
-
-    d->wireLink->connect();
-    d->airLink->connect();
-
-    connect(&d->sub, &Subscriber::received, this,
-            &GroundGatewayNode::onSubReceived);
+     connect(&d->sub, &Subscriber::received,
+             this, &GroundGatewayNode::onSubReceived);
 }
 
 void GroundGatewayNode::exec()
 {
-    if (d->dataMap.isEmpty())
-        d->dataMap.insert(topics::interview, QByteArray());
+    // TODO: connect by user's request
+    if (!d->wireLink->isConnected()) d->wireLink->connect();
+    if (!d->airLink->isConnected()) d->airLink->connect();
 
-    for (const QString& topic: d->dataMap)
+    if (d->packets.isEmpty())
+        d->packets.insert(topics::interview,
+                          CrcPacket(topics::interview, QByteArray()));
+
+    QList<AbstractLink*> links;
+
+    for (const CrcPacket& packet: d->packets)
     {
-        CrcPacket packet(topic, d->dataMap[topic]);
+        QByteArray data = packet.toByteArray();
 
-        if (!d->airReceived || (d->wireReceived && d->airReceived))
-            d->wireLink->tryTransmit(packet.toByteArray());
-        if (!d->wireReceived)
-            d->airLink->tryTransmit(packet.toByteArray());
+        if (d->wireLink->isConnected() && (!d->airLink->isOnline() ||
+            (d->wireLink->isOnline() && d->airLink->isOnline())))
+            d->wireLink->send(data);
+
+        if (d->airLink->isConnected() && !d->wireLink->isOnline())
+            d->airLink->send(data);
     }
 
-    d->dataMap.clear();
+    d->packets.clear();
 
     ConnectionStatusPacket statusPacket;
 
-    statusPacket.airLink = d->airReceived;
-    statusPacket.wireLink = d->wireReceived;
+    statusPacket.airLink = d->airLink->isOnline();
+    statusPacket.wireLink = d->wireLink->isOnline();
     statusPacket.packetsPerSecond = d->count * this->frequency();
-    statusPacket.badPackets = (d->count) ? 100 * d->badCount / d->count : 0;
+    statusPacket.packetsLost = (d->count) ? 100 * d->packetsLost / d->count : 0;
 
     d->pub.publish(topics::connectionStatusPacket, statusPacket.toByteArray());
 
     d->count = 0;
-    d->badCount = 0;
-}
-
-void GroundGatewayNode::onTimeout()
-{
-    d->wireReceived = false;
-    d->airReceived = false;
+    d->packetsLost = 0;
 }
 
 void GroundGatewayNode::onSubReceived(const QString& topic,
                                      const QByteArray& data)
 {
-    d->dataMap.insert(topic, data);
+    d->packets.insert(topic, CrcPacket(topic, data));
 }
 
 void GroundGatewayNode::onLinkReceived(const QByteArray& data)
 {
-    if (this->sender() == d->wireLink) d->wireReceived = true;
-    else if (this->sender() == d->airLink) d->airReceived = true;
     d->count++;
 
     auto packet = CrcPacket::fromByteArray(data);
     if (!packet.validateCrc())
     {
-        d->badCount++;
+        d->packetsLost++;
         return;
     }
 
     d->pub.publish(packet.topic, packet.data);
-    d->timoutTimer->start();
 }
 

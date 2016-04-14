@@ -42,7 +42,7 @@ void SerialPortLink::disconnect()
     m_port->close();
 }
 
-void SerialPortLink::transmit(const QByteArray& packet)
+void SerialPortLink::send(const QByteArray& packet)
 {
     m_port->write(::separator);
     m_port->write(packet.data(), packet.size());
@@ -71,5 +71,5 @@ void SerialPortLink::readSerialData()
 void SerialPortLink::processFramgent(const QByteArray& fragment)
 {
     if (fragment.isEmpty()) return;
-    emit received(fragment);
+    this->onReceived(fragment);
 }

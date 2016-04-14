@@ -1,7 +1,6 @@
 #include "board_gateway_node.h"
 
 // Qt
-#include <QTimer>
 #include <QMap>
 #include <QDebug>
 
@@ -28,11 +27,7 @@ public:
     AbstractLink* wireLink;
     AbstractLink* airLink;
 
-    QTimer* timoutTimer;
-
-    bool wireReceived = false;
-    bool airReceived = false;
-    QMap <QString, QByteArray> dataMap;
+    QMap <QString, CrcPacket> packets;
 };
 
 BoardGatewayNode::BoardGatewayNode(QObject* parent):
@@ -55,11 +50,6 @@ BoardGatewayNode::BoardGatewayNode(QObject* parent):
     connect(d->airLink, &AbstractLink::received,
             this, &BoardGatewayNode::onLinkReceived);
 
-    d->timoutTimer = new QTimer(this);
-    d->timoutTimer->setInterval(Config::value("timeout_interval").toInt());
-    d->timoutTimer->setSingleShot(true);
-    connect(d->timoutTimer, &QTimer::timeout, this, &BoardGatewayNode::onTimeout);
-
     Config::end();
 }
 
@@ -70,7 +60,7 @@ BoardGatewayNode::~BoardGatewayNode()
 
 void BoardGatewayNode::init()
 {
-    d->sub.connectTo({ endpoints::altimeter,
+    d->sub.connectTo({ endpoints::altimeter, // TODO: sensors
                        endpoints::ins,
                        endpoints::sns,
                        endpoints::failuresHandler,
@@ -78,54 +68,36 @@ void BoardGatewayNode::init()
                        endpoints::controller });
 
     d->sub.subscribe(topics::data);
-}
-
-void BoardGatewayNode::start()
-{
-    AbstractNodeFrequency::start();
-
-    d->wireLink->connect();
-    d->airLink->connect();
-
     connect(&d->sub, &Subscriber::received, this,
             &BoardGatewayNode::onSubReceived);
 }
 
 void BoardGatewayNode::exec()
 {
-    for (const QString& topic: d->dataMap.keys())
-    {
-        CrcPacket packet(topic, d->dataMap[topic]);
+    if (!d->wireLink->isConnected()) d->wireLink->connect();
+    if (!d->airLink->isConnected()) d->airLink->connect();
 
-        if (d->wireReceived) d->wireLink->tryTransmit(packet.toByteArray());
-        if (d->airReceived) d->airLink->tryTransmit(packet.toByteArray());
+    for (const CrcPacket& packet: d->packets)
+    {
+        QByteArray data = packet.toByteArray();
+
+        if (d->wireLink->isConnected()) d->wireLink->send(data);
+        if (d->airLink->isConnected()) d->airLink->send(data);
     }
 
-    d->dataMap.clear();
+    d->packets.clear();
 }
 
-void BoardGatewayNode::onTimeout()
+void BoardGatewayNode::onSubReceived(const QString& topic, const QByteArray& data)
 {
-    d->wireReceived = false;
-    d->airReceived = false;
-}
-
-void BoardGatewayNode::onSubReceived(const QString& topic,
-                                     const QByteArray& data)
-{
-    d->dataMap.insert(topic, data);
+    d->packets.insert(topic, CrcPacket(topic, data));
 }
 
 void BoardGatewayNode::onLinkReceived(const QByteArray& data)
 {
-    if (this->sender() == d->wireLink) d->wireReceived = true;
-    else if (this->sender() == d->airLink) d->airReceived = true;
-
     auto packet = CrcPacket::fromByteArray(data);
     if (!packet.validateCrc()) return;
 
-    if (packet.topic == topics::interview)
-        d->timoutTimer->start();
-    else
+    if (packet.topic != topics::interview)
         d->pub.publish(packet.topic, packet.data);
 }

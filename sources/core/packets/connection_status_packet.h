@@ -11,7 +11,7 @@ namespace domain
         bool airLink;
         bool wireLink;
         int packetsPerSecond;
-        int badPackets;
+        int packetsLost;
 
         QDataStream& operator >>(QDataStream& stream) const override;
         QDataStream& operator <<(QDataStream& stream) override;

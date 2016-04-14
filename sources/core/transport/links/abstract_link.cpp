@@ -1,16 +1,41 @@
 #include "abstract_link.h"
 
+// Qt
+#include <QTimer>
+
+namespace
+{
+    const int interval = 2000;
+}
+
 using namespace domain;
 
 AbstractLink::AbstractLink(QObject* parent):
-    QObject(parent)
-{}
+    QObject(parent),
+    m_online(false),
+    m_timer(new QTimer(this))
+{
+    m_timer->start(::interval);
+}
 
 AbstractLink::~AbstractLink()
 {}
 
-void AbstractLink::tryTransmit(const QByteArray& packet)
+bool AbstractLink::isOnline() const
 {
-    if (this->isConnected() || this->connect())
-        this->transmit(packet);
+    return m_online;
+}
+
+void AbstractLink::onReceived(const QByteArray& packet)
+{
+    m_timer->start();
+
+    m_online = true;
+    emit received(packet);
+}
+
+void AbstractLink::onTimeout()
+{
+    m_online = false;
+    emit timeout();
 }

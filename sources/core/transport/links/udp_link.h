@@ -25,7 +25,7 @@ namespace domain
     public slots:
         bool connect() override;
         void disconnect() override;
-        void transmit(const QByteArray& packet) override;
+        void send(const QByteArray& packet) override;
 
         void setAdress(const QHostAddress& adress);
         void setPort(int port);

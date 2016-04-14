@@ -7,7 +7,7 @@ QDataStream& ConnectionStatusPacket::operator >>(QDataStream& stream) const
     stream << airLink;
     stream << wireLink;
     stream << packetsPerSecond;
-    stream << badPackets;
+    stream << packetsLost;
 
     return stream;
 }
@@ -17,7 +17,7 @@ QDataStream& ConnectionStatusPacket::operator <<(QDataStream& stream)
     stream >> airLink;
     stream >> wireLink;
     stream >> packetsPerSecond;
-    stream >> badPackets;
+    stream >> packetsLost;
 
     return stream;
 }

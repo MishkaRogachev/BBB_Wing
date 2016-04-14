@@ -18,8 +18,8 @@ int main(int argc, char* argv[])
     // TODO: reduce target dependings(from core)
 
     // TODO: data source manager node
-//    scheduler.addNode(new GroundGatewayNode());
-    scheduler.addNode(new FlightRecordPlayerNode());
+    scheduler.addNode(new GroundGatewayNode());
+//    scheduler.addNode(new FlightRecordPlayerNode());
     scheduler.addNode(new GuiNode());
 
     scheduler.init();

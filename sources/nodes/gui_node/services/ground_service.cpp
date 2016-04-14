@@ -46,9 +46,9 @@ void GroundService::updateConnectionStatus(const ConnectionStatusPacket& packet)
         emit ppsChanged(packet.packetsPerSecond);
     }
 
-    if (m_badPackets != packet.badPackets)
+    if (m_badPackets != packet.packetsLost)
     {
-        m_badPackets = packet.badPackets;
-        emit ppsChanged(packet.badPackets);
+        m_badPackets = packet.packetsLost;
+        emit ppsChanged(packet.packetsLost);
     }
 }

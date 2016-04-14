@@ -3,6 +3,8 @@
 
 #include <QObject>
 
+class QTimer;
+
 namespace domain
 {
     class AbstractLink: public QObject
@@ -14,18 +16,25 @@ namespace domain
         ~AbstractLink() override;
 
         virtual bool isConnected() const = 0;
+        bool isOnline() const;
 
     public slots:
         virtual bool connect() = 0;
         virtual void disconnect() = 0;
-        virtual void transmit(const QByteArray& packet) = 0;
-
-        void tryTransmit(const QByteArray& packet);
+        virtual void send(const QByteArray& packet) = 0;
 
     signals:
         void received(const QByteArray& packet);
+        void timeout();
+
+    protected slots:
+        void onReceived(const QByteArray& packet);
+        void onTimeout();
 
     private:
+        bool m_online;
+        QTimer* m_timer;
+
         Q_DISABLE_COPY(AbstractLink)
     };
 }

@@ -15,11 +15,9 @@ namespace domain
 
     public slots:
         void init() override;
-        void start() override;
         void exec() override;
 
     private slots:
-        void onTimeout();
         void onSubReceived(const QString& topic, const QByteArray& data);
         void onLinkReceived(const QByteArray& data);
 
