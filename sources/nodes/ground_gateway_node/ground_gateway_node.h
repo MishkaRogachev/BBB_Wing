@@ -16,6 +16,7 @@ namespace domain
     public slots:
         void init() override;
         void exec() override;
+        void stop() override;
 
     private slots:
         void onSubReceived(const QString& topic, const QByteArray& data);

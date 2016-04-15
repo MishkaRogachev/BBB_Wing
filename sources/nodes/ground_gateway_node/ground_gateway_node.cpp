@@ -22,8 +22,8 @@ using namespace domain;
 class GroundGatewayNode::Impl
 {
 public:
-    Subscriber sub;
-    Publisher pub;
+    Subscriber* sub;
+    Publisher* pub;
 
     AbstractLink* wireLink;
     AbstractLink* airLink;
@@ -39,8 +39,11 @@ GroundGatewayNode::GroundGatewayNode(QObject* parent):
                           parent),
     d(new Impl())
 {
+    d->sub = new Subscriber(this);
+    d->pub = new Publisher(this);
+
     Config::begin("GroundGateway");
-    d->pub.bind(endpoints::groundGateway);
+    d->pub->bind(endpoints::groundGateway);
 
     d->wireLink = new UdpLink(
                       Config::value("udp_ground_port").toInt(),
@@ -66,10 +69,10 @@ GroundGatewayNode::~GroundGatewayNode()
 
 void GroundGatewayNode::init()
 {
-     d->sub.connectTo(endpoints::gui);
-     d->sub.subscribe(topics::data);
+     d->sub->connectTo(endpoints::gui);
+     d->sub->subscribe(topics::data);
 
-     connect(&d->sub, &Subscriber::received,
+     connect(d->sub, &Subscriber::received,
              this, &GroundGatewayNode::onSubReceived);
 }
 
@@ -79,7 +82,7 @@ void GroundGatewayNode::exec()
     if (!d->wireLink->isConnected()) d->wireLink->connect();
     if (!d->airLink->isConnected()) d->airLink->connect();
 
-    if (d->packets.isEmpty()) // TODO: blanking command
+    if (d->packets.isEmpty()) // TODO: blanking command or single direct packet
         d->packets.insert(topics::interview,
                           CrcPacket(topics::interview, QByteArray()));
 
@@ -106,10 +109,18 @@ void GroundGatewayNode::exec()
     statusPacket.packetsPerSecond = d->count * this->frequency();
     statusPacket.packetsLost = (d->count) ? 100 * d->packetsLost / d->count : 0;
 
-    d->pub.publish(topics::connectionStatusPacket, statusPacket.toByteArray());
+    d->pub->publish(topics::connectionStatusPacket, statusPacket.toByteArray());
 
     d->count = 0;
     d->packetsLost = 0;
+}
+
+void GroundGatewayNode::stop()
+{
+    d->airLink->disconnect();
+    d->wireLink->disconnect();
+
+    AbstractNodeFrequency::stop();
 }
 
 void GroundGatewayNode::onSubReceived(const QString& topic,
@@ -129,6 +140,6 @@ void GroundGatewayNode::onLinkReceived(const QByteArray& data)
         return;
     }
 
-    d->pub.publish(packet.topic, packet.data);
+    d->pub->publish(packet.topic, packet.data);
 }
 

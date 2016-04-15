@@ -30,18 +30,3 @@ ThreadNode::~ThreadNode()
     m_thread->quit();
     m_thread->wait();
 }
-/*
-void ThreadNode::init()
-{
-    QMetaObject::invokeMethod(m_worker, "init", Qt::QueuedConnection);
-}
-
-void ThreadNode::start()
-{
-    QMetaObject::invokeMethod(m_worker, "start", Qt::QueuedConnection);
-}
-
-void ThreadNode::stop()
-{
-    QMetaObject::invokeMethod(m_worker, "stop", Qt::QueuedConnection);
-}*/
