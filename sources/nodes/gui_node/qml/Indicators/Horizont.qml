@@ -9,6 +9,8 @@ Item {
     property int minPitch: -25
     property int maxPitch: 25
 
+    property int effectiveHeight
+
     onRollChanged: canvas.requestPaint()
     onPitchChanged: canvas.requestPaint()
 
@@ -19,12 +21,13 @@ Item {
         onPaint: {
             var ctx = canvas.getContext('2d');
             var size = 10000;
-            var offset = Helper.mapToPixel(pitch, minPitch, maxPitch, horizont.height);
+            var offset = Helper.mapToPixel(pitch, minPitch, maxPitch,
+                                           effectiveHeight);
 
             ctx.save();
             ctx.translate(width / 2, height / 2);
             ctx.rotate(-roll * Math.PI / 180);
-            ctx.translate(0, offset - height / 2);
+            ctx.translate(0, offset - effectiveHeight / 2);
 
             ctx.fillStyle = '#3498db';
             ctx.fillRect(-size / 2, -size / 2, size, size / 2);

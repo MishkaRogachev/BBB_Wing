@@ -44,6 +44,9 @@ Item {
             ctx.lineTo(11, offset + 11 - height / 2);
             ctx.lineTo(-11, offset + 11 - height / 2);
             ctx.lineTo(0, offset - height / 2);
+
+            ctx.fillText(roll, 0, offset + 25 - height / 2);
+
             ctx.restore();
 
             ctx.stroke();

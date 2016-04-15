@@ -17,8 +17,8 @@ Column {
     property int minVelocity: -13
     property int maxVelocity: 13
     property int velocityStep: 5
-    property int minPitch: -37
-    property int maxPitch: 37
+    property int minPitch: -23
+    property int maxPitch: 23
     property int minRoll: -45
     property int maxRoll: 45
     property int minAltitude: -27
@@ -63,9 +63,8 @@ Column {
 
                 Horizont {
                     id: horizont
-                    anchors.centerIn: parent
-                    width: parent.width
-                    height: parent.height + 100
+                    anchors.fill: parent
+                    effectiveHeight: parent.height - rollOffset * 2
                     pitch: pitchInverted ? flightDirector.pitch : 0
                     roll: rollInverted ? flightDirector.roll : 0
                     minPitch: flightDirector.minPitch
@@ -74,7 +73,7 @@ Column {
 
                 PitchScale {
                     anchors.centerIn: parent
-                    height: parent.height + 100
+                    height: parent.height - rollOffset * 2
                     pitch: flightDirector.pitch
                     roll: flightDirector.roll
                     minPitch: flightDirector.pitch + flightDirector.minPitch
