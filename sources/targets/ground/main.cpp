@@ -3,6 +3,7 @@
 
 // Internal
 #include "branch_node.h"
+#include "thread_node.h"
 #include "ground_gateway_node.h"
 #include "flight_record_player_node.h"
 #include "gui_node.h"
@@ -18,7 +19,7 @@ int main(int argc, char* argv[])
     // TODO: reduce target dependings(from core)
 
     // TODO: data source manager node
-    scheduler.addNode(new GroundGatewayNode());
+    scheduler.addNode(new ThreadNode(new GroundGatewayNode()));
 //    scheduler.addNode(new FlightRecordPlayerNode());
     scheduler.addNode(new GuiNode());
 

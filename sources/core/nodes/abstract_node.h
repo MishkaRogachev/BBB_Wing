@@ -17,6 +17,9 @@ namespace domain
         virtual void init();
         virtual void start() = 0;
         virtual void stop();
+
+    private:
+        Q_DISABLE_COPY(AbstractNode)
     };
 }
 
