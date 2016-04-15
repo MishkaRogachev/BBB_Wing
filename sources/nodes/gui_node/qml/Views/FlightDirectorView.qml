@@ -16,15 +16,18 @@ Column {
     property bool rollInverted: true
     property int minVelocity: -13
     property int maxVelocity: 13
+    property int velocityStep: 5
     property int minPitch: -37
     property int maxPitch: 37
+    property int minRoll: -45
+    property int maxRoll: 45
     property int minAltitude: -27
     property int maxAltitude: 27
+    property int altitudeStep: 10
     property int minYaw: -17
     property int maxYaw: 17
 
-    property alias radius: mask.radius
-    property alias size: picthRoll.width
+    property int rollOffset: 30
 
     Behavior on pitch { PropertyAnimation { duration: 100 } }
     Behavior on roll { PropertyAnimation { duration: 100 } }
@@ -36,19 +39,21 @@ Column {
         anchors.horizontalCenter: parent.horizontalCenter
 
         LinearScale {
+            id: velocityScale
             value: flightDirector.velocity
             minValue: flightDirector.velocity + flightDirector.minVelocity
             maxValue: flightDirector.velocity + flightDirector.maxVelocity
-            valueStep: 5
+            valueStep: flightDirector.velocityStep
             anchors.verticalCenter: parent.verticalCenter
-            height: picthRoll.height - 16
+            height: picthRoll.height + rollOffset
             canvasRotation: 90
         }
 
         Item {
             id: picthRoll
             anchors.verticalCenter: parent.verticalCenter
-            width: 256
+            width: flightDirector.width - velocityScale.width -
+                   altitudeScale.width
             height: width
 
             Item {
@@ -76,11 +81,6 @@ Column {
                     maxPitch: flightDirector.pitch + flightDirector.maxPitch
                 }
 
-                RollScale {
-                    anchors.centerIn: parent
-                    height: parent.height
-                }
-
                 PlaneMark { // TODO: plane mark pitch & roll
                     anchors.centerIn: parent
                     pitch: pitchInverted ? 0 : flightDirector.pitch
@@ -98,18 +98,28 @@ Column {
                 id: mask
                 width: parent.width
                 height: parent.height
-                radius: width / 8
+                radius: width / 2
                 visible: false
+            }
+
+            RollScale {
+                anchors.centerIn: parent
+                height: parent.height + rollOffset
+                offset: rollOffset / 2
+                roll: flightDirector.roll
+                minRoll: flightDirector.minRoll
+                maxRoll: flightDirector.maxRoll
             }
         }
 
         LinearScale {
+            id: altitudeScale
             value: flightDirector.altitude
             minValue: flightDirector.altitude + flightDirector.minAltitude
             maxValue: flightDirector.altitude + flightDirector.maxAltitude
-            valueStep: 10
+            valueStep: flightDirector.altitudeStep
             anchors.verticalCenter: parent.verticalCenter
-            height: picthRoll.height - 16
+            height: picthRoll.height + rollOffset
             canvasRotation: -90
         }
     }

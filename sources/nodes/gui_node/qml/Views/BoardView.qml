@@ -2,10 +2,13 @@ import QtQuick 2.4
 
 Column {
     id: dashboard
+
     spacing: 4
+    width: 480
 
     FlightDirectorView {
         id: flightDirector
+        width: parent.width
         pitch: boardService.pitch
         roll: boardService.roll
         yaw: boardService.yaw
