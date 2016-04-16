@@ -13,6 +13,7 @@
 #include "subscriber.h"
 #include "publisher.h"
 
+#include "config_service.h"
 #include "board_service.h"
 #include "ground_service.h"
 #include "video_service.h"
@@ -32,6 +33,7 @@ public:
     Subscriber sub;
     Publisher pub;
 
+    ConfigService configService;
     BoardService boardService;
     GroundService groundService;
     VideoService videoService;
@@ -48,6 +50,7 @@ GuiNode::GuiNode(QObject* parent):
     d->view.rootContext()->setContextProperty("boardService", &d->boardService);
     d->view.rootContext()->setContextProperty("groundService", &d->groundService);
     d->view.rootContext()->setContextProperty("videoService", &d->videoService);
+    d->view.rootContext()->setContextProperty("configService", &d->configService);
 
     d->view.setSource(QUrl(QStringLiteral("qrc:/qml/Views/MainView.qml")));
     d->view.setResizeMode(QQuickView::SizeRootObjectToView);

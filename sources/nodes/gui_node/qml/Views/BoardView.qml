@@ -1,10 +1,10 @@
 import QtQuick 2.4
 
 Column {
-    id: dashboard
+    id: boardView
 
     spacing: 4
-    width: 400
+    width: configService.value("Gui/dashboard_width")
 
     FlightDirectorView {
         id: flightDirector
