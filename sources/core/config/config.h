@@ -2,7 +2,9 @@
 #define CONFIG_H
 
 // Qt
-#include <QSettings>
+#include <QVariant>
+
+class QSettings;
 
 namespace domain
 {
@@ -10,6 +12,7 @@ namespace domain
     {
     public:
         static Config& instance();
+        ~Config();
 
         static QVariant value(const QString& key);
         static void setValue(const QString& key, const QVariant& value);
@@ -22,7 +25,7 @@ namespace domain
         Config(const Config&) = delete;
         Config& operator=(const Config&) = delete;
 
-        QSettings m_settings;
+        QSettings* m_settings;
     };
 }
 

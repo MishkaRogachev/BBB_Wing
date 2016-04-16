@@ -4,21 +4,21 @@
 #include <QDebug>
 
 // Internal
-#include "mpl3115a2.h"
-
 #include "core.h"
 #include "config.h"
 #include "publisher.h"
 
 #include "alt_packet.h"
 
+#include "mpl3115a2.h"
+
 using namespace domain;
 
 class SensorAltimeterNode::Impl
 {
 public:
-    devices::Mpl3115A2 altimeter;
     Publisher pub;
+    devices::Mpl3115A2 altimeter;
 };
 
 SensorAltimeterNode::SensorAltimeterNode(QObject* parent):

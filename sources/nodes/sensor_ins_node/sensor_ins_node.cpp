@@ -4,15 +4,15 @@
 #include <QDebug>
 
 // Internal
-#include "lsm9ds1.h"
-#include "lsm9ds1_gyro_accel.h"
-#include "lsm9ds1_mag.h"
-
 #include "core.h"
 #include "config.h"
 #include "publisher.h"
 
 #include "ins_packet.h"
+
+#include "lsm9ds1.h"
+#include "lsm9ds1_gyro_accel.h"
+#include "lsm9ds1_mag.h"
 
 namespace
 {
@@ -24,8 +24,8 @@ using namespace domain;
 class SensorInsNode::Impl
 {
 public:
-    devices::Lsm9ds1 imu;
     Publisher pub;
+    devices::Lsm9ds1 imu;
 };
 
 SensorInsNode::SensorInsNode(QObject* parent):

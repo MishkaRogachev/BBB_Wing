@@ -12,10 +12,13 @@ namespace domain
     {
         Q_OBJECT
 
-        Q_PROPERTY(QAbstractVideoSurface* videoSurface WRITE setVideoSurface)
+        Q_PROPERTY(QAbstractVideoSurface* videoSurface READ videoSurface
+                   WRITE setVideoSurface)
 
     public:
         explicit VideoService(QObject* parent = nullptr);
+
+        QAbstractVideoSurface* videoSurface() const;
 
     public slots:
         void setVideoSurface(QAbstractVideoSurface* videoSurface);

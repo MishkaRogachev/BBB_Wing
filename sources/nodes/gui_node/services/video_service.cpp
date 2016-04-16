@@ -18,6 +18,11 @@ VideoService::VideoService(QObject* parent):
     this->updateSource();
 }
 
+QAbstractVideoSurface*VideoService::videoSurface() const
+{
+    return m_videoSurface;
+}
+
 void VideoService::setVideoSurface(QAbstractVideoSurface* videoSurface)
 {
     if (m_videoSurface == videoSurface) return;
