@@ -4,11 +4,12 @@ Column {
     id: boardView
 
     spacing: 4
-    width: configService.value("Gui/dashboard_width")
+    width: configService.value("Gui/Dashboard/width")
 
     FlightDirectorView {
         id: flightDirector
         width: parent.width
+
         pitch: boardService.pitch
         roll: boardService.roll
         yaw: boardService.yaw
