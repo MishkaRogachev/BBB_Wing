@@ -60,7 +60,7 @@ Item {
 
             ctx.beginPath();
             ctx.moveTo(width / 2 - 16, 16);
-            ctx.lineTo(width / 2, 2);
+            ctx.lineTo(width / 2, 4);
             ctx.lineTo(width / 2 + 16, 16);
             ctx.stroke();
 

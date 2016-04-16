@@ -37,9 +37,9 @@ Item {
 
                 if (major) {
                     ctx.textAlign = 'right';
-                    ctx.fillText(i, 22, yPos);
+                    ctx.fillText(i, 22, yPos + 2);
                     ctx.textAlign = 'left';
-                    ctx.fillText(i, width - 22, yPos);
+                    ctx.fillText(i, width - 22, yPos + 2);
                 }
             }
             ctx.stroke();

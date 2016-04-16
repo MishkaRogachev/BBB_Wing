@@ -27,7 +27,8 @@ Column {
     property int minYaw: -17
     property int maxYaw: 17
 
-    property int rollOffset: 30
+    property int rollOffset: 28
+    spacing: 8
 
     Behavior on pitch { PropertyAnimation { duration: 100 } }
     Behavior on roll { PropertyAnimation { duration: 100 } }
@@ -36,7 +37,9 @@ Column {
     Behavior on altitude { PropertyAnimation { duration: 100 } }
 
     Row {
+        id: row
         anchors.horizontalCenter: parent.horizontalCenter
+        spacing: 8
 
         LinearScale {
             id: velocityScale
@@ -53,7 +56,7 @@ Column {
             id: picthRoll
             anchors.verticalCenter: parent.verticalCenter
             width: flightDirector.width - velocityScale.width -
-                   altitudeScale.width
+                   altitudeScale.width - row.spacing * 2
             height: width
 
             Item {
@@ -64,7 +67,7 @@ Column {
                 Horizont {
                     id: horizont
                     anchors.fill: parent
-                    effectiveHeight: parent.height - rollOffset * 2
+                    effectiveHeight: pitchScale.height
                     pitch: pitchInverted ? flightDirector.pitch : 0
                     roll: rollInverted ? flightDirector.roll : 0
                     minPitch: flightDirector.minPitch
@@ -72,8 +75,9 @@ Column {
                 }
 
                 PitchScale {
+                    id: pitchScale
                     anchors.centerIn: parent
-                    height: parent.height - rollOffset * 2
+                    height: parent.height - rollOffset - 48 // roll mark
                     pitch: flightDirector.pitch
                     roll: flightDirector.roll
                     minPitch: flightDirector.pitch + flightDirector.minPitch

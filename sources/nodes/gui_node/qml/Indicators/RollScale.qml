@@ -41,11 +41,12 @@ Item {
             ctx.save();
             ctx.rotate(-roll * Math.PI / 180);
             ctx.moveTo(0, offset - height / 2);
-            ctx.lineTo(11, offset + 11 - height / 2);
-            ctx.lineTo(-11, offset + 11 - height / 2);
+            ctx.lineTo(16, offset + 16 - height / 2);
+            ctx.lineTo(-16, offset + 16 - height / 2);
             ctx.lineTo(0, offset - height / 2);
 
-            ctx.fillText(roll, 0, offset + 25 - height / 2);
+            ctx.font = '14pt Open Sans';
+            ctx.fillText(roll, 0, offset + 32 - height / 2);
 
             ctx.restore();
 

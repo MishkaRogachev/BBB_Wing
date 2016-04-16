@@ -4,7 +4,7 @@ Column {
     id: dashboard
 
     spacing: 4
-    width: 480
+    width: 400
 
     FlightDirectorView {
         id: flightDirector
