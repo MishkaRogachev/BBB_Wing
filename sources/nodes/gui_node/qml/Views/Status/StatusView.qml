@@ -1,5 +1,5 @@
 import QtQuick 2.5
-import "../Controls"
+import "../../Controls"
 
 Rectangle {
     height: 48

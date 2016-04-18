@@ -1,5 +1,9 @@
 import QtQuick 2.5
+
+import "./Dashboard"
+import "./Map"
 import "./Settings"
+import "./Status"
 
 Rectangle {
     id: main
@@ -12,7 +16,7 @@ Rectangle {
         anchors.bottom: parent.bottom
         spacing: 4
 
-        BoardView {
+        DashboardView {
             id: boardView
             anchors.top: parent.top
         }
@@ -24,13 +28,6 @@ Rectangle {
         }
     }
 
-    StatusView {
-        id: status
-        anchors.top: parent.top
-        anchors.left: parent.left
-        anchors.right: parent.right
-    }
-
     SettingsView {
         id: settings
         anchors.top: status.bottom
@@ -38,5 +35,12 @@ Rectangle {
         anchors.right: parent.right
         anchors.bottom: parent.bottom
         visible: false
+    }
+
+    StatusView {
+        id: status
+        anchors.top: parent.top
+        anchors.left: parent.left
+        anchors.right: parent.right
     }
 }
