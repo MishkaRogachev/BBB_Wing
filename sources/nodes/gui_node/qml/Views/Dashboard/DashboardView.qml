@@ -26,7 +26,7 @@ Column {
             text: qsTr("ALT")
             font.bold: true
             font.pointSize: 14
-            color: boardService.altStatus ? "#42CB6F" : "#ED5F55"
+            color: boardService.altStatus ? palette.errorColor : palette.textColor
             anchors.verticalCenter: parent.verticalCenter
         }
 
@@ -34,7 +34,7 @@ Column {
             text: qsTr("INS")
             font.bold: true
             font.pointSize: 14
-            color: boardService.insStatus ? "#42CB6F" : "#ED5F55"
+            color: boardService.insStatus ? palette.errorColor : palette.textColor
             anchors.verticalCenter: parent.verticalCenter
         }
 
@@ -42,7 +42,7 @@ Column {
             text: qsTr("SNS")
             font.bold: true
             font.pointSize: 14
-            color: boardService.snsStatus ? "#42CB6F" : "#ED5F55"
+            color: boardService.snsStatus ? palette.errorColor : palette.textColor
             anchors.verticalCenter: parent.verticalCenter
         }
 
@@ -50,7 +50,7 @@ Column {
             text: qsTr("FIX: ") + boardService.snsFix
             font.bold: true
             font.pointSize: 14
-            color: "#ecf0f1"
+            color: palette.textColor
             anchors.verticalCenter: parent.verticalCenter
         }
     }

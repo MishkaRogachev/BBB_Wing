@@ -3,7 +3,7 @@ import "../../Controls"
 
 Rectangle {
     height: 48
-    color: "#2c3e50"
+    color: palette.backgroundColor
 
     Row {
         id: right

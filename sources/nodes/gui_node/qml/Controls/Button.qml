@@ -8,7 +8,8 @@ Clickable {
 
     Rectangle {
         anchors.fill: parent
-        color: checked ? "#16a085" : "#34495e"
+        color: checked ? palette.highlightColor : palette.foregroundColor
+        Behavior on color { ColorAnimation { duration: 250 } }
         z: -1
     }
 

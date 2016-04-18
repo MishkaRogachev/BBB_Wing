@@ -31,7 +31,7 @@ Item {
         Text {
             id: label
             font.pointSize: 11
-            color: "#ecf0f1"
+            color: palette.textColor
             anchors.verticalCenter: parent.verticalCenter
         }
     }

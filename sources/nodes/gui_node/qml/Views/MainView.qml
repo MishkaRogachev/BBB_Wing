@@ -1,5 +1,6 @@
 import QtQuick 2.5
 
+import "../"
 import "./Dashboard"
 import "./Map"
 import "./Settings"
@@ -7,7 +8,9 @@ import "./Status"
 
 Rectangle {
     id: main
-    color: "#2c3e50"
+    color: palette.backgroundColor
+
+    Palette { id: palette }
 
     Row {
         anchors.top: status.bottom
