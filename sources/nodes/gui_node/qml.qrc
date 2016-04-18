@@ -11,9 +11,9 @@
         <file>qml/Views/MainView.qml</file>
         <file>qml/Views/StatusView.qml</file>
         <file>qml/Views/MapView.qml</file>
-        <file>qml/Views/FlightDirectorView.qml</file>
         <file>qml/Views/VideoView.qml</file>
         <file>qml/Views/BoardView.qml</file>
         <file>qml/Views/Settings/SettingsView.qml</file>
+        <file>qml/Indicators/FlightDirector.qml</file>
     </qresource>
 </RCC>

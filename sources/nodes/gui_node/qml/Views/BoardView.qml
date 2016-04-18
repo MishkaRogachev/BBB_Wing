@@ -1,4 +1,5 @@
 import QtQuick 2.4
+import "../Indicators"
 
 Column {
     id: boardView
@@ -6,7 +7,7 @@ Column {
     spacing: 4
     width: configService.value("Gui/Dashboard/width")
 
-    FlightDirectorView {
+    FlightDirector {
         id: flightDirector
         width: parent.width
 
