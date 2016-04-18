@@ -29,10 +29,10 @@ Item {
             ctx.rotate(-roll * Math.PI / 180);
             ctx.translate(0, offset - effectiveHeight / 2);
 
-            ctx.fillStyle = '#3498db';
+            ctx.fillStyle = palette.skyColor;
             ctx.fillRect(-size / 2, -size / 2, size, size / 2);
 
-            ctx.fillStyle = '#e67e22';
+            ctx.fillStyle = palette.groundColor;
             ctx.fillRect(-size / 2, 0, size, size / 2);
 
             ctx.stroke();

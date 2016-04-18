@@ -21,7 +21,7 @@ Map {
     MapPolyline {
         id: track
         line.width: 3
-        line.color: "#1abc9c"
+        line.color: palette.highlightColor
     }
 
     MapQuickItem {

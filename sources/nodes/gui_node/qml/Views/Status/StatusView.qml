@@ -15,7 +15,7 @@ Rectangle {
         Text {
             text: qsTr("Air")
             font.pointSize: 11
-            color: "#ecf0f1"
+            color: palette.textColor
             anchors.verticalCenter: parent.verticalCenter
             visible: groundService.airEnabled
         }
@@ -23,7 +23,7 @@ Rectangle {
         Text {
             text: qsTr("Wire")
             font.pointSize: 11
-            color: "#ecf0f1"
+            color: palette.textColor
             anchors.verticalCenter: parent.verticalCenter
             visible: groundService.wireEnabled
         }
@@ -31,14 +31,14 @@ Rectangle {
         Text {
             text: qsTr("PPS: ") + groundService.pps
             font.pointSize: 11
-            color: "#ecf0f1"
+            color: palette.textColor
             anchors.verticalCenter: parent.verticalCenter
         }
 
         Text {
             text: qsTr("Bad: ") + groundService.badPackets + "%"
             font.pointSize: 11
-            color: "#ecf0f1"
+            color: palette.textColor
             anchors.verticalCenter: parent.verticalCenter
         }
 
