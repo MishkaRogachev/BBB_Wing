@@ -14,5 +14,6 @@
         <file>qml/Views/FlightDirectorView.qml</file>
         <file>qml/Views/VideoView.qml</file>
         <file>qml/Views/BoardView.qml</file>
+        <file>qml/Views/Settings/SettingsView.qml</file>
     </qresource>
 </RCC>

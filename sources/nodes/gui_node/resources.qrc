@@ -4,5 +4,6 @@
         <file>resources/indicators/plane_map_mark.svg</file>
         <file>resources/icons/quit.svg</file>
         <file>resources/icons/fit.svg</file>
+        <file>resources/icons/settings.svg</file>
     </qresource>
 </RCC>

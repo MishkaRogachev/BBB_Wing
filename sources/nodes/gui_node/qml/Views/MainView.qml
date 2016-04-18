@@ -1,23 +1,16 @@
 import QtQuick 2.5
+import "./Settings"
 
 Rectangle {
     id: main
     color: "#2c3e50"
 
-    StatusView {
-        id: status
-        anchors.top: parent.top
-        anchors.left: parent.left
-        anchors.right: parent.right
-    }
-
     Row {
         anchors.top: status.bottom
         anchors.left: parent.left
-        anchors.margins: 4
+        anchors.right: parent.right
+        anchors.bottom: parent.bottom
         spacing: 4
-        width: parent.width
-        height: parent.height - status.height
 
         BoardView {
             id: boardView
@@ -29,5 +22,21 @@ Rectangle {
             width: parent.width - boardView.width
             height: parent.height
         }
+    }
+
+    StatusView {
+        id: status
+        anchors.top: parent.top
+        anchors.left: parent.left
+        anchors.right: parent.right
+    }
+
+    SettingsView {
+        id: settings
+        anchors.top: status.bottom
+        anchors.left: parent.left
+        anchors.right: parent.right
+        anchors.bottom: parent.bottom
+        visible: false
     }
 }

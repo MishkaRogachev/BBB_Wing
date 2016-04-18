@@ -3,7 +3,7 @@ import "../Controls"
 
 Rectangle {
     height: 48
-    color: "#34495e"
+    color: "#2c3e50"
 
     Row {
         id: right
@@ -42,7 +42,15 @@ Rectangle {
             anchors.verticalCenter: parent.verticalCenter
         }
 
-        Clickable {
+        Button {
+            icon: "qrc:/resources/icons/settings.svg"
+            text: qsTr("Settings")
+            checkable: true
+            onCheckedChanged: settings.visible = checked
+            anchors.verticalCenter: parent.verticalCenter
+        }
+
+        Button {
             icon: "qrc:/resources/icons/quit.svg"
             text: qsTr("Quit")
             onClicked: Qt.quit()
