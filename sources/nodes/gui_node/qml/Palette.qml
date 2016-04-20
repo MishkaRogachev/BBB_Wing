@@ -1,12 +1,12 @@
 import QtQuick 2.5
 
 Item {
-    property color backgroundColor: "#2c3e50"
-    property color foregroundColor: "#34495e"
-    property color highlightColor: "#16a085"
-    property color textColor: "#ecf0f1"
-    property color errorColor: "#42CB6F"
+    property color backgroundColor: configService.value("Gui/Palette/backgroundColor")
+    property color foregroundColor: configService.value("Gui/Palette/foregroundColor")
+    property color highlightColor: configService.value("Gui/Palette/highlightColor")
+    property color textColor: configService.value("Gui/Palette/textColor")
+    property color errorColor: configService.value("Gui/Palette/errorColor")
 
-    property color skyColor: "#3498db"
-    property color groundColor: "#e67e22"
+    property color skyColor: configService.value("Gui/Palette/skyColor")
+    property color groundColor: configService.value("Gui/Palette/groundColor")
 }
