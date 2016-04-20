@@ -5,10 +5,21 @@
 
 namespace devices
 {
-    class Pca9685 : public I2cDevice
+    class Pca9685: public I2cDevice
     {
     public:
         Pca9685();
+
+        bool start(const char* filename) override;
+        uint8_t i2cAddress() const override;
+
+        bool checkDevicePresent() override;
+
+        void reset();
+        void setFrequency(float frequency);
+        void setPwm(uint8_t channel, int value);
+        void setPwm(uint8_t channel, int onValue, int offValue);
+        int pwm(uint8_t channel);
     };
 }
 #endif // PCA9685_H
