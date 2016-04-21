@@ -10,7 +10,7 @@ file(READ ${CMAKE_CURRENT_SOURCE_DIR}/config.conf LOCAL_CONFIG)
 set(CONFIG ${CONFIG} "\n" ${LOCAL_CONFIG} PARENT_SCOPE)
 
 # External dirs
-add_subdirectory(../../devices/pca9685 ${CMAKE_CURRENT_BINARY_DIR}/devices/pca9685)
+add_subdirectory(../../devices/i2c_device ${CMAKE_CURRENT_BINARY_DIR}/devices/i2c_device)
 
 # Includes
 HEADER_DIRECTORIES(INTERNAL_INCLUDES ${CMAKE_CURRENT_SOURCE_DIR})
@@ -20,6 +20,10 @@ include_directories(${INCLUDES} ${INTERNAL_INCLUDES})
 set(INTERNAL_SOURCES
     servo_control_node.h
     servo_control_node.cpp
+    servo_controllers/i_servo_controller.h
+    servo_controllers/pca9685/pca9685.h
+    servo_controllers/pca9685/pca9685_registers.h
+    servo_controllers/pca9685/pca9685.cpp
 )
 
 # Qt5 wrap node's headers
