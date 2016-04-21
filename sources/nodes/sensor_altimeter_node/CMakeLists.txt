@@ -10,7 +10,7 @@ file(READ ${CMAKE_CURRENT_SOURCE_DIR}/config.conf LOCAL_CONFIG)
 set(CONFIG ${CONFIG} "\n" ${LOCAL_CONFIG} PARENT_SCOPE)
 
 # External dirs
-add_subdirectory(../../devices/mpl3115a2 ${CMAKE_CURRENT_BINARY_DIR}/devices/mpl3115a2)
+add_subdirectory(../../devices/i2c_device ${CMAKE_CURRENT_BINARY_DIR}/devices/i2c_device)
 
 # Includes
 HEADER_DIRECTORIES(INTERNAL_INCLUDES ${CMAKE_CURRENT_SOURCE_DIR})
@@ -20,6 +20,10 @@ include_directories(${INCLUDES} ${INTERNAL_INCLUDES})
 set(INTERNAL_SOURCES
     sensor_altimeter_node.h
     sensor_altimeter_node.cpp
+    altimeters/barometric_altimeter.h
+    altimeters/mpl3115a2/mpl3115a2.h
+    altimeters/mpl3115a2/mpl3115a2_registers.h
+    altimeters/mpl3115a2/mpl3115a2.cpp
 )
 
 # Qt5 wrap node's headers
