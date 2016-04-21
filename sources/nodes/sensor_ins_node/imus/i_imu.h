@@ -10,6 +10,8 @@ namespace devices
 
         virtual void init() = 0;
         virtual bool checkAvalible() = 0;
+
+        // TODO: IMU interface
     };
 }
 
