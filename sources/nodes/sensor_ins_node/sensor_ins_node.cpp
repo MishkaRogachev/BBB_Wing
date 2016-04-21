@@ -25,7 +25,7 @@ class SensorInsNode::Impl
 {
 public:
     Publisher pub;
-    devices::Lsm9ds1 imu;
+    devices::Lsm9ds1* imu;
 };
 
 SensorInsNode::SensorInsNode(QObject* parent):
@@ -34,27 +34,27 @@ SensorInsNode::SensorInsNode(QObject* parent):
     d(new Impl())
 {
     d->pub.bind(endpoints::ins);
+
+    d->imu = new devices::Lsm9ds1(
+                 qPrintable(Config::value("SensorIns/i2c_path").toString()));
 }
 
 SensorInsNode::~SensorInsNode()
 {
+    delete d->imu;
     delete d;
 }
 
 void SensorInsNode::init()
 {
-    Config::begin("SensorIns");
-
-    if (d->imu.isStarted()) d->imu.stop();
-    d->imu.start(Config::value("i2c_path").toString().toLatin1().data());
-
-    Config::end();
+    if (d->imu->isStarted()) d->imu->stop();
+    d->imu->start();
 }
 
 void SensorInsNode::exec()
 {
-    if (d->imu.isStarted() &&
-        d->imu.checkDevicePresent())
+    if (d->imu->isStarted() &&
+        d->imu->checkDevicePresent())
     {
         d->pub.publish(topics::insStatus, QByteArray::number(true));
 
@@ -62,13 +62,13 @@ void SensorInsNode::exec()
 //        float gx = d->imu.gyroAccel()->readGyro(devices::AxisX);
 //        float gy = d->imu.gyroAccel()->readGyro(devices::AxisY);
 //        float gz = d->imu.gyroAccel()->readGyro(devices::AxisZ);
-        float ax = d->imu.gyroAccel()->readAccel(devices::AxisX);
-        float ay = d->imu.gyroAccel()->readAccel(devices::AxisY);
-        float az = d->imu.gyroAccel()->readAccel(devices::AxisZ);
-//        float temperature = d->imu.gyroAccel()->readTempearture();
-        float mx = d->imu.mag()->readMag(devices::AxisX);
-        float my = d->imu.mag()->readMag(devices::AxisY);
-//        float mz = d->imu.mag()->readMag(devices::AxisZ);
+        float ax = d->imu->gyroAccel()->readAccel(devices::AxisX);
+        float ay = d->imu->gyroAccel()->readAccel(devices::AxisY);
+        float az = d->imu->gyroAccel()->readAccel(devices::AxisZ);
+//        float temperature = d->imu->gyroAccel()->readTempearture();
+        float mx = d->imu->mag()->readMag(devices::AxisX);
+        float my = d->imu->mag()->readMag(devices::AxisY);
+//        float mz = d->imu->mag()->readMag(devices::AxisZ);
 
         // TODO: separate this code to INS class
         packet.pitch = atan2(ax, sqrt(ay * ay + az * az)) * 180.0f / M_PI;

@@ -3,8 +3,8 @@
 
 using namespace devices;
 
-Lsm9ds1::GyroAccel::GyroAccel():
-    I2cDevice(),
+Lsm9ds1::GyroAccel::GyroAccel(const char* filename):
+    I2cDevice(filename),
     m_gyroResolution(1.0f),
     m_accelResolution(1.0f)
 {}

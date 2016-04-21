@@ -9,8 +9,9 @@
 
 using namespace devices;
 
-I2cDevice::I2cDevice():
-    m_file(-1)
+I2cDevice::I2cDevice(const char* filename):
+    m_file(-1),
+    m_filename(filename)
 {}
 
 I2cDevice::~I2cDevice()
@@ -18,9 +19,14 @@ I2cDevice::~I2cDevice()
     if (m_file != -1) this->stop();
 }
 
-bool I2cDevice::start(const char* filename)
+const char* I2cDevice::filename() const
 {
-    if ((m_file = open(filename, O_RDWR)) < 0)
+    return m_filename;
+}
+
+bool I2cDevice::start()
+{
+    if ((m_file = open(m_filename, O_RDWR)) < 0)
         return false;
 
     if (ioctl(m_file, I2C_SLAVE, this->i2cAddress()) < 0)

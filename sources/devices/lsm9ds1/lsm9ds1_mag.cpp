@@ -3,8 +3,8 @@
 
 using namespace devices;
 
-Lsm9ds1::Mag::Mag():
-    I2cDevice()
+Lsm9ds1::Mag::Mag(const char* filename):
+    I2cDevice(filename)
 {}
 
 uint8_t Lsm9ds1::Mag::i2cAddress() const

@@ -18,7 +18,7 @@ class SensorAltimeterNode::Impl
 {
 public:
     Publisher pub;
-    devices::Mpl3115A2 altimeter;
+    devices::Mpl3115A2* altimeter;
 };
 
 SensorAltimeterNode::SensorAltimeterNode(QObject* parent):
@@ -27,35 +27,35 @@ SensorAltimeterNode::SensorAltimeterNode(QObject* parent):
     d(new Impl())
 {
     d->pub.bind(endpoints::altimeter);
+
+    d->altimeter = new devices::Mpl3115A2(
+                       qPrintable(Config::value("SensorAltimeter/i2c_path").toString()));
 }
 
 SensorAltimeterNode::~SensorAltimeterNode()
 {
+    delete d->altimeter;
     delete d;
 }
 
 void SensorAltimeterNode::init()
 {
-    Config::begin("SensorAltimeter");
-
-    if (d->altimeter.isStarted()) d->altimeter.stop();
-    d->altimeter.start(Config::value("i2c_path").toString().toLatin1().data());
-
-    Config::end();
+    if (d->altimeter->isStarted()) d->altimeter->stop();
+    d->altimeter->start();
 }
 
 void SensorAltimeterNode::exec()
 {
-    if (d->altimeter.isStarted() &&
-        d->altimeter.checkDevicePresent())
+    if (d->altimeter->isStarted() &&
+        d->altimeter->checkDevicePresent())
     {
-        d->altimeter.processMeasurement();
+        d->altimeter->processMeasurement();
 
         d->pub.publish(topics::altStatus, QByteArray::number(true));
 
         AltPacket packet;
-        packet.altitude = d->altimeter.altitude();
-        packet.temperature = d->altimeter.temperature();
+        packet.altitude = d->altimeter->altitude();
+        packet.temperature = d->altimeter->temperature();
 
         d->pub.publish(topics::altPacket, packet.toByteArray());
     }

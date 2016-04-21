@@ -9,10 +9,12 @@ namespace devices
     class I2cDevice
     {
     public:
-        I2cDevice();
+        I2cDevice(const char* filename);
         virtual ~I2cDevice();
 
-        virtual bool start(const char* filename);
+        const char* filename() const;
+
+        virtual bool start();
         void stop();
         virtual uint8_t i2cAddress() const;
 
@@ -27,6 +29,7 @@ namespace devices
 
     private:
         int m_file;
+        const char* m_filename;
     };
 }
 

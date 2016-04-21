@@ -18,10 +18,10 @@ namespace devices
         class Mag;
 
     public:
-        Lsm9ds1();
+        Lsm9ds1(const char* filename);
         ~Lsm9ds1();
 
-        bool start(const char* filename);
+        bool start();
         void stop();
         bool isStarted() const;
         bool checkDevicePresent();

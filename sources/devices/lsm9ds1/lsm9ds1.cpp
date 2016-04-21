@@ -4,9 +4,9 @@
 
 using namespace devices;
 
-Lsm9ds1::Lsm9ds1():
-    m_gyroAccel(new GyroAccel()),
-    m_mag(new Mag())
+Lsm9ds1::Lsm9ds1(const char* filename):
+    m_gyroAccel(new GyroAccel(filename)),
+    m_mag(new Mag(filename))
 {}
 
 Lsm9ds1::~Lsm9ds1()
@@ -15,9 +15,9 @@ Lsm9ds1::~Lsm9ds1()
     delete m_mag;
 }
 
-bool Lsm9ds1::start(const char* filename)
+bool Lsm9ds1::start()
 {
-    if (!m_gyroAccel->start(filename) || !m_mag->start(filename)) return false;
+    if (!m_gyroAccel->start() || !m_mag->start()) return false;
 
     m_gyroAccel->initGyro();
     m_gyroAccel->initAccel();

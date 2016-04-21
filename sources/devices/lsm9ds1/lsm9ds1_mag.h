@@ -28,7 +28,7 @@ namespace devices
     class Lsm9ds1::Mag: public I2cDevice
     {
     public:
-        Mag();
+        Mag(const char* filename);
 
         uint8_t i2cAddress() const override;
         bool checkDevicePresent() override;

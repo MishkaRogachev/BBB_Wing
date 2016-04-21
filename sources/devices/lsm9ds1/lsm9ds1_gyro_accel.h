@@ -46,7 +46,7 @@ namespace devices
     class Lsm9ds1::GyroAccel: public I2cDevice
     {
     public:
-        GyroAccel();
+        GyroAccel(const char* filename);
 
         uint8_t i2cAddress() const override;
         bool checkDevicePresent() override;

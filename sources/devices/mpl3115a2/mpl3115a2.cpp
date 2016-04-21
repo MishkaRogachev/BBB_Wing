@@ -11,16 +11,16 @@
 
 using namespace devices;
 
-Mpl3115A2::Mpl3115A2():
-    I2cDevice(),
+Mpl3115A2::Mpl3115A2(const char* filename):
+    I2cDevice(filename),
     m_altitude(std::numeric_limits<float>::quiet_NaN()),
     m_temperature(std::numeric_limits<float>::quiet_NaN()),
     m_pressure(std::numeric_limits<float>::quiet_NaN())
 {}
 
-bool Mpl3115A2::start(const char* filename)
+bool Mpl3115A2::start()
 {
-    if (!I2cDevice::start(filename)) return false;
+    if (!I2cDevice::start()) return false;
 
     // Set Oversample to the recommended 128
     this->setOversampleRate(7);

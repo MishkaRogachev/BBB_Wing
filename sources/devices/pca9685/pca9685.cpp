@@ -3,13 +3,13 @@
 
 using namespace devices;
 
-Pca9685::Pca9685():
-    I2cDevice()
+Pca9685::Pca9685(const char* filename):
+    I2cDevice(filename)
 {}
 
-bool Pca9685::start(const char* filename)
+bool Pca9685::start()
 {
-    if (!I2cDevice::start(filename)) return false;
+    if (!I2cDevice::start()) return false;
 
     this->reset();
     this->setFrequency(1000); // to settings

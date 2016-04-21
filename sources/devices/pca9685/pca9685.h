@@ -8,9 +8,9 @@ namespace devices
     class Pca9685: public I2cDevice
     {
     public:
-        Pca9685();
+        Pca9685(const char* filename);
 
-        bool start(const char* filename) override;
+        bool start() override;
         uint8_t i2cAddress() const override;
 
         bool checkDevicePresent() override;

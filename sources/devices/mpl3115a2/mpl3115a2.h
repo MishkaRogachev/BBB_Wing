@@ -8,9 +8,9 @@ namespace devices
     class Mpl3115A2: public I2cDevice
     {
     public:
-        Mpl3115A2();
+        Mpl3115A2(const char* filename);
 
-        bool start(const char* filename) override;
+        bool start() override;
         uint8_t i2cAddress() const override;
 
         bool checkDevicePresent() override;
