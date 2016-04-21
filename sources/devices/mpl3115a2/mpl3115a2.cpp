@@ -110,6 +110,21 @@ void Mpl3115A2::processMeasurement()
     m_temperature = (float)(t_msb + templsb);
 }
 
+void Mpl3115A2::init()
+{
+    if (this->isStarted()) this->stop();
+    this->start();
+}
+
+bool Mpl3115A2::takeMeasure()
+{
+    if (!this->isStarted() || !this->checkDevicePresent())
+        return false;
+
+    this->processMeasurement();
+    return true;
+}
+
 float Mpl3115A2::altitude() const
 {
     return m_altitude;

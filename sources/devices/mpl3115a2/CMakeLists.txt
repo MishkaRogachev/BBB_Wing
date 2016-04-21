@@ -2,6 +2,7 @@
 cmake_minimum_required(VERSION 2.8.11)
 
 # External dirs
+add_subdirectory(../interfaces ${CMAKE_CURRENT_BINARY_DIR}/interfaces)
 add_subdirectory(../i2c_device ${CMAKE_CURRENT_BINARY_DIR}/i2c_device)
 
 # Includes
@@ -19,4 +20,4 @@ set(SOURCES
 PARENT_SCOPE)
 
 # Tests
-add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/tests)
+# add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/tests)

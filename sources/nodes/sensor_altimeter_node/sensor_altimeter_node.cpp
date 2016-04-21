@@ -18,7 +18,7 @@ class SensorAltimeterNode::Impl
 {
 public:
     Publisher pub;
-    devices::Mpl3115A2* altimeter;
+    devices::BarometricAltimeter* altimeter;
 };
 
 SensorAltimeterNode::SensorAltimeterNode(QObject* parent):
@@ -40,17 +40,13 @@ SensorAltimeterNode::~SensorAltimeterNode()
 
 void SensorAltimeterNode::init()
 {
-    if (d->altimeter->isStarted()) d->altimeter->stop();
-    d->altimeter->start();
+    d->altimeter->init();
 }
 
 void SensorAltimeterNode::exec()
 {
-    if (d->altimeter->isStarted() &&
-        d->altimeter->checkDevicePresent())
+    if (d->altimeter->takeMeasure())
     {
-        d->altimeter->processMeasurement();
-
         d->pub.publish(topics::altStatus, QByteArray::number(true));
 
         AltPacket packet;
@@ -62,6 +58,6 @@ void SensorAltimeterNode::exec()
     else
     {
         d->pub.publish(topics::altStatus, QByteArray::number(false));
-        this->init();
+        d->altimeter->init();
     }
 }
