@@ -51,3 +51,14 @@ Lsm9ds1::Mag* Lsm9ds1::mag() const
 {
     return m_mag;
 }
+
+void Lsm9ds1::init()
+{
+    if (this->isStarted()) this->stop();
+    this->start();
+}
+
+bool Lsm9ds1::checkAvalible()
+{
+    return (this->isStarted() && this->checkDevicePresent());
+}

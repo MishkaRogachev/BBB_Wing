@@ -47,14 +47,12 @@ SensorInsNode::~SensorInsNode()
 
 void SensorInsNode::init()
 {
-    if (d->imu->isStarted()) d->imu->stop();
-    d->imu->start();
+    d->imu->init();
 }
 
 void SensorInsNode::exec()
 {
-    if (d->imu->isStarted() &&
-        d->imu->checkDevicePresent())
+    if (d->imu->checkAvalible())
     {
         d->pub.publish(topics::insStatus, QByteArray::number(true));
 
@@ -86,6 +84,6 @@ void SensorInsNode::exec()
     else
     {
         d->pub.publish(topics::insStatus, QByteArray::number(false));
-        this->init();
+        d->imu->init();
     }
 }

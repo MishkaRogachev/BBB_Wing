@@ -1,7 +1,9 @@
 #ifndef LSM9DS1_H
 #define LSM9DS1_H
 
-#include "i2c_device.h"
+#include "i_imu.h"
+
+#include <cstdint>
 
 namespace devices
 {
@@ -12,7 +14,7 @@ namespace devices
         AxisZ = 0X5
     };
 
-    class Lsm9ds1
+    class Lsm9ds1: public IImu
     {
         class GyroAccel;
         class Mag;
@@ -28,6 +30,9 @@ namespace devices
 
         GyroAccel* gyroAccel() const;
         Mag* mag() const;
+
+        void init() override;
+        bool checkAvalible() override;
 
     private:
         GyroAccel* m_gyroAccel;

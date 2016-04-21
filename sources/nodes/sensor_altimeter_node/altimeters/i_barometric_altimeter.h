@@ -1,12 +1,12 @@
-#ifndef BAROMETRIC_ALTIMETER_H
-#define BAROMETRIC_ALTIMETER_H
+#ifndef I_BAROMETRIC_ALTIMETER_H
+#define I_BAROMETRIC_ALTIMETER_H
 
 namespace devices
 {
-    class BarometricAltimeter
+    class IBarometricAltimeter
     {
     public:
-        virtual ~BarometricAltimeter() {}
+        virtual ~IBarometricAltimeter() {}
 
         virtual void init() = 0;
         virtual bool takeMeasure() = 0;
@@ -17,4 +17,4 @@ namespace devices
     };
 }
 
-#endif // BAROMETRIC_ALTIMETER_H
+#endif // I_BAROMETRIC_ALTIMETER_H

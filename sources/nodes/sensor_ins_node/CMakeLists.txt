@@ -10,7 +10,7 @@ file(READ ${CMAKE_CURRENT_SOURCE_DIR}/config.conf LOCAL_CONFIG)
 set(CONFIG ${CONFIG} "\n" ${LOCAL_CONFIG} PARENT_SCOPE)
 
 # External dirs
-add_subdirectory(../../devices/lsm9ds1 ${CMAKE_CURRENT_BINARY_DIR}/devices/lsm9ds1)
+add_subdirectory(../../devices/i2c_device ${CMAKE_CURRENT_BINARY_DIR}/devices/i2c_device)
 
 # Includes
 HEADER_DIRECTORIES(INTERNAL_INCLUDES ${CMAKE_CURRENT_SOURCE_DIR})
@@ -20,6 +20,14 @@ include_directories(${INCLUDES} ${INTERNAL_INCLUDES})
 set(INTERNAL_SOURCES
     sensor_ins_node.h
     sensor_ins_node.cpp
+    imus/i_imu.h
+    imus/lsm9ds1/lsm9ds1.h
+    imus/lsm9ds1/lsm9ds1_registers.h
+    imus/lsm9ds1/lsm9ds1_gyro_accel.h
+    imus/lsm9ds1/lsm9ds1_mag.h
+    imus/lsm9ds1/lsm9ds1_gyro_accel.cpp
+    imus/lsm9ds1/lsm9ds1_mag.cpp
+    imus/lsm9ds1/lsm9ds1.cpp
 )
 
 # Qt5 wrap node's headers

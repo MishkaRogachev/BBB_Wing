@@ -20,7 +20,7 @@ include_directories(${INCLUDES} ${INTERNAL_INCLUDES})
 set(INTERNAL_SOURCES
     sensor_altimeter_node.h
     sensor_altimeter_node.cpp
-    altimeters/barometric_altimeter.h
+    altimeters/i_barometric_altimeter.h
     altimeters/mpl3115a2/mpl3115a2.h
     altimeters/mpl3115a2/mpl3115a2_registers.h
     altimeters/mpl3115a2/mpl3115a2.cpp

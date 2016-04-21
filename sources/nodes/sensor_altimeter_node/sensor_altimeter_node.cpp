@@ -18,7 +18,7 @@ class SensorAltimeterNode::Impl
 {
 public:
     Publisher pub;
-    devices::BarometricAltimeter* altimeter;
+    devices::IBarometricAltimeter* altimeter;
 };
 
 SensorAltimeterNode::SensorAltimeterNode(QObject* parent):

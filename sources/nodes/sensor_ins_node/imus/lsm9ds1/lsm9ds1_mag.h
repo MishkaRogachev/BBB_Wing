@@ -2,6 +2,7 @@
 #define LSM9DS1_MAG_H
 
 #include "lsm9ds1.h"
+#include "i2c_device.h"
 
 namespace devices
 {
