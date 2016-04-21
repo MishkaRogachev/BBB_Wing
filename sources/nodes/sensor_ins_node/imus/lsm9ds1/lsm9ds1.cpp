@@ -62,3 +62,48 @@ bool Lsm9ds1::checkAvalible()
 {
     return (this->isStarted() && this->checkDevicePresent());
 }
+
+float Lsm9ds1::readGyroX()
+{
+    return m_gyroAccel->gyroResolution() * m_gyroAccel->readGyroXRaw();
+}
+
+float Lsm9ds1::readGyroY()
+{
+    return m_gyroAccel->gyroResolution() * m_gyroAccel->readGyroYRaw();
+}
+
+float Lsm9ds1::readGyroZ()
+{
+    return m_gyroAccel->gyroResolution() * m_gyroAccel->readGyroZRaw();
+}
+
+float Lsm9ds1::readAccelX()
+{
+    return m_gyroAccel->accelResolution() * m_gyroAccel->readAccelXRaw();
+}
+
+float Lsm9ds1::readAccelY()
+{
+    return m_gyroAccel->accelResolution() * m_gyroAccel->readAccelYRaw();
+}
+
+float Lsm9ds1::readAccelZ()
+{
+    return m_gyroAccel->accelResolution() * m_gyroAccel->readAccelZRaw();
+}
+
+float Lsm9ds1::readMagX()
+{
+    return m_mag->resolution() * m_mag->readMagXRaw();
+}
+
+float Lsm9ds1::readMagY()
+{
+    return m_mag->resolution() * m_mag->readMagYRaw();
+}
+
+float Lsm9ds1::readMagZ()
+{
+    return m_mag->resolution() * m_mag->readMagZRaw();
+}

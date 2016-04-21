@@ -32,6 +32,11 @@ float Lsm9ds1::GyroAccel::calcGyroResolution(GyroScale scale)
     }
 }
 
+float Lsm9ds1::GyroAccel::gyroResolution() const
+{
+    return m_gyroResolution;
+}
+
 void Lsm9ds1::GyroAccel::initGyro()
 {
     this->i2cWrite(CTRL_REG1_G, 0x38);
@@ -41,9 +46,9 @@ void Lsm9ds1::GyroAccel::initGyro()
 
     this->setGyroSampleRate(GyroSampleRate952);
     this->setGyroScale(GyroScale245);
-    this->setGyroAxisEnabled(AxisX, true);
-    this->setGyroAxisEnabled(AxisY, true);
-    this->setGyroAxisEnabled(AxisZ, true);
+    this->setGyroXEnabled(true);
+    this->setGyroYEnabled(true);
+    this->setGyroZEnabled(true);
 }
 
 void Lsm9ds1::GyroAccel::setGyroSampleRate(GyroSampleRate rate)
@@ -71,38 +76,40 @@ void Lsm9ds1::GyroAccel::setGyroLowPowerEnabled(bool enabled)
     this->i2cWrite(CTRL_REG3_G, ctrl);
 }
 
-void Lsm9ds1::GyroAccel::setGyroAxisEnabled(Axes axis, bool enabled)
+void Lsm9ds1::GyroAccel::setGyroXEnabled(bool enabled)
 {
     uint8_t ctrl = this->i2cRead(CTRL_REG4);
-    ctrl |= (enabled << axis);
+    ctrl |= (enabled << 0x3);
     this->i2cWrite(CTRL_REG4, ctrl);
 }
 
-int16_t Lsm9ds1::GyroAccel::readGyroRaw(Axes axis)
+void Lsm9ds1::GyroAccel::setGyroYEnabled(bool enabled)
 {
-    uint8_t regAddrL, regAddrH;
-
-    switch (axis) {
-    case AxisX:
-        regAddrL = OUT_X_L_G;
-        regAddrH = OUT_X_H_G;
-        break;
-    case AxisY:
-        regAddrL = OUT_Y_L_G;
-        regAddrH = OUT_Y_H_G;
-        break;
-    case AxisZ:
-        regAddrL = OUT_Z_L_G;
-        regAddrH = OUT_Z_H_G;
-        break;
-    }
-
-    return this->i2cRead(regAddrH) << 8 | this->i2cRead(regAddrL);
+    uint8_t ctrl = this->i2cRead(CTRL_REG4);
+    ctrl |= (enabled << 0x4);
+    this->i2cWrite(CTRL_REG4, ctrl);
 }
 
-float Lsm9ds1::GyroAccel::readGyro(Axes axis)
+void Lsm9ds1::GyroAccel::setGyroZEnabled(bool enabled)
 {
-    return m_gyroResolution * this->readGyroRaw(axis);
+    uint8_t ctrl = this->i2cRead(CTRL_REG4);
+    ctrl |= (enabled << 0x5);
+    this->i2cWrite(CTRL_REG4, ctrl);
+}
+
+int16_t Lsm9ds1::GyroAccel::readGyroXRaw()
+{
+    return this->i2cRead(OUT_X_H_G) << 8 | this->i2cRead(OUT_X_L_G);
+}
+
+int16_t Lsm9ds1::GyroAccel::readGyroYRaw()
+{
+    return this->i2cRead(OUT_Y_H_G) << 8 | this->i2cRead(OUT_Y_L_G);
+}
+
+int16_t Lsm9ds1::GyroAccel::readGyroZRaw()
+{
+    return this->i2cRead(OUT_Z_H_G) << 8 | this->i2cRead(OUT_Z_L_G);
 }
 
 float Lsm9ds1::GyroAccel::calcAccelResolution(AccelScale scale)
@@ -118,6 +125,11 @@ float Lsm9ds1::GyroAccel::calcAccelResolution(AccelScale scale)
     }
 }
 
+float Lsm9ds1::GyroAccel::accelResolution() const
+{
+    return m_accelResolution;
+}
+
 void Lsm9ds1::GyroAccel::initAccel()
 {
     this->i2cWrite(CTRL_REG5_XL, 0x38);
@@ -126,9 +138,9 @@ void Lsm9ds1::GyroAccel::initAccel()
 
     this->setAccelSampleRate(AccelSampleRate952);
     this->setAccelScale(AccelScale2);
-    this->setAccelAxisEnabled(AxisX, true);
-    this->setAccelAxisEnabled(AxisY, true);
-    this->setAccelAxisEnabled(AxisZ, true);
+    this->setAccelXEnabled(true);
+    this->setAccelYEnabled(true);
+    this->setAccelZEnabled(true);
 }
 
 void Lsm9ds1::GyroAccel::setAccelSampleRate(AccelSampleRate rate)
@@ -149,38 +161,40 @@ void Lsm9ds1::GyroAccel::setAccelScale(AccelScale scale)
     m_accelResolution = this->calcAccelResolution(scale);
 }
 
-void Lsm9ds1::GyroAccel::setAccelAxisEnabled(Axes axis, bool enabled)
+void Lsm9ds1::GyroAccel::setAccelXEnabled(bool enabled)
 {
     uint8_t ctrl = this->i2cRead(CTRL_REG5_XL);
-    ctrl |= (enabled << axis);
+    ctrl |= (enabled << 0x3);
     this->i2cWrite(CTRL_REG5_XL, ctrl);
 }
 
-int16_t Lsm9ds1::GyroAccel::readAccelRaw(Axes axis)
+void Lsm9ds1::GyroAccel::setAccelYEnabled(bool enabled)
 {
-    uint8_t regAddrL, regAddrH;
-
-    switch (axis) {
-    case AxisX:
-        regAddrL = OUT_X_L_XL;
-        regAddrH = OUT_X_H_XL;
-        break;
-    case AxisY:
-        regAddrL = OUT_Y_L_XL;
-        regAddrH = OUT_Y_H_XL;
-        break;
-    case AxisZ:
-        regAddrL = OUT_Z_L_XL;
-        regAddrH = OUT_Z_H_XL;
-        break;
-    }
-
-    return this->i2cRead(regAddrH) << 8 | this->i2cRead(regAddrL);
+    uint8_t ctrl = this->i2cRead(CTRL_REG5_XL);
+    ctrl |= (enabled << 0x4);
+    this->i2cWrite(CTRL_REG5_XL, ctrl);
 }
 
-float Lsm9ds1::GyroAccel::readAccel(Axes axis)
+void Lsm9ds1::GyroAccel::setAccelZEnabled(bool enabled)
 {
-    return m_accelResolution * this->readAccelRaw(axis);
+    uint8_t ctrl = this->i2cRead(CTRL_REG5_XL);
+    ctrl |= (enabled << 0x5);
+    this->i2cWrite(CTRL_REG5_XL, ctrl);
+}
+
+int16_t Lsm9ds1::GyroAccel::readAccelXRaw()
+{
+    return this->i2cRead(OUT_X_H_XL) << 8 | this->i2cRead(OUT_X_L_XL);
+}
+
+int16_t Lsm9ds1::GyroAccel::readAccelYRaw()
+{
+    return this->i2cRead(OUT_Y_H_XL) << 8 | this->i2cRead(OUT_Y_L_XL);
+}
+
+int16_t Lsm9ds1::GyroAccel::readAccelZRaw()
+{
+    return this->i2cRead(OUT_Z_H_XL) << 8 | this->i2cRead(OUT_Z_L_XL);
 }
 
 int16_t Lsm9ds1::GyroAccel::readTempeartureRaw()

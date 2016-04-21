@@ -7,13 +7,6 @@
 
 namespace devices
 {
-    enum Axes: uint8_t
-    {
-        AxisX = 0x3,
-        AxisY = 0x4,
-        AxisZ = 0X5
-    };
-
     class Lsm9ds1: public IImu
     {
         class GyroAccel;
@@ -33,6 +26,18 @@ namespace devices
 
         void init() override;
         bool checkAvalible() override;
+
+        float readGyroX() override;
+        float readGyroY() override;
+        float readGyroZ() override;
+
+        float readAccelX() override;
+        float readAccelY() override;
+        float readAccelZ() override;
+
+        float readMagX() override;
+        float readMagY() override;
+        float readMagZ() override;
 
     private:
         GyroAccel* m_gyroAccel;

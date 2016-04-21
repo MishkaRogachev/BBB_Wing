@@ -11,8 +11,6 @@
 #include "ins_packet.h"
 
 #include "lsm9ds1.h"
-#include "lsm9ds1_gyro_accel.h"
-#include "lsm9ds1_mag.h"
 
 namespace
 {
@@ -25,7 +23,7 @@ class SensorInsNode::Impl
 {
 public:
     Publisher pub;
-    devices::Lsm9ds1* imu;
+    devices::IImu* imu;
 };
 
 SensorInsNode::SensorInsNode(QObject* parent):
@@ -60,12 +58,12 @@ void SensorInsNode::exec()
 //        float gx = d->imu.gyroAccel()->readGyro(devices::AxisX);
 //        float gy = d->imu.gyroAccel()->readGyro(devices::AxisY);
 //        float gz = d->imu.gyroAccel()->readGyro(devices::AxisZ);
-        float ax = d->imu->gyroAccel()->readAccel(devices::AxisX);
-        float ay = d->imu->gyroAccel()->readAccel(devices::AxisY);
-        float az = d->imu->gyroAccel()->readAccel(devices::AxisZ);
+        float ax = d->imu->readAccelX();
+        float ay = d->imu->readAccelY();
+        float az = d->imu->readAccelZ();
 //        float temperature = d->imu->gyroAccel()->readTempearture();
-        float mx = d->imu->mag()->readMag(devices::AxisX);
-        float my = d->imu->mag()->readMag(devices::AxisY);
+        float mx = d->imu->readMagX();
+        float my = d->imu->readGyroY();
 //        float mz = d->imu->mag()->readMag(devices::AxisZ);
 
         // TODO: separate this code to INS class

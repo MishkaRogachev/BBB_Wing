@@ -35,12 +35,14 @@ namespace devices
         bool checkDevicePresent() override;
 
         static float calcResolution(MagScale scale);
+        float resolution() const;
 
         void initMag();
         void setMagSampleRate(MagSampleRate rate);
         void setMagScale(MagScale scale);
-        int16_t readMagRaw(Axes axis);
-        float readMag(Axes axis);
+        int16_t readMagXRaw();
+        int16_t readMagYRaw();
+        int16_t readMagZRaw();
 
     private:
         float m_resolution;

@@ -53,23 +53,31 @@ namespace devices
         bool checkDevicePresent() override;
 
         static float calcGyroResolution(GyroScale scale);
+        float gyroResolution() const;
 
         void initGyro();
         void setGyroSampleRate(GyroSampleRate rate);
         void setGyroScale(GyroScale scale);
         void setGyroLowPowerEnabled(bool enabled);
-        void setGyroAxisEnabled(Axes axis, bool enabled);
-        int16_t readGyroRaw(Axes axis);
-        float readGyro(Axes axis);
+        void setGyroXEnabled(bool enabled);
+        void setGyroYEnabled(bool enabled);
+        void setGyroZEnabled(bool enabled);
+        int16_t readGyroXRaw();
+        int16_t readGyroYRaw();
+        int16_t readGyroZRaw();
 
         static float calcAccelResolution(AccelScale scale);
+        float accelResolution() const;
 
         void initAccel();
         void setAccelSampleRate(AccelSampleRate rate);
         void setAccelScale(AccelScale scale);
-        void setAccelAxisEnabled(Axes axis, bool enabled);
-        int16_t readAccelRaw(Axes axis);
-        float readAccel(Axes axis);
+        void setAccelXEnabled(bool enabled);
+        void setAccelYEnabled(bool enabled);
+        void setAccelZEnabled(bool enabled);
+        int16_t readAccelXRaw();
+        int16_t readAccelYRaw();
+        int16_t readAccelZRaw();
 
         int16_t readTempeartureRaw();
         float readTempearture();

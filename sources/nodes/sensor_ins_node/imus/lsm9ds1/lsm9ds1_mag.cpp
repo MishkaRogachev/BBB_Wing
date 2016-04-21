@@ -30,6 +30,11 @@ float Lsm9ds1::Mag::calcResolution(MagScale scale)
     }
 }
 
+float Lsm9ds1::Mag::resolution() const
+{
+    return m_resolution;
+}
+
 void Lsm9ds1::Mag::initMag()
 {
     this->i2cWrite(CTRL_REG1_M, 0xC0);
@@ -60,29 +65,17 @@ void Lsm9ds1::Mag::setMagScale(MagScale scale)
     m_resolution = this->calcResolution(scale);
 }
 
-int16_t Lsm9ds1::Mag::readMagRaw(Axes axis)
+int16_t Lsm9ds1::Mag::readMagXRaw()
 {
-    uint8_t regAddrL, regAddrH;
-
-    switch (axis) {
-    case AxisX:
-        regAddrL = OUT_X_L_M;
-        regAddrH = OUT_X_H_M;
-        break;
-    case AxisY:
-        regAddrL = OUT_Y_L_M;
-        regAddrH = OUT_Y_H_M;
-        break;
-    case AxisZ:
-        regAddrL = OUT_Z_L_M;
-        regAddrH = OUT_Z_H_M;
-        break;
-    }
-
-    return this->i2cRead(regAddrH) << 8 | this->i2cRead(regAddrL);
+    return this->i2cRead(OUT_X_H_M) << 8 | this->i2cRead(OUT_X_L_M);
 }
 
-float Lsm9ds1::Mag::readMag(Axes axis)
+int16_t Lsm9ds1::Mag::readMagYRaw()
 {
-    return m_resolution * this->readMagRaw(axis);
+    return this->i2cRead(OUT_Y_H_M) << 8 | this->i2cRead(OUT_Y_L_M);
+}
+
+int16_t Lsm9ds1::Mag::readMagZRaw()
+{
+    return this->i2cRead(OUT_Z_H_M) << 8 | this->i2cRead(OUT_Z_L_M);
 }
