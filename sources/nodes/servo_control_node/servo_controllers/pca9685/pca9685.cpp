@@ -1,6 +1,13 @@
 #include "pca9685.h"
 #include "pca9685_registers.h"
 
+namespace
+{
+    const float dutyMin = 3;
+    const float dutyMax = 14.5;
+    const float dutySpan = dutyMax - dutyMin;
+}
+
 using namespace devices;
 
 Pca9685::Pca9685(const char* filename):
@@ -62,4 +69,28 @@ int Pca9685::pwm(uint8_t channel)
     value <<= 8;
     value += this->i2cRead(LED0_OFF_L + LED_MULTIPLYER * (channel - 1));
     return value;
+}
+
+void Pca9685::init()
+{
+    if (this->isStarted()) this->stop();
+    this->start();
+}
+
+bool Pca9685::checkAvalible()
+{
+    return (this->isStarted() && this->checkDevicePresent());
+}
+
+void Pca9685::setAngle(uint8_t channel, float angle)
+{
+    //FIXME: angle to pwm correct calculation
+    int duty = 100 - (angle / 180) * ::dutySpan + ::dutyMin;
+    this->setPwm(channel, duty);
+}
+
+float Pca9685::angle(uint8_t channel) const
+{
+    // FIXME: angle
+    return 0;
 }

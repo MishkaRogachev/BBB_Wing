@@ -23,7 +23,7 @@ FlightControllerNode::FlightControllerNode(QObject* parent):
                           parent),
     d(new Impl())
 {
-    d->pub.bind(endpoints::controller);
+    d->pub.bind(endpoints::flightController);
 }
 
 FlightControllerNode::~FlightControllerNode()

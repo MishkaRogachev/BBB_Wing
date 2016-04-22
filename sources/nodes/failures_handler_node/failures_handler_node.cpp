@@ -42,7 +42,7 @@ void FailuresHandlerNode::init()
                        endpoints::ins,
                        endpoints::sns,
                        endpoints::navigator,
-                       endpoints::controller,
+                       endpoints::flightController,
                        endpoints::boardGateway });
 
     d->sub.subscribe(topics::status);

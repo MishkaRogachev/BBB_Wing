@@ -1,12 +1,12 @@
 #ifndef MPL3115A2_H
 #define MPL3115A2_H
 
-#include "i_barometric_altimeter.h"
 #include "i2c_device.h"
+#include "i_barometric_altimeter.h"
 
 namespace devices
 {
-    class Mpl3115A2: public IBarometricAltimeter, public I2cDevice
+    class Mpl3115A2: public I2cDevice, public IBarometricAltimeter
     {
     public:
         Mpl3115A2(const char* filename);

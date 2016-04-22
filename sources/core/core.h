@@ -46,7 +46,7 @@ namespace endpoints
     const QString failuresHandler = "ipc://failurer";
 
     const QString navigator = "ipc://navi";
-    const QString controller = "ipc://ctrl";
+    const QString flightController = "ipc://ctrl";
 
     const QString player = "ipc://player";
 

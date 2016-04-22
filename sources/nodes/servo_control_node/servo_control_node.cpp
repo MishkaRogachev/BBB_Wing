@@ -18,7 +18,7 @@ class SerovoControlNode::Impl
 public:
     Subscriber sub;
 
-    devices::Pca9685* servoAdapter;
+    devices::IServoController* servoController;
 };
 
 SerovoControlNode::SerovoControlNode(QObject* parent):
@@ -26,31 +26,44 @@ SerovoControlNode::SerovoControlNode(QObject* parent):
                           parent),
     d(new Impl())
 {
-    d->servoAdapter = new devices::Pca9685(
+    d->servoController = new devices::Pca9685(
                           qPrintable(Config::value("ServoControl/i2c_path").toString()));
 }
 
 SerovoControlNode::~SerovoControlNode()
 {
-    delete d->servoAdapter;
+    delete d->servoController;
     delete d;
 }
 
 void SerovoControlNode::init()
 {
-    if (d->servoAdapter->isStarted()) d->servoAdapter->stop();
-    d->servoAdapter->start();
+    d->sub.connectTo({ endpoints::flightController,
+                       endpoints::ins,
+                       endpoints::sns,
+                       endpoints::navigator,
+                       endpoints::boardGateway });
+
+    d->sub.subscribe(topics::data);
+    connect(&d->sub, &Subscriber::received, this,
+            &SerovoControlNode::onSubReceived);
+
+    d->servoController->init();
 }
 
 void SerovoControlNode::exec()
 {
-    if (d->servoAdapter->isStarted() &&
-        d->servoAdapter->checkDevicePresent())
+    if (d->servoController->checkAvalible())
     {
         // TODO: do servo work
     }
     else
     {
-        this->init();
+        d->servoController->init();
     }
+}
+
+void SerovoControlNode::onSubReceived(const QString& topic, const QByteArray& msg)
+{
+
 }

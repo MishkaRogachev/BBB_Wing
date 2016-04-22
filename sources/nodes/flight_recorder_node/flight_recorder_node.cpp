@@ -50,7 +50,7 @@ void FlightRecorderNode::init()
                        endpoints::sns,
                        endpoints::failuresHandler,
                        endpoints::navigator,
-                       endpoints::controller,
+                       endpoints::flightController,
                        endpoints::boardGateway });
 
     d->sub.subscribe(topics::all);
