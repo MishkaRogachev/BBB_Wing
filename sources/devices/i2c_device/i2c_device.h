@@ -1,18 +1,18 @@
 #ifndef I2C_DEVICE_H
 #define I2C_DEVICE_H
 
-// Std
-#include <cstdint>
+// Qt
+#include <QString>
 
 namespace devices
 {
     class I2cDevice
     {
     public:
-        I2cDevice(const char* filename);
+        I2cDevice(const QString& filename);
         virtual ~I2cDevice();
 
-        const char* filename() const;
+        QString filename() const;
 
         virtual bool start();
         void stop();
@@ -29,7 +29,7 @@ namespace devices
 
     private:
         int m_file;
-        const char* m_filename;
+        QString m_filename;
     };
 }
 

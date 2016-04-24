@@ -34,7 +34,7 @@ SensorInsNode::SensorInsNode(QObject* parent):
     d->pub.bind(endpoints::ins);
 
     d->imu = new devices::Lsm9ds1(
-                 qPrintable(Config::value("SensorIns/i2c_path").toString()));
+                 Config::value("SensorIns/i2c_path").toString());
 }
 
 SensorInsNode::~SensorInsNode()
@@ -50,7 +50,7 @@ void SensorInsNode::init()
 
 void SensorInsNode::exec()
 {
-    if (d->imu->checkAvalible())
+    if (d->imu->checkDevicePresent())
     {
         d->pub.publish(topics::insStatus, QByteArray::number(true));
 

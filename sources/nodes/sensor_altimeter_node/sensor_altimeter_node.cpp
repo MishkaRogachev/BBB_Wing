@@ -29,7 +29,7 @@ SensorAltimeterNode::SensorAltimeterNode(QObject* parent):
     d->pub.bind(endpoints::altimeter);
 
     d->altimeter = new devices::Mpl3115A2(
-                       qPrintable(Config::value("SensorAltimeter/i2c_path").toString()));
+                       Config::value("SensorAltimeter/i2c_path").toString());
 }
 
 SensorAltimeterNode::~SensorAltimeterNode()

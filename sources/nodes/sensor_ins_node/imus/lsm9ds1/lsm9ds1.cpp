@@ -4,7 +4,7 @@
 
 using namespace devices;
 
-Lsm9ds1::Lsm9ds1(const char* filename):
+Lsm9ds1::Lsm9ds1(const QString& filename):
     m_gyroAccel(new GyroAccel(filename)),
     m_mag(new Mag(filename))
 {}
@@ -56,11 +56,6 @@ void Lsm9ds1::init()
 {
     if (this->isStarted()) this->stop();
     this->start();
-}
-
-bool Lsm9ds1::checkAvalible()
-{
-    return (this->isStarted() && this->checkDevicePresent());
 }
 
 float Lsm9ds1::readGyroX()

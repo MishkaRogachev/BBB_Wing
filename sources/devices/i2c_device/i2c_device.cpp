@@ -9,7 +9,7 @@
 
 using namespace devices;
 
-I2cDevice::I2cDevice(const char* filename):
+I2cDevice::I2cDevice(const QString& filename):
     m_file(-1),
     m_filename(filename)
 {}
@@ -19,14 +19,14 @@ I2cDevice::~I2cDevice()
     if (m_file != -1) this->stop();
 }
 
-const char* I2cDevice::filename() const
+QString I2cDevice::filename() const
 {
     return m_filename;
 }
 
 bool I2cDevice::start()
 {
-    if ((m_file = open(m_filename, O_RDWR)) < 0)
+    if ((m_file = open(qPrintable(m_filename), O_RDWR)) < 0)
         return false;
 
     if (ioctl(m_file, I2C_SLAVE, this->i2cAddress()) < 0)

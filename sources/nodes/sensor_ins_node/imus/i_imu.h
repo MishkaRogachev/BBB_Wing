@@ -9,7 +9,7 @@ namespace devices
         virtual ~IImu() {}
 
         virtual void init() = 0;
-        virtual bool checkAvalible() = 0;
+        virtual bool checkDevicePresent() = 0;
 
         virtual float readGyroX() = 0;
         virtual float readGyroY() = 0;

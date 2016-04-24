@@ -3,7 +3,7 @@
 
 using namespace devices;
 
-Lsm9ds1::Mag::Mag(const char* filename):
+Lsm9ds1::Mag::Mag(const QString& filename):
     I2cDevice(filename)
 {}
 

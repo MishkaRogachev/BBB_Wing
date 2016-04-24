@@ -3,7 +3,8 @@
 
 #include "i_imu.h"
 
-#include <cstdint>
+// Qt
+#include <QString>
 
 namespace devices
 {
@@ -13,7 +14,7 @@ namespace devices
         class Mag;
 
     public:
-        Lsm9ds1(const char* filename);
+        Lsm9ds1(const QString& filename);
         ~Lsm9ds1();
 
         bool start();
@@ -25,7 +26,6 @@ namespace devices
         Mag* mag() const;
 
         void init() override;
-        bool checkAvalible() override;
 
         float readGyroX() override;
         float readGyroY() override;

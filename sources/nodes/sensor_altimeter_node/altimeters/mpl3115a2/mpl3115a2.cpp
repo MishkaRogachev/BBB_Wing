@@ -11,7 +11,7 @@
 
 using namespace devices;
 
-Mpl3115A2::Mpl3115A2(const char* filename):
+Mpl3115A2::Mpl3115A2(const QString& filename):
     I2cDevice(filename),
     m_altitude(std::numeric_limits<float>::quiet_NaN()),
     m_temperature(std::numeric_limits<float>::quiet_NaN()),
@@ -118,8 +118,7 @@ void Mpl3115A2::init()
 
 bool Mpl3115A2::takeMeasure()
 {
-    if (!this->isStarted() || !this->checkDevicePresent())
-        return false;
+    if (!this->isStarted()) return false;
 
     this->processMeasurement();
     return true;

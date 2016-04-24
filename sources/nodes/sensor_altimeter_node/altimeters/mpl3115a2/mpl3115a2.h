@@ -9,7 +9,7 @@ namespace devices
     class Mpl3115A2: public I2cDevice, public IBarometricAltimeter
     {
     public:
-        Mpl3115A2(const char* filename);
+        Mpl3115A2(const QString& filename);
 
         bool start() override;
         uint8_t i2cAddress() const override;
