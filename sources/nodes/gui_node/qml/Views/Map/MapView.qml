@@ -7,9 +7,6 @@ Map {
     id: map
 
     plugin: Plugin { name: "osm" }
-    gesture.activeGestures: MapGestureArea.PanGesture |
-                            MapGestureArea.FlickGesture |
-                            MapGestureArea.ZoomGesture
     gesture.flickDeceleration: 3000
     gesture.enabled: true
     gesture.onPanStarted: fitButton.checked = false
