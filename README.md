@@ -8,6 +8,7 @@ Open souce UAV software project,
   * CMake 2.8.11
   * ZermoMQ 2
   * libi2c-dev (board only)
+  * libqgpsmm-dev (board only)
 
 ### Building 
 ```
@@ -17,9 +18,10 @@ cmake .. -DTARGET_TYPE=<type>
 make
 ```
 
-# <type> can be:
-  *board - on-board UAV software, designed to run on single-board computer like Raspberry pi, Beaglebone Black or others
-  *ground - ground control station with rich graphics interface
-  *all - all possible targets
+#### TARGET_TYPE varible can be specified:
+ 
+  * board - UAV software, designed to run on single-board computer like Raspberry Pi, Beaglebone Black or others
+  * ground - ground control station with rich graphics interface
+  * all - all possible targets, used by default
 
-# Resulting binaries will be deployed in result folder
+#### Resulting binaries will be deployed in 'result' folder
