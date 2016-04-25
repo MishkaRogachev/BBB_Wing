@@ -6,7 +6,7 @@ Open souce UAV software project
   * C++11 compiler
   * Qt 5.5 or greater(no-gui targets can be build with lower Qt5 versions)
   * CMake 2.8.11 or greater
-  * ZermoMQ
+  * ZeroMQ
   * Linux I2C header (board only)
   * GPSD header and development files (board only)
  
