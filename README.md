@@ -1,14 +1,19 @@
 # BBB_Wing
-Open souce UAV software project, 
+Open souce UAV software project
 
 ### Dependencies
  
   * C++11 compiler
-  * Qt 5.5 (non-gui targets can be build with lower Qt5 versions)
-  * CMake 2.8.11
-  * ZermoMQ 2
-  * libi2c-dev (board only)
-  * libqgpsmm-dev (board only)
+  * Qt 5.5 or greater(no-gui targets can be build with lower Qt5 versions)
+  * CMake 2.8.11 or greater
+  * ZermoMQ
+  * Linux I2C header (board only)
+  * GPSD header and development files (board only)
+ 
+#### Ubuntu users can use apt-get:
+```
+  sudo apt-get install cmake libzmq-dev libi2c-dev libgps-dev
+```
 
 ### Building 
 ```
