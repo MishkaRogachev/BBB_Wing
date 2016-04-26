@@ -2,13 +2,13 @@
 
 // Qt
 #include <QDebug>
-#include <QMap>
 
 // Internal
 #include "core.h"
 #include "config.h"
 
 #include "subscriber.h"
+#include "drive_impacts_packet.h"
 
 #include "pca9685.h"
 
@@ -19,7 +19,7 @@ class ServoDrivesNode::Impl
 public:
     Subscriber sub;
 
-    QMap<int, float> channelAngles;
+    DriveImpacts impacts;
     devices::IServoController* servoController;
 };
 
@@ -61,9 +61,9 @@ void ServoDrivesNode::exec()
 {
     if (d->servoController->checkAvalible())
     {
-        for (int channel: d->channelAngles.keys())
+        for (int channel: d->impacts.keys())
         {
-            d->servoController->setAngle(channel, d->channelAngles.value(channel));
+            d->servoController->setAngle(channel, d->impacts.value(channel));
         }
     }
     else
@@ -74,5 +74,10 @@ void ServoDrivesNode::exec()
 
 void ServoDrivesNode::onSubReceived(const QString& topic, const QByteArray& msg)
 {
-    // TODO: fill d->channelAngles
+    if (topic == topics::driveImpactsPacket)
+    {
+        DriveImpacts newImpacts = DriveImpactsPacket::fromByteArray(msg).impacts;
+        for (int channel: newImpacts)
+            d->impacts.insert(channel, newImpacts[channel]);
+    }
 }

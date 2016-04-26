@@ -7,7 +7,7 @@
 #include "alt_packet.h"
 #include "ins_packet.h"
 #include "sns_packet.h"
-#include "drive_inpacts_packet.h"
+#include "drive_impacts_packet.h"
 #include "failures_packet.h"
 #include "crc_packet.h"
 
@@ -86,14 +86,14 @@ void PacketsTest::testSnsPacket()
 
 void PacketsTest::testDriveImpactsPacket()
 {
-    DriveInpactsPacket packet;
+    DriveImpactsPacket packet;
 
     packet.impacts = DriveImpacts { { 0,  56.45 },
                                     { 1, -73.01 } ,
                                     { 2, 223.42 } };
 
-    DriveInpactsPacket converted =
-            this->testPacketSerialization<DriveInpactsPacket>(packet);
+    DriveImpactsPacket converted =
+            this->testPacketSerialization<DriveImpactsPacket>(packet);
 
     QCOMPARE(converted.impacts, packet.impacts);
 }
