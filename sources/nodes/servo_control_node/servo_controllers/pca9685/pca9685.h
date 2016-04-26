@@ -9,7 +9,8 @@ namespace devices
     class Pca9685: public IServoController, public I2cDevice
     {
     public:
-        Pca9685(const char* filename);
+        Pca9685(const char* filename, float minAngle, float maxAngle,
+                int minDuty, int maxDuty);
 
         bool start() override;
         uint8_t i2cAddress() const override;
@@ -26,7 +27,12 @@ namespace devices
         bool checkAvalible() override;
 
         void setAngle(uint8_t channel, float angle) override;
-        float angle(uint8_t channel) const override;
+
+    private:
+        float m_minAngle;
+        float m_maxAngle;
+        int m_minDuty;
+        int m_maxDuty;
     };
 }
 #endif // PCA9685_H

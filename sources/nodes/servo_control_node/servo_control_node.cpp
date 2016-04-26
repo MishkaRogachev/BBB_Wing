@@ -27,7 +27,11 @@ SerovoControlNode::SerovoControlNode(QObject* parent):
     d(new Impl())
 {
     d->servoController = new devices::Pca9685(
-                          qPrintable(Config::value("ServoControl/i2c_path").toString()));
+                             qPrintable(Config::value("ServoControl/i2c_path").toString()),
+                             Config::value("ServoControl/min_servo_angle").toFloat(),
+                             Config::value("ServoControl/max_servo_angle").toFloat(),
+                             Config::value("ServoControl/min_pwm_duty").toInt(),
+                             Config::value("ServoControl/max_pwm_duty").toInt());
 }
 
 SerovoControlNode::~SerovoControlNode()
