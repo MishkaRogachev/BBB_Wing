@@ -43,7 +43,8 @@ void SensorSnsNode::init()
 void SensorSnsNode::exec()
 {
     struct gps_data_t* data = nullptr;
-    if ((data = d->handle.read()) == nullptr)
+
+    if (!d->handle.is_open() || ((data = d->handle.read()) == nullptr))
     {
         d->pub.publish(topics::snsStatus, QByteArray::number(false));
         this->init();
