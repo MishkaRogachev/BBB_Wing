@@ -1,5 +1,6 @@
 import QtQuick 2.4
 import "../../Indicators"
+import "../../Controls"
 
 Column {
     id: boardView
@@ -53,6 +54,10 @@ Column {
             color: palette.textColor
             anchors.verticalCenter: parent.verticalCenter
         }
+    }
+
+    Joystick {
+        anchors.horizontalCenter: parent.horizontalCenter
     }
 
     VideoView {

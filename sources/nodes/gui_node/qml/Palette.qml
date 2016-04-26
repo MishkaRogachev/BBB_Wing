@@ -1,6 +1,8 @@
 import QtQuick 2.5
 
 Item {
+    id: palette
+
     property color backgroundColor: configService.value("Gui/Palette/backgroundColor")
     property color foregroundColor: configService.value("Gui/Palette/foregroundColor")
     property color highlightColor: configService.value("Gui/Palette/highlightColor")
