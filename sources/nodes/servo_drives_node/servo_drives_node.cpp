@@ -1,7 +1,8 @@
-#include "servo_control_node.h"
+#include "servo_drives_node.h"
 
 // Qt
 #include <QDebug>
+#include <QMap>
 
 // Internal
 #include "core.h"
@@ -13,34 +14,35 @@
 
 using namespace domain;
 
-class SerovoControlNode::Impl
+class ServoDrivesNode::Impl
 {
 public:
     Subscriber sub;
 
+    QMap<int, float> channelAngles;
     devices::IServoController* servoController;
 };
 
-SerovoControlNode::SerovoControlNode(QObject* parent):
-    AbstractNodeFrequency(Config::value("ServoControl/frequency").toFloat(),
+ServoDrivesNode::ServoDrivesNode(QObject* parent):
+    AbstractNodeFrequency(Config::value("ServoDrives/frequency").toFloat(),
                           parent),
     d(new Impl())
 {
     d->servoController = new devices::Pca9685(
-                             qPrintable(Config::value("ServoControl/i2c_path").toString()),
-                             Config::value("ServoControl/min_servo_angle").toFloat(),
-                             Config::value("ServoControl/max_servo_angle").toFloat(),
-                             Config::value("ServoControl/min_pwm_duty").toInt(),
-                             Config::value("ServoControl/max_pwm_duty").toInt());
+                             qPrintable(Config::value("ServoDrives/i2c_path").toString()),
+                             Config::value("ServoDrives/min_servo_angle").toFloat(),
+                             Config::value("ServoDrives/max_servo_angle").toFloat(),
+                             Config::value("ServoDrives/min_pwm_duty").toInt(),
+                             Config::value("ServoDrives/max_pwm_duty").toInt());
 }
 
-SerovoControlNode::~SerovoControlNode()
+ServoDrivesNode::~ServoDrivesNode()
 {
     delete d->servoController;
     delete d;
 }
 
-void SerovoControlNode::init()
+void ServoDrivesNode::init()
 {
     d->sub.connectTo({ endpoints::flightController,
                        endpoints::ins,
@@ -50,16 +52,19 @@ void SerovoControlNode::init()
 
     d->sub.subscribe(topics::data);
     connect(&d->sub, &Subscriber::received, this,
-            &SerovoControlNode::onSubReceived);
+            &ServoDrivesNode::onSubReceived);
 
     d->servoController->init();
 }
 
-void SerovoControlNode::exec()
+void ServoDrivesNode::exec()
 {
     if (d->servoController->checkAvalible())
     {
-        // TODO: do servo work
+        for (int channel: d->channelAngles.keys())
+        {
+            d->servoController->setAngle(channel, d->channelAngles.value(channel));
+        }
     }
     else
     {
@@ -67,7 +72,7 @@ void SerovoControlNode::exec()
     }
 }
 
-void SerovoControlNode::onSubReceived(const QString& topic, const QByteArray& msg)
+void ServoDrivesNode::onSubReceived(const QString& topic, const QByteArray& msg)
 {
-
+    // TODO: fill d->channelAngles
 }

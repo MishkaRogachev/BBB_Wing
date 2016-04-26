@@ -1,17 +1,17 @@
-#ifndef SERVO_CONTROL_NODE_H
-#define SERVO_CONTROL_NODE_H
+#ifndef SERVO_DRIVES_NODE_H
+#define SERVO_DRIVES_NODE_H
 
 #include "abstract_node_frequency.h"
 
 namespace domain
 {
-    class SerovoControlNode: public AbstractNodeFrequency
+    class ServoDrivesNode: public AbstractNodeFrequency
     {
         Q_OBJECT
 
     public:
-        SerovoControlNode(QObject* parent = nullptr);
-        ~SerovoControlNode() override;
+        ServoDrivesNode(QObject* parent = nullptr);
+        ~ServoDrivesNode() override;
 
     public slots:
         void init() override;
@@ -26,4 +26,4 @@ namespace domain
     };
 }
 
-#endif // SERVO_CONTROL_NODE_H
+#endif // SERVO_DRIVES_NODE_H

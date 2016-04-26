@@ -7,6 +7,7 @@
 #include "alt_packet.h"
 #include "ins_packet.h"
 #include "sns_packet.h"
+#include "drive_inpacts_packet.h"
 #include "failures_packet.h"
 #include "crc_packet.h"
 
@@ -81,6 +82,20 @@ void PacketsTest::testSnsPacket()
 
     QVERIFY(qFuzzyCompare(converted.altitude, packet.altitude));
     QVERIFY(qFuzzyCompare(converted.climb, packet.climb));
+}
+
+void PacketsTest::testDriveImpactsPacket()
+{
+    DriveInpactsPacket packet;
+
+    packet.impacts = DriveImpacts { { 0,  56.45 },
+                                    { 1, -73.01 } ,
+                                    { 2, 223.42 } };
+
+    DriveInpactsPacket converted =
+            this->testPacketSerialization<DriveInpactsPacket>(packet);
+
+    QCOMPARE(converted.impacts, packet.impacts);
 }
 
 void PacketsTest::testFailuresPacket()
