@@ -45,8 +45,6 @@ ServoDrivesNode::~ServoDrivesNode()
 void ServoDrivesNode::init()
 {
     d->sub.connectTo({ endpoints::flightController,
-                       endpoints::ins,
-                       endpoints::sns,
                        endpoints::navigator,
                        endpoints::boardGateway });
 

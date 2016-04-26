@@ -1,11 +1,25 @@
-#ifndef DRIVEINPACTSPACKET_H
-#define DRIVEINPACTSPACKET_H
+#ifndef DRIVE_IMPACTS_PACKET_H
+#define DRIVE_IMPACTS_PACKET_H
 
+#include "packet.h"
 
-class DriveInpactsPacket : public Packet
+// Qt
+#include <QMap>
+
+namespace domain // TODO: namspaces to node layers
 {
-public:
-    DriveInpactsPacket();
-};
+    using DriveImpacts = QMap<int, float>;
 
-#endif // DRIVEINPACTSPACKET_H
+    class DriveImpactsPacket: public Packet
+    {
+    public:
+        DriveImpacts impacts;
+
+        QDataStream& operator >>(QDataStream& stream) const override;
+        QDataStream& operator <<(QDataStream& stream) override;
+
+        static DriveImpactsPacket fromByteArray(const QByteArray& data);
+    };
+}
+
+#endif // DRIVE_IMPACTS_PACKET_H
