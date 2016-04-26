@@ -53,7 +53,7 @@ if (TARGET_TYPE STREQUAL "board" OR TARGET_TYPE STREQUAL "all")
     add_subdirectory(sources/nodes/sensor_altimeter_node)
     add_subdirectory(sources/nodes/sensor_ins_node)
     add_subdirectory(sources/nodes/sensor_sns_node)
-    add_subdirectory(sources/nodes/servo_control_node)
+    add_subdirectory(sources/nodes/servo_drives_node)
 
     add_subdirectory(sources/nodes/failures_handler_node)
     add_subdirectory(sources/nodes/flight_recorder_node)
