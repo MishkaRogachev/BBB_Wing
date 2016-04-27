@@ -3,6 +3,9 @@
 // Qt
 #include <QDebug>
 
+//Internal
+#include "core.h"
+
 using namespace domain;
 
 BoardService::BoardService(QObject* parent):
@@ -82,7 +85,8 @@ bool BoardService::altStatus() const
 {
     return m_altStatus;
 }
-
+// Internal
+#include "direct_packet.h"
 bool BoardService::insStatus() const
 {
     return m_insStatus;
@@ -190,4 +194,22 @@ void BoardService::updateFailuresPacket(const FailuresPacket& packet)
         m_snsStatus = packet.snsStatus;
         snsStatusChanged(packet.snsStatus);
     }
+}
+
+void BoardService::setJoystickDeviationX(float deviation)
+{
+    m_direct.manual.deviationX = deviation;
+    emit publish(topics::directPacket, m_direct.toByteArray());
+}
+
+void BoardService::setJoystickDeviationY(float deviation)
+{
+    m_direct.manual.deviationY = deviation;
+    emit publish(topics::directPacket, m_direct.toByteArray());
+}
+
+void BoardService::setJoystickDeviationZ(float deviation)
+{
+    m_direct.manual.deviationZ = deviation;
+    emit publish(topics::directPacket, m_direct.toByteArray());
 }

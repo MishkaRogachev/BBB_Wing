@@ -47,6 +47,10 @@ GuiNode::GuiNode(QObject* parent):
 
     d->pub.bind(endpoints::gui);
 
+    connect(&d->boardService, &BoardService::publish,
+            &d->pub, static_cast<void (Publisher::*)
+            (const QString&, const QByteArray&)>(&Publisher::publish));
+
     d->view.rootContext()->setContextProperty("boardService", &d->boardService);
     d->view.rootContext()->setContextProperty("groundService", &d->groundService);
     d->view.rootContext()->setContextProperty("videoService", &d->videoService);

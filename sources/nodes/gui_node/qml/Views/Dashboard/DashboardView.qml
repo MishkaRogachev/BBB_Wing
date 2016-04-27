@@ -89,7 +89,7 @@ Column {
         minY: configService.value("Gui/Joystick/min_y")
         maxY: configService.value("Gui/Joystick/max_y")
 
-        onDeviationXChanged: console.log(deviationX, deviationY)
-        onDeviationYChanged: console.log(deviationX, deviationY)
+        onDeviationXChanged: boardService.setJoystickDeviationX(deviationX)
+        onDeviationYChanged: boardService.setJoystickDeviationY(deviationY)
     }
 }

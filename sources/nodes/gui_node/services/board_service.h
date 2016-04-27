@@ -11,6 +11,8 @@
 #include "alt_packet.h"
 #include "failures_packet.h"
 
+#include "direct_packet.h"
+
 namespace domain
 {
     class BoardService: public QObject
@@ -62,6 +64,10 @@ namespace domain
         void updateSnsData(const SnsPacket& packet);
         void updateFailuresPacket(const FailuresPacket& packet);
 
+        void setJoystickDeviationX(float deviation);
+        void setJoystickDeviationY(float deviation);
+        void setJoystickDeviationZ(float deviation);
+
     signals:
         void barAltitudeChanged(float barAltitude);
         void temperatureChanged(float temperature);
@@ -81,8 +87,10 @@ namespace domain
         void insStatusChanged(bool insStatus);
         void snsStatusChanged(bool snsStatus);
 
+        void publish(const QString& topic, const QByteArray& data);
+
     private:
-        float m_barAltitude;
+        float m_barAltitude; // TODO: packets to varibles
         float m_temperature;
 
         float m_pitch;
@@ -99,6 +107,8 @@ namespace domain
         bool m_altStatus;
         bool m_insStatus;
         bool m_snsStatus;
+
+        DirectPacket m_direct;
     };
 }
 

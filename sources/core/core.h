@@ -9,8 +9,6 @@ namespace topics
     const QString data = "data";
     const QString all = "";
 
-    const QString interview = "iv";
-
     const QString altStatus = "status_alt";
     const QString altPacket = "data_alt";
 
@@ -29,6 +27,8 @@ namespace topics
     const QString flightCtrlPacket = "data_ctrl";
 
     const QString connectionStatusPacket = "status_cn";
+
+    const QString directPacket = "data_direct";
 
     const QStringList boardTopics = {
         altStatus, altPacket,
@@ -56,6 +56,6 @@ namespace endpoints
     const QString groundGateway = "ipc://ground_gw";
 
     const QString gui = "ipc://gui";
-} 
+}
 
 #endif // CORE_H

@@ -100,6 +100,5 @@ void BoardGatewayNode::onLinkReceived(const QByteArray& data)
     auto packet = CrcPacket::fromByteArray(data);
     if (!packet.validateCrc()) return;
 
-    if (packet.topic != topics::interview)
-        d->pub.publish(packet.topic, packet.data);
+    d->pub.publish(packet.topic, packet.data);
 }

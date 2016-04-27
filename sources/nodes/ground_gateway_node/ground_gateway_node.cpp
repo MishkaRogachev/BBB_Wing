@@ -16,6 +16,7 @@
 
 #include "crc_packet.h"
 #include "connection_status_packet.h"
+#include "direct_packet.h"
 
 using namespace domain;
 
@@ -31,7 +32,7 @@ public:
     int count = 0;
     int packetsLost = 0;
 
-    QMap <QString, CrcPacket> packets;
+    DirectPacket direct;
 };
 
 GroundGatewayNode::GroundGatewayNode(QObject* parent):
@@ -82,25 +83,15 @@ void GroundGatewayNode::exec()
     if (!d->wireLink->isConnected()) d->wireLink->connect();
     if (!d->airLink->isConnected()) d->airLink->connect();
 
-    if (d->packets.isEmpty()) // TODO: blanking command or single direct packet
-        d->packets.insert(topics::interview,
-                          CrcPacket(topics::interview, QByteArray()));
+    CrcPacket crcPacket(topics::directPacket, d->direct.toByteArray());
+    QByteArray data = crcPacket.toByteArray();
 
-    QList<AbstractLink*> links;
+    if (d->wireLink->isConnected() && (!d->airLink->isOnline() ||
+        (d->wireLink->isOnline() && d->airLink->isOnline())))
+        d->wireLink->send(data);
 
-    for (const CrcPacket& packet: d->packets)
-    {
-        QByteArray data = packet.toByteArray();
-
-        if (d->wireLink->isConnected() && (!d->airLink->isOnline() ||
-            (d->wireLink->isOnline() && d->airLink->isOnline())))
-            d->wireLink->send(data);
-
-        if (d->airLink->isConnected() && !d->wireLink->isOnline())
-            d->airLink->send(data);
-    }
-
-    d->packets.clear();
+    if (d->airLink->isConnected() && !d->wireLink->isOnline())
+        d->airLink->send(data);
 
     ConnectionStatusPacket statusPacket;
 
@@ -126,7 +117,10 @@ void GroundGatewayNode::stop()
 void GroundGatewayNode::onSubReceived(const QString& topic,
                                      const QByteArray& data)
 {
-    d->packets.insert(topic, CrcPacket(topic, data));
+    if (topic == topics::directPacket)
+    {
+        d->direct = DirectPacket::fromByteArray(data);
+    }
 }
 
 void GroundGatewayNode::onLinkReceived(const QByteArray& data)
