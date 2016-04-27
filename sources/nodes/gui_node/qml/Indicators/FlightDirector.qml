@@ -10,10 +10,24 @@ Column {
     property real velocity: 0.0
     property real altitude: 0.0
 
-    property bool pitchInverted: configService.value("Gui/FlightDirector/pitchInverted")
-    property bool rollInverted: configService.value("Gui/FlightDirector/rollInverted")
-    property int rollOffset: configService.value("Gui/FlightDirector/rollOffset")
-    spacing: configService.value("Gui/FlightDirector/spacing")
+    property bool pitchInverted: true
+    property bool rollInverted: true
+    property int rollOffset: 28
+
+    property int minVelocity: -13
+    property int maxVelocity: 13
+    property int velocityStep: 5
+    property int minPitch: -23
+    property int maxPitch: 23
+    property int minRoll: -45
+    property int maxRoll: 45
+    property int minAltitude: -27
+    property int maxAltitude: 27
+    property int altitudeStep: 10
+    property int minYaw: -17
+    property int maxYaw: 17
+
+    spacing: 8
 
     Behavior on pitch { PropertyAnimation { duration: 100 } }
     Behavior on roll { PropertyAnimation { duration: 100 } }
@@ -29,11 +43,9 @@ Column {
         LinearScale {
             id: velocityScale
             value: flightDirector.velocity
-            minValue: flightDirector.velocity +
-                      parseInt(configService.value("Gui/FlightDirector/minVelocity"))
-            maxValue: flightDirector.velocity +
-                      parseInt(configService.value("Gui/FlightDirector/maxVelocity"))
-            valueStep: configService.value("Gui/FlightDirector/velocityStep")
+            minValue: velocity + minVelocity
+            maxValue: velocity + maxVelocity
+            valueStep: velocityStep
             anchors.verticalCenter: parent.verticalCenter
             height: picthRoll.height + rollOffset
             canvasRotation: 90
@@ -57,8 +69,8 @@ Column {
                     effectiveHeight: pitchScale.height
                     pitch: pitchInverted ? flightDirector.pitch : 0
                     roll: rollInverted ? flightDirector.roll : 0
-                    minPitch: configService.value("Gui/FlightDirector/minPitch")
-                    maxPitch: configService.value("Gui/FlightDirector/maxPitch")
+                    minPitch: flightDirector.minPitch
+                    maxPitch: flightDirector.maxPitch
                 }
 
                 PitchScale {
@@ -67,8 +79,8 @@ Column {
                     height: parent.height - rollOffset - 48 // roll mark
                     pitch: flightDirector.pitch
                     roll: flightDirector.roll
-                    minPitch: flightDirector.pitch + horizont.minPitch
-                    maxPitch: flightDirector.pitch + horizont.maxPitch
+                    minPitch: flightDirector.pitch + flightDirector.minPitch
+                    maxPitch: flightDirector.pitch + flightDirector.maxPitch
                 }
 
                 PlaneMark { // TODO: plane mark pitch & roll
@@ -98,19 +110,17 @@ Column {
                 height: parent.height + rollOffset
                 offset: rollOffset / 2
                 roll: flightDirector.roll
-                minRoll: configService.value("Gui/FlightDirector/minRoll")
-                maxRoll: configService.value("Gui/FlightDirector/maxRoll")
+                minRoll: flightDirector.minRoll
+                maxRoll: flightDirector.maxRoll
             }
         }
 
         LinearScale {
             id: altitudeScale
             value: flightDirector.altitude
-            minValue: flightDirector.altitude +
-                      parseInt(configService.value("Gui/FlightDirector/minAltitude"))
-            maxValue: flightDirector.altitude +
-                      parseInt(configService.value("Gui/FlightDirector/maxAltitude"))
-            valueStep: configService.value("Gui/FlightDirector/altitudeStep")
+            minValue: altitude + minAltitude
+            maxValue: altitude + maxAltitude
+            valueStep: altitudeStep
             anchors.verticalCenter: parent.verticalCenter
             height: picthRoll.height + rollOffset
             canvasRotation: -90
@@ -119,11 +129,9 @@ Column {
 
     LinearScale {
         id: yawScale
-        value: flightDirector.yaw
-        minValue: flightDirector.yaw +
-                  parseInt(configService.value("Gui/FlightDirector/minYaw"))
-        maxValue: flightDirector.yaw +
-                  parseInt(configService.value("Gui/FlightDirector/maxYaw"))
+        value: yaw
+        minValue: yaw + minYaw
+        maxValue: yaw + maxYaw
         valueStep: 5
         anchors.horizontalCenter: parent.horizontalCenter
         width: flightDirector.width - 16

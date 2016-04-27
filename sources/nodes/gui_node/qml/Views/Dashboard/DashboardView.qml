@@ -17,6 +17,23 @@ Column {
         yaw: boardService.yaw
         velocity: boardService.groundSpeed
         altitude: boardService.barAltitude
+
+        pitchInverted: configService.value("Gui/FlightDirector/pitch_inverted")
+        rollInverted: configService.value("Gui/FlightDirector/roll_inverted")
+        rollOffset: configService.value("Gui/FlightDirector/roll_offset")
+
+        minVelocity: configService.value("Gui/FlightDirector/min_velocity")
+        maxVelocity: configService.value("Gui/FlightDirector/max_velocity")
+        velocityStep: configService.value("Gui/FlightDirector/velocity_step")
+        minPitch: configService.value("Gui/FlightDirector/min_pitch")
+        maxPitch: configService.value("Gui/FlightDirector/max_pitch")
+        minRoll: configService.value("Gui/FlightDirector/min_roll")
+        maxRoll: configService.value("Gui/FlightDirector/max_roll")
+        minAltitude: configService.value("Gui/FlightDirector/min_altitude")
+        maxAltitude: configService.value("Gui/FlightDirector/max_altitude")
+        altitudeStep: configService.value("Gui/FlightDirector/altitude_step")
+        minYaw: configService.value("Gui/FlightDirector/min_yaw")
+        maxYaw: configService.value("Gui/FlightDirector/max_yaw")
     }
 
     Row {
