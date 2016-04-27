@@ -17,7 +17,6 @@ Rectangle {
         anchors.left: parent.left
         anchors.right: parent.right
         anchors.bottom: parent.bottom
-        spacing: 4
 
         DashboardView {
             id: boardView

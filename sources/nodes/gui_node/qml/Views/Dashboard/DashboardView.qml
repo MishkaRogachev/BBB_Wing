@@ -5,7 +5,7 @@ import "../../Controls"
 Column {
     id: boardView
 
-    spacing: 4
+    spacing: 8
     width: configService.value("Gui/Dashboard/width")
 
     FlightDirector {
@@ -56,13 +56,23 @@ Column {
         }
     }
 
-    Joystick {
-        anchors.horizontalCenter: parent.horizontalCenter
-    }
-
     VideoView {
         id: video
-        width: parent.width
+        width: parent.width - boardView.spacing
+        anchors.horizontalCenter: parent.horizontalCenter
         height: width * 3 / 4
+    }
+
+    Joystick {
+        anchors.horizontalCenter: parent.horizontalCenter
+
+        width: configService.value("Gui/Joystick/size")
+        minX: configService.value("Gui/Joystick/min_x")
+        maxX: configService.value("Gui/Joystick/max_x")
+        minY: configService.value("Gui/Joystick/min_y")
+        maxY: configService.value("Gui/Joystick/max_y")
+
+        onDeviationXChanged: console.log(deviationX, deviationY)
+        onDeviationYChanged: console.log(deviationX, deviationY)
     }
 }
