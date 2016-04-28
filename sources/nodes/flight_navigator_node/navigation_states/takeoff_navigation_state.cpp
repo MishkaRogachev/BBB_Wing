@@ -5,8 +5,6 @@
 #include "config.h"
 #include "core.h"
 
-#include "flight_control_packet.h"
-
 using namespace domain;
 
 TakeoffNavigationState::TakeoffNavigationState(AbstractNavigationState&& other):
@@ -30,14 +28,6 @@ QString TakeoffNavigationState::stateId() const
 void TakeoffNavigationState::process()
 {
     AbstractNavigationState::process();
-
-    FlightControlPacket packet;
-
-    packet.pitch = m_takeoffPitch;
-    packet.roll = m_takeoffRoll;
-    packet.velocity = m_takeoffVelocity;
-
-    this->publish(topics::flightCtrlPacket, packet.toByteArray());
 
     // TODO: StabilizationState
     //if (m_data->altimeterAltitude > m_takeoffAltitude)

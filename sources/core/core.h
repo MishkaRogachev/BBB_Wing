@@ -22,9 +22,8 @@ namespace topics
 
     const QString failuresPacket = "data_fails";
 
-    const QString naviState = "state_navi";
-
-    const QString flightCtrlPacket = "data_ctrl";
+    const QString navigatorState = "state_navi";
+    const QString navigatorPacket = "data_navi";
 
     const QString connectionStatusPacket = "status_cn";
 
@@ -34,8 +33,7 @@ namespace topics
         altStatus, altPacket,
         insStatus, insPacket,
         snsStatus, snsPacket,
-        naviState,
-        flightCtrlPacket
+        navigatorState, navigatorPacket
     };
 }
 
