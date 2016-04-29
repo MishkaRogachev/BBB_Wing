@@ -27,8 +27,6 @@ Column {
     property int minYaw: -17
     property int maxYaw: 17
 
-    spacing: 8
-
     Behavior on pitch { PropertyAnimation { duration: 100 } }
     Behavior on roll { PropertyAnimation { duration: 100 } }
     Behavior on yaw { PropertyAnimation { duration: 100 } }

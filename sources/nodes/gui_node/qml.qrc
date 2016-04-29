@@ -5,6 +5,7 @@
         <file>qml/Controls/Clickable.qml</file>
         <file>qml/Controls/Button.qml</file>
         <file>qml/Controls/Stick.qml</file>
+	<file>qml/Controls/StickPad.qml</file>
         <file>qml/Indicators/Horizont.qml</file>
         <file>qml/Indicators/PlaneMark.qml</file>
         <file>qml/Indicators/LinearScale.qml</file>

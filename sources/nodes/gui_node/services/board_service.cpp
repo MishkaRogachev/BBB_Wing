@@ -196,8 +196,8 @@ void BoardService::updateFailuresPacket(const FailuresPacket& packet)
     }
 }
 
-void BoardService::setJoystickDeviation(int axis, float deviation)
+void BoardService::setJoystickDeviation(int channel, float deviation)
 {
-    m_direct.manual.deviations[axis] = deviation;
+    m_direct.manual.deviations[channel] = deviation;
     emit publish(topics::directPacket, m_direct.toByteArray());
 }

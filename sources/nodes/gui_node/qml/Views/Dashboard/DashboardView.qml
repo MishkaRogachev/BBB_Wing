@@ -5,12 +5,13 @@ import "../../Controls"
 Column {
     id: boardView
 
-    spacing: 8
+    spacing: configService.value("Gui/Dashboard/spacing")
     width: configService.value("Gui/Dashboard/width")
 
     FlightDirector {
         id: flightDirector
         width: parent.width
+        spacing: boardView.spacing
 
         pitch: boardService.pitch
         roll: boardService.roll
@@ -21,7 +22,6 @@ Column {
         pitchInverted: configService.value("Gui/FlightDirector/pitch_inverted")
         rollInverted: configService.value("Gui/FlightDirector/roll_inverted")
         rollOffset: configService.value("Gui/FlightDirector/roll_offset")
-
         minVelocity: configService.value("Gui/FlightDirector/min_velocity")
         maxVelocity: configService.value("Gui/FlightDirector/max_velocity")
         velocityStep: configService.value("Gui/FlightDirector/velocity_step")
@@ -80,16 +80,11 @@ Column {
         height: width * 3 / 4
     }
 
-    Stick {
+    StickPad {
         anchors.horizontalCenter: parent.horizontalCenter
-
-        width: configService.value("Gui/Joystick/size")
-        minX: configService.value("Gui/Joystick/min_x")
-        maxX: configService.value("Gui/Joystick/max_x")
-        minY: configService.value("Gui/Joystick/min_y")
-        maxY: configService.value("Gui/Joystick/max_y")
-
-        onDeviationXChanged: boardService.setJoystickDeviation(0, deviationX)
-        onDeviationYChanged: boardService.setJoystickDeviation(1, deviationY)
+        spacing: boardView.spacing
+        height: configService.value("Gui/StickPad/size")
+        model: configService.value("Gui/StickPad/model")
+        onDeviationChanged: boardService.setJoystickDeviation(channel, deviation)
     }
 }
