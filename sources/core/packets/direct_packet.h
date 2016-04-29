@@ -1,20 +1,21 @@
-#ifndef DIRECTPACKET_H
-#define DIRECTPACKET_H
+#ifndef DIRECT_PACKET_H
+#define DIRECT_PACKET_H
 
 #include "packet.h"
 
+// Qt
+#include <QMap>
+
 namespace domain
 {
-    class DirectPacket : public Packet
+    class DirectPacket: public Packet
     {
     public:
         // bool isManual; TODO: manual/automatic
 
         struct Manual
         {
-            float deviationX = 0.0;
-            float deviationY = 0.0;
-            float deviationZ = 0.0;
+            QMap<int, float> deviations;
         } manual;
 
         QDataStream& operator >>(QDataStream& stream) const override;
@@ -24,4 +25,4 @@ namespace domain
     };
 }
 
-#endif // DIRECTPACKET_H
+#endif // DIRECT_PACKET_H

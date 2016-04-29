@@ -4,18 +4,14 @@ using namespace domain;
 
 QDataStream& DirectPacket::operator >>(QDataStream& stream) const
 {
-    stream << manual.deviationX;
-    stream << manual.deviationY;
-    stream << manual.deviationZ;
+    stream << manual.deviations;
 
     return stream;
 }
 
 QDataStream& DirectPacket::operator <<(QDataStream& stream)
 {
-    stream >> manual.deviationX;
-    stream >> manual.deviationY;
-    stream >> manual.deviationZ;
+    stream >> manual.deviations;
 
     return stream;
 }

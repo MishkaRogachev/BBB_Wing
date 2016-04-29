@@ -64,9 +64,7 @@ namespace domain
         void updateSnsData(const SnsPacket& packet);
         void updateFailuresPacket(const FailuresPacket& packet);
 
-        void setJoystickDeviationX(float deviation);
-        void setJoystickDeviationY(float deviation);
-        void setJoystickDeviationZ(float deviation);
+        void setJoystickDeviation(int axis, float deviation);
 
     signals:
         void barAltitudeChanged(float barAltitude);

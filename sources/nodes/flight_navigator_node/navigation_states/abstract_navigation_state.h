@@ -10,7 +10,7 @@
 #include "sns_packet.h"
 #include "ins_packet.h"
 
-namespace domain
+namespace domain //TODO: navigation states: idle, takeoff, return_home, flight_by_program
 {
     class Publisher;
 

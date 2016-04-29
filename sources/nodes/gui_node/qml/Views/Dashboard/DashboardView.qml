@@ -80,7 +80,7 @@ Column {
         height: width * 3 / 4
     }
 
-    Joystick {
+    Stick {
         anchors.horizontalCenter: parent.horizontalCenter
 
         width: configService.value("Gui/Joystick/size")
@@ -89,7 +89,7 @@ Column {
         minY: configService.value("Gui/Joystick/min_y")
         maxY: configService.value("Gui/Joystick/max_y")
 
-        onDeviationXChanged: boardService.setJoystickDeviationX(deviationX)
-        onDeviationYChanged: boardService.setJoystickDeviationY(deviationY)
+        onDeviationXChanged: boardService.setJoystickDeviation(0, deviationX)
+        onDeviationYChanged: boardService.setJoystickDeviation(1, deviationY)
     }
 }

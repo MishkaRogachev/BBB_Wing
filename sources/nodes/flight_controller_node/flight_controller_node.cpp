@@ -10,6 +10,7 @@
 #include "subscriber.h"
 #include "publisher.h"
 
+#include "navigator_packet.h"
 #include "direct_packet.h"
 #include "drive_impacts_packet.h"
 
@@ -60,14 +61,22 @@ void FlightControllerNode::exec()
 void FlightControllerNode::onSubReceived(const QString& topic,
                                          const QByteArray& msg)
 {
+    if (topic == topics::navigatorPacket)
+    {
+        // TODO: PID regulation calc impats using navigatorPacket
+    }
+
     if (topic == topics::directPacket)
     {
         DirectPacket packet = DirectPacket::fromByteArray(msg);
 
+//        float targetVelocity = 0.0;
+//        float targetPitch = 0.0;
+//        float targetRoll = 0.0;
+
         // TODO: deviation to angle recalculation
-        d->impacts[0] = packet.manual.deviationX;
-        d->impacts[1] = packet.manual.deviationY;
-        d->impacts[2] = packet.manual.deviationZ;
+        for (int i = 0; i < packet.manual.deviations.count(); ++i)
+            d->impacts.insert(i, packet.manual.deviations[i]);
     }
 
 }
