@@ -1,7 +1,8 @@
 #include "config.h"
 
-// Qt
+// Qt // TODO: move from QSettings to JSon
 #include <QSettings>
+#include <QDebug>
 
 using namespace domain;
 

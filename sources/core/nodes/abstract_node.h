@@ -5,7 +5,7 @@
 
 namespace domain
 {
-    class AbstractNode: public QObject // TODO: in-node pub/sub
+    class AbstractNode: public QObject
     {
         Q_OBJECT
 
