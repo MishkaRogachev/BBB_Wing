@@ -1,0 +1,6 @@
+    "FlightRecorder": {
+        "file_format": "ddMMyyyy_hhmm",
+        "frequency": "1",
+        "max_record_size": "32000000",
+        "path": "/media/sd_card/records/"
+    },

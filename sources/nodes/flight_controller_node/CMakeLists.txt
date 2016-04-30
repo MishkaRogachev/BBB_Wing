@@ -6,7 +6,7 @@ set(PROJECT flight_controller_node)
 project(${PROJECT})
 
 # Config
-file(READ ${CMAKE_CURRENT_SOURCE_DIR}/config.conf LOCAL_CONFIG)
+file(READ ${CMAKE_CURRENT_SOURCE_DIR}/config.json LOCAL_CONFIG)
 set(CONFIG ${CONFIG} "\n" ${LOCAL_CONFIG} PARENT_SCOPE)
 
 # Includes

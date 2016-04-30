@@ -1,0 +1,5 @@
+    "SensorAltimeter": {
+        "frequency": "5",
+        "i2c_path": "/dev/i2c-2"
+    },
+

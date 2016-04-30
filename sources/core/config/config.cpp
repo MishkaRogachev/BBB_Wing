@@ -1,18 +1,17 @@
 #include "config.h"
+#include "config_impl.h"
 
-// Qt // TODO: move from QSettings to JSon
-#include <QSettings>
 #include <QDebug>
 
 using namespace domain;
 
 Config::Config():
-    m_settings(new QSettings("config.conf", QSettings::NativeFormat))
+    d(new Impl("config.json"))
 {}
 
 Config::~Config()
 {
-    delete m_settings;
+    delete d;
 }
 
 Config& Config::instance()
@@ -21,32 +20,41 @@ Config& Config::instance()
     return config;
 }
 
-
+void Config::setValue(const QString& key, const QVariant& value)
+{
+    Config::instance().d->setValue(key, QJsonValue::fromVariant(value));
+}
 
 QVariant Config::value(const QString& key)
 {
-    if (Config::instance().m_settings->contains(key))
-        return Config::instance().m_settings->value(key);
-
-    qCritical("No key '%s'' in config group '%s'!",
-              qPrintable(key),
-              qPrintable(Config::instance().m_settings->group()));
-    return QVariant();
-}
-
-void Config::setValue(const QString& key, const QVariant& value)
-{
-    Config::instance().m_settings->setValue(key, value);
+    QVariant value = Config::instance().d->value(key).toVariant();
+    if (value.isNull())
+    {
+        qCritical("No key '%s'' in config group '%s'!",
+                  qPrintable(key),
+                  qPrintable(Config::instance().d->group()));
+    }
+    return value;
 }
 
 void Config::begin(const QString& prefix)
 {
-    Config::instance().m_settings->beginGroup(prefix);
+    Config::instance().d->setGroup(prefix);
 }
 
 void Config::end()
 {
-    Config::instance().m_settings->endGroup();
+    Config::instance().d->setGroup(QString());
+}
+
+void Config::save()
+{
+    Config::instance().d->save();
+}
+
+void Config::reload()
+{
+     Config::instance().d->load();
 }
 
 

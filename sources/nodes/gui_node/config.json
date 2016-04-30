@@ -1,0 +1,41 @@
+    "Gui": {
+        "Dashboard": {
+            "spacing": "8",
+            "width": "400"
+        },
+        "FlightDirector": {
+            "altitude_step": "10",
+            "max_altitude": "27",
+            "max_pitch": "23",
+            "max_roll": "45",
+            "max_velocity": "13",
+            "max_yaw": "17",
+            "min_altitude": "-27",
+            "min_pitch": "-23",
+            "min_roll": "-45",
+            "min_velocity": "-13",
+            "min_yaw": "-17",
+            "pitch_inverted": "true",
+            "roll_inverted": "true",
+            "roll_offset": "28",
+            "velocity_step": "5"
+        },
+        "Palette": {
+            "background_color": "#2c3e50",
+            "error_color": "#e74c3c",
+            "foreground_color": "#34495e",
+            "ground_color": "#e67e22",
+            "highlight_color": "#1abc9c",
+            "normal_color": "#2eec71",
+            "sky_color": "#3498db",
+            "text_color": "#ecf0f1",
+            "warning_color": "#f39c12"
+        },
+        "StickPad": {
+            "model": "2",
+            "size": "200"
+        },
+        "Video": {
+            "device": "/dev/video1"
+        }
+    }

@@ -4,16 +4,8 @@ cmake_minimum_required(VERSION 2.8.11)
 # Project
 project(BBB_Wing)
 
-# Version
-set(VERSION_MAJOR "0")
-set(VERSION_MINOR "1")
-set(VERSION_PATCH "0")
-
 # Config
-set(CONFIG "[GLOBAL]\n")
-list(APPEND CONFIG
-    "version=${VERSION_MAJOR}.${VERSION_MINOR}.${VERSION_PATCH}\n"
-)
+file(READ ${CMAKE_SOURCE_DIR}/config.json CONFIG)
 
 # CMake modules
 include(cmake/RecurseSubdirs.cmake)
@@ -75,4 +67,5 @@ if (TARGET_TYPE STREQUAL "ground" OR TARGET_TYPE STREQUAL "all")
 endif()
 
 # Create config file
-file(WRITE ${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/config.conf ${CONFIG})
+list(APPEND CONFIG "}\n")
+file(WRITE ${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/config.json ${CONFIG})
