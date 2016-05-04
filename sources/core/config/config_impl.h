@@ -8,7 +8,7 @@
 
 namespace domain
 {
-    class Config::Impl // TODO: cmake module to merge splitted JSon configs
+    class Config::Impl
     {
     public:
         Impl(const QString& filename);

@@ -6,7 +6,7 @@
 // Qt
 #include <QMap>
 
-namespace domain // TODO: namspaces to node layers
+namespace domain // TODO: namespaces to node layers
 {
     using DriveImpacts = QMap<int, float>;
 
