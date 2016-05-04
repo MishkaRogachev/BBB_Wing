@@ -1,3 +1,4 @@
+{
     "Gui": {
         "Dashboard": {
             "spacing": "8",
@@ -39,3 +40,4 @@
             "device": "/dev/video1"
         }
     }
+}

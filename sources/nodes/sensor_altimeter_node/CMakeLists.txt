@@ -6,8 +6,7 @@ set(PROJECT sensor_altimeter_node)
 project(${PROJECT})
 
 # Config
-file(READ ${CMAKE_CURRENT_SOURCE_DIR}/config.json LOCAL_CONFIG)
-set(CONFIG ${CONFIG} "\n" ${LOCAL_CONFIG} PARENT_SCOPE)
+ADD_JSON_CONFIG(${CMAKE_CURRENT_SOURCE_DIR}/config.json)
 
 # External dirs
 add_subdirectory(../../devices/i2c_device ${CMAKE_CURRENT_BINARY_DIR}/devices/i2c_device)

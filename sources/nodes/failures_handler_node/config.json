@@ -1,3 +1,5 @@
+{
     "FailuresHandler": {
         "frequency": "2"
-    },
+    }
+}

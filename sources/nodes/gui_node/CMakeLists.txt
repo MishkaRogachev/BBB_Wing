@@ -6,8 +6,7 @@ set(PROJECT gui_node)
 project(${PROJECT})
 
 # Config
-file(READ ${CMAKE_CURRENT_SOURCE_DIR}/config.json LOCAL_CONFIG)
-set(CONFIG ${CONFIG} "\n" ${LOCAL_CONFIG} PARENT_SCOPE)
+ADD_JSON_CONFIG(${CMAKE_CURRENT_SOURCE_DIR}/config.json)
 
 # Enable required Qt modules
 find_package(Qt5 COMPONENTS Gui Quick Multimedia Positioning Location REQUIRED)

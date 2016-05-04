@@ -4,11 +4,9 @@ cmake_minimum_required(VERSION 2.8.11)
 # Project
 project(BBB_Wing)
 
-# Config
-file(READ ${CMAKE_SOURCE_DIR}/config.json CONFIG)
-
 # CMake modules
 include(cmake/RecurseSubdirs.cmake)
+include(cmake/AddJSonConfig.cmake)
 
 # Set default output directory
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_SOURCE_DIR}/result)
@@ -67,5 +65,6 @@ if (TARGET_TYPE STREQUAL "ground" OR TARGET_TYPE STREQUAL "all")
 endif()
 
 # Create config file
-list(APPEND CONFIG "}\n")
+
+list(APPEND CONFIG "\n}")
 file(WRITE ${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/config.json ${CONFIG})

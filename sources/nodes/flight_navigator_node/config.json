@@ -1,7 +1,9 @@
+{
     "FlightNavigator": {
         "frequency": "5",
         "takeoff_altitude": "50",
         "takeoff_pitch": "25",
         "takeoff_roll": "0",
         "takeoff_velocity": "25"
-    },
+    }
+}
