@@ -22,6 +22,7 @@ namespace domain
         void testDriveImpactsPacket();
         void testFailuresPacket();
         void testTransmissionPacket();
+        void testDirectPacket();
     };
 }
 

@@ -10,6 +10,7 @@
 #include "drive_impacts_packet.h"
 #include "failures_packet.h"
 #include "crc_packet.h"
+#include "direct_packet.h"
 
 using namespace domain;
 
@@ -123,4 +124,28 @@ void PacketsTest::testTransmissionPacket()
     QCOMPARE(converted.data, packet.data);
     QCOMPARE(converted.timeStamp, packet.timeStamp);
     QVERIFY(converted.validateCrc());
+
+    converted.data = "another_data";
+    QVERIFY(!converted.validateCrc());
+    converted.calcCrc();
+    QVERIFY(converted.validateCrc());
+}
+
+void PacketsTest::testDirectPacket()
+{
+    DirectPacket packet;
+
+    packet.isManual = true;
+    packet.manual.deviations[0] = 143.41;
+    packet.manual.deviations[1] = -23.03;
+    packet.manual.deviations[2] = 81537.123;
+    packet.manual.deviations[3] = -413012.34;
+
+    DirectPacket converted = this->testPacketSerialization<DirectPacket>(packet);
+
+    QCOMPARE(converted.isManual, packet.isManual);
+    QCOMPARE(converted.manual.deviations[0], packet.manual.deviations[0]);
+    QCOMPARE(converted.manual.deviations[1], packet.manual.deviations[1]);
+    QCOMPARE(converted.manual.deviations[2], packet.manual.deviations[2]);
+    QCOMPARE(converted.manual.deviations[3], packet.manual.deviations[3]);
 }

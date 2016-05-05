@@ -4,14 +4,54 @@ using namespace domain;
 
 QDataStream& DirectPacket::operator >>(QDataStream& stream) const
 {
-    stream << manual.deviations;
+    stream << isManual;
+
+    if (isManual)
+    {
+        for (int channel = 0; channel < Manual::channels; ++channel)
+            stream << manual.deviations[channel];
+    }
+    else
+    {
+        stream << automatic.isAltitudeOverridden;
+        if (automatic.isAltitudeOverridden) stream << automatic.overriddenAltitude;
+
+        stream << automatic.isCourseOverridden;
+        if (automatic.isAltitudeOverridden) stream << automatic.overriddenCourse;
+
+        stream << automatic.isVelocityOverridden;
+        if (automatic.isAltitudeOverridden) stream << automatic.overriddenVelocity;
+
+        stream << automatic.activeProgram;
+        stream << automatic.activePoint;
+    }
 
     return stream;
 }
 
 QDataStream& DirectPacket::operator <<(QDataStream& stream)
 {
-    stream >> manual.deviations;
+    stream >> isManual;
+
+    if (isManual)
+    {
+        for (int channel = 0; channel < Manual::channels; ++channel)
+            stream >> manual.deviations[channel];
+    }
+    else
+    {
+        stream >> automatic.isAltitudeOverridden;
+        if (automatic.isAltitudeOverridden) stream >> automatic.overriddenAltitude;
+
+        stream >> automatic.isCourseOverridden;
+        if (automatic.isAltitudeOverridden) stream >> automatic.overriddenCourse;
+
+        stream >> automatic.isVelocityOverridden;
+        if (automatic.isAltitudeOverridden) stream >> automatic.overriddenVelocity;
+
+        stream >> automatic.activeProgram;
+        stream >> automatic.activePoint;
+    }
 
     return stream;
 }

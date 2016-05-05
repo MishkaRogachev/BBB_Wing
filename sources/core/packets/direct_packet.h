@@ -11,12 +11,34 @@ namespace domain
     class DirectPacket: public Packet
     {
     public:
-        // bool isManual; TODO: manual/automatic
+        bool isManual;
 
         struct Manual
         {
-            QMap<int, float> deviations;
-        } manual;
+            static const int channels = 4;
+            float deviations[channels];
+        };
+
+        struct Automatic
+        {
+            bool isAltitudeOverridden;
+            float overriddenAltitude;
+
+            bool isCourseOverridden;
+            float overriddenCourse;
+
+            bool isVelocityOverridden;
+            float overriddenVelocity;
+
+            qint16 activeProgram;
+            short activePoint;
+        };
+
+        union
+        {
+            Manual manual;
+            Automatic automatic;
+        };
 
         QDataStream& operator >>(QDataStream& stream) const override;
         QDataStream& operator <<(QDataStream& stream) override;
