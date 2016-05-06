@@ -7,7 +7,8 @@ Rectangle {
     property real maxX: 1
     property real minY: -1
     property real maxY: 1
-    property bool returning: true
+    property bool returningX: true
+    property bool returningY: true
     property real deviationX: minX + (maxX - minX) * handle.x /
                               (joystick.width - handle.width)
     property real deviationY: minY + (maxY - minY) * handle.y /
@@ -35,15 +36,14 @@ Rectangle {
     MouseArea {
         anchors.fill: parent
         drag.target: handle
-        drag.axis: Drag.XAndYAxis
+        drag.axis: Drag.XandYAxis
         drag.minimumX: 0
         drag.maximumX: joystick.width - handle.width
         drag.minimumY: 0
         drag.maximumY: joystick.height - handle.height
         onReleased: {
-            if (!returning) return;
-            handle.x = (joystick.width - handle.width) / 2;
-            handle.y = (joystick.height - handle.height) / 2;
+            if (returningX) handle.x = (joystick.width - handle.width) / 2;
+            if (returningY) handle.y = (joystick.height - handle.height) / 2;
         }
     }
 }

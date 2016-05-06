@@ -33,8 +33,23 @@
             "warning_color": "#f39c12"
         },
         "StickPad": {
-            "model": "2",
-            "size": "200"
+            "model": [ { 
+                    "minX": -1,
+                    "maxX": 1, 
+                    "minY": -1,
+                    "maxY": 1, 
+                    "returningX": true,
+                    "returningY": false 
+                }, {
+                    "minX": -1,
+                    "maxX": 1, 
+                    "minY": -1,
+                    "maxY": 1,
+                    "returningX": true,
+                    "returningY": true 
+                }
+            ],
+            "size": 200
         },
         "Video": {
             "device": "/dev/video1"

@@ -1,4 +1,4 @@
-import QtQuick 2.0
+import QtQuick 2.5
 
 Row {
     id: stickPad
@@ -8,9 +8,14 @@ Row {
 
     Repeater {
         id: repeater
-        model: 2
 
         Stick {
+            minX: modelData.minX
+            maxX: modelData.maxX
+            minY: modelData.minY
+            maxY: modelData.maxY
+            returningX: modelData.returningX
+            returningY: modelData.returningY
             width: stickPad.height - stickPad.spacing
             onDeviationXChanged: deviationChanged(index * 2, deviationX)
             onDeviationYChanged: deviationChanged(index * 2 + 1, deviationY)
