@@ -1,5 +1,5 @@
 {    
     "FlightController": {
-        "frequency": "25"
+        "frequency": 25
     }
 }

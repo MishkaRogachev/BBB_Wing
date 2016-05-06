@@ -2,6 +2,6 @@
     "FlightRecordPlayer": {
         "file_format": "ddMMyyyy_hhmm",
         "filename": "12042016_1132.tlm",
-        "frequency": "25"
+        "frequency": 25
     }
 }

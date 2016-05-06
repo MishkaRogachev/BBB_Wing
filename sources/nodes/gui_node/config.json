@@ -1,25 +1,25 @@
 {
     "Gui": {
         "Dashboard": {
-            "spacing": "8",
-            "width": "400"
+            "spacing": 8,
+            "width": 400
         },
         "FlightDirector": {
-            "altitude_step": "10",
-            "max_altitude": "27",
-            "max_pitch": "23",
-            "max_roll": "45",
-            "max_velocity": "13",
-            "max_yaw": "17",
-            "min_altitude": "-27",
-            "min_pitch": "-23",
-            "min_roll": "-45",
-            "min_velocity": "-13",
-            "min_yaw": "-17",
-            "pitch_inverted": "true",
-            "roll_inverted": "true",
-            "roll_offset": "28",
-            "velocity_step": "5"
+            "altitude_step": 10,
+            "max_altitude": 27,
+            "max_pitch": 23,
+            "max_roll": 45,
+            "max_velocity": 13,
+            "max_yaw": 17,
+            "min_altitude": -27,
+            "min_pitch": -23,
+            "min_roll": -45,
+            "min_velocity": -13,
+            "min_yaw": -17,
+            "pitch_inverted": true,
+            "roll_inverted": true,
+            "roll_offset": 28,
+            "velocity_step": 5
         },
         "Palette": {
             "background_color": "#2c3e50",

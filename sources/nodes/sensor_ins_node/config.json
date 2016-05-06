@@ -1,6 +1,6 @@
 {
     "SensorIns": {
-        "frequency": "100",
+        "frequency": 100,
         "i2c_path": "/dev/i2c-2"
     }
 }

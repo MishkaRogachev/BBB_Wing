@@ -1,10 +1,10 @@
 {
     "ServoDrives": {
-        "frequency": "100",
+        "frequency": 100,
         "i2c_path": "/dev/i2c-2",
-        "max_pwm_duty": "200000",
-        "max_servo_angle": "180",
-        "min_pwm_duty": "100000",
-        "min_servo_angle": "0"
+        "max_pwm_duty": 200000,
+        "max_servo_angle": 180,
+        "min_pwm_duty": 100000,
+        "min_servo_angle": 0
     }
 }
