@@ -65,11 +65,6 @@ public:
     Subscriber sub;
     Publisher pub;
 
-    float pitch;
-    float roll;
-    float yaw;
-    float velocity;
-
     QScopedPointer<AbstractRegulator> pitchRegulator;
     QScopedPointer<AbstractRegulator> rollRegulator;
     QScopedPointer<AbstractRegulator> courseRegulator;
@@ -118,14 +113,10 @@ void FlightControllerNode::init()
 
 void FlightControllerNode::exec()
 {
-    float ctrlPitch = d->pitchRegulator ?
-                          d->pitchRegulator->regulate(d->pitch) : 0;
-    float ctrlRoll = d->rollRegulator ?
-                         d->rollRegulator->regulate(d->roll) : 0;
-    float ctrlCourse = d->courseRegulator ?
-                        d->courseRegulator->regulate(d->yaw) : 0;
-    float ctrlVelocity = d->velocityRegulator ?
-                             d->velocityRegulator->regulate(d->velocity) : 0;
+    float ctrlPitch = d->pitchRegulator ? d->pitchRegulator->regulate() : 0;
+    float ctrlRoll = d->rollRegulator ? d->rollRegulator->regulate() : 0;
+    float ctrlCourse = d->courseRegulator ? d->courseRegulator->regulate() : 0;
+    float ctrlVelocity = d->velocityRegulator ? d->velocityRegulator->regulate() : 0;
 
     // TODO: control values to channels
 
@@ -140,14 +131,15 @@ void FlightControllerNode::onSubReceived(const QString& topic, const QByteArray&
     if (topic == topics::insPacket)
     {
         InsPacket ins = InsPacket::fromByteArray(msg);
-        d->pitch = ins.pitch;
-        d->roll = ins.roll;
-        d->yaw = ins.yaw;
+        if (d->pitchRegulator) d->pitchRegulator->setInputValue(ins.pitch);
+        if (d->rollRegulator) d->rollRegulator->setInputValue(ins.roll);
+        if (d->courseRegulator) d->courseRegulator->setInputValue(ins.yaw);
     }
 
     if (topic == topics::snsPacket)
     {
         SnsPacket sns = SnsPacket::fromByteArray(msg);
-        d->velocity = sns.groundSpeed; // TODO: airspeed
+        if (d->velocityRegulator) d->velocityRegulator->setInputValue(sns.groundSpeed);
+        // TODO: airspeed
     }
 }

@@ -7,8 +7,8 @@ using namespace domain;
 
 PidRegulator::PidRegulator(float proportional, float integral, float derivative,
                            float lowerBound, float upperBound, float errorThreshold,
-                           float frequency, float targetValue):
-    AbstractRegulator(targetValue),
+                           float frequency, float targetValue, float inputValue):
+    AbstractRegulator(targetValue, inputValue),
     m_proportional(proportional),
     m_integral(integral),
     m_derivative(derivative),
@@ -90,9 +90,9 @@ void PidRegulator::setFrequency(float frequency)
     m_frequency = frequency;
 }
 
-float PidRegulator::regulate(float inputValue)
+float PidRegulator::regulate()
 {
-    float errorValue = m_targetValue - inputValue;
+    float errorValue = m_targetValue - m_inputValue;
 
     if (qAbs(errorValue) > m_errorThreshold)
     {

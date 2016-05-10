@@ -6,17 +6,21 @@ namespace domain
     class AbstractRegulator
     {
     public:
-        AbstractRegulator(float targetValue);
+        AbstractRegulator(float targetValue, float inputValue);
 
         float targetValue() const;
         void setTargetValue(float targetValue);
 
+        float inputValue() const;
+        void setInputValue(float inputValue);
+
         float outputValue() const;
 
-        virtual float regulate(float inputValue) = 0;
+        virtual float regulate() = 0;
 
     protected:
         float m_targetValue;
+        float m_inputValue;
         float m_outputValue;
     };
 }

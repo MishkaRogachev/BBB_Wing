@@ -10,7 +10,8 @@ namespace domain
     public:
         PidRegulator(float proportional, float integral, float derivative,
                      float lowerBound, float upperBound, float errorThreshold = 0.0,
-                     float frequency = 1.0, float targetValue = 0.0);
+                     float frequency = 1.0, float targetValue = 0.0,
+                     float inputValue = 0.0);
 
         float proportional() const;
         void setProportional(float proportional);
@@ -36,7 +37,7 @@ namespace domain
         float targetValue() const;
         void setTargetValue(float targetValue);
 
-        float regulate(float inputValue) override;
+        float regulate() override;
 
     private:
         float m_proportional;
