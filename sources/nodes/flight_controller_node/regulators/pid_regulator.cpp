@@ -6,16 +6,16 @@
 using namespace domain;
 
 PidRegulator::PidRegulator(float proportional, float integral, float derivative,
-                           float lowerBound, float upperBound,
-                           float errorThreshold, float targetValue):
+                           float lowerBound, float upperBound, float errorThreshold,
+                           float frequency, float targetValue):
+    AbstractRegulator(targetValue),
     m_proportional(proportional),
     m_integral(integral),
     m_derivative(derivative),
     m_lowerBound(lowerBound),
     m_upperBound(upperBound),
     m_errorThreshold(errorThreshold),
-    m_targetValue(targetValue),
-    m_outputValue(0.0),
+    m_frequency(frequency),
     m_integralValue(0.0),
     m_lastErrorValue(0.0)
 {}
@@ -80,25 +80,25 @@ void PidRegulator::setErrorThreshold(float errorThreshold)
     m_errorThreshold = errorThreshold;
 }
 
-float PidRegulator::targetValue() const
+float PidRegulator::frequency() const
 {
-    return m_targetValue;
+    return m_frequency;
 }
 
-void PidRegulator::setTargetValue(float targetValue)
+void PidRegulator::setFrequency(float frequency)
 {
-    m_targetValue = targetValue;
+    m_frequency = frequency;
 }
 
-float PidRegulator::regulate(float inputValue, float frequency)
+float PidRegulator::regulate(float inputValue)
 {
     float errorValue = m_targetValue - inputValue;
 
     if (qAbs(errorValue) > m_errorThreshold)
     {
         m_outputValue = m_proportional * errorValue +
-                        m_integral * m_integralValue / frequency +
-                        m_derivative * (errorValue - m_outputValue) * frequency;
+                        m_integral * m_integralValue / m_frequency +
+                        m_derivative * (errorValue - m_outputValue) * m_frequency;
 
         if (m_outputValue > m_upperBound) m_outputValue = m_upperBound;
         if (m_outputValue < m_lowerBound) m_outputValue = m_lowerBound;
@@ -109,5 +109,3 @@ float PidRegulator::regulate(float inputValue, float frequency)
 
     return m_outputValue;
 }
-
-
