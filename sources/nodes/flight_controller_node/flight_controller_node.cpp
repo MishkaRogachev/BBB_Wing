@@ -21,8 +21,6 @@ class FlightControllerNode::Impl
 public:
     Subscriber sub;
     Publisher pub;
-
-    DriveImpacts impacts;
 };
 
 FlightControllerNode::FlightControllerNode(QObject* parent):
