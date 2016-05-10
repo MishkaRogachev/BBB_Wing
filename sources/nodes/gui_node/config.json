@@ -34,13 +34,17 @@
         },
         "StickPad": {
             "model": [ { 
-                    "minX": -1,
-                    "maxX": 1, 
+                    "channelX": -1,
+                    "channelY": 2,
+                    "minX": 0,
+                    "maxX": 0, 
                     "minY": -1,
                     "maxY": 1, 
-                    "returningX": true,
+                    "returningX": false,
                     "returningY": false 
                 }, {
+                    "channelX": 0,
+                    "channelY": 1,
                     "minX": -1,
                     "maxX": 1, 
                     "minY": -1,

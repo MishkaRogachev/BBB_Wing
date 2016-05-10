@@ -15,8 +15,9 @@ namespace domain
 
         struct Manual
         {
-            static const int channels = 4;
-            float deviations[channels];
+            float targetPitch;
+            float targetRoll;
+            float targetCourse;
         };
 
         struct Automatic

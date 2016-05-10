@@ -133,19 +133,49 @@ void PacketsTest::testTransmissionPacket()
 
 void PacketsTest::testDirectPacket()
 {
-    DirectPacket packet;
+    {
+        DirectPacket packet;
 
-    packet.isManual = true;
-    packet.manual.deviations[0] = 143.41;
-    packet.manual.deviations[1] = -23.03;
-    packet.manual.deviations[2] = 81537.123;
-    packet.manual.deviations[3] = -413012.34;
+        packet.isManual = true;
+        packet.manual.targetPitch = 143.41;
+        packet.manual.targetRoll = -23.03;
+        packet.manual.targetCourse = 137.123;
 
-    DirectPacket converted = this->testPacketSerialization<DirectPacket>(packet);
+        DirectPacket converted = this->testPacketSerialization<DirectPacket>(packet);
 
-    QCOMPARE(converted.isManual, packet.isManual);
-    QCOMPARE(converted.manual.deviations[0], packet.manual.deviations[0]);
-    QCOMPARE(converted.manual.deviations[1], packet.manual.deviations[1]);
-    QCOMPARE(converted.manual.deviations[2], packet.manual.deviations[2]);
-    QCOMPARE(converted.manual.deviations[3], packet.manual.deviations[3]);
+        QCOMPARE(converted.isManual, packet.isManual);
+        QCOMPARE(converted.manual.targetPitch, packet.manual.targetPitch);
+        QCOMPARE(converted.manual.targetRoll, packet.manual.targetRoll);
+        QCOMPARE(converted.manual.targetCourse, packet.manual.targetCourse);
+    }
+
+    {
+        DirectPacket packet;
+
+        packet.isManual = false;
+
+        packet.automatic.isAltitudeOverridden = true;
+        packet.automatic.overriddenAltitude = 60403;
+        packet.automatic.isVelocityOverridden = true;
+        packet.automatic.overriddenVelocity = 35;
+        packet.automatic.isCourseOverridden = false;
+        packet.automatic.activeProgram = 34525;
+        packet.automatic.activePoint = 3;
+
+        DirectPacket converted = this->testPacketSerialization<DirectPacket>(packet);
+
+        QCOMPARE(converted.isManual, packet.isManual);
+        QCOMPARE(converted.automatic.isAltitudeOverridden,
+                 packet.automatic.isAltitudeOverridden);
+        QCOMPARE(converted.automatic.overriddenAltitude,
+                 packet.automatic.overriddenAltitude);
+        QCOMPARE(converted.automatic.isVelocityOverridden,
+                 packet.automatic.isVelocityOverridden);
+        QCOMPARE(converted.automatic.overriddenVelocity,
+                 packet.automatic.overriddenVelocity);
+        QCOMPARE(converted.automatic.isCourseOverridden,
+                 packet.automatic.isCourseOverridden);
+        QCOMPARE(converted.automatic.activeProgram, packet.automatic.activeProgram);
+        QCOMPARE(converted.automatic.activePoint, packet.automatic.activePoint);
+    }
 }

@@ -8,8 +8,9 @@ QDataStream& DirectPacket::operator >>(QDataStream& stream) const
 
     if (isManual)
     {
-        for (int channel = 0; channel < Manual::channels; ++channel)
-            stream << manual.deviations[channel];
+        stream << manual.targetPitch;
+        stream << manual.targetRoll;
+        stream << manual.targetCourse;
     }
     else
     {
@@ -35,8 +36,9 @@ QDataStream& DirectPacket::operator <<(QDataStream& stream)
 
     if (isManual)
     {
-        for (int channel = 0; channel < Manual::channels; ++channel)
-            stream >> manual.deviations[channel];
+        stream >> manual.targetPitch;
+        stream >> manual.targetRoll;
+        stream >> manual.targetCourse;
     }
     else
     {

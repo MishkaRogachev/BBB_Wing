@@ -23,7 +23,7 @@ namespace
 
 using namespace domain;
 
-class FlightRecorderNode::Impl
+class FlightRecorderNode::Impl // TODO: Board and ground recorder nodes
 {
 public:
     QFile file;

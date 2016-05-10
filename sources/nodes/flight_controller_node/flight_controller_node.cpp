@@ -75,8 +75,6 @@ void FlightControllerNode::onSubReceived(const QString& topic,
 //        float targetRoll = 0.0;
 
         // TODO: deviation to angle recalculation
-        for (int i = 0; i < packet.manual.channels; ++i)
-            d->impacts.insert(i, packet.manual.deviations[i]);
     }
 
 }
