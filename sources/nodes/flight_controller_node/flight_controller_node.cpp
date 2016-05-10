@@ -10,17 +10,26 @@
 #include "subscriber.h"
 #include "publisher.h"
 
-#include "navigator_packet.h"
-#include "direct_packet.h"
+#include "ins_packet.h"
+#include "sns_packet.h"
 #include "drive_impacts_packet.h"
 
+#include "flight_regulator.h"
+
 using namespace domain;
+
 
 class FlightControllerNode::Impl
 {
 public:
     Subscriber sub;
     Publisher pub;
+
+    float pitch;
+    float roll;
+    float velocity;
+
+    QList<FlightRegulator> regulators;
 };
 
 FlightControllerNode::FlightControllerNode(QObject* parent):
@@ -29,6 +38,12 @@ FlightControllerNode::FlightControllerNode(QObject* parent):
     d(new Impl())
 {
     d->pub.bind(endpoints::flightController);
+
+    for (const QVariant& regulator:
+         Config::value("FlightController/regulators").toList())
+    {
+        d->regulators.append(FlightRegulator(regulator.toMap()));
+    }
 }
 
 FlightControllerNode::~FlightControllerNode()
@@ -52,27 +67,29 @@ void FlightControllerNode::init()
 void FlightControllerNode::exec()
 {
     DriveImpactsPacket packet;
-    packet.impacts = d->impacts;
+
+    for (FlightRegulator& regulator: d->regulators)
+    {
+        packet.impacts.insert(regulator.channel(),
+                              regulator.regulate(0, this->frequency()));
+        // TODO: base regulator classes
+    }
+
     d->pub.publish(topics::driveImpactsPacket, packet.toByteArray());
 }
 
-void FlightControllerNode::onSubReceived(const QString& topic,
-                                         const QByteArray& msg)
+void FlightControllerNode::onSubReceived(const QString& topic, const QByteArray& msg)
 {
-    if (topic == topics::navigatorPacket)
+    if (topic == topics::insPacket)
     {
-        // TODO: PID regulation calc impats using navigatorPacket
+        InsPacket ins = InsPacket::fromByteArray(msg);
+        d->pitch = ins.pitch;
+        d->roll = ins.roll;
     }
 
-    if (topic == topics::directPacket)
+    if (topic == topics::snsPacket)
     {
-        DirectPacket packet = DirectPacket::fromByteArray(msg);
-
-//        float targetVelocity = 0.0;
-//        float targetPitch = 0.0;
-//        float targetRoll = 0.0;
-
-        // TODO: deviation to angle recalculation
+        SnsPacket sns = SnsPacket::fromByteArray(msg);
+        d->velocity = sns.groundSpeed; // TODO: airspeed
     }
-
 }

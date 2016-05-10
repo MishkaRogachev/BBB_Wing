@@ -6,13 +6,13 @@
 using namespace domain;
 
 PidRegulator::PidRegulator(float proportional, float integral, float derivative,
-                           float upperBound, float lowerBound,
+                           float lowerBound, float upperBound,
                            float errorThreshold, float targetValue):
     m_proportional(proportional),
     m_integral(integral),
     m_derivative(derivative),
-    m_upperBound(upperBound),
     m_lowerBound(lowerBound),
+    m_upperBound(upperBound),
     m_errorThreshold(errorThreshold),
     m_targetValue(targetValue),
     m_outputValue(0.0),
@@ -50,16 +50,6 @@ void PidRegulator::setDerivative(float derivative)
     m_derivative = derivative;
 }
 
-float PidRegulator::upperBound() const
-{
-    return m_upperBound;
-}
-
-void PidRegulator::setUpperBound(float upperBound)
-{
-    m_upperBound = upperBound;
-}
-
 float PidRegulator::lowerBound() const
 {
     return m_lowerBound;
@@ -68,6 +58,16 @@ float PidRegulator::lowerBound() const
 void PidRegulator::setLowerBound(float lowerBound)
 {
     m_lowerBound = lowerBound;
+}
+
+float PidRegulator::upperBound() const
+{
+    return m_upperBound;
+}
+
+void PidRegulator::setUpperBound(float upperBound)
+{
+    m_upperBound = upperBound;
 }
 
 float PidRegulator::errorThreshold() const

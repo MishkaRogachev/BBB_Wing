@@ -7,7 +7,7 @@ namespace domain
     {
     public:
         PidRegulator(float proportional, float integral, float derivative,
-                     float upperBound, float lowerBound,
+                     float lowerBound, float upperBound,
                      float errorThreshold = 0.0, float targetValue = 0.0);
 
         float proportional() const;
@@ -37,8 +37,8 @@ namespace domain
         float m_proportional;
         float m_integral;
         float m_derivative;
-        float m_upperBound;
         float m_lowerBound;
+        float m_upperBound;
         float m_errorThreshold;
         float m_targetValue;
         float m_outputValue;

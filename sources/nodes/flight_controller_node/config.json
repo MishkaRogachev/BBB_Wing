@@ -1,5 +1,34 @@
 {    
     "FlightController": {
-        "frequency": 25
+        "frequency": 40,
+        "regulators": [ {
+                "channel": 0,
+                "type": "left_elevon",
+                "proportional": 0.015,
+                "integral": 10.0,
+                "derivative": 0.0,
+                "lower_bound": -45,
+                "upper_bound": 45,
+                "error_threshold": 0.0
+            }, {
+                "channel": 1,
+                "type": "right_elevon",
+                "proportional": 0.015,
+                "integral": 10.0,
+                "derivative": 0.0,
+                "lower_bound": -45,
+                "upper_bound": 45,
+                "error_threshold": 0.0
+            }, {
+                "channel": 2,
+                "type": "throttle",
+                "proportional": 0.015,
+                "integral": 20.0,
+                "derivative": 0.0001,
+                "lower_bound": 0,
+                "upper_bound": 1,
+                "error_threshold": 0.0
+            }
+        ]
     }
 }
