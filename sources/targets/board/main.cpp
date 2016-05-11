@@ -15,6 +15,7 @@
 
 #include "flight_navigator_node.h"
 #include "flight_controller_node.h"
+#include "flight_dynamics_node.h"
 
 #include "board_gateway_node.h"
 
@@ -36,6 +37,7 @@ int main(int argc, char* argv[])
 
     scheduler.addNode(new FlightNavigatorNode());
     scheduler.addNode(new FlightControllerNode());
+    scheduler.addNode(new FlightDynamicsNode());
 
     scheduler.addNode(new BoardGatewayNode());
 

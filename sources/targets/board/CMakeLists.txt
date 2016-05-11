@@ -17,6 +17,7 @@ set(LIBRARIES
     flight_recorder_node
     flight_navigator_node
     flight_controller_node
+    flight_dynamics_node
     board_gateway_node
 )
 

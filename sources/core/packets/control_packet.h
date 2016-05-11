@@ -8,9 +8,9 @@ namespace domain
     class ControlPacket: public Packet
     {
     public:
-        float pitchControl;
-        float rollControl;
-        float courseControl;
+        float pitchControl; // lateral
+        float rollControl; // longitudinal
+        float courseControl; // vertical
         float velocityControl;
 
         QDataStream& operator >>(QDataStream& stream) const override;

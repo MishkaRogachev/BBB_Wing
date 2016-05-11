@@ -24,15 +24,20 @@ using namespace domain;
 //{
 //    Unknown,
 //    Throttle,
+//    AirBrake
 //    LeftAileron,
 //    LeftElevon,
+//    LeftDeceleron,
 //    LeftFlap,
 //    LeftFlaperon,
+//    LeftSpoiler,
 //    LeftVTail,
 //    RightAileron,
 //    RightElevon,
+//    RightDeceleron,
 //    RightFlap,
 //    RightFlaperon,
+//    RightSpoiler,
 //    RightVTail,
 //    Elevator,
 //    Ruddler,
@@ -126,6 +131,7 @@ void FlightControllerNode::exec()
 
 void FlightControllerNode::onSubReceived(const QString& topic, const QByteArray& msg)
 {
+    // TODO: regulatos target value
     if (topic == topics::insPacket)
     {
         InsPacket ins = InsPacket::fromByteArray(msg);
