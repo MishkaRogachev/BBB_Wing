@@ -11,6 +11,7 @@ QDataStream& DirectPacket::operator >>(QDataStream& stream) const
         stream << manual.targetPitch;
         stream << manual.targetRoll;
         stream << manual.targetCourse;
+        stream << manual.targetSpeed;
     }
     else
     {
@@ -39,6 +40,7 @@ QDataStream& DirectPacket::operator <<(QDataStream& stream)
         stream >> manual.targetPitch;
         stream >> manual.targetRoll;
         stream >> manual.targetCourse;
+        stream >> manual.targetSpeed;
     }
     else
     {

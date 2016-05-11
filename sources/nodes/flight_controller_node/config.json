@@ -22,7 +22,7 @@
         "course_regulator": {
             "type": "none"
         },
-        "velocity_regulator": {
+        "speed_regulator": {
             "type": "pid",
             "proportional": 0.015,
             "integral": 20.0,

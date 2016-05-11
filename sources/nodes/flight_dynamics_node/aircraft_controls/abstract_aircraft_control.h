@@ -16,7 +16,7 @@ namespace domain
 
         virtual float processControl(const ControlPacket& packet) = 0;
 
-    private:
+    protected:
         int m_channel;
     };
 }

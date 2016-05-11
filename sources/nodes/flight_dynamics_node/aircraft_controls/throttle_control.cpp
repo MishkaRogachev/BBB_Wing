@@ -8,6 +8,6 @@ ThrottleControl::ThrottleControl(int channel):
 
 float ThrottleControl::processControl(const ControlPacket& packet)
 {
-    return packet.velocityControl;
+    return packet.speedControl;
 }
 

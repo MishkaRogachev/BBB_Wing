@@ -18,6 +18,7 @@ namespace domain
             float targetPitch;
             float targetRoll;
             float targetCourse;
+            float targetSpeed;
         };
 
         struct Automatic

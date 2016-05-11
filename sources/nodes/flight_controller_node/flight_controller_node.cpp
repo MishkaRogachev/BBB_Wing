@@ -11,9 +11,10 @@
 #include "subscriber.h"
 #include "publisher.h"
 
+#include "control_packet.h"
 #include "ins_packet.h"
 #include "sns_packet.h"
-#include "control_packet.h"
+#include "direct_packet.h"
 
 #include "flight_controller_node.h"
 #include "regulator_factory.h"
@@ -29,7 +30,7 @@ public:
     QScopedPointer<AbstractRegulator> pitchRegulator;
     QScopedPointer<AbstractRegulator> rollRegulator;
     QScopedPointer<AbstractRegulator> courseRegulator;
-    QScopedPointer<AbstractRegulator> velocityRegulator;
+    QScopedPointer<AbstractRegulator> speedRegulator;
 };
 
 FlightControllerNode::FlightControllerNode(QObject* parent): // TODO: rename flight regulator node
@@ -49,8 +50,8 @@ FlightControllerNode::FlightControllerNode(QObject* parent): // TODO: rename fli
     d->courseRegulator.reset(factory.create(
                                 Config::value("FlightController/course_regulator").toMap(),
                                 this->frequency()));
-    d->velocityRegulator.reset(factory.create(
-                                Config::value("FlightController/velocity_regulator").toMap(),
+    d->speedRegulator.reset(factory.create(
+                                Config::value("FlightController/speed_regulator").toMap(),
                                 this->frequency()));
 }
 
@@ -79,14 +80,13 @@ void FlightControllerNode::exec()
     packet.pitchControl = d->pitchRegulator ? d->pitchRegulator->regulate() : 0;
     packet.rollControl = d->rollRegulator ? d->rollRegulator->regulate() : 0;
     packet.courseControl = d->courseRegulator ? d->courseRegulator->regulate() : 0;
-    packet.velocityControl = d->velocityRegulator ? d->velocityRegulator->regulate() : 0;
+    packet.speedControl = d->speedRegulator ? d->speedRegulator->regulate() : 0;
 
     d->pub.publish(topics::controlPacket, packet.toByteArray());
 }
 
 void FlightControllerNode::onSubReceived(const QString& topic, const QByteArray& msg)
 {
-    // TODO: regulatos target value
     if (topic == topics::insPacket)
     {
         InsPacket ins = InsPacket::fromByteArray(msg);
@@ -94,11 +94,22 @@ void FlightControllerNode::onSubReceived(const QString& topic, const QByteArray&
         if (d->rollRegulator) d->rollRegulator->setInputValue(ins.roll);
         if (d->courseRegulator) d->courseRegulator->setInputValue(ins.yaw);
     }
-
-    if (topic == topics::snsPacket)
+    else if (topic == topics::snsPacket)
     {
         SnsPacket sns = SnsPacket::fromByteArray(msg);
-        if (d->velocityRegulator) d->velocityRegulator->setInputValue(sns.groundSpeed);
+        if (d->speedRegulator) d->speedRegulator->setInputValue(sns.groundSpeed);
         // TODO: airspeed
+    }
+    else if (topic == topics::directPacket)
+    {
+        DirectPacket direct = DirectPacket::fromByteArray(msg);
+
+        if (direct.isManual)
+        {
+            d->pitchRegulator->setTargetValue(direct.manual.targetPitch);
+            d->rollRegulator->setTargetValue(direct.manual.targetRoll);
+            d->courseRegulator->setTargetValue(direct.manual.targetCourse);
+            d->speedRegulator->setTargetValue(direct.manual.targetSpeed);
+        }
     }
 }

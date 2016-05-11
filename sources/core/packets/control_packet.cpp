@@ -7,7 +7,7 @@ QDataStream& ControlPacket::operator >>(QDataStream& stream) const
     stream << pitchControl;
     stream << rollControl;
     stream << courseControl;
-    stream << velocityControl;
+    stream << speedControl;
 
     return stream;
 }
@@ -17,7 +17,7 @@ QDataStream& ControlPacket::operator <<(QDataStream& stream)
     stream >> pitchControl;
     stream >> rollControl;
     stream >> courseControl;
-    stream >> velocityControl;
+    stream >> speedControl;
 
     return stream;
 }

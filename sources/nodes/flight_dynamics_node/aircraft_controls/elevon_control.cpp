@@ -6,7 +6,9 @@ ElevonControl::ElevonControl(int channel, bool left,
                              float rollFactor, float pitchFactor):
     AileronControl(channel, left, rollFactor),
     ElevatorControl(channel, pitchFactor)
-{}
+{
+    this->setChannel(channel); // virtual inheritance use default constructor
+}
 
 float ElevonControl::processControl(const ControlPacket& packet)
 {

@@ -3,7 +3,8 @@
 using namespace domain;
 
 ElevatorControl::ElevatorControl(int channel, float pitchFactor):
-    AbstractAircraftControl(channel)
+    AbstractAircraftControl(channel),
+    m_pitchFactor(pitchFactor)
 {}
 
 float ElevatorControl::pitchFactor() const
