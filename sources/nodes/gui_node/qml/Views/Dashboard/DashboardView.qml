@@ -85,6 +85,21 @@ Column {
         spacing: boardView.spacing
         height: configService.value("Gui/StickPad/size")
         model: configService.value("Gui/StickPad/model")
-        onDeviationChanged: boardService.setJoystickDeviation(channel, deviation)
+        onDeviationChanged: {
+            switch (channel) {
+            case "pitch":
+                boardService.setTargetPitch(deviation);
+                break;
+            case "roll":
+                boardService.setTargetRoll(deviation);
+                break;
+            case "course":
+                boardService.setTargetCourse(deviation);
+                break;
+            case "speed":
+                boardService.setTargetSpeed(deviation);
+                break;
+            }
+        }
     }
 }

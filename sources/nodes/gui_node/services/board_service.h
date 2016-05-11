@@ -64,7 +64,10 @@ namespace domain
         void updateSnsData(const SnsPacket& packet);
         void updateFailuresPacket(const FailuresPacket& packet);
 
-        void setJoystickDeviation(int channel, float deviation);
+        void setTargetPitch(float targetPitch);
+        void setTargetRoll(float targetRoll);
+        void setTargetCourse(float targetCourse);
+        void setTargetSpeed(float targetSpeed);
 
     signals:
         void barAltitudeChanged(float barAltitude);

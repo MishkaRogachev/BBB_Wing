@@ -3,7 +3,7 @@ import QtQuick 2.5
 Row {
     id: stickPad
 
-    signal deviationChanged(int channel, real deviation);
+    signal deviationChanged(string channel, real deviation);
     property alias model: repeater.model
 
     Repeater {
@@ -17,8 +17,8 @@ Row {
             returningX: modelData.returningX
             returningY: modelData.returningY
             width: stickPad.height - stickPad.spacing
-            onDeviationXChanged: deviationChanged(index * 2, deviationX)
-            onDeviationYChanged: deviationChanged(index * 2 + 1, deviationY)
+            onDeviationXChanged: deviationChanged(modelData.channelX, deviationX)
+            onDeviationYChanged: deviationChanged(modelData.channelY, deviationY)
         }
     }
 }

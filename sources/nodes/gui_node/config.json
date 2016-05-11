@@ -34,26 +34,26 @@
         },
         "StickPad": {
             "model": [ { 
-                    "channelX": -1,
-                    "channelY": 2,
-                    "minX": 0,
-                    "maxX": 0, 
-                    "minY": -1,
-                    "maxY": 1, 
-                    "returningX": false,
+                    "channelX": "course",
+                    "channelY": "speed",
+                    "minX": -50,
+                    "maxX": 50, 
+                    "minY": 0,
+                    "maxY": 100, 
+                    "returningX": true,
                     "returningY": false 
                 }, {
-                    "channelX": 0,
-                    "channelY": 1,
-                    "minX": -1,
-                    "maxX": 1, 
-                    "minY": -1,
-                    "maxY": 1,
+                    "channelX": "pitch",
+                    "channelY": "roll",
+                    "minX": -50,
+                    "maxX": 50, 
+                    "minY": -50,
+                    "maxY": 50,
                     "returningX": true,
                     "returningY": true 
                 }
             ],
-            "size": 200
+            "size": 150
         },
         "Video": {
             "device": "/dev/video1"

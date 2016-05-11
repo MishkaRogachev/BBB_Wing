@@ -24,7 +24,13 @@ BoardService::BoardService(QObject* parent):
     m_altStatus(false),
     m_insStatus(false),
     m_snsStatus(false)
-{}
+{
+    m_direct.isManual = true;
+    m_direct.manual.targetPitch = 0.0;
+    m_direct.manual.targetRoll = 0.0;
+    m_direct.manual.targetCourse = 0.0;
+    m_direct.manual.targetSpeed = 0.0;
+}
 
 float BoardService::barAltitude() const
 {
@@ -196,9 +202,27 @@ void BoardService::updateFailuresPacket(const FailuresPacket& packet)
     }
 }
 
-void BoardService::setJoystickDeviation(int channel, float deviation)
+void BoardService::setTargetPitch(float targetPitch)
 {
-    // TODO: joystic deviations to pitch roll, etc
-//    m_direct.manual.deviations[channel] = deviation;
-//    emit publish(topics::directPacket, m_direct.toByteArray());
+    m_direct.manual.targetPitch = targetPitch;
+    emit publish(topics::directPacket, m_direct.toByteArray());
 }
+
+void BoardService::setTargetRoll(float targetRoll)
+{
+    m_direct.manual.targetRoll = targetRoll;
+    emit publish(topics::directPacket, m_direct.toByteArray());
+}
+
+void BoardService::setTargetCourse(float targetCourse)
+{
+    m_direct.manual.targetCourse = targetCourse;
+    emit publish(topics::directPacket, m_direct.toByteArray());
+}
+
+void BoardService::setTargetSpeed(float targetSpeed)
+{
+    m_direct.manual.targetSpeed = targetSpeed;
+    emit publish(topics::directPacket, m_direct.toByteArray());
+}
+

@@ -73,5 +73,5 @@ void FlightDynamicsNode::onSubReceived(const QString& topic, const QByteArray& m
                               control->processControl(controlPacket));
     }
 
-    d->pub.publish(topics::failuresPacket, packet.toByteArray());
+    d->pub.publish(topics::driveImpactsPacket, packet.toByteArray());
 }
