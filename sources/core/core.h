@@ -18,6 +18,7 @@ namespace topics
     const QString snsStatus = "status_sns";
     const QString snsPacket = "data_sns";
 
+    const QString controlPacket = "data_ctrl";
     const QString driveImpactsPacket = "data_drv";
 
     const QString failuresPacket = "data_fails";

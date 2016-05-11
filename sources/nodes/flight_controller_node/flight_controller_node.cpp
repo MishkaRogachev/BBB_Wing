@@ -13,8 +13,9 @@
 
 #include "ins_packet.h"
 #include "sns_packet.h"
-#include "drive_impacts_packet.h"
+#include "control_packet.h"
 
+#include "flight_controller_node.h"
 #include "regulator_factory.h"
 
 using namespace domain;
@@ -113,17 +114,14 @@ void FlightControllerNode::init()
 
 void FlightControllerNode::exec()
 {
-    float ctrlPitch = d->pitchRegulator ? d->pitchRegulator->regulate() : 0;
-    float ctrlRoll = d->rollRegulator ? d->rollRegulator->regulate() : 0;
-    float ctrlCourse = d->courseRegulator ? d->courseRegulator->regulate() : 0;
-    float ctrlVelocity = d->velocityRegulator ? d->velocityRegulator->regulate() : 0;
+    ControlPacket packet;
 
-    // TODO: control values to channels
+    packet.pitchControl = d->pitchRegulator ? d->pitchRegulator->regulate() : 0;
+    packet.rollControl = d->rollRegulator ? d->rollRegulator->regulate() : 0;
+    packet.courseControl = d->courseRegulator ? d->courseRegulator->regulate() : 0;
+    packet.velocityControl = d->velocityRegulator ? d->velocityRegulator->regulate() : 0;
 
-    DriveImpactsPacket packet;
-
-
-    d->pub.publish(topics::driveImpactsPacket, packet.toByteArray());
+    d->pub.publish(topics::controlPacket, packet.toByteArray());
 }
 
 void FlightControllerNode::onSubReceived(const QString& topic, const QByteArray& msg)
