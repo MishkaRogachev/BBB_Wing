@@ -8,6 +8,9 @@ AbstractRegulator::AbstractRegulator(float targetValue, float inputValue):
     m_outputValue(0.0)
 {}
 
+AbstractRegulator::~AbstractRegulator()
+{}
+
 float AbstractRegulator::targetValue() const
 {
     return m_targetValue;

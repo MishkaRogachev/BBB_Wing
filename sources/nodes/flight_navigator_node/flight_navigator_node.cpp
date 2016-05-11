@@ -23,7 +23,7 @@ public:
     AbstractNavigationState* state = nullptr;
 };
 
-FlightNavigatorNode::FlightNavigatorNode(QObject* parent):
+FlightNavigatorNode::FlightNavigatorNode(QObject* parent): // Todo: Rename flight manager
     AbstractNodeFrequency(Config::value("FlightNavigator/frequency").toFloat(),
                           parent),
     d(new Impl())

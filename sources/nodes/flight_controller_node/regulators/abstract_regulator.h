@@ -7,6 +7,7 @@ namespace domain
     {
     public:
         AbstractRegulator(float targetValue, float inputValue);
+        virtual ~AbstractRegulator();
 
         float targetValue() const;
         void setTargetValue(float targetValue);

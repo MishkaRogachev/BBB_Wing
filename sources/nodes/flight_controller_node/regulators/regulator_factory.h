@@ -1,9 +1,11 @@
 #ifndef REGULATOR_FACTORY_H
 #define REGULATOR_FACTORY_H
 
-#include "abstract_regulator.h"
-
+// Qt
 #include <QVariant>
+
+// Internal
+#include "abstract_regulator.h"
 
 namespace domain
 {

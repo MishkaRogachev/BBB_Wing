@@ -1,4 +1,9 @@
 {
-    "FlightDynamicsNode": {
+    "FlightDynamics": {
+        "controls": [
+        { "type": "elevon", "wing": "left", "channel": 0, "pitch_factor": 0.5, "roll_factor": 0.5 },
+        { "type": "elevon", "wing": "right", "channel": 1, "pitch_factor": 0.5, "roll_factor": 0.5 },
+        { "type": "throttle", "channel": 2 }
+        ]
     }
 }

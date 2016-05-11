@@ -13,6 +13,8 @@
 #include "control_packet.h"
 #include "drive_impacts_packet.h"
 
+#include "aircraft_control_factory.h"
+
 using namespace domain;
 
 class FlightDynamicsNode::Impl
@@ -20,6 +22,8 @@ class FlightDynamicsNode::Impl
 public:
     Subscriber sub;
     Publisher pub;
+
+    QList<AbstractAircraftControl*> controls;
 };
 
 FlightDynamicsNode::FlightDynamicsNode(QObject* parent):
@@ -27,10 +31,20 @@ FlightDynamicsNode::FlightDynamicsNode(QObject* parent):
     d(new Impl())
 {
     d->pub.bind(endpoints::failuresHandler);
+
+    AircraftControlFactory factory;
+
+    for (const QVariant& settings:
+         Config::value("FlightDynamics/controls").toList())
+    {
+        d->controls.append(factory.create(settings.toMap()));
+    }
 }
 
 FlightDynamicsNode::~FlightDynamicsNode()
 {
+    while (!d->controls.empty())
+        delete d->controls.takeFirst();
     delete d;
 }
 
@@ -50,9 +64,14 @@ void FlightDynamicsNode::onSubReceived(const QString& topic, const QByteArray& m
 {
     if (topic != topics::controlPacket) return;
 
-    ControlPacket control = ControlPacket::fromByteArray(msg);
-
+    ControlPacket controlPacket = ControlPacket::fromByteArray(msg);
     DriveImpactsPacket packet;
+
+    for (AbstractAircraftControl* control: d->controls)
+    {
+        packet.impacts.insert(control->channel(),
+                              control->processControl(controlPacket));
+    }
 
     d->pub.publish(topics::failuresPacket, packet.toByteArray());
 }
