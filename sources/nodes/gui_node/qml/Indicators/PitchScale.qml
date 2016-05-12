@@ -19,11 +19,16 @@ Item {
         rotation: -roll
         onPaint: {
             var ctx = canvas.getContext('2d');
-            Helper.prepareContext(ctx);
+
+            ctx.clearRect(0, 0, width, height);
+
+            ctx.lineWidth = 2;
+            ctx.strokeStyle = palette.textColor;
+            ctx.fillStyle = palette.textColor;
+            ctx.font = '11pt Open Sans';
+            ctx.textBaseline = 'middle';
 
             ctx.save();
-            ctx.clearRect(0, 0, width, height);
-            ctx.textBaseline = 'middle';
             ctx.beginPath();
 
             var counter = 0;

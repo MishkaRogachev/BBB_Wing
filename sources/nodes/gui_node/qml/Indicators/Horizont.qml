@@ -35,7 +35,6 @@ Item {
             ctx.fillStyle = palette.groundColor;
             ctx.fillRect(-size / 2, 0, size, size / 2);
 
-            ctx.stroke();
             ctx.restore();
         }
     }

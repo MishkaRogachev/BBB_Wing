@@ -24,16 +24,19 @@ Item {
         height: vertical ? parent.width : parent.height
         onPaint: {
             var ctx = canvas.getContext('2d');
-            Helper.prepareContext(ctx);
 
-            ctx.save();
             ctx.clearRect(0, 0, width, height);
 
-            ctx.beginPath();
+            ctx.lineWidth = 2;
+            ctx.strokeStyle = palette.textColor;
+            ctx.fillStyle = palette.textColor;
+            ctx.font = '11pt Open Sans';
             ctx.textAlign = vertical ?
                         (canvasRotation > 0 ? 'right' : 'left') : 'center';
             ctx.textBaseline = vertical ? 'middle' : 'top';
 
+            ctx.save();
+            ctx.beginPath();
             ctx.moveTo(0, 2);
             ctx.lineTo(width, 2);
 

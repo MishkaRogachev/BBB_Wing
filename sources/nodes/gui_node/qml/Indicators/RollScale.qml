@@ -20,14 +20,19 @@ Item {
         anchors.fill: parent
         onPaint: {
             var ctx = canvas.getContext('2d');
-            Helper.prepareContext(ctx);
 
             ctx.clearRect(0, 0, width, height);
+
+            ctx.lineWidth = 2;
+            ctx.strokeStyle = palette.textColor;
+            ctx.fillStyle = palette.textColor;
+            ctx.font = '11pt Open Sans';
             ctx.textBaseline = 'middle';
             ctx.textAlign = 'center';
-            ctx.beginPath();
 
             ctx.save();
+            ctx.beginPath();
+
             ctx.translate(width / 2, height / 2);
             for (var i = minRoll - (minRoll % valueStep); i <= maxRoll;
                  i += valueStep) {
