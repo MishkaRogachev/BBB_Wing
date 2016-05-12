@@ -50,7 +50,7 @@ FlightDynamicsNode::~FlightDynamicsNode()
 
 void FlightDynamicsNode::init()
 {
-    d->sub.connectTo({ endpoints::flightController });
+    d->sub.connectTo({ endpoints::flightPilot });
 
     d->sub.subscribe(topics::controlPacket);
     connect(&d->sub, &Subscriber::received, this,

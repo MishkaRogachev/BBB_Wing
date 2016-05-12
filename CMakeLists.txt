@@ -49,7 +49,7 @@ if (TARGET_TYPE STREQUAL "board" OR TARGET_TYPE STREQUAL "all")
     add_subdirectory(sources/nodes/flight_recorder_node)
 
     add_subdirectory(sources/nodes/flight_navigator_node)
-    add_subdirectory(sources/nodes/flight_controller_node)
+    add_subdirectory(sources/nodes/flight_pilot_node)
     add_subdirectory(sources/nodes/flight_dynamics_node)
     
     add_subdirectory(sources/nodes/board_gateway_node)

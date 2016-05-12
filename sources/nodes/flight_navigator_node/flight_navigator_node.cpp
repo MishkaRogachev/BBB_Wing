@@ -41,7 +41,7 @@ void FlightNavigatorNode::init()
     d->sub.connectTo({ endpoints::altimeter,
                        endpoints::ins,
                        endpoints::sns,
-                       endpoints::flightController,
+                       endpoints::flightPilot,
                        endpoints::boardGateway });
 
     d->sub.subscribe(topics::data);

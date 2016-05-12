@@ -1,17 +1,17 @@
-#ifndef FLIGHT_CONTROLLER_NODE_H
-#define FLIGHT_CONTROLLER_NODE_H
+#ifndef FLIGHT_PILOT_NODE_H
+#define FLIGHT_PILOT_NODE_H
 
 #include "abstract_node_frequency.h"
 
 namespace domain
 {
-    class FlightControllerNode: public AbstractNodeFrequency
+    class FlightPilotNode: public AbstractNodeFrequency
     {
         Q_OBJECT
 
     public:
-        FlightControllerNode(QObject* parent = nullptr);
-        ~FlightControllerNode() override;
+        FlightPilotNode(QObject* parent = nullptr);
+        ~FlightPilotNode() override;
 
     public slots:
         void init() override;
@@ -26,4 +26,4 @@ namespace domain
     };
 }
 
-#endif // FLIGHT_CONTROLLER_NODE_H
+#endif // FLIGHT_PILOT_NODE_H

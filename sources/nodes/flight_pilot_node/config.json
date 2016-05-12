@@ -1,5 +1,5 @@
 {    
-    "FlightController": {
+    "FlightPilot": {
         "frequency": 40,
         "pitch_regulator": {
             "type": "pid",

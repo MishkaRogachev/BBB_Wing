@@ -1,4 +1,4 @@
-#include "flight_controller_node.h"
+#include "flight_pilot_node.h"
 
 // Qt
 #include <QDebug>
@@ -16,12 +16,11 @@
 #include "sns_packet.h"
 #include "direct_packet.h"
 
-#include "flight_controller_node.h"
 #include "regulator_factory.h"
 
 using namespace domain;
 
-class FlightControllerNode::Impl
+class FlightPilotNode::Impl
 {
 public:
     Subscriber sub;
@@ -33,34 +32,34 @@ public:
     QScopedPointer<AbstractRegulator> speedRegulator;
 };
 
-FlightControllerNode::FlightControllerNode(QObject* parent): // TODO: rename flight regulator node
-    AbstractNodeFrequency(Config::value("FlightController/frequency").toFloat(),
+FlightPilotNode::FlightPilotNode(QObject* parent):
+    AbstractNodeFrequency(Config::value("FlightPilot/frequency").toFloat(),
                           parent),
     d(new Impl())
 {
-    d->pub.bind(endpoints::flightController);
+    d->pub.bind(endpoints::flightPilot);
 
     RegulatorFactory factory;
     d->pitchRegulator.reset(factory.create(
-                                Config::value("FlightController/pitch_regulator").toMap(),
+                                Config::value("FlightPilot/pitch_regulator").toMap(),
                                 this->frequency()));
     d->rollRegulator.reset(factory.create(
-                                Config::value("FlightController/roll_regulator").toMap(),
+                                Config::value("FlightPilot/roll_regulator").toMap(),
                                 this->frequency()));
     d->courseRegulator.reset(factory.create(
-                                Config::value("FlightController/course_regulator").toMap(),
+                                Config::value("FlightPilot/course_regulator").toMap(),
                                 this->frequency()));
     d->speedRegulator.reset(factory.create(
-                                Config::value("FlightController/speed_regulator").toMap(),
+                                Config::value("FlightPilot/speed_regulator").toMap(),
                                 this->frequency()));
 }
 
-FlightControllerNode::~FlightControllerNode()
+FlightPilotNode::~FlightPilotNode()
 {
     delete d;
 }
 
-void FlightControllerNode::init()
+void FlightPilotNode::init()
 {
     d->sub.connectTo({ endpoints::altimeter,
                        endpoints::ins,
@@ -70,10 +69,10 @@ void FlightControllerNode::init()
 
     d->sub.subscribe({ topics::data });
     connect(&d->sub, &Subscriber::received, this,
-            &FlightControllerNode::onSubReceived);
+            &FlightPilotNode::onSubReceived);
 }
 
-void FlightControllerNode::exec()
+void FlightPilotNode::exec()
 {
     ControlPacket packet;
 
@@ -85,18 +84,19 @@ void FlightControllerNode::exec()
     d->pub.publish(topics::controlPacket, packet.toByteArray());
 }
 
-void FlightControllerNode::onSubReceived(const QString& topic, const QByteArray& msg)
+void FlightPilotNode::onSubReceived(const QString& topic, const QByteArray& msg)
 {
     if (topic == topics::insPacket)
     {
         InsPacket ins = InsPacket::fromByteArray(msg);
         if (d->pitchRegulator) d->pitchRegulator->setInputValue(ins.pitch);
         if (d->rollRegulator) d->rollRegulator->setInputValue(ins.roll);
-        if (d->courseRegulator) d->courseRegulator->setInputValue(ins.yaw);
+
     }
     else if (topic == topics::snsPacket)
     {
         SnsPacket sns = SnsPacket::fromByteArray(msg);
+        if (d->courseRegulator) d->courseRegulator->setInputValue(sns.yaw);
         if (d->speedRegulator) d->speedRegulator->setInputValue(sns.groundSpeed);
         // TODO: airspeed
     }

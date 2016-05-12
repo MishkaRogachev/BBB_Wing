@@ -67,7 +67,7 @@ void BoardGatewayNode::init()
                        endpoints::sns,
                        endpoints::failuresHandler,
                        endpoints::navigator,
-                       endpoints::flightController });
+                       endpoints::flightPilot });
 
     d->sub.subscribe(topics::data);
     connect(&d->sub, &Subscriber::received, this,
