@@ -23,8 +23,19 @@ void Config::Impl::load()
     QFile file(m_filename);
     if (!file.open(QIODevice::ReadOnly)) return;
 
-    QJsonDocument document = QJsonDocument::fromJson(file.readAll());
-    m_object = document.object();
+    QJsonParseError error;
+    QJsonDocument document = QJsonDocument::fromJson(file.readAll(), &error);
+
+    if (error.error == QJsonParseError::NoError)
+    {
+        m_object = document.object();
+    }
+    else
+    {
+        qCritical("JSon config parse error: %s",
+                  qPrintable(error.errorString().toUtf8()));
+    }
+
     file.close();
 }
 
