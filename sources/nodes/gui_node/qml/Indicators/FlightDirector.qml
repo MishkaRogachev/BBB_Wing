@@ -75,16 +75,18 @@ Column {
                     id: pitchScale
                     anchors.centerIn: parent
                     height: parent.height - rollOffset - 48 // roll mark
-                    pitch: flightDirector.pitch
-                    roll: flightDirector.roll
+                    pitch: pitchInverted ? flightDirector.pitch : 0
+                    roll: rollInverted ? flightDirector.roll : 0
                     minPitch: flightDirector.pitch + flightDirector.minPitch
                     maxPitch: flightDirector.pitch + flightDirector.maxPitch
                 }
 
-                PlaneMark { // TODO: plane mark pitch & roll
+                PlaneMark {
                     anchors.centerIn: parent
-                    pitch: pitchInverted ? 0 : flightDirector.pitch
-                    roll: rollInverted ? 0 : flightDirector.roll
+                    width: parent.width
+                    height: pitchScale.height
+                    pitch: pitchInverted ? 0 : -flightDirector.pitch
+                    roll: rollInverted ? 0 : -flightDirector.roll
                 }
             }
 
