@@ -2,7 +2,6 @@ import QtQuick 2.5
 import "../../Controls"
 
 StickPad {
-    anchors.horizontalCenter: parent.horizontalCenter
     spacing: boardView.spacing
     height: configService.value("Gui/StickPad/size")
     model: configService.value("Gui/StickPad/model")

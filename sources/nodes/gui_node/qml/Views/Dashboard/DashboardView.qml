@@ -1,5 +1,6 @@
 import QtQuick 2.4
 import "../../Indicators"
+import "../../Controls"
 
 Column {
     id: boardView
@@ -79,7 +80,35 @@ Column {
         height: width * 3 / 4
     }
 
-    ManualView {
-        id: manual
+    Component {
+        id: manualComponent
+
+        ManualView {
+            id: manual
+        }
     }
+
+    Component {
+        id: automaticComponent
+
+        AutomaticView {
+            id: automatic
+        }
+    }
+
+    MultiSwitch {
+        id: modeSwitch
+        width: parent.width - boardView.spacing
+        model: [
+            { text: qsTr("AUTOMATIC"), component: automaticComponent },
+            { text:qsTr("MANUAL"), component: manualComponent }
+        ]
+    }
+
+    Loader {
+        anchors.horizontalCenter: parent.horizontalCenter
+        sourceComponent: modeSwitch.selectedItem.component
+    }
+
+
 }
