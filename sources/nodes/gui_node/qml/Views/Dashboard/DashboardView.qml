@@ -3,7 +3,7 @@ import "../../Indicators"
 import "../../Controls"
 
 Column {
-    id: boardView
+    id: dashboardView
 
     spacing: configService.value("Gui/Dashboard/spacing")
     width: configService.value("Gui/Dashboard/width")
@@ -11,7 +11,7 @@ Column {
     FlightDirector {
         id: flightDirector
         width: parent.width
-        spacing: boardView.spacing
+        spacing: dashboardView.spacing
 
         pitch: boardService.pitch
         roll: boardService.roll
@@ -75,16 +75,16 @@ Column {
 
     VideoView {
         id: video
-        width: parent.width - boardView.spacing
+        width: parent.width - dashboardView.spacing
         anchors.horizontalCenter: parent.horizontalCenter
         height: width * 3 / 4
     }
 
     Component {
-        id: manualComponent
+        id: initComponent
 
-        ManualView {
-            id: manual
+        InitView {
+            id: init
         }
     }
 
@@ -96,10 +96,20 @@ Column {
         }
     }
 
+    Component {
+        id: manualComponent
+
+        ManualView {
+            id: manual
+        }
+    }
+
     MultiSwitch {
         id: modeSwitch
-        width: parent.width - boardView.spacing
+        anchors.horizontalCenter: parent.horizontalCenter
+        width: parent.width - dashboardView.spacing
         model: [
+            { text: qsTr("INIT"), component: initComponent },
             { text: qsTr("AUTOMATIC"), component: automaticComponent },
             { text:qsTr("MANUAL"), component: manualComponent }
         ]
@@ -109,6 +119,4 @@ Column {
         anchors.horizontalCenter: parent.horizontalCenter
         sourceComponent: modeSwitch.selectedItem.component
     }
-
-
 }
