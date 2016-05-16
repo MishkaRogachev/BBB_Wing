@@ -8,7 +8,7 @@ import "./Status"
 
 Rectangle {
     id: main
-    color: palette.backgroundColor
+    color: palette.middlegroundColor
 
     Palette { id: palette }
 

@@ -2,8 +2,9 @@ import QtQuick 2.5
 import "../../Controls"
 
 Rectangle {
-    height: 48
-    color: palette.backgroundColor
+    id: root
+    height: 42
+    color: palette.middlegroundColor
 
     Row {
         id: right

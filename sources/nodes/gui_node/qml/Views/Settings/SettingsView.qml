@@ -2,7 +2,7 @@ import QtQuick 2.5
 import "../../Controls"
 
 Rectangle {
-    color: palette.backgroundColor
+    color: palette.middlegroundColor
 
     Column {
         id: column

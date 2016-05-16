@@ -22,11 +22,12 @@
             "velocity_step": 5
         },
         "Palette": {
-            "background_color": "#2c3e50",
+            "background_color": "#243342",
             "error_color": "#e74c3c",
             "foreground_color": "#34495e",
             "ground_color": "#e67e22",
             "highlight_color": "#1abc9c",
+            "middleground_color": "#2c3e50",
             "normal_color": "#2eec71",
             "sky_color": "#3498db",
             "text_color": "#ecf0f1",

@@ -10,7 +10,7 @@ Item {
     signal clicked()
 
     width: contents.width + 16
-    height: 48
+    height: 36
 
     Rectangle {
         id: hightlight

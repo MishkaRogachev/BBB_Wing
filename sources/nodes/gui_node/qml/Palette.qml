@@ -4,6 +4,7 @@ Item {
     id: palette
 
     property color backgroundColor: configService.value("Gui/Palette/background_color")
+    property color middlegroundColor: configService.value("Gui/Palette/middleground_color")
     property color foregroundColor: configService.value("Gui/Palette/foreground_color")
 
     property color textColor: configService.value("Gui/Palette/text_color")

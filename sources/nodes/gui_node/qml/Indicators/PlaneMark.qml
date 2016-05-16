@@ -21,8 +21,8 @@ Item {
             var offset = Helper.mapToPixel(pitch, minPitch, maxPitch, height);
 
             ctx.lineWidth = 4;
-            ctx.strokeStyle = palette.backgroundColor;
-            ctx.fillStyle = palette.backgroundColor;
+            ctx.strokeStyle = palette.middlegroundColor;
+            ctx.fillStyle = palette.middlegroundColor;
 
             ctx.save();
             ctx.beginPath();
