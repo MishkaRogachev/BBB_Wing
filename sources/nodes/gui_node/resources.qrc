@@ -4,5 +4,8 @@
         <file>resources/icons/quit.svg</file>
         <file>resources/icons/fit.svg</file>
         <file>resources/icons/settings.svg</file>
+        <file>resources/icons/map-marker.svg</file>
+        <file>resources/icons/plus.svg</file>
+        <file>resources/icons/minus.svg</file>
     </qresource>
 </RCC>
