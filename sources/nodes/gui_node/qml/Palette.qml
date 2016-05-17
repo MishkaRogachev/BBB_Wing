@@ -16,4 +16,6 @@ Item {
 
     property color skyColor: configService.value("Gui/Palette/sky_color")
     property color groundColor: configService.value("Gui/Palette/ground_color")
+
+    property color transparent: "transparent"
 }

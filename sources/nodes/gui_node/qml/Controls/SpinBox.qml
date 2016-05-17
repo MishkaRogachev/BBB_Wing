@@ -3,7 +3,9 @@ import Qt.labs.controls 1.0
 
 SpinBox {
     id: spinBox
+
     leftPadding: -background.implicitWidth / 2
+    opacity: enabled ? 1 : 0.3
 
     background: Rectangle {
         implicitWidth: 32
@@ -44,7 +46,7 @@ SpinBox {
         height: parent.height
         implicitWidth: 32
         implicitHeight: 32
-        color: up.pressed ? palette.highlightColor : "transparent"
+        color: up.pressed ? palette.highlightColor : palette.transparent
 
         Image {
             anchors.centerIn: parent

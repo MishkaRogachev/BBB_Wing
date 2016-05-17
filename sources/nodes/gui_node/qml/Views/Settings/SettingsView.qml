@@ -15,7 +15,7 @@ Rectangle {
             model: [ { id: "gui", name: qsTr("Gui"), source: "GuiSettings.qml" }
             ]
 
-            Clickable {
+            Button {
                 text: modelData.name
                 onClicked: loader.source = modelData.source
                 width: parent.width

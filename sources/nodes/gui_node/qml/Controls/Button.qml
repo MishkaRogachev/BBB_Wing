@@ -1,17 +1,38 @@
 import QtQuick 2.5
+import Qt.labs.controls 1.0
 
-Clickable {
+Button {
     id: button
 
-    property bool checkable: false
-    property bool checked: false
+    property alias icon: image.source
 
-    Rectangle {
-        anchors.fill: parent
-        color: checked ? palette.highlightColor : palette.foregroundColor
-        Behavior on color { ColorAnimation { duration: 250 } }
-        z: -1
+    opacity: enabled ? 1 : 0.3
+
+    background: Rectangle {
+        implicitWidth: 32
+        implicitHeight: 32
+        color: button.pressed || button.checked ?
+                   palette.highlightColor : palette.foregroundColor
     }
 
-    onClicked: if (checkable) checked = !checked
+    label: Row {
+        x: parent.leftPadding
+        y: parent.topPadding
+        width: parent.availableWidth
+        height: parent.availableHeight
+
+        Image {
+            id: image
+            anchors.verticalCenter: parent.verticalCenter
+        }
+
+        Text {
+            font: button.font
+            text: button.text
+            color: palette.textColor
+            anchors.verticalCenter: parent.verticalCenter
+            horizontalAlignment: Text.AlignHCenter
+            verticalAlignment: Text.AlignVCenter
+        }
+    }
 }
