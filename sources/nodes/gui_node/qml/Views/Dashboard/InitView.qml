@@ -1,5 +1,6 @@
 import QtQuick 2.4
 import "../../Controls"
+import "../../Widgets"
 
 Column {
 

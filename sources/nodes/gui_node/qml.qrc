@@ -2,10 +2,8 @@
     <qresource prefix="/">
         <file>js/helpers/drawer_helper.js</file>
         <file>qml/Palette.qml</file>
-        <file>qml/Controls/Clickable.qml</file>
         <file>qml/Controls/Button.qml</file>
         <file>qml/Controls/MultiSwitch.qml</file>
-        <file>qml/Controls/LocationEdit.qml</file>
         <file>qml/Controls/Stick.qml</file>
         <file>qml/Controls/StickPad.qml</file>
         <file>qml/Indicators/Horizont.qml</file>
@@ -14,6 +12,7 @@
         <file>qml/Indicators/PitchScale.qml</file>
         <file>qml/Indicators/RollScale.qml</file>
         <file>qml/Indicators/FlightDirector.qml</file>
+        <file>qml/Widgets/LocationEdit.qml</file>
         <file>qml/Views/MainView.qml</file>
         <file>qml/Views/Dashboard/DashboardView.qml</file>
         <file>qml/Views/Dashboard/VideoView.qml</file>
