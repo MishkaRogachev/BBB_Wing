@@ -1,6 +1,6 @@
 import QtQuick 2.4
-import "../../Indicators"
 import "../../Controls"
+import "../../Indicators"
 
 Column {
     id: dashboardView
@@ -104,9 +104,10 @@ Column {
         }
     }
 
-    MultiSwitch {
-        id: modeSwitch
+    TabBar {
+        id: modeBar
         anchors.horizontalCenter: parent.horizontalCenter
+        property variant currentModelItem: model[currentIndex]
         width: parent.width - dashboardView.spacing
         model: [
             { text: qsTr("INIT"), component: initComponent },
@@ -117,6 +118,6 @@ Column {
 
     Loader {
         anchors.horizontalCenter: parent.horizontalCenter
-        sourceComponent: modeSwitch.selectedItem.component
+        sourceComponent: modeBar.currentModelItem.component
     }
 }

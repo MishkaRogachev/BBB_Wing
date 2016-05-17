@@ -14,22 +14,23 @@ SpinBox {
     }
 
     contentItem: TextInput {
-        text: textFromValue(parent.value, parent.locale)
+        text: textFromValue(spinBox.value, spinBox.locale)
 
-        font: parent.font
+        font: spinBox.font
         color: palette.textColor
         selectionColor: palette.highlightColor
         selectedTextColor: color
         horizontalAlignment: Qt.AlignHCenter
         verticalAlignment: Qt.AlignVCenter
 
-        validator: parent.validator
+        validator: spinBox.validator
         inputMethodHints: Qt.ImhFormattedNumbersOnly
     }
 
     down.indicator: Rectangle {
-        x: parent.mirrored ? up.indicator.width : parent.width - width - up.indicator.width
-        height: parent.height
+        x: spinBox.mirrored ? up.indicator.width :
+                              spinBox.width - width - up.indicator.width
+        height: spinBox.height
         implicitWidth: 32
         implicitHeight: 32
         color: down.pressed ? palette.highlightColor : "transparent"
@@ -42,8 +43,8 @@ SpinBox {
     }
 
     up.indicator: Rectangle {
-        x: parent.mirrored ? 0 : parent.width - width
-        height: parent.height
+        x: spinBox.mirrored ? 0 : spinBox.width - width
+        height: spinBox.height
         implicitWidth: 32
         implicitHeight: 32
         color: up.pressed ? palette.highlightColor : palette.transparent
