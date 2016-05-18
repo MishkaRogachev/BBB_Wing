@@ -15,16 +15,14 @@ SpinBox {
 
     contentItem: TextInput {
         text: textFromValue(spinBox.value, spinBox.locale)
-
+        onEditingFinished:spinBox.value = valueFromText(text, spinBox.locale)
         font: spinBox.font
         color: palette.textColor
         selectionColor: palette.highlightColor
         selectedTextColor: color
         horizontalAlignment: Qt.AlignHCenter
         verticalAlignment: Qt.AlignVCenter
-
         validator: spinBox.validator
-        inputMethodHints: Qt.ImhFormattedNumbersOnly
     }
 
     down.indicator: Rectangle {

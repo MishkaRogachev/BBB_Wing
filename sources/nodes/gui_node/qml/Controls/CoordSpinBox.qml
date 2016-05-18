@@ -28,13 +28,16 @@ Control {
 
     contentItem: TextInput {
         text: Helper.degreesToDmsString(value)
+        onEditingFinished: value =  Helper.dmsStringToDegree(text)
         font: coordSpinBox.font
         color: palette.textColor
         selectionColor: palette.highlightColor
         selectedTextColor: color
         horizontalAlignment: Qt.AlignHCenter
         verticalAlignment: Qt.AlignVCenter
-        inputMethodHints: Qt.ImhFormattedNumbersOnly
+        validator: RegExpValidator {
+            regExp: /[0-9]{1,3}[°][0-9]{1,2}['][0-9]{1,2}[.][0-9]{1,2}"/
+        }
     }
 
     Current.Button {
