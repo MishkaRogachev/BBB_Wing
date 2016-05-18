@@ -5,6 +5,7 @@
         <file>qml/Controls/Button.qml</file>
         <file>qml/Controls/SpinBox.qml</file>
         <file>qml/Controls/CoordSpinBox.qml</file>
+        <file>qml/Controls/Label.qml</file>
         <file>qml/Controls/TabBar.qml</file>
         <file>qml/Controls/Stick.qml</file>
         <file>qml/Controls/StickPad.qml</file>

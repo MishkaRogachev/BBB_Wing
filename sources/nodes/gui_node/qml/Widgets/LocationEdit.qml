@@ -9,24 +9,31 @@ Row {
     Column {
         spacing: 6
         anchors.verticalCenter: parent.verticalCenter
-        //width: 156
 
-        CoordSpinBox {
-            id: latitude
-           // width: parent.width
+        Row {
+            Label {
+                width: 36
+                text: qsTr("Lat.")
+                anchors.verticalCenter: parent.verticalCenter
+            }
+
+            CoordSpinBox {
+                id: latitude
+                width: 172
+            }
         }
 
-        CoordSpinBox {
-            id: longitude
-///            width: parent.width
-        }
+        Row {
+            Label {
+                width: 36
+                text: qsTr("Lon.")
+                anchors.verticalCenter: parent.verticalCenter
+            }
 
-        SpinBox {
-            id: altitude
-       //     width: parent.width
-            from: -2000
-            to: 10000
-            stepSize: 1
+            CoordSpinBox {
+                id: longitude
+                width: 172
+            }
         }
     }
 
