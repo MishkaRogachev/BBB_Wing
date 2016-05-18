@@ -1,5 +1,4 @@
 import QtQuick 2.4
-import "../../Controls"
 import "../../Widgets"
 
 Column {
@@ -16,11 +15,6 @@ Column {
 
         LocationEdit {
             anchors.verticalCenter: parent.verticalCenter
-        }
-
-        Button {
-            anchors.verticalCenter: parent.verticalCenter
-            icon: "qrc:/resources/icons/map-marker.svg"
         }
     }
 

@@ -1,5 +1,5 @@
 import QtQuick 2.5
-import "qrc:/js/helpers/drawer_helper.js" as Helper
+import "qrc:/js/helper.js" as Helper
 
 Item {
     id: pitchScale
@@ -35,7 +35,7 @@ Item {
             for (var i = minPitch - (minPitch % valueStep); i <= maxPitch;
                  i += (valueStep / 2)) {
                 var major = (counter++ % 2) == 0;
-                var yPos = height - Helper.mapToPixel(i, minPitch, maxPitch, height);
+                var yPos = height - Helper.mapToRange(i, minPitch, maxPitch, height);
 
                 ctx.moveTo(major ? 24 : 36, yPos);
                 ctx.lineTo(major ? width - 24 : width - 36, yPos);

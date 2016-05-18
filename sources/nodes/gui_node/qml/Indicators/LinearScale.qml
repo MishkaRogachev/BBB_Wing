@@ -1,5 +1,5 @@
 import QtQuick 2.0
-import "qrc:/js/helpers/drawer_helper.js" as Helper
+import "qrc:/js/helper.js" as Helper
 
 Item {
     id: scale
@@ -45,8 +45,8 @@ Item {
                  i += (valueStep / 2)) {
                 var major = (counter++ % 2) == 0;
                 var xPos = canvasRotation > 0 ?
-                            width - Helper.mapToPixel(i, minValue, maxValue, width) :
-                            Helper.mapToPixel(i, minValue, maxValue, width);
+                            width - Helper.mapToRange(i, minValue, maxValue, width) :
+                            Helper.mapToRange(i, minValue, maxValue, width);
                 ctx.moveTo(xPos, 2);
                 ctx.lineTo(xPos, major ? 10 : 8);
                 if (major) {

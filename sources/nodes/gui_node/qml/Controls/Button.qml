@@ -5,10 +5,12 @@ Button {
     id: button
 
     property alias icon: image.source
+    property alias backgroundColor: backgroundRect.color
 
     opacity: enabled ? 1 : 0.3
 
     background: Rectangle {
+        id: backgroundRect
         implicitWidth: 32
         implicitHeight: 32
         color: button.pressed || button.checked ?
@@ -18,7 +20,6 @@ Button {
     label: Row {
         x: parent.leftPadding
         y: parent.topPadding
-        width: parent.availableWidth
         height: parent.availableHeight
 
         Image {

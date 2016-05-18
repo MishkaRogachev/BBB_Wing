@@ -6,28 +6,32 @@ Row {
 
     spacing: 6
 
-    Repeater {
-        model: [ "Latitude", "Longitude" ]
+    Column {
+        spacing: 6
+        anchors.verticalCenter: parent.verticalCenter
+        //width: 156
 
-        Column {
-            spacing: 6
-
-            Text {
-                text: modelData
-                anchors.horizontalCenter: parent.horizontalCenter
-            }
-
-            SpinBox {
-                id: degree
-            }
-
-            SpinBox {
-                id: minutes
-            }
-
-            SpinBox {
-                id: seconds
-            }
+        CoordSpinBox {
+            id: latitude
+           // width: parent.width
         }
+
+        CoordSpinBox {
+            id: longitude
+///            width: parent.width
+        }
+
+        SpinBox {
+            id: altitude
+       //     width: parent.width
+            from: -2000
+            to: 10000
+            stepSize: 1
+        }
+    }
+
+    Button {
+        anchors.verticalCenter: parent.verticalCenter
+        icon: "qrc:/resources/icons/map-marker.svg"
     }
 }

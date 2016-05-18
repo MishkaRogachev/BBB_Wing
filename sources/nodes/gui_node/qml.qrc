@@ -1,9 +1,10 @@
 <RCC>
     <qresource prefix="/">
-        <file>js/helpers/drawer_helper.js</file>
+        <file>js/helper.js</file>
         <file>qml/Palette.qml</file>
         <file>qml/Controls/Button.qml</file>
         <file>qml/Controls/SpinBox.qml</file>
+        <file>qml/Controls/CoordSpinBox.qml</file>
         <file>qml/Controls/TabBar.qml</file>
         <file>qml/Controls/Stick.qml</file>
         <file>qml/Controls/StickPad.qml</file>

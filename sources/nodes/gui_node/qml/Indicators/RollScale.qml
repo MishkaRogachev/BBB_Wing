@@ -1,5 +1,5 @@
 import QtQuick 2.5
-import "qrc:/js/helpers/drawer_helper.js" as Helper
+import "qrc:/js/helper.js" as Helper
 
 Item {
     id: rollScale

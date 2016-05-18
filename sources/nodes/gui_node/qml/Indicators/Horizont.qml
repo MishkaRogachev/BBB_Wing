@@ -1,5 +1,5 @@
 import QtQuick 2.5
-import "qrc:/js/helpers/drawer_helper.js" as Helper
+import "qrc:/js/helper.js" as Helper
 
 Item {
     id: horizont
@@ -21,7 +21,7 @@ Item {
         onPaint: {
             var ctx = canvas.getContext('2d');
             var size = 10000;
-            var offset = Helper.mapToPixel(pitch, minPitch, maxPitch,
+            var offset = Helper.mapToRange(pitch, minPitch, maxPitch,
                                            effectiveHeight);
 
             ctx.save();

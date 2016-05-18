@@ -1,5 +1,5 @@
 import QtQuick 2.5
-import "qrc:/js/helpers/drawer_helper.js" as Helper
+import "qrc:/js/helper.js" as Helper
 
 Item {
     id: planeMark
@@ -18,7 +18,7 @@ Item {
 
             ctx.clearRect(0, 0, width, height);
 
-            var offset = Helper.mapToPixel(pitch, minPitch, maxPitch, height);
+            var offset = Helper.mapToRange(pitch, minPitch, maxPitch, height);
 
             ctx.lineWidth = 4;
             ctx.strokeStyle = palette.middlegroundColor;
