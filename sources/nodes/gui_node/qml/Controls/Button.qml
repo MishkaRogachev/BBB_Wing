@@ -8,6 +8,7 @@ Button {
     property alias backgroundColor: backgroundRect.color
 
     opacity: enabled ? 1 : 0.3
+    font.pointSize: 11
 
     background: Rectangle {
         id: backgroundRect
@@ -18,8 +19,7 @@ Button {
     }
 
     label: Row {
-        x: parent.leftPadding
-        y: parent.topPadding
+        anchors.centerIn: parent
         height: parent.availableHeight
 
         Image {

@@ -4,6 +4,7 @@ import Qt.labs.controls 1.0
 SpinBox {
     id: spinBox
 
+    font.pointSize: 11
     leftPadding: 6 - (up.indicator.width + down.indicator.width) / 2
     opacity: enabled ? 1 : 0.3
 

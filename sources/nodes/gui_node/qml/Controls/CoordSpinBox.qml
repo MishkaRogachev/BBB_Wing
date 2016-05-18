@@ -15,7 +15,7 @@ Control {
                             up.implicitWidth +
                             down.implicitWidth)
     implicitHeight: 32
-
+    font.pointSize: 11
     padding: 6
     leftPadding: -(up.width + down.width) / 2
     rightPadding: 6 + coordSpinBox.mirrored ? down.width : up.width
@@ -44,6 +44,7 @@ Control {
         id: down
         x: coordSpinBox.mirrored ? up.width : coordSpinBox.width - width - up.width
         height: coordSpinBox.height
+        width: height
         backgroundColor: pressed ? palette.highlightColor : palette.transparent
         icon: "qrc:/resources/icons/minus.svg"
         onClicked: value -= stepSize
@@ -54,6 +55,7 @@ Control {
         id: up
         x: coordSpinBox.mirrored ? 0 : coordSpinBox.width - width
         height: coordSpinBox.height
+        width: height
         backgroundColor: pressed ? palette.highlightColor : palette.transparent
         icon: "qrc:/resources/icons/plus.svg"
         onClicked: value += stepSize
