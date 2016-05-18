@@ -2,7 +2,10 @@ import QtQuick 2.0
 import "../Controls"
 
 Row {
-    id: root
+    id: locationEdit
+
+    property alias latitude: latitudeSpinBox.value
+    property alias longitude: longitudeSpinBox.value
 
     spacing: 6
 
@@ -18,7 +21,7 @@ Row {
             }
 
             CoordSpinBox {
-                id: latitude
+                id: latitudeSpinBox
                 width: 172
             }
         }
@@ -31,14 +34,26 @@ Row {
             }
 
             CoordSpinBox {
-                id: longitude
+                id: longitudeSpinBox
                 width: 172
             }
         }
     }
 
     Button {
+        id: pickButton
         anchors.verticalCenter: parent.verticalCenter
         icon: "qrc:/resources/icons/map-marker.svg"
+        checkable: true
+    }
+
+    Connections {
+        target: map
+        onPicked: {
+            if (!pickButton.checked) return;
+            locationEdit.latitude = latitude;
+            locationEdit.longitude = longitude;
+            pickButton.checked = false;
+        }
     }
 }

@@ -6,14 +6,21 @@ import "../../Controls"
 Map {
     id: map
 
+    signal picked(real latitude, real longitude)
+
     plugin: Plugin { name: "osm" }
     gesture.flickDeceleration: 3000
     gesture.enabled: true
     gesture.onPanStarted: fitButton.checked = false
+    activeMapType: supportedMapTypes[5] // TerrainMapType
+
     MouseArea { // FIXME: touch gestures bug workaround, must be fixed since Qt 5.6
         anchors.fill: parent
+        onClicked: {
+            var point = map.toCoordinate(Qt.point(x, y), true);
+            map.picked(point.latitude, point.longitude);
+        }
     }
-    activeMapType: supportedMapTypes[5] // TerrainMapType
 
     MapPolyline {
         id: track
