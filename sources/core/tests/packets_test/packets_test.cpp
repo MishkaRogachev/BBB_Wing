@@ -9,6 +9,8 @@
 #include "sns_packet.h"
 #include "drive_impacts_packet.h"
 #include "failures_packet.h"
+#include "flight_point_packet.h"
+#include "flight_program_packet.h"
 #include "crc_packet.h"
 #include "direct_packet.h"
 
@@ -107,11 +109,46 @@ void PacketsTest::testFailuresPacket()
     packet.insStatus = false;
     packet.snsStatus = true;
 
-    FailuresPacket converted = this->testPacketSerialization<FailuresPacket>(packet);
+    FailuresPacket converted =
+            this->testPacketSerialization<FailuresPacket>(packet);
 
     QCOMPARE(converted.altStatus, packet.altStatus);
     QCOMPARE(converted.insStatus, packet.insStatus);
     QCOMPARE(converted.snsStatus, packet.snsStatus);
+}
+
+void PacketsTest::testFlightPointPacket()
+{
+    FlightPointPacket packet;
+
+    packet.latitude = 56.3275;
+    packet.longitude = 32.163;
+    packet.altitude = 1245.43;
+
+    FlightPointPacket converted =
+            this->testPacketSerialization<FlightPointPacket>(packet);
+
+    QCOMPARE(converted.latitude, packet.latitude);
+    QCOMPARE(converted.longitude, packet.longitude);
+    QCOMPARE(converted.altitude, packet.altitude);
+}
+
+void PacketsTest::testFlightProgramPacket()
+{
+    FlightProgramPacket packet;
+
+    packet.points.append(FlightPointPacket(48.4512, 34.2638, 2751.5));
+    packet.points.append(FlightPointPacket(12.7241, 27.8436, 5244.3));
+
+    FlightProgramPacket converted =
+            this->testPacketSerialization<FlightProgramPacket>(packet);
+
+    QCOMPARE(converted.points[0].latitude, packet.points[0].latitude);
+    QCOMPARE(converted.points[0].longitude, packet.points[0].longitude);
+    QCOMPARE(converted.points[0].altitude, packet.points[0].altitude);
+    QCOMPARE(converted.points[1].latitude, packet.points[1].latitude);
+    QCOMPARE(converted.points[1].longitude, packet.points[1].longitude);
+    QCOMPARE(converted.points[1].altitude, packet.points[1].altitude);
 }
 
 void PacketsTest::testTransmissionPacket()

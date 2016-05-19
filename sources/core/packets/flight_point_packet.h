@@ -8,6 +8,10 @@ namespace domain
     class FlightPointPacket: public Packet
     {
     public:
+        FlightPointPacket(double latitude = 0.0,
+                          double longitude = 0.0,
+                          float altitude = 0.0);
+
         double latitude;
         double longitude;
         float altitude;

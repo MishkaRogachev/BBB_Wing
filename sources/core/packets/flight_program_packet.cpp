@@ -16,7 +16,11 @@ QDataStream& FlightProgramPacket::operator <<(QDataStream& stream)
     int count;
     stream >> count;
     for (int i = 0; i < count; ++i)
-        stream >> points[i];
+    {
+        FlightPointPacket point;
+        stream >> point;
+        points.append(point);
+    }
 
     return stream;
 }

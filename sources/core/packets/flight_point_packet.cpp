@@ -2,6 +2,13 @@
 
 using namespace domain;
 
+FlightPointPacket::FlightPointPacket(
+        double latitude, double longitude, float altitude):
+    latitude(latitude),
+    longitude(longitude),
+    altitude(altitude)
+{}
+
 QDataStream& FlightPointPacket::operator >>(QDataStream& stream) const
 {
     stream << latitude;

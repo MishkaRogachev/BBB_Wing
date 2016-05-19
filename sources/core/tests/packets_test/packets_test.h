@@ -21,6 +21,8 @@ namespace domain
         void testSnsPacket();
         void testDriveImpactsPacket();
         void testFailuresPacket();
+        void testFlightPointPacket();
+        void testFlightProgramPacket();
         void testTransmissionPacket();
         void testDirectPacket();
     };
