@@ -29,6 +29,7 @@ namespace topics
     const QString connectionStatusPacket = "status_cn";
 
     const QString directPacket = "data_direct";
+    const QString reversePacket = "data_direct";
 
     const QStringList boardTopics = {
         altStatus, altPacket,

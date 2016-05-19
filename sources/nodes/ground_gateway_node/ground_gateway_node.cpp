@@ -17,6 +17,7 @@
 #include "crc_packet.h"
 #include "connection_status_packet.h"
 #include "direct_packet.h"
+#include "reverse_packet.h"
 
 using namespace domain;
 
@@ -32,7 +33,7 @@ public:
     int count = 0;
     int packetsLost = 0;
 
-    DirectPacket direct;
+    DirectPacket packet;
 };
 
 GroundGatewayNode::GroundGatewayNode(QObject* parent):
@@ -83,7 +84,7 @@ void GroundGatewayNode::exec()
     if (!d->wireLink->isConnected()) d->wireLink->connect();
     if (!d->airLink->isConnected()) d->airLink->connect();
 
-    CrcPacket crcPacket(topics::directPacket, d->direct.toByteArray());
+    CrcPacket crcPacket(topics::directPacket, d->packet.toByteArray());
     QByteArray data = crcPacket.toByteArray();
 
     if (d->wireLink->isConnected() && (!d->airLink->isOnline() ||
@@ -119,7 +120,7 @@ void GroundGatewayNode::onSubReceived(const QString& topic,
 {
     if (topic == topics::directPacket)
     {
-        d->direct = DirectPacket::fromByteArray(data);
+        d->packet = DirectPacket::fromByteArray(data);
     }
 }
 
@@ -134,6 +135,21 @@ void GroundGatewayNode::onLinkReceived(const QByteArray& data)
         return;
     }
 
-    d->pub->publish(packet.topic, packet.data);
+    if (packet.topic == topics::reversePacket)
+    {
+        ReversePacket packet = ReversePacket::fromByteArray(data);
+
+        if (packet.altAvalible)
+            d->pub->publish(topics::altPacket, packet.alt.toByteArray());
+
+        if (packet.insAvalible)
+            d->pub->publish(topics::insPacket, packet.ins.toByteArray());
+
+        if (packet.snsAvalible)
+            d->pub->publish(topics::snsPacket, packet.sns.toByteArray());
+
+        if (packet.controlAvalible)
+            d->pub->publish(topics::controlPacket, packet.control.toByteArray());
+    }
 }
 

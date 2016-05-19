@@ -2,6 +2,14 @@
 
 using namespace domain;
 
+void ReversePacket::reset()
+{
+    altAvalible = false;
+    insAvalible = false;
+    snsAvalible = false;
+    controlAvalible = false;
+}
+
 QDataStream& ReversePacket::operator >>(QDataStream& stream) const
 {
     stream << altAvalible;

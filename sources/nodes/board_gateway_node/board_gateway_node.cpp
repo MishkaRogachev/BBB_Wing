@@ -15,6 +15,7 @@
 #include "serial_port_link.h"
 
 #include "crc_packet.h"
+#include "reverse_packet.h"
 
 using namespace domain;
 
@@ -27,7 +28,7 @@ public:
     AbstractLink* wireLink;
     AbstractLink* airLink;
 
-    QMap <QString, CrcPacket> packets;
+    ReversePacket packet;
 };
 
 BoardGatewayNode::BoardGatewayNode(QObject* parent):
@@ -53,6 +54,8 @@ BoardGatewayNode::BoardGatewayNode(QObject* parent):
             this, &BoardGatewayNode::onLinkReceived);
 
     Config::end();
+
+    d->packet.reset();
 }
 
 BoardGatewayNode::~BoardGatewayNode()
@@ -79,20 +82,37 @@ void BoardGatewayNode::exec()
     if (!d->wireLink->isConnected()) d->wireLink->connect();
     if (!d->airLink->isConnected()) d->airLink->connect();
 
-    for (const CrcPacket& packet: d->packets)
-    {
-        QByteArray data = packet.toByteArray();
+    CrcPacket crcPacket(topics::reversePacket, d->packet.toByteArray());
+    QByteArray data = crcPacket.toByteArray();
 
-        if (d->wireLink->isConnected()) d->wireLink->send(data);
-        if (d->airLink->isConnected()) d->airLink->send(data);
-    }
+    if (d->wireLink->isConnected()) d->wireLink->send(data);
+    if (d->airLink->isConnected()) d->airLink->send(data);
 
-    d->packets.clear();
+    d->packet.reset();
 }
 
 void BoardGatewayNode::onSubReceived(const QString& topic, const QByteArray& data)
 {
-    d->packets.insert(topic, CrcPacket(topic, data));
+    if (topic == topics::altPacket)
+    {
+        d->packet.alt = AltPacket::fromByteArray(data);
+        d->packet.altAvalible = true;
+    }
+    else if (topic == topics::insPacket)
+    {
+        d->packet.ins = InsPacket::fromByteArray(data);
+        d->packet.insAvalible = true;
+    }
+    else if (topic == topics::snsPacket)
+    {
+        d->packet.sns = SnsPacket::fromByteArray(data);
+        d->packet.snsAvalible = true;
+    }
+    else if (topic == topics::controlPacket)
+    {
+        d->packet.control = ControlPacket::fromByteArray(data);
+        d->packet.controlAvalible = true;
+    }
 }
 
 void BoardGatewayNode::onLinkReceived(const QByteArray& data)
