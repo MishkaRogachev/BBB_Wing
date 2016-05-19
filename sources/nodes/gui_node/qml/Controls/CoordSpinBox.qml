@@ -35,7 +35,7 @@ Control {
         selectedTextColor: color
         horizontalAlignment: Qt.AlignHCenter
         verticalAlignment: Qt.AlignVCenter
-        validator: RegExpValidator {
+        validator: RegExpValidator { // TODO :NSWE
             regExp: /[0-9]{1,3}[°][0-9]{1,2}['][0-9]{1,2}[.][0-9]{1,2}"/
         }
     }

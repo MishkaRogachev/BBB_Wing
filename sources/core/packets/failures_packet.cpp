@@ -2,7 +2,6 @@
 
 using namespace domain;
 
-
 QDataStream& FailuresPacket::operator >>(QDataStream& stream) const
 {
     stream << altStatus;
