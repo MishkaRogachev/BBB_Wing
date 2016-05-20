@@ -4,6 +4,9 @@ using namespace domain;
 
 QDataStream& AltPacket::operator >>(QDataStream& stream) const
 {
+    stream << status;
+    if (!status) return stream;
+
     stream << altitude;
     stream << temperature;
 
@@ -12,6 +15,9 @@ QDataStream& AltPacket::operator >>(QDataStream& stream) const
 
 QDataStream& AltPacket::operator <<(QDataStream& stream)
 {
+    stream >> status;
+    if (!status) return stream;
+
     stream >> altitude;
     stream >> temperature;
 

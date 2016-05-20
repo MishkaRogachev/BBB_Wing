@@ -35,6 +35,8 @@ void PacketsTest::testAltPacket()
 {
     AltPacket packet;
 
+    packet.status = true;
+
     packet.altitude = 3527.821;
     packet.temperature = -4.534;
 
@@ -47,6 +49,8 @@ void PacketsTest::testAltPacket()
 void PacketsTest::testInsPacket()
 {
     InsPacket packet;
+
+    packet.status = true;
 
     packet.pitch = -12.12;
     packet.roll = 58.33;
@@ -63,27 +67,28 @@ void PacketsTest::testSnsPacket()
 {
     SnsPacket packet;
 
-    packet.fix = 2;
+    packet.status = true;
+    packet.fix = 3;
 
-    packet.latitude = 43.23474;
-    packet.longitude = 53.93562;
-    packet.groundSpeed = 15.68;
-    packet.yaw = 273.44;
+    packet.fix2d.latitude = 43.23474;
+    packet.fix2d.longitude = 53.93562;
+    packet.fix2d.groundSpeed = 15.68;
+    packet.fix2d.yaw = 273.44;
 
-    packet.altitude = 2346.123;
-    packet.climb = -0.45;
+    packet.fix3d.altitude = 2346.123;
+    packet.fix3d.climb = -0.45;
 
     SnsPacket converted = this->testPacketSerialization<SnsPacket>(packet);
 
     QCOMPARE(converted.fix, packet.fix);
 
-    QVERIFY(qFuzzyCompare(converted.latitude, packet.latitude));
-    QVERIFY(qFuzzyCompare(converted.longitude, packet.longitude));
-    QVERIFY(qFuzzyCompare(converted.groundSpeed, packet.groundSpeed));
-    QVERIFY(qFuzzyCompare(converted.yaw, packet.yaw));
+    QVERIFY(qFuzzyCompare(converted.fix2d.latitude, packet.fix2d.latitude));
+    QVERIFY(qFuzzyCompare(converted.fix2d.longitude, packet.fix2d.longitude));
+    QVERIFY(qFuzzyCompare(converted.fix2d.groundSpeed, packet.fix2d.groundSpeed));
+    QVERIFY(qFuzzyCompare(converted.fix2d.yaw, packet.fix2d.yaw));
 
-    QVERIFY(qFuzzyCompare(converted.altitude, packet.altitude));
-    QVERIFY(qFuzzyCompare(converted.climb, packet.climb));
+    QVERIFY(qFuzzyCompare(converted.fix3d.altitude, packet.fix3d.altitude));
+    QVERIFY(qFuzzyCompare(converted.fix3d.climb, packet.fix3d.climb));
 }
 
 void PacketsTest::testDriveImpactsPacket()

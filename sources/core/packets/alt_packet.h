@@ -8,6 +8,8 @@ namespace domain
     class AltPacket: public Packet
     {
     public:
+        bool status;
+
         float altitude;
         float temperature;
 

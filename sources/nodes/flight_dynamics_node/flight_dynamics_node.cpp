@@ -30,7 +30,7 @@ FlightDynamicsNode::FlightDynamicsNode(QObject* parent):
     AbstractNode(parent),
     d(new Impl())
 {
-    d->pub.bind(endpoints::failuresHandler);
+    d->pub.bind(endpoints::flightDynamics);
 
     AircraftControlFactory factory;
 

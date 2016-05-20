@@ -96,9 +96,15 @@ void FlightPilotNode::onSubReceived(const QString& topic, const QByteArray& msg)
     else if (topic == topics::snsPacket)
     {
         SnsPacket sns = SnsPacket::fromByteArray(msg);
-        if (d->courseRegulator) d->courseRegulator->setInputValue(sns.yaw);
-        if (d->speedRegulator) d->speedRegulator->setInputValue(sns.groundSpeed);
-        // TODO: airspeed
+
+        if (sns.status && sns.fix > 2)
+        {
+            if (d->courseRegulator)
+                d->courseRegulator->setInputValue(sns.fix2d.yaw);
+            if (d->speedRegulator)
+                d->speedRegulator->setInputValue(sns.fix2d.groundSpeed);
+            // TODO: airspeed
+        }
     }
     else if (topic == topics::directPacket)
     {

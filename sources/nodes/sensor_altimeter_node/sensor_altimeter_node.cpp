@@ -45,19 +45,20 @@ void SensorAltimeterNode::init()
 
 void SensorAltimeterNode::exec()
 {
+    AltPacket packet;
+
     if (d->altimeter->takeMeasure())
     {
-        d->pub.publish(topics::altStatus, QByteArray::number(true));
+        packet.status = true;
 
-        AltPacket packet;
         packet.altitude = d->altimeter->altitude();
         packet.temperature = d->altimeter->temperature();
-
-        d->pub.publish(topics::altPacket, packet.toByteArray());
     }
     else
     {
-        d->pub.publish(topics::altStatus, QByteArray::number(false));
+        packet.status = false;
         d->altimeter->init();
     }
+
+    d->pub.publish(topics::altPacket, packet.toByteArray());
 }

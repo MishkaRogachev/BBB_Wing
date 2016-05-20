@@ -8,6 +8,8 @@ namespace domain
     class InsPacket: public Packet
     {
     public:
+        bool status;
+
         float pitch;
         float roll;
         float yaw;

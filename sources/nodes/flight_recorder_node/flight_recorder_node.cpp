@@ -48,7 +48,6 @@ void FlightRecorderNode::init()
     d->sub.connectTo({ endpoints::altimeter,
                        endpoints::ins,
                        endpoints::sns,
-                       endpoints::failuresHandler,
                        endpoints::navigator,
                        endpoints::flightPilot,
                        endpoints::boardGateway });

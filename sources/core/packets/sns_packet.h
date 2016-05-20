@@ -8,15 +8,22 @@ namespace domain
     class SnsPacket: public Packet
     {
     public:
+        bool status;
         short fix;
 
-        double latitude;
-        double longitude;
-        float groundSpeed;
-        float yaw;
+        struct
+        {
+            double latitude;
+            double longitude;
+            float groundSpeed;
+            float yaw;
+        } fix2d;
 
-        float altitude;
-        float climb;
+        struct
+        {
+            float altitude;
+            float climb;
+        } fix3d;
 
         QDataStream& operator >>(QDataStream& stream) const override;
         QDataStream& operator <<(QDataStream& stream) override;

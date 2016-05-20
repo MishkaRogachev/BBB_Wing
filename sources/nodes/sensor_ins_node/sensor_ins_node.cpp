@@ -50,11 +50,12 @@ void SensorInsNode::init()
 
 void SensorInsNode::exec()
 {
+    InsPacket packet;
+
     if (d->imu->checkDevicePresent())
     {
-        d->pub.publish(topics::insStatus, QByteArray::number(true));
+        packet.status = true;
 
-        InsPacket packet;
 //        float gx = d->imu.gyroAccel()->readGyro(devices::AxisX);
 //        float gy = d->imu.gyroAccel()->readGyro(devices::AxisY);
 //        float gz = d->imu.gyroAccel()->readGyro(devices::AxisZ);
@@ -76,12 +77,11 @@ void SensorInsNode::exec()
         if (yaw > M_PI) yaw -= 2 * M_PI;
         else if (yaw < 0) yaw += 2 * M_PI;
         packet.yaw = yaw * 180.0f / M_PI - declination;
-
-        d->pub.publish(topics::insPacket, packet.toByteArray());
     }
     else
     {
-        d->pub.publish(topics::insStatus, QByteArray::number(false));
+        packet.status = false;
         d->imu->init();
     }
+    d->pub.publish(topics::insPacket, packet.toByteArray());
 }

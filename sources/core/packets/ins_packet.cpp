@@ -4,6 +4,9 @@ using namespace domain;
 
 QDataStream& InsPacket::operator >>(QDataStream& stream) const
 {
+    stream << status;
+    if (!status) return stream;
+
     stream << pitch;
     stream << roll;
     stream << yaw;
@@ -13,6 +16,9 @@ QDataStream& InsPacket::operator >>(QDataStream& stream) const
 
 QDataStream& InsPacket::operator <<(QDataStream& stream)
 {
+    stream >> status;
+    if (!status) return stream;
+
     stream >> pitch;
     stream >> roll;
     stream >> yaw;

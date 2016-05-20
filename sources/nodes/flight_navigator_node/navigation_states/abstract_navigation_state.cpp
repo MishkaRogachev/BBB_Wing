@@ -24,5 +24,5 @@ void AbstractNavigationState::onSubReceived(const QString& topic,
 
 void AbstractNavigationState::process()
 {
-    this->publish(topics::navigatorState, this->stateId().toLatin1());
+    //this->publish(topics::navigatorState, this->stateId().toLatin1());
 }

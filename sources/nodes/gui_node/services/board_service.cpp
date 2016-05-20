@@ -105,6 +105,14 @@ bool BoardService::snsStatus() const
 
 void BoardService::updateAltData(const AltPacket& packet)
 {
+    if (m_altStatus != packet.status)
+    {
+        m_altStatus = packet.status;
+        emit altStatusChanged(m_altStatus);
+    }
+
+    if (!packet.status) return;
+
     if (!qFuzzyCompare(m_barAltitude, packet.altitude))
     {
         m_barAltitude = packet.altitude;
@@ -120,6 +128,14 @@ void BoardService::updateAltData(const AltPacket& packet)
 
 void BoardService::updateInsData(const InsPacket& packet)
 {
+    if (m_insStatus != packet.status)
+    {
+        m_insStatus = packet.status;
+        emit insStatusChanged(m_insStatus);
+    }
+
+    if (!packet.status) return;
+
     if (!qFuzzyCompare(m_pitch, packet.pitch))
     {
         m_pitch = packet.pitch;
@@ -141,43 +157,61 @@ void BoardService::updateInsData(const InsPacket& packet)
 
 void BoardService::updateSnsData(const SnsPacket& packet)
 {
+    if (m_snsStatus != packet.status)
+    {
+        m_snsStatus = packet.status;
+        emit snsStatusChanged(m_snsStatus);
+    }
+
+    if (!packet.status) return;
+
     if (m_snsFix != packet.fix)
     {
         m_snsFix = packet.fix;
         emit snsFixChanged(packet.fix);
     }
 
-    QGeoCoordinate position = packet.fix > 1 ? QGeoCoordinate(packet.latitude,
-                                           packet.longitude, packet.altitude) :
-                                           QGeoCoordinate();
+    QGeoCoordinate position;
+
+    if (packet.fix > 1)
+    {
+        position.setLatitude(packet.fix2d.latitude);
+        position.setLongitude(packet.fix2d.longitude);
+
+        if (!qFuzzyCompare(m_snsYaw, packet.fix2d.yaw))
+        {
+            m_snsYaw = packet.fix2d.yaw;
+            emit snsYawChanged(packet.fix2d.yaw);
+        }
+
+        if (!qFuzzyCompare(m_groundSpeed, packet.fix2d.groundSpeed))
+        {
+            m_groundSpeed = packet.fix2d.groundSpeed;
+            emit groundSpeedChanged(packet.fix2d.groundSpeed);
+        }
+
+        if (packet.fix > 2)
+        {
+            position.setLongitude(packet.fix3d.altitude);
+
+            if (!qFuzzyCompare(m_climb, packet.fix3d.climb))
+            {
+                m_climb = packet.fix3d.climb;
+                emit climbChanged(packet.fix3d.climb);
+            }
+
+            if (!qFuzzyCompare(m_snsAltitude, packet.fix3d.altitude))
+            {
+                m_snsAltitude = packet.fix3d.altitude;
+                emit snsAltitudeChanged(packet.fix3d.altitude);
+            }
+        }
+    }
+
     if (m_position != position)
     {
         m_position = position;
         emit positionChanged(position);
-    }
-
-    if (!qFuzzyCompare(m_snsYaw, packet.yaw))
-    {
-        m_snsYaw = packet.yaw;
-        emit snsYawChanged(packet.yaw);
-    }
-
-    if (!qFuzzyCompare(m_groundSpeed, packet.groundSpeed))
-    {
-        m_groundSpeed = packet.groundSpeed;
-        emit groundSpeedChanged(packet.groundSpeed);
-    }
-
-    if (!qFuzzyCompare(m_climb, packet.climb))
-    {
-        m_climb = packet.climb;
-        emit climbChanged(packet.climb);
-    }
-
-    if (!qFuzzyCompare(m_snsAltitude, packet.altitude))
-    {
-        m_snsAltitude = packet.altitude;
-        emit snsAltitudeChanged(packet.altitude);
     }
 }
 

@@ -4,30 +4,46 @@ using namespace domain;
 
 QDataStream& SnsPacket::operator >>(QDataStream& stream) const
 {
+    stream << status;
+    if (!status) return stream;
+
     stream << fix;
+    if (fix > 1)
+    {
+        stream << fix2d.latitude;
+        stream << fix2d.longitude;
+        stream << fix2d.groundSpeed;
+        stream << fix2d.yaw;
 
-    stream << latitude;
-    stream << longitude;
-    stream << groundSpeed;
-    stream << yaw;
-
-    stream << altitude;
-    stream << climb;
+        if (fix > 2)
+        {
+            stream << fix3d.altitude;
+            stream << fix3d.climb;
+        }
+    }
 
     return stream;
 }
 
 QDataStream& SnsPacket::operator <<(QDataStream& stream)
 {
+    stream >> status;
+    if (!status) return stream;
+
     stream >> fix;
+    if (fix > 1)
+    {
+        stream >> fix2d.latitude;
+        stream >> fix2d.longitude;
+        stream >> fix2d.groundSpeed;
+        stream >> fix2d.yaw;
 
-    stream >> latitude;
-    stream >> longitude;
-    stream >> groundSpeed;
-    stream >> yaw;
-
-    stream >> altitude;
-    stream >> climb;
+        if (fix > 2)
+        {
+            stream >> fix3d.altitude;
+            stream >> fix3d.climb;
+        }
+    }
 
     return stream;
 }
