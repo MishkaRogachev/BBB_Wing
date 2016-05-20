@@ -9,7 +9,6 @@
 #include "sns_packet.h"
 #include "ins_packet.h"
 #include "alt_packet.h"
-#include "failures_packet.h"
 
 #include "direct_packet.h"
 
@@ -62,7 +61,6 @@ namespace domain
         void updateAltData(const AltPacket& packet);
         void updateInsData(const InsPacket& packet);
         void updateSnsData(const SnsPacket& packet);
-        void updateFailuresPacket(const FailuresPacket& packet);
 
         void setTargetPitch(float targetPitch);
         void setTargetRoll(float targetRoll);

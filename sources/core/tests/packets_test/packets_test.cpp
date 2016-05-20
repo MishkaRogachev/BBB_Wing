@@ -8,7 +8,6 @@
 #include "ins_packet.h"
 #include "sns_packet.h"
 #include "drive_impacts_packet.h"
-#include "failures_packet.h"
 #include "flight_point_packet.h"
 #include "flight_program_packet.h"
 #include "crc_packet.h"
@@ -99,22 +98,6 @@ void PacketsTest::testDriveImpactsPacket()
             this->testPacketSerialization<DriveImpactsPacket>(packet);
 
     QCOMPARE(converted.impacts, packet.impacts);
-}
-
-void PacketsTest::testFailuresPacket()
-{
-    FailuresPacket packet;
-
-    packet.altStatus = true;
-    packet.insStatus = false;
-    packet.snsStatus = true;
-
-    FailuresPacket converted =
-            this->testPacketSerialization<FailuresPacket>(packet);
-
-    QCOMPARE(converted.altStatus, packet.altStatus);
-    QCOMPARE(converted.insStatus, packet.insStatus);
-    QCOMPARE(converted.snsStatus, packet.snsStatus);
 }
 
 void PacketsTest::testFlightPointPacket()

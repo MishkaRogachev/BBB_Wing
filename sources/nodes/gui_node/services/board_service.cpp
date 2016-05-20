@@ -181,27 +181,6 @@ void BoardService::updateSnsData(const SnsPacket& packet)
     }
 }
 
-void BoardService::updateFailuresPacket(const FailuresPacket& packet)
-{
-    if (m_altStatus != packet.altStatus)
-    {
-        m_altStatus = packet.altStatus;
-        altStatusChanged(packet.altStatus);
-    }
-
-    if (m_insStatus != packet.insStatus)
-    {
-        m_insStatus = packet.insStatus;
-        insStatusChanged(packet.insStatus);
-    }
-
-    if (m_snsStatus != packet.snsStatus)
-    {
-        m_snsStatus = packet.snsStatus;
-        snsStatusChanged(packet.snsStatus);
-    }
-}
-
 void BoardService::setTargetPitch(float targetPitch)
 {
     m_direct.manual.targetPitch = targetPitch;
