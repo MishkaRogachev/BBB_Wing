@@ -8,24 +8,11 @@ QDataStream& DirectPacket::operator >>(QDataStream& stream) const
 
     if (isManual)
     {
-        stream << manual.targetPitch;
-        stream << manual.targetRoll;
-        stream << manual.targetCourse;
-        stream << manual.targetSpeed;
+        stream << manual;
     }
     else
     {
-        stream << automatic.isAltitudeOverridden;
-        if (automatic.isAltitudeOverridden) stream << automatic.overriddenAltitude;
-
-        stream << automatic.isCourseOverridden;
-        if (automatic.isAltitudeOverridden) stream << automatic.overriddenCourse;
-
-        stream << automatic.isVelocityOverridden;
-        if (automatic.isAltitudeOverridden) stream << automatic.overriddenVelocity;
-
-        stream << automatic.activeProgram;
-        stream << automatic.activePoint;
+        stream << automatic;
     }
 
     return stream;
@@ -37,24 +24,11 @@ QDataStream& DirectPacket::operator <<(QDataStream& stream)
 
     if (isManual)
     {
-        stream >> manual.targetPitch;
-        stream >> manual.targetRoll;
-        stream >> manual.targetCourse;
-        stream >> manual.targetSpeed;
+        stream >> manual;
     }
     else
     {
-        stream >> automatic.isAltitudeOverridden;
-        if (automatic.isAltitudeOverridden) stream >> automatic.overriddenAltitude;
-
-        stream >> automatic.isCourseOverridden;
-        if (automatic.isAltitudeOverridden) stream >> automatic.overriddenCourse;
-
-        stream >> automatic.isVelocityOverridden;
-        if (automatic.isAltitudeOverridden) stream >> automatic.overriddenVelocity;
-
-        stream >> automatic.activeProgram;
-        stream >> automatic.activePoint;
+        stream >> automatic;
     }
 
     return stream;

@@ -162,16 +162,18 @@ void PacketsTest::testDirectPacket()
         DirectPacket packet;
 
         packet.isManual = true;
-        packet.manual.targetPitch = 143.41;
-        packet.manual.targetRoll = -23.03;
-        packet.manual.targetCourse = 137.123;
+        packet.manual.pitchControl = 143.41;
+        packet.manual.rollControl = -23.03;
+        packet.manual.courseControl = 137.123;
+        packet.manual.speedControl = 46.324;
 
         DirectPacket converted = this->testPacketSerialization<DirectPacket>(packet);
 
         QCOMPARE(converted.isManual, packet.isManual);
-        QCOMPARE(converted.manual.targetPitch, packet.manual.targetPitch);
-        QCOMPARE(converted.manual.targetRoll, packet.manual.targetRoll);
-        QCOMPARE(converted.manual.targetCourse, packet.manual.targetCourse);
+        QCOMPARE(converted.manual.pitchControl, packet.manual.pitchControl);
+        QCOMPARE(converted.manual.rollControl, packet.manual.rollControl);
+        QCOMPARE(converted.manual.courseControl, packet.manual.courseControl);
+        QCOMPARE(converted.manual.speedControl, packet.manual.speedControl);
     }
 
     {

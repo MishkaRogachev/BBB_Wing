@@ -62,11 +62,6 @@ namespace domain
         void updateInsData(const InsPacket& packet);
         void updateSnsData(const SnsPacket& packet);
 
-        void setTargetPitch(float targetPitch);
-        void setTargetRoll(float targetRoll);
-        void setTargetCourse(float targetCourse);
-        void setTargetSpeed(float targetSpeed);
-
     signals:
         void barAltitudeChanged(float barAltitude);
         void temperatureChanged(float temperature);
@@ -106,8 +101,6 @@ namespace domain
         bool m_altStatus;
         bool m_insStatus;
         bool m_snsStatus;
-
-        DirectPacket m_direct;
     };
 }
 

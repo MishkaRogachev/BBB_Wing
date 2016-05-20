@@ -113,13 +113,13 @@ void FlightPilotNode::onSubReceived(const QString& topic, const QByteArray& msg)
         if (direct.isManual)
         {
             if (d->pitchRegulator) d->pitchRegulator->setTargetValue(
-                        direct.manual.targetPitch);
+                        direct.manual.pitchControl);
             if (d->rollRegulator) d->rollRegulator->setTargetValue(
-                        direct.manual.targetRoll);
+                        direct.manual.rollControl);
             if (d->courseRegulator) d->courseRegulator->setTargetValue(
-                        direct.manual.targetCourse);
+                        direct.manual.courseControl);
             if (d->speedRegulator) d->speedRegulator->setTargetValue(
-                        direct.manual.targetSpeed);
+                        direct.manual.speedControl);
         }
     }
 }
