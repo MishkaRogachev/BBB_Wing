@@ -85,8 +85,10 @@ void BoardGatewayNode::exec()
     CrcPacket crcPacket(topics::reversePacket, d->packet.toByteArray());
     QByteArray data = crcPacket.toByteArray();
 
-    if (d->wireLink->isConnected()) d->wireLink->send(data);
-    if (d->airLink->isConnected()) d->airLink->send(data);
+    if (d->wireLink->isConnected() && d->wireLink->isOnline())
+        d->wireLink->send(data);
+    if (d->airLink->isConnected() && d->wireLink->isOnline())
+        d->airLink->send(data);
 
     d->packet.reset();
 }

@@ -88,7 +88,7 @@ void GroundGatewayNode::exec()
     QByteArray data = crcPacket.toByteArray();
 
     if (d->wireLink->isConnected() && (!d->airLink->isOnline() ||
-        (d->wireLink->isOnline() && d->airLink->isOnline())))
+        (d->airLink->isOnline() && d->wireLink->isOnline())))
         d->wireLink->send(data);
 
     if (d->airLink->isConnected() && !d->wireLink->isOnline())
