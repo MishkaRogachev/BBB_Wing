@@ -86,7 +86,7 @@ void BoardGatewayNode::exec()
 
     if (d->wireLink->isConnected() && d->wireLink->isOnline())
         d->wireLink->send(data);
-    if (d->airLink->isConnected() && d->wireLink->isOnline())
+    if (d->airLink->isConnected() && d->airLink->isOnline())
         d->airLink->send(data);
 
     d->packet.reset();
