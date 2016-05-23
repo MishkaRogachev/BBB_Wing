@@ -16,10 +16,10 @@ QDataStream& ReversePacket::operator >>(QDataStream& stream) const
     if (altAvalible) stream << alt;
 
     stream << insAvalible;
-    if (altAvalible) stream << ins;
+    if (insAvalible) stream << ins;
 
     stream << snsAvalible;
-    if (altAvalible) stream << sns;
+    if (snsAvalible) stream << sns;
 
     stream << controlAvalible;
     if (controlAvalible) stream << control;
@@ -33,10 +33,10 @@ QDataStream& ReversePacket::operator <<(QDataStream& stream)
     if (altAvalible) stream >> alt;
 
     stream >> insAvalible;
-    if (altAvalible) stream >> ins;
+    if (insAvalible) stream >> ins;
 
     stream >> snsAvalible;
-    if (altAvalible) stream >> sns;
+    if (snsAvalible) stream >> sns;
 
     stream >> controlAvalible;
     if (controlAvalible) stream >> control;

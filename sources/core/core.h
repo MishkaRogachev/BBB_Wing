@@ -18,7 +18,7 @@ namespace topics
     const QString navigatorPacket = "data_navi";
 
     const QString directPacket = "data_direct";
-    const QString reversePacket = "data_direct";
+    const QString reversePacket = "data_reverse";
 
     const QString connectionStatusPacket = "status_cn";
 
