@@ -22,4 +22,6 @@ PARENT_SCOPE)
 set(LIBRARIES ${LIBRARIES} PARENT_SCOPE)
 
 # Tests
-add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/tests)
+if (TARGET_TYPE STREQUAL "tests" OR TARGET_TYPE STREQUAL "all")
+    add_subdirectory(tests)
+endif()

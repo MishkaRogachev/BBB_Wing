@@ -29,14 +29,14 @@ set(LIBRARIES
     Qt5::SerialPort
 )
 
-# Core
-add_subdirectory(sources/core)
-
-# Tagret type. Avalible values: all, board, ground
+# Tagret type. Avalible values: all, board, ground, tests
 if(NOT TARGET_TYPE)
     set(TARGET_TYPE "all")
 endif(NOT TARGET_TYPE)
 message("Tagret type: " ${TARGET_TYPE})
+
+# Core
+add_subdirectory(sources/core)
 
 # Nodes targets
 if (TARGET_TYPE STREQUAL "board" OR TARGET_TYPE STREQUAL "all")
