@@ -3,7 +3,7 @@
 
 #include <QStringList>
 
-namespace topics
+namespace topics // TODO: core to dynamic library
 {
     const QString data = "data";
     const QString all = "";

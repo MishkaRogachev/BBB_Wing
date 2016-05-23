@@ -84,7 +84,7 @@ namespace domain
         void publish(const QString& topic, const QByteArray& data);
 
     private:
-        float m_barAltitude; // TODO: packets to varibles
+        float m_barAltitude; // TODO: varibles to packets
         float m_temperature;
 
         float m_pitch;
