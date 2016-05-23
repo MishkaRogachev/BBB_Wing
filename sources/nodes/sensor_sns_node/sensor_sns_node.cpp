@@ -45,7 +45,7 @@ void SensorSnsNode::exec()
     struct gps_data_t* data = nullptr;
     SnsPacket packet;
 
-    if (!d->handle.is_open() || ((data = d->handle.read()) == nullptr))
+    if (/*!d->handle.is_open() || */((data = d->handle.read()) == nullptr))
     {
         packet.status = false;
         this->init();

@@ -67,7 +67,7 @@ void FlightPilotNode::init()
                        endpoints::navigator,
                        endpoints::boardGateway });
 
-    d->sub.subscribe({ topics::data });
+    d->sub.subscribe(topics::data);
     connect(&d->sub, &Subscriber::received, this,
             &FlightPilotNode::onSubReceived);
 }
