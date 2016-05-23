@@ -5,6 +5,9 @@
 
 using namespace domain;
 
+Packet::~Packet()
+{}
+
 QByteArray Packet::toByteArray() const
 {
     QByteArray data;

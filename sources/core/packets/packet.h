@@ -9,6 +9,8 @@ namespace domain
     class Packet
     {
     public:
+        virtual ~Packet();
+
         virtual QDataStream& operator >>(QDataStream& stream) const = 0;
         virtual QDataStream& operator <<(QDataStream& stream) = 0;
 
