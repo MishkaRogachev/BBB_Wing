@@ -23,8 +23,6 @@ namespace domain
         bool controlAvalible;
         ControlPacket control;
 
-        void reset();
-
         QDataStream& operator >>(QDataStream& stream) const override;
         QDataStream& operator <<(QDataStream& stream) override;
 

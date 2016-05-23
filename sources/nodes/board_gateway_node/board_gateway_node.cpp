@@ -2,6 +2,7 @@
 
 // Qt
 #include <QMap>
+#include <QTimer>
 #include <QDebug>
 
 // Internal
@@ -29,6 +30,11 @@ public:
     AbstractLink* airLink;
 
     ReversePacket packet;
+
+    QTimer* altTimer;
+    QTimer* insTimer;
+    QTimer* snsTimer;
+    QTimer* controlTimer;
 };
 
 BoardGatewayNode::BoardGatewayNode(QObject* parent):
@@ -53,9 +59,28 @@ BoardGatewayNode::BoardGatewayNode(QObject* parent):
     connect(d->airLink, &AbstractLink::received,
             this, &BoardGatewayNode::onLinkReceived);
 
+    d->altTimer = new QTimer(this);
+    d->altTimer->setInterval(Config::value("alt_timeout").toInt());
+    connect(d->altTimer, &QTimer::timeout, this, &BoardGatewayNode::onAltTimeout);
+
+    d->insTimer = new QTimer(this);
+    d->insTimer->setInterval(Config::value("ins_timeout").toInt());
+    connect(d->insTimer, &QTimer::timeout, this, &BoardGatewayNode::onInsTimeout);
+
+    d->snsTimer = new QTimer(this);
+    d->snsTimer->setInterval(Config::value("sns_timeout").toInt());
+    connect(d->snsTimer, &QTimer::timeout, this, &BoardGatewayNode::onSnsTimeout);
+
+    d->controlTimer = new QTimer(this);
+    d->controlTimer->setInterval(Config::value("ctrl_timeout").toInt());
+    connect(d->controlTimer, &QTimer::timeout, this, &BoardGatewayNode::onControlTimeout);
+
     Config::end();
 
-    d->packet.reset();
+    this->onAltTimeout();
+    this->onInsTimeout();
+    this->onSnsTimeout();
+    this->onControlTimeout();
 }
 
 BoardGatewayNode::~BoardGatewayNode()
@@ -88,8 +113,6 @@ void BoardGatewayNode::exec()
         d->wireLink->send(data);
     if (d->airLink->isConnected() && d->airLink->isOnline())
         d->airLink->send(data);
-
-    d->packet.reset();
 }
 
 void BoardGatewayNode::onSubReceived(const QString& topic, const QByteArray& data)
@@ -98,21 +121,25 @@ void BoardGatewayNode::onSubReceived(const QString& topic, const QByteArray& dat
     {
         d->packet.alt = AltPacket::fromByteArray(data);
         d->packet.altAvalible = true;
+        d->altTimer->start();
     }
     else if (topic == topics::insPacket)
     {
         d->packet.ins = InsPacket::fromByteArray(data);
         d->packet.insAvalible = true;
+        d->insTimer->start();
     }
     else if (topic == topics::snsPacket)
     {
         d->packet.sns = SnsPacket::fromByteArray(data);
         d->packet.snsAvalible = true;
+        d->snsTimer->start();
     }
     else if (topic == topics::controlPacket)
     {
         d->packet.control = ControlPacket::fromByteArray(data);
         d->packet.controlAvalible = true;
+        d->controlTimer->start();
     }
 }
 
@@ -122,4 +149,24 @@ void BoardGatewayNode::onLinkReceived(const QByteArray& data)
     if (!packet.validateCrc()) return;
 
     d->pub.publish(packet.topic, packet.data);
+}
+
+void BoardGatewayNode::onAltTimeout()
+{
+    d->packet.altAvalible = false;
+}
+
+void BoardGatewayNode::onInsTimeout()
+{
+    d->packet.insAvalible = false;
+}
+
+void BoardGatewayNode::onSnsTimeout()
+{
+    d->packet.snsAvalible = false;
+}
+
+void BoardGatewayNode::onControlTimeout()
+{
+    d->packet.controlAvalible = false;
 }
