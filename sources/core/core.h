@@ -12,10 +12,11 @@ namespace topics // TODO: core to dynamic library
     const QString insPacket = "data_ins";
     const QString snsPacket = "data_sns";
 
-    const QString controlPacket = "data_ctrl";
     const QString driveImpactsPacket = "data_drv";
-
+    const QString controlPacket = "data_ctrl";
     const QString navigatorPacket = "data_navi";
+
+    const QString automaticPacket = "data_auto";
 
     const QString directPacket = "data_direct";
     const QString reversePacket = "data_reverse";

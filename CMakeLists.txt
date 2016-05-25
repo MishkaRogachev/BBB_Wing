@@ -57,9 +57,8 @@ if (TARGET_TYPE STREQUAL "board" OR TARGET_TYPE STREQUAL "all")
 endif()
 
 if (TARGET_TYPE STREQUAL "ground" OR TARGET_TYPE STREQUAL "all")
-    add_subdirectory(sources/nodes/ground_gateway_node)
+    add_subdirectory(sources/nodes/ground_transceiver_node)
     add_subdirectory(sources/nodes/flight_record_player_node)
-
     add_subdirectory(sources/nodes/gui_node)
 
     add_subdirectory(sources/targets/ground)

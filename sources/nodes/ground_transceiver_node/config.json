@@ -1,10 +1,11 @@
 {
-    "GroundGateway": {
+    "GroundTransceiver": {
         "frequency": 4,
         "serial_baud_rate": 38400,
         "serial_port_ground": "/dev/ttyUSB0",
         "udp_board_address": "192.168.7.2",
         "udp_board_port": 50001,
-        "udp_ground_port": 50000
+        "udp_ground_port": 50000,
+        "link_timeout": 2000
     }
 }

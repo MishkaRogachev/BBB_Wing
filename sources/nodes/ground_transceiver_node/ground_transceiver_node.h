@@ -1,17 +1,17 @@
-#ifndef BOARD_TRANSCEIVER_NODE_H
-#define BOARD_TRANSCEIVER_NODE_H
+#ifndef GROUND_TRANSCEIVER_NODE_H
+#define GROUND_TRANSCEIVER_NODE_H
 
 #include "abstract_node_frequency.h"
 
 namespace domain
 {
-    class BoardTransceiverNode: public AbstractNodeFrequency
+    class GroundTransceiverNode: public AbstractNodeFrequency
     {
         Q_OBJECT
 
     public:
-        BoardTransceiverNode(QObject* parent = nullptr);
-        ~BoardTransceiverNode() override;
+        GroundTransceiverNode(QObject* parent = nullptr);
+        ~GroundTransceiverNode() override;
 
     public slots:
         void init() override;
@@ -31,4 +31,4 @@ namespace domain
     };
 }
 
-#endif // BOARD_TRANSCEIVER_NODE_H
+#endif // GROUND_TRANSCEIVER_NODE_H

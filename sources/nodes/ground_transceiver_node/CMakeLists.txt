@@ -2,7 +2,7 @@
 cmake_minimum_required(VERSION 2.8.11)
 
 # Project
-set(PROJECT ground_gateway_node)
+set(PROJECT ground_transceiver_node)
 project(${PROJECT})
 
 # Config
@@ -16,7 +16,11 @@ include_directories(${INCLUDES} ${INTERNAL_INCLUDES})
 file(GLOB_RECURSE INTERNAL_SOURCES "*.cpp" "*.h")
 
 # Qt5 wrap node's headers
-qt5_wrap_cpp(MOC_SOURCES ground_gateway_node.h)
+qt5_wrap_cpp(MOC_SOURCES
+    ground_transceiver_node.h
+    ground_receiver/ground_receiver.h
+    ground_transmitter/ground_transmitter.h
+)
 
 # Static Library target
 add_library(${PROJECT} STATIC ${SOURCES} ${INTERNAL_SOURCES} ${MOC_SOURCES})
