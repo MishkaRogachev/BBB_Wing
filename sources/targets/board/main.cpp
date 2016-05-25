@@ -16,7 +16,7 @@
 #include "flight_pilot_node.h"
 #include "flight_dynamics_node.h"
 
-#include "board_gateway_node.h"
+#include "board_transceiver_node.h"
 
 int main(int argc, char* argv[])
 {
@@ -37,7 +37,7 @@ int main(int argc, char* argv[])
     scheduler.addNode(new FlightPilotNode());
     scheduler.addNode(new FlightDynamicsNode());
 
-    scheduler.addNode(new BoardGatewayNode());
+    scheduler.addNode(new BoardTransceiverNode());
 
     scheduler.init();
     scheduler.start();

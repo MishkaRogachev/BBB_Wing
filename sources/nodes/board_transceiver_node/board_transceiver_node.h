@@ -5,25 +5,25 @@
 
 namespace domain
 {
-    class BoardGatewayNode: public AbstractNodeFrequency
+    class BoardTransceiverNode: public AbstractNodeFrequency
     {
         Q_OBJECT
 
     public:
-        BoardGatewayNode(QObject* parent = nullptr);
-        ~BoardGatewayNode() override;
+        BoardTransceiverNode(QObject* parent = nullptr);
+        ~BoardTransceiverNode() override;
 
     public slots:
         void init() override;
         void exec() override;
 
+    protected:
+        void timerEvent(QTimerEvent* event);
+
     private slots:
         void onSubReceived(const QString& topic, const QByteArray& data);
-        void onLinkReceived(const QByteArray& data);
-        void onAltTimeout();
-        void onInsTimeout();
-        void onSnsTimeout();
-        void onControlTimeout();
+        void onWireLinkReceived(const QByteArray& data);
+        void onAirLinkReceived(const QByteArray& data);
 
     private:
         class Impl;

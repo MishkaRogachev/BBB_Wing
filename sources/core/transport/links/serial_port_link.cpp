@@ -27,15 +27,18 @@ bool SerialPortLink::isConnected() const
     return m_port->isOpen(); // TODO: handle serial port avalibility
 }
 
-bool SerialPortLink::connect()
+bool SerialPortLink::connectLink()
 {
     if (m_port->open(QIODevice::ReadWrite)) return true;
+
+    qWarning("Serial port connection error: '%s'!",
+             qPrintable(m_port->errorString()));
 
     m_port->close();
     return false;
 }
 
-void SerialPortLink::disconnect()
+void SerialPortLink::disconnectLink()
 {
     m_port->close();
 }
@@ -69,5 +72,5 @@ void SerialPortLink::readSerialData()
 void SerialPortLink::processFramgent(const QByteArray& fragment)
 {
     if (fragment.isEmpty()) return;
-    this->onReceived(fragment);
+    emit received(fragment);
 }

@@ -23,8 +23,8 @@ namespace domain
         bool isConnected() const override;
 
     public slots:
-        bool connect() override;
-        void disconnect() override;
+        bool connectLink() override;
+        void disconnectLink() override;
         void send(const QByteArray& packet) override;
 
         void setAdress(const QHostAddress& adress);

@@ -32,16 +32,18 @@ bool UdpLink::isConnected() const
     return m_socket->state() == QAbstractSocket::BoundState;
 }
 
-bool UdpLink::connect()
+bool UdpLink::connectLink()
 {
-    if (m_socket->bind(m_hostPort))
-        return true;
+    if (m_socket->bind(m_hostPort)) return true;
+
+    qWarning("UDP connection error: '%s'!",
+             qPrintable(m_socket->errorString()));
 
     m_socket->close();
     return false;
 }
 
-void UdpLink::disconnect()
+void UdpLink::disconnectLink()
 {
     m_socket->close();
 }
@@ -59,7 +61,7 @@ void UdpLink::readPendingDatagrams()
         packet.resize(m_socket->pendingDatagramSize());
         m_socket->readDatagram(packet.data(), packet.size());
 
-        this->onReceived(packet);
+        emit received(packet);
     }
 }
 

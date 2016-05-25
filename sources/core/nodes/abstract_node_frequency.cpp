@@ -39,4 +39,6 @@ void AbstractNodeFrequency::timerEvent(QTimerEvent* event)
     if (event->timerId() != m_timerId) return;
 
     this->exec();
+
+    QObject::timerEvent(event);
 }

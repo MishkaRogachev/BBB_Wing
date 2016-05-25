@@ -81,23 +81,25 @@ void GroundGatewayNode::init()
 void GroundGatewayNode::exec()
 {
     // TODO: connect by user's request
-    if (!d->wireLink->isConnected()) d->wireLink->connect();
-    if (!d->airLink->isConnected()) d->airLink->connect();
+    if (!d->wireLink->isConnected()) d->wireLink->connectLink();
+    if (!d->airLink->isConnected()) d->airLink->connectLink();
 
     CrcPacket crcPacket(topics::directPacket, d->packet.toByteArray());
     QByteArray data = crcPacket.toByteArray();
-
+/*
     if (d->wireLink->isConnected() && (!d->airLink->isOnline() ||
         (d->airLink->isOnline() && d->wireLink->isOnline())))
         d->wireLink->send(data);
 
     if (d->airLink->isConnected() && !d->wireLink->isOnline())
-        d->airLink->send(data);
+        d->airLink->send(data);*/
+
+    d->airLink->send(data);
 
     ConnectionStatusPacket statusPacket;
 
-    statusPacket.airLink = d->airLink->isOnline();
-    statusPacket.wireLink = d->wireLink->isOnline();
+//    statusPacket.airLink = d->airLink->isOnline();
+//    statusPacket.wireLink = d->wireLink->isOnline();
     statusPacket.packetsPerSecond = d->count * this->frequency();
     statusPacket.packetsLost = (d->count) ? 100 * d->packetsLost / d->count : 0;
 
@@ -109,8 +111,8 @@ void GroundGatewayNode::exec()
 
 void GroundGatewayNode::stop()
 {
-    d->airLink->disconnect();
-    d->wireLink->disconnect();
+    d->airLink->disconnectLink();
+    d->wireLink->disconnectLink();
 
     AbstractNodeFrequency::stop();
 }

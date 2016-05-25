@@ -2,7 +2,7 @@
 cmake_minimum_required(VERSION 2.8.11)
 
 # Project
-set(PROJECT board_gateway_node)
+set(PROJECT board_transceiver_node)
 project(${PROJECT})
 
 # Config
@@ -16,7 +16,11 @@ include_directories(${INCLUDES} ${INTERNAL_INCLUDES})
 file(GLOB_RECURSE INTERNAL_SOURCES "*.cpp" "*.h")
 
 # Qt5 wrap node's headers
-qt5_wrap_cpp(MOC_SOURCES board_gateway_node.h)
+qt5_wrap_cpp(MOC_SOURCES
+    board_transceiver_node.h
+    board_receiver/board_receiver.h
+    board_transmitter/board_transmitter.h
+)
 
 # Static Library target
 add_library(${PROJECT} STATIC ${SOURCES} ${INTERNAL_SOURCES} ${MOC_SOURCES})

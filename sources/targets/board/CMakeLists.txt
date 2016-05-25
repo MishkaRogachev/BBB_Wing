@@ -17,7 +17,7 @@ set(LIBRARIES
     flight_navigator_node
     flight_pilot_node
     flight_dynamics_node
-    board_gateway_node
+    board_transceiver_node
 )
 
 # Includes
