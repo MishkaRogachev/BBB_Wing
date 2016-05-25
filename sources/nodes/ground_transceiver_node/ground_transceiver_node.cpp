@@ -37,9 +37,6 @@ public:
 
     GroundReceiver receiver;
     GroundTransmitter transmitter;
-
-    int count = 0;
-    int packetsLost = 0;
 };
 
 GroundTransceiverNode::GroundTransceiverNode(QObject* parent):
@@ -107,11 +104,12 @@ void GroundTransceiverNode::exec()
 
     statusPacket.airLink = d->activeLink == d->airLink;
     statusPacket.wireLink = d->activeLink == d->wireLink;
-    statusPacket.packetsPerSecond = d->count * this->frequency();
-    statusPacket.packetsLost = (d->count) ? 100 * d->packetsLost / d->count : 0;
+    statusPacket.packetsPerSecond = d->receiver.count() * this->frequency();
+    statusPacket.packetsLost = (d->receiver.count()) ?
+                                   100 * d->receiver.packetsLost() /
+                                   d->receiver.count() : 0;
 
-    d->count = 0;
-    d->packetsLost = 0;
+    d->receiver.reset();
 
     d->pub.publish(topics::connectionStatusPacket, statusPacket.toByteArray());
 }
@@ -134,7 +132,6 @@ void GroundTransceiverNode::onSubReceived(const QString& topic, const QByteArray
 
 void GroundTransceiverNode::onWireLinkReceived(const QByteArray& data)
 {
-    d->count++; // TODO: packets & bad count count to receiver
     d->activeLink = d->wireLink;
     d->linkTimer.start(d->linkInterval, Qt::PreciseTimer, this);
     d->receiver.onLinkReceived(data);
@@ -142,7 +139,6 @@ void GroundTransceiverNode::onWireLinkReceived(const QByteArray& data)
 
 void GroundTransceiverNode::onAirLinkReceived(const QByteArray& data)
 {
-    d->count++;
     d->activeLink = d->airLink;
     d->linkTimer.start(d->linkInterval, Qt::PreciseTimer, this);
     d->receiver.onLinkReceived(data);

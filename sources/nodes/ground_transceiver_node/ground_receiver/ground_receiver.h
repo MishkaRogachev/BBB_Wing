@@ -12,11 +12,19 @@ namespace domain
     public:
         explicit GroundReceiver(QObject* parent = nullptr);
 
+        int count() const;
+        int packetsLost() const;
+
     public slots:
         void onLinkReceived(const QByteArray& data);
+        void reset();
 
     signals:
         void publish(const QString& topic, const QByteArray& data);
+
+    private:
+        int m_count = 0;
+        int m_packetsLost = 0;
     };
 }
 
