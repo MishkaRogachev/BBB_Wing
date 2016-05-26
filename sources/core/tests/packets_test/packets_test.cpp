@@ -4,14 +4,12 @@
 #include <QDebug>
 
 // Internal
-#include "alt_packet.h"
-#include "ins_packet.h"
-#include "sns_packet.h"
 #include "drive_impacts_packet.h"
 #include "flight_point_packet.h"
 #include "flight_program_packet.h"
 #include "crc_packet.h"
 #include "direct_packet.h"
+#include "reverse_packet.h"
 
 using namespace domain;
 
@@ -205,4 +203,35 @@ void PacketsTest::testDirectPacket()
         QCOMPARE(converted.automatic.activeProgram, packet.automatic.activeProgram);
         QCOMPARE(converted.automatic.activePoint, packet.automatic.activePoint);
     }
+}
+
+void PacketsTest::testReversePacket()
+{
+    ReversePacket packet;
+
+    packet.altAvalible = true;
+    packet.alt.status = true;
+    packet.alt.altitude = 7195.76;
+    packet.alt.altitude = -26.63;
+    packet.insAvalible = true;
+    packet.ins.status = false;
+    packet.snsAvalible = false;
+    packet.controlAvalible = false;
+
+    ReversePacket converted =
+            this->testPacketSerialization<ReversePacket>(packet);
+
+    QCOMPARE(converted.altAvalible, packet.altAvalible);
+    QCOMPARE(converted.alt.toByteArray(), packet.alt.toByteArray());
+    QCOMPARE(converted.insAvalible, packet.insAvalible);
+    QCOMPARE(converted.ins.toByteArray(), packet.ins.toByteArray());
+    QCOMPARE(converted.snsAvalible, packet.snsAvalible);
+    QCOMPARE(converted.controlAvalible, packet.controlAvalible);
+
+    ReverseStatusPacket status = converted.status();
+
+    QCOMPARE(status.altAvalible, packet.altAvalible);
+    QCOMPARE(status.insAvalible, packet.insAvalible);
+    QCOMPARE(status.snsAvalible, packet.snsAvalible);
+    QCOMPARE(status.controlAvalible, packet.controlAvalible);
 }
