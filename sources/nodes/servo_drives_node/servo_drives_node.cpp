@@ -46,7 +46,7 @@ void ServoDrivesNode::init()
 {
     d->sub.connectTo({ endpoints::flightPilot,
                        endpoints::navigator,
-                       endpoints::boardGateway });
+                       endpoints::boardTransceiver });
 
     d->sub.subscribe(topics::data);
     connect(&d->sub, &Subscriber::received, this,

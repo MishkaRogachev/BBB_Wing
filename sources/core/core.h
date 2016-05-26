@@ -6,6 +6,7 @@
 namespace topics // TODO: core to dynamic library
 {
     const QString data = "data";
+    const QString status = "st";
     const QString all = "";
 
     const QString altPacket = "data_alt";
@@ -19,9 +20,11 @@ namespace topics // TODO: core to dynamic library
     const QString automaticPacket = "data_auto";
 
     const QString directPacket = "data_direct";
-    const QString reversePacket = "data_reverse";
 
-    const QString connectionStatusPacket = "status_cn";
+    const QString reversePacket = "data_reverse";
+    const QString reverseStatusPacket = "st_reverse";
+
+    const QString connectionStatusPacket = "st_cn";
 
     const QStringList boardTopics = {
         altPacket, insPacket, snsPacket,
@@ -41,8 +44,8 @@ namespace endpoints
 
     const QString player = "ipc://player";
 
-    const QString boardGateway = "ipc://board_gw";
-    const QString groundGateway = "ipc://ground_gw";
+    const QString boardTransceiver = "ipc://board_tr";
+    const QString groundTransceiver = "ipc://ground_tr";
 
     const QString gui = "ipc://gui";
 }

@@ -70,7 +70,7 @@ GuiNode::~GuiNode()
 
 void GuiNode::init()
 {
-    d->sub.connectTo( { endpoints::groundGateway, endpoints::player } );
+    d->sub.connectTo( { endpoints::groundTransceiver, endpoints::player } );
     d->sub.subscribe(topics::all);
     connect(&d->sub, &Subscriber::received, this, &GuiNode::onSubReceived);
 }
@@ -88,6 +88,8 @@ void GuiNode::onSubReceived(const QString& topic, const QByteArray& data)
         d->boardService.updateSnsData(SnsPacket::fromByteArray(data));
     else if (topic == topics::insPacket)
         d->boardService.updateInsData(InsPacket::fromByteArray(data));
+    else if (topic == topics::reverseStatusPacket)
+        d->boardService.updateStatusData(ReverseStatusPacket::fromByteArray(data));
     else if (topic == topics::connectionStatusPacket)
         d->groundService.updateConnectionStatus(
                     ConnectionStatusPacket::fromByteArray(data));

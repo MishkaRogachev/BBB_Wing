@@ -209,3 +209,8 @@ void BoardService::updateSnsData(const SnsPacket& packet)
     }
 }
 
+void BoardService::updateStatusData(const ReverseStatusPacket& packet)
+{
+    // TODO: status
+}
+

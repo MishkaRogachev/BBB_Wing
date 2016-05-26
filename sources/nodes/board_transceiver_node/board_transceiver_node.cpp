@@ -43,7 +43,7 @@ BoardTransceiverNode::BoardTransceiverNode(QObject* parent):
     d(new Impl())
 {
     Config::begin("BoardTransceiver");
-    d->pub.bind(endpoints::boardGateway);
+    d->pub.bind(endpoints::boardTransceiver);
     connect(&d->receiver, &BoardReceiver::publish, &d->pub,
             static_cast<void(Publisher::*)(const QString&, const QByteArray&)>(
                 &Publisher::publish));

@@ -45,7 +45,7 @@ GroundTransceiverNode::GroundTransceiverNode(QObject* parent):
     d(new Impl())
 {
     Config::begin("GroundTransceiver");
-    d->pub.bind(endpoints::groundGateway);
+    d->pub.bind(endpoints::groundTransceiver);
     connect(&d->receiver, &GroundReceiver::publish, &d->pub,
             static_cast<void(Publisher::*)(const QString&, const QByteArray&)>(
                 &Publisher::publish));

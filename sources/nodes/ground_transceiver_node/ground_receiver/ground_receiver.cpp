@@ -28,16 +28,18 @@ void GroundReceiver::onLinkReceived(const QByteArray& data)
 
     if (crcPacket.topic == topics::reversePacket)
     {
-        auto reversePacket = ReversePacket::fromByteArray(crcPacket.data);
+        auto reverse = ReversePacket::fromByteArray(crcPacket.data);
 
-        if (reversePacket.altAvalible)
-            emit publish(topics::altPacket, reversePacket.alt.toByteArray());
-        if (reversePacket.insAvalible)
-            emit publish(topics::insPacket, reversePacket.ins.toByteArray());
-        if (reversePacket.snsAvalible)
-            emit publish(topics::snsPacket, reversePacket.sns.toByteArray());
-        if (reversePacket.controlAvalible)
-            emit publish(topics::controlPacket, reversePacket.control.toByteArray());
+        if (reverse.altAvalible)
+            emit publish(topics::altPacket, reverse.alt.toByteArray());
+        if (reverse.insAvalible)
+            emit publish(topics::insPacket, reverse.ins.toByteArray());
+        if (reverse.snsAvalible)
+            emit publish(topics::snsPacket, reverse.sns.toByteArray());
+        if (reverse.controlAvalible)
+            emit publish(topics::controlPacket, reverse.control.toByteArray());
+
+        emit publish(topics::reverseStatusPacket, reverse.status().toByteArray());
     }
 }
 

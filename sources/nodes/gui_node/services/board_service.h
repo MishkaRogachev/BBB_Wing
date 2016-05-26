@@ -9,8 +9,7 @@
 #include "sns_packet.h"
 #include "ins_packet.h"
 #include "alt_packet.h"
-
-#include "direct_packet.h"
+#include "reverse_status_packet.h"
 
 namespace domain
 {
@@ -61,6 +60,7 @@ namespace domain
         void updateAltData(const AltPacket& packet);
         void updateInsData(const InsPacket& packet);
         void updateSnsData(const SnsPacket& packet);
+        void updateStatusData(const ReverseStatusPacket& packet);
 
     signals:
         void barAltitudeChanged(float barAltitude);

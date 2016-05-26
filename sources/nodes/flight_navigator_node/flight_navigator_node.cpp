@@ -42,7 +42,7 @@ void FlightNavigatorNode::init()
                        endpoints::ins,
                        endpoints::sns,
                        endpoints::flightPilot,
-                       endpoints::boardGateway });
+                       endpoints::boardTransceiver });
 
     d->sub.subscribe(topics::data);
     this->onStateRequested(new IdleNavigationState(this));
