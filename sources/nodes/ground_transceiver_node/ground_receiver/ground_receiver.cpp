@@ -6,6 +6,9 @@
 #include "crc_packet.h"
 #include "reverse_packet.h"
 
+// Qt
+#include <QDebug>
+
 using namespace domain;
 
 GroundReceiver::GroundReceiver(QObject* parent):
@@ -23,7 +26,7 @@ void GroundReceiver::onLinkReceived(const QByteArray& data)
         return;
     }
 
-    if (crcPacket.topic == topics::directPacket)
+    if (crcPacket.topic == topics::reversePacket)
     {
         auto reversePacket = ReversePacket::fromByteArray(crcPacket.data);
 
