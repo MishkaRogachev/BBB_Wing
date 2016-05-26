@@ -6,7 +6,7 @@
 
 namespace
 {
-    const QByteArray separator = QByteArray::fromHex("A0BC1F0923");
+    const QByteArray separator = QByteArray::fromHex("FA32");
 }
 
 using namespace domain;
