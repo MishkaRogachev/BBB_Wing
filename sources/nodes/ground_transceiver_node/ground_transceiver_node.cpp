@@ -25,8 +25,8 @@ using namespace domain;
 class GroundTransceiverNode::Impl
 {
 public:
-    Subscriber sub;
-    Publisher pub;
+    Subscriber* sub;
+    Publisher* pub;
 
     AbstractLink* wireLink;
     AbstractLink* airLink;
@@ -45,8 +45,10 @@ GroundTransceiverNode::GroundTransceiverNode(QObject* parent):
     d(new Impl())
 {
     Config::begin("GroundTransceiver");
-    d->pub.bind(endpoints::groundTransceiver);
-    connect(&d->receiver, &GroundReceiver::publish, &d->pub,
+
+    d->pub = new Publisher(this);
+    d->pub->bind(endpoints::groundTransceiver);
+    connect(&d->receiver, &GroundReceiver::publish, d->pub,
             static_cast<void(Publisher::*)(const QString&, const QByteArray&)>(
                 &Publisher::publish));
 
@@ -77,10 +79,11 @@ GroundTransceiverNode::~GroundTransceiverNode()
 
 void GroundTransceiverNode::init()
 {
-    d->sub.connectTo(endpoints::gui);
-    d->sub.subscribe(topics::data);
+    d->sub = new Subscriber(this);
+    d->sub->connectTo(endpoints::gui);
+    d->sub->subscribe(topics::data);
 
-    connect(&d->sub, &Subscriber::received,
+    connect(d->sub, &Subscriber::received,
             this, &GroundTransceiverNode::onSubReceived);
 }
 
@@ -111,7 +114,7 @@ void GroundTransceiverNode::exec()
 
     d->receiver.reset();
 
-    d->pub.publish(topics::connectionStatusPacket, statusPacket.toByteArray());
+    d->pub->publish(topics::connectionStatusPacket, statusPacket.toByteArray());
 }
 
 void GroundTransceiverNode::timerEvent(QTimerEvent* event)
