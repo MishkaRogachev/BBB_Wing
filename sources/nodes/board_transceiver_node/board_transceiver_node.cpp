@@ -108,7 +108,6 @@ void BoardTransceiverNode::onSubReceived(const QString& topic, const QByteArray&
     if (topic == topics::altPacket) d->transmitter.setAltData(data);
     else if (topic == topics::insPacket) d->transmitter.setInsData(data);
     else if (topic == topics::snsPacket) d->transmitter.setSnsData(data);
-    else if (topic == topics::controlPacket) d->transmitter.setControlData(data);
 }
 
 void BoardTransceiverNode::onWireLinkReceived(const QByteArray& data)

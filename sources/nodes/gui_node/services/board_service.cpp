@@ -5,6 +5,7 @@
 
 //Internal
 #include "core.h"
+#include "config.h"
 
 using namespace domain;
 
@@ -23,8 +24,19 @@ BoardService::BoardService(QObject* parent):
     m_snsAltitude(0),
     m_altStatus(false),
     m_insStatus(false),
-    m_snsStatus(false)
-{}
+    m_snsStatus(false),
+    m_altAvalible(false),
+    m_insAvalible(false),
+    m_snsAvalible(false)
+{
+    m_altTimer.setInterval(Config::value("Gui/BoardService/alt_timeout").toInt());
+    m_insTimer.setInterval(Config::value("Gui/BoardService/ins_timeout").toInt());
+    m_snsTimer.setInterval(Config::value("Gui/BoardService/sns_timeout").toInt());
+
+    connect(&m_altTimer, &QTimer::timeout, this, &BoardService::onTimeout);
+    connect(&m_insTimer, &QTimer::timeout, this, &BoardService::onTimeout);
+    connect(&m_snsTimer, &QTimer::timeout, this, &BoardService::onTimeout);
+}
 
 float BoardService::barAltitude() const
 {
@@ -85,8 +97,7 @@ bool BoardService::altStatus() const
 {
     return m_altStatus;
 }
-// Internal
-#include "direct_packet.h"
+
 bool BoardService::insStatus() const
 {
     return m_insStatus;
@@ -97,8 +108,30 @@ bool BoardService::snsStatus() const
     return m_snsStatus;
 }
 
+bool BoardService::altAvalible() const
+{
+    return m_altAvalible;
+}
+
+bool BoardService::insAvalible() const
+{
+    return m_insAvalible;
+}
+
+bool BoardService::snsAvalible() const
+{
+    return m_snsAvalible;
+}
+
 void BoardService::updateAltData(const AltPacket& packet)
 {
+    if (!m_altAvalible)
+    {
+        m_altAvalible = true;
+        emit altAvalibleChanged(m_altAvalible);
+    }
+    m_altTimer.start();
+
     if (m_altStatus != packet.status)
     {
         m_altStatus = packet.status;
@@ -122,6 +155,13 @@ void BoardService::updateAltData(const AltPacket& packet)
 
 void BoardService::updateInsData(const InsPacket& packet)
 {
+    if (!m_insAvalible)
+    {
+        m_insAvalible = true;
+        emit insAvalibleChanged(m_insAvalible);
+    }
+    m_insTimer.start();
+
     if (m_insStatus != packet.status)
     {
         m_insStatus = packet.status;
@@ -151,6 +191,13 @@ void BoardService::updateInsData(const InsPacket& packet)
 
 void BoardService::updateSnsData(const SnsPacket& packet)
 {
+    if (!m_snsAvalible)
+    {
+        m_snsAvalible = true;
+        emit snsAvalibleChanged(m_snsAvalible);
+    }
+    m_snsTimer.start();
+
     if (m_snsStatus != packet.status)
     {
         m_snsStatus = packet.status;
@@ -209,8 +256,23 @@ void BoardService::updateSnsData(const SnsPacket& packet)
     }
 }
 
-void BoardService::updateStatusData(const ReverseStatusPacket& packet)
+void BoardService::onTimeout()
 {
-    // TODO: status
+    if (this->sender() == &m_altTimer && m_altAvalible)
+    {
+        m_altAvalible = false;
+        emit altAvalibleChanged(m_altAvalible);
+    }
+    else if (this->sender() == &m_insTimer && m_insAvalible)
+    {
+        m_insAvalible = false;
+        emit snsAvalibleChanged(m_insAvalible);
+    }
+    else if (this->sender() == &m_snsTimer && m_snsAvalible)
+    {
+        m_snsAvalible = false;
+        emit snsAvalibleChanged(m_snsAvalible);
+    }
 }
+
 

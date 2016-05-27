@@ -22,7 +22,6 @@ namespace domain
         void setAltData(const QByteArray& data);
         void setInsData(const QByteArray& data);
         void setSnsData(const QByteArray& data);
-        void setControlData(const QByteArray& data);
 
     protected:
         void timerEvent(QTimerEvent* event);

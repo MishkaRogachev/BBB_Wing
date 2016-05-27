@@ -24,12 +24,10 @@ public:
     QBasicTimer altTimer;
     QBasicTimer insTimer;
     QBasicTimer snsTimer;
-    QBasicTimer controlTimer;
 
     int altInterval;
     int insInterval;
     int snsInterval;
-    int controlInterval;
 };
 
 BoardTransmitter::BoardTransmitter(QObject* parent):
@@ -39,12 +37,10 @@ BoardTransmitter::BoardTransmitter(QObject* parent):
     d->packet.altAvalible = false;
     d->packet.insAvalible = false;
     d->packet.snsAvalible = false;
-    d->packet.controlAvalible = false;
 
     d->altInterval = Config::value("BoardTransceiver/alt_timeout").toInt();
     d->insInterval = Config::value("BoardTransceiver/ins_timeout").toInt();
     d->snsInterval = Config::value("BoardTransceiver/sns_timeout").toInt();
-    d->controlInterval = Config::value("BoardTransceiver/ctrl_timeout").toInt();
 }
 
 BoardTransmitter::~BoardTransmitter()
@@ -79,13 +75,6 @@ void BoardTransmitter::setSnsData(const QByteArray& data)
     d->snsTimer.start(d->snsInterval, Qt::PreciseTimer, this);
 }
 
-void BoardTransmitter::setControlData(const QByteArray& data)
-{
-    d->packet.control = ControlPacket::fromByteArray(data);
-    d->packet.controlAvalible = true;
-    d->controlTimer.start(d->controlInterval, Qt::PreciseTimer, this);
-}
-
 void BoardTransmitter::timerEvent(QTimerEvent* event)
 {
     if (event->timerId() == d->altTimer.timerId())
@@ -101,11 +90,6 @@ void BoardTransmitter::timerEvent(QTimerEvent* event)
     if (event->timerId() == d->snsTimer.timerId())
     {
         d->packet.snsAvalible = false;
-        d->altTimer.stop();
-    }
-    if (event->timerId() == d->controlTimer.timerId())
-    {
-        d->packet.controlAvalible = false;
         d->altTimer.stop();
     }
 }

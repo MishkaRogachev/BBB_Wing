@@ -216,7 +216,6 @@ void PacketsTest::testReversePacket()
     packet.insAvalible = true;
     packet.ins.status = false;
     packet.snsAvalible = false;
-    packet.controlAvalible = false;
 
     ReversePacket converted =
             this->testPacketSerialization<ReversePacket>(packet);
@@ -226,12 +225,4 @@ void PacketsTest::testReversePacket()
     QCOMPARE(converted.insAvalible, packet.insAvalible);
     QCOMPARE(converted.ins.toByteArray(), packet.ins.toByteArray());
     QCOMPARE(converted.snsAvalible, packet.snsAvalible);
-    QCOMPARE(converted.controlAvalible, packet.controlAvalible);
-
-    ReverseStatusPacket status = converted.status();
-
-    QCOMPARE(status.altAvalible, packet.altAvalible);
-    QCOMPARE(status.insAvalible, packet.insAvalible);
-    QCOMPARE(status.snsAvalible, packet.snsAvalible);
-    QCOMPARE(status.controlAvalible, packet.controlAvalible);
 }

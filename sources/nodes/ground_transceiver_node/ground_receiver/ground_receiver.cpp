@@ -36,10 +36,6 @@ void GroundReceiver::onLinkReceived(const QByteArray& data)
             emit publish(topics::insPacket, reverse.ins.toByteArray());
         if (reverse.snsAvalible)
             emit publish(topics::snsPacket, reverse.sns.toByteArray());
-        if (reverse.controlAvalible)
-            emit publish(topics::controlPacket, reverse.control.toByteArray());
-
-        emit publish(topics::reverseStatusPacket, reverse.status().toByteArray());
     }
 }
 

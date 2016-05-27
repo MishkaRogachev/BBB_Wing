@@ -4,12 +4,12 @@
 // Qt
 #include <QObject>
 #include <QtPositioning/QGeoCoordinate>
+#include <QTimer>
 
 // Internal
 #include "sns_packet.h"
 #include "ins_packet.h"
 #include "alt_packet.h"
-#include "reverse_status_packet.h"
 
 namespace domain
 {
@@ -35,6 +35,10 @@ namespace domain
         Q_PROPERTY(bool insStatus READ insStatus NOTIFY insStatusChanged)
         Q_PROPERTY(bool snsStatus READ snsStatus NOTIFY snsStatusChanged)
 
+        Q_PROPERTY(bool altAvalible READ altAvalible NOTIFY altAvalibleChanged)
+        Q_PROPERTY(bool insAvalible READ insAvalible NOTIFY insAvalibleChanged)
+        Q_PROPERTY(bool snsAvalible READ snsAvalible NOTIFY snsAvalibleChanged)
+
     public:
         explicit BoardService(QObject* parent = nullptr);
 
@@ -56,11 +60,14 @@ namespace domain
         bool insStatus() const;
         bool snsStatus() const;
 
+        bool altAvalible() const;
+        bool insAvalible() const;
+        bool snsAvalible() const;
+
     public slots:
         void updateAltData(const AltPacket& packet);
         void updateInsData(const InsPacket& packet);
         void updateSnsData(const SnsPacket& packet);
-        void updateStatusData(const ReverseStatusPacket& packet);
 
     signals:
         void barAltitudeChanged(float barAltitude);
@@ -81,10 +88,17 @@ namespace domain
         void insStatusChanged(bool insStatus);
         void snsStatusChanged(bool snsStatus);
 
+        void altAvalibleChanged(bool altAvalible);
+        void insAvalibleChanged(bool insAvalible);
+        void snsAvalibleChanged(bool snsAvalible);
+
         void publish(const QString& topic, const QByteArray& data);
 
-    private:
-        float m_barAltitude; // TODO: varibles to packets
+    private slots:
+        void onTimeout();
+
+    private: // TODO: sepatate to subclasses
+        float m_barAltitude;
         float m_temperature;
 
         float m_pitch;
@@ -101,6 +115,13 @@ namespace domain
         bool m_altStatus;
         bool m_insStatus;
         bool m_snsStatus;
+
+        bool m_altAvalible;
+        bool m_insAvalible;
+        bool m_snsAvalible;
+        QTimer m_altTimer;
+        QTimer m_insTimer;
+        QTimer m_snsTimer;
     };
 }
 

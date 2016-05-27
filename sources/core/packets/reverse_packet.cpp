@@ -2,14 +2,6 @@
 
 using namespace domain;
 
-ReverseStatusPacket ReversePacket::status() const
-{
-    QByteArray data;
-    QDataStream stream(&data, QIODevice::WriteOnly);
-    ReverseStatusPacket::operator >>(stream);
-    return ReverseStatusPacket::fromByteArray(data);
-}
-
 QDataStream& ReversePacket::operator >>(QDataStream& stream) const
 {
     stream << altAvalible;
@@ -20,9 +12,6 @@ QDataStream& ReversePacket::operator >>(QDataStream& stream) const
 
     stream << snsAvalible;
     if (snsAvalible) stream << sns;
-
-    stream << controlAvalible;
-    if (controlAvalible) stream << control;
 
     return stream;
 }
@@ -37,9 +26,6 @@ QDataStream& ReversePacket::operator <<(QDataStream& stream)
 
     stream >> snsAvalible;
     if (snsAvalible) stream >> sns;
-
-    stream >> controlAvalible;
-    if (controlAvalible) stream >> control;
 
     return stream;
 }

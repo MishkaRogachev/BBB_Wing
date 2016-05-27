@@ -1,5 +1,10 @@
 {
     "Gui": {
+        "BoardService": {
+            "alt_timeout": 2000,
+            "ins_timeout": 400,
+            "sns_timeout": 800
+        },
         "Dashboard": {
             "spacing": 8,
             "width": 400

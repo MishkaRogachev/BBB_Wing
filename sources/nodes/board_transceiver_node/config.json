@@ -9,7 +9,6 @@
         "link_timeout": 2000,
         "alt_timeout": 2000,
         "ins_timeout": 400,
-        "sns_timeout": 800,
-        "ctrl_timeout": 800
+        "sns_timeout": 800
     }
 }
