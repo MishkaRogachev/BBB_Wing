@@ -4,10 +4,11 @@ import "./" as Current
 import "qrc:/js/helper.js" as Helper
 
 Control {
-    id: coordSpinBox
+    id: control
 
     property real value: 0
     property real stepSize: 0.001
+    property bool longitude: false
 
     implicitWidth: Math.max(background.implicitWidth,
                             contentItem.implicitWidth +
@@ -18,7 +19,7 @@ Control {
     font.pointSize: 11
     padding: 6
     leftPadding: -(up.width + down.width) / 2
-    rightPadding: 6 + coordSpinBox.mirrored ? down.width : up.width
+    rightPadding: 6 + control.mirrored ? down.width : up.width
 
     background: Rectangle {
         implicitWidth: 32
@@ -27,23 +28,23 @@ Control {
     }
 
     contentItem: TextInput {
-        text: Helper.degreesToDmsString(value)
-        onEditingFinished: value =  Helper.dmsStringToDegree(text)
-        font: coordSpinBox.font
+        text: Helper.degreesToDmsString(value, longitude)
+        onEditingFinished: value =  Helper.dmsStringToDegree(text, longitude)
+        font: control.font
         color: palette.textColor
         selectionColor: palette.highlightColor
         selectedTextColor: color
         horizontalAlignment: Qt.AlignHCenter
         verticalAlignment: Qt.AlignVCenter
-        validator: RegExpValidator { // TODO :NSWE
-            regExp: /[0-9]{1,3}[°][0-9]{1,2}['][0-9]{1,2}[.][0-9]{1,2}"/
+        validator: RegExpValidator {
+            regExp: /[0-9]{1,3}[°][0-9]{1,2}['][0-9]{1,2}[.][0-9]{1,2}"[N,S,W,E]/
         }
     }
 
     Current.Button {
         id: down
-        x: coordSpinBox.mirrored ? up.width : coordSpinBox.width - width - up.width
-        height: coordSpinBox.height
+        x: control.mirrored ? up.width : control.width - width - up.width
+        height: control.height
         width: height
         backgroundColor: pressed ? palette.highlightColor : palette.transparent
         icon: "qrc:/resources/icons/minus.svg"
@@ -53,8 +54,8 @@ Control {
 
     Current.Button {
         id: up
-        x: coordSpinBox.mirrored ? 0 : coordSpinBox.width - width
-        height: coordSpinBox.height
+        x: control.mirrored ? 0 : control.width - width
+        height: control.height
         width: height
         backgroundColor: pressed ? palette.highlightColor : palette.transparent
         icon: "qrc:/resources/icons/plus.svg"

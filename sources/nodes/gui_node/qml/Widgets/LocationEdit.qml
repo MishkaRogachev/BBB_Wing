@@ -22,7 +22,8 @@ Row {
 
             CoordSpinBox {
                 id: latitudeSpinBox
-                width: 172
+                longitude: false
+                width: 180
             }
         }
 
@@ -35,7 +36,8 @@ Row {
 
             CoordSpinBox {
                 id: longitudeSpinBox
-                width: 172
+                longitude: true
+                width: 180
             }
         }
     }

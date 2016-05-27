@@ -17,7 +17,8 @@ function degreesToDms(degrees) {
     var sec = frac * 3600 - min * 60;
 
     return {
-        deg: deg,
+        sign: degrees < 0 ? -1 : 1,
+        deg:  Math.abs(deg),
         min: min,
         sec: sec
     }
@@ -27,20 +28,23 @@ function dmsToDegree(deg, min, sec) {
     return deg + min / 60.0 + sec / 3600.0;
 }
 
-function degreesToDmsString(degrees) {
+function degreesToDmsString(degrees, lng) {
     var dms = degreesToDms(degrees);
     return pad(dms.deg, 3) + "\u00B0" +
            pad(dms.min, 2) + "\'" +
-           pad(dms.sec.toFixed(2), 5) + "\""
+           pad(dms.sec.toFixed(2), 5) + "\"" +
+           (dms.sign < 0 ? lng ? "W" : "S" : lng ? "E" : "N");
 }
 
-function dmsStringToDegree(string) {
+function dmsStringToDegree(string, lng) {
     var split = string.split("\u00B0");
     if (split.cout < 2) return 0.0;
     var deg = split[0];
     split = split[1].split("\'");
     if (split.cout < 2) return 0.0;
     var min = split[0];
-    var sec = split[1];
-    return dmsToDegree(parseInt(deg), parseInt(min), parseFloat(sec));
+    split = split[1].split("\"");
+    var sec = split[0];
+    var sign = split[1] === "W" || split[1] === "S" ? -1 : 1;
+    return dmsToDegree(sign * parseInt(deg), parseInt(min), parseFloat(sec));
 }
