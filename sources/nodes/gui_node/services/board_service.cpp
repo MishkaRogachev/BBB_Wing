@@ -266,7 +266,7 @@ void BoardService::onTimeout()
     else if (this->sender() == &m_insTimer && m_insAvalible)
     {
         m_insAvalible = false;
-        emit snsAvalibleChanged(m_insAvalible);
+        emit insAvalibleChanged(m_insAvalible);
     }
     else if (this->sender() == &m_snsTimer && m_snsAvalible)
     {
