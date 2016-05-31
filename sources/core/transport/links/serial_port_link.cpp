@@ -13,10 +13,10 @@ using namespace domain;
 
 SerialPortLink::SerialPortLink(const QString& device, qint32 baudRate,
                                QObject* parent):
-    AbstractLink(parent)
+    AbstractLink(parent),
+    m_baudRate(baudRate)
 {
     m_port = new QSerialPort(device, this);
-    m_port->setBaudRate(baudRate);
 
     QObject::connect(m_port, &QSerialPort::readyRead,
                      this, &SerialPortLink::readSerialData);
@@ -29,7 +29,11 @@ bool SerialPortLink::isConnected() const
 
 bool SerialPortLink::connectLink()
 {
-    if (m_port->open(QIODevice::ReadWrite)) return true;
+    if (m_port->open(QIODevice::ReadWrite))
+    {
+        m_port->setBaudRate(m_baudRate);
+        return true;
+    }
 
     qWarning("Serial port connection error: '%s'!",
              qPrintable(m_port->errorString()));

@@ -28,6 +28,7 @@ namespace domain
 
     private:
         QSerialPort* m_port;
+        qint32 m_baudRate;
         QByteArray m_data;
     };
 }
