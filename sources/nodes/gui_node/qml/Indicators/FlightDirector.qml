@@ -4,11 +4,11 @@ import QtGraphicalEffects 1.0
 Column {
     id: flightDirector
 
-    property real pitch: 0.0
-    property real roll: 0.0
-    property real yaw: 0.0
-    property real velocity: 0.0
-    property real altitude: 0.0
+    property int pitch: 0.0
+    property int roll: 0.0
+    property int yaw: 0.0
+    property int velocity: 0.0
+    property int altitude: 0.0
 
     property bool pitchInverted: true
     property bool rollInverted: true
