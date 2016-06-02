@@ -58,14 +58,14 @@ void SensorSnsNode::exec()
         {
             packet.fix = data->fix.mode;
 
-            if (data->fix.mode > 1)
+            if (data->fix.mode > MODE_2D)
             {
                 packet.fix2d.latitude = data->fix.latitude;
                 packet.fix2d.longitude = data->fix.longitude;
                 packet.fix2d.yaw = data->fix.track;
                 packet.fix2d.groundSpeed = data->fix.speed;
 
-                if (data->fix.mode > 2)
+                if (data->fix.mode > MODE_3D)
                 {
                     packet.fix3d.altitude = data->fix.altitude;
                     packet.fix3d.climb = data->fix.climb;

@@ -233,7 +233,7 @@ void BoardService::updateSnsData(const SnsPacket& packet)
 
         if (packet.fix > 2)
         {
-            position.setLongitude(packet.fix3d.altitude);
+            position.setAltitude(packet.fix3d.altitude);
 
             if (!qFuzzyCompare(m_climb, packet.fix3d.climb))
             {
