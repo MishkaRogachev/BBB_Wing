@@ -68,10 +68,10 @@ void ComplementaryFilter::process(float dt)
                         180.0 / M_PI;
 
     // Complementary filter used to combine the accelerometer and gyro values.(GAIN?)
-    d->pitch = ::filterConstant * (d->pitch + d->gx * dt) +
-               (1 - ::filterConstant) * accelXAngle;
-    d->roll = ::filterConstant * (d->roll + d->gy * dt) +
+    d->pitch = ::filterConstant * (d->pitch + d->gy * dt) +
               (1 - ::filterConstant) * accelYAngle;
+    d->roll = ::filterConstant * (d->roll + d->gx * dt) +
+               (1 - ::filterConstant) * accelXAngle;
 
     // Normalize accelerometer raw values
     float l = sqrt(pow(d->ax, 2) + pow(d->ay, 2) + pow(d->az, 2));
