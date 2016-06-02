@@ -16,18 +16,7 @@ HEADER_DIRECTORIES(INTERNAL_INCLUDES ${CMAKE_CURRENT_SOURCE_DIR})
 include_directories(${INCLUDES} ${INTERNAL_INCLUDES})
 
 # Sources
-set(INTERNAL_SOURCES
-    sensor_ins_node.h
-    sensor_ins_node.cpp
-    imus/i_imu.h
-    imus/lsm9ds1/lsm9ds1.h
-    imus/lsm9ds1/lsm9ds1_registers.h
-    imus/lsm9ds1/lsm9ds1_gyro_accel.h
-    imus/lsm9ds1/lsm9ds1_mag.h
-    imus/lsm9ds1/lsm9ds1_gyro_accel.cpp
-    imus/lsm9ds1/lsm9ds1_mag.cpp
-    imus/lsm9ds1/lsm9ds1.cpp
-)
+file(GLOB_RECURSE INTERNAL_SOURCES "*.cpp" "*.h")
 
 # Qt5 wrap node's headers
 qt5_wrap_cpp(MOC_SOURCES sensor_ins_node.h)

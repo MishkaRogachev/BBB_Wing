@@ -11,11 +11,7 @@
 #include "ins_packet.h"
 
 #include "lsm9ds1.h"
-
-namespace
-{
-    const float declination = -8.58;
-}
+#include "complementary_filter.h"
 
 using namespace domain;
 
@@ -24,6 +20,8 @@ class SensorInsNode::Impl
 public:
     Publisher pub;
     devices::IImu* imu;
+
+    ComplementaryFilter filter;
 };
 
 SensorInsNode::SensorInsNode(QObject* parent):
@@ -56,31 +54,29 @@ void SensorInsNode::exec()
     {
         packet.status = true;
 
-//        float gx = d->imu.gyroAccel()->readGyro(devices::AxisX);
-//        float gy = d->imu.gyroAccel()->readGyro(devices::AxisY);
-//        float gz = d->imu.gyroAccel()->readGyro(devices::AxisZ);
-        float ax = d->imu->readAccelX();
-        float ay = d->imu->readAccelY();
-        float az = d->imu->readAccelZ();
-//        float temperature = d->imu->gyroAccel()->readTempearture();
-        float mx = d->imu->readMagX();
-        float my = d->imu->readGyroY();
-//        float mz = d->imu->mag()->readMag(devices::AxisZ);
+        d->filter.setAccelData(d->imu->readAccelX(),
+                               d->imu->readAccelY(),
+                               d->imu->readAccelZ());
 
-        // TODO: separate this code to INS class
-        packet.pitch = atan2(ax, sqrt(ay * ay + az * az)) * 180.0f / M_PI;
-        packet.roll = atan2(ay, az) * 180.0 / M_PI;
+        d->filter.setGyroData(d->imu->readGyroX(),
+                              d->imu->readGyroY(),
+                              d->imu->readGyroZ());
 
-        float yaw = qFuzzyCompare(my, 0.0f) ?
-                        (mx < 0 ? 180.0f : 0.0f) :
-                        atan2(mx ,my);
-        if (yaw > M_PI) yaw -= 2 * M_PI;
-        else if (yaw < 0) yaw += 2 * M_PI;
-        packet.yaw = yaw * 180.0f / M_PI - declination;
+        d->filter.setMagData(d->imu->readMagX(),
+                             d->imu->readMagY(),
+                             d->imu->readMagZ());
+
+        d->filter.process(1 / this->frequency());
+
+        packet.pitch = d->filter.pitch();
+        packet.roll = d->filter.roll();
+        packet.yaw = d->filter.yaw();
     }
     else
     {
         packet.status = false;
+
+        d->filter.reset();
         d->imu->init();
     }
     d->pub.publish(topics::insPacket, packet.toByteArray());
