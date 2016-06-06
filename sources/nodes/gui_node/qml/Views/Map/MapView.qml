@@ -1,4 +1,4 @@
-import QtQuick 2.5
+import QtQuick 2.6
 import QtLocation 5.5
 import QtPositioning 5.5
 import "../../Controls"

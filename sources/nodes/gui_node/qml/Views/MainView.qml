@@ -1,4 +1,4 @@
-import QtQuick 2.5
+import QtQuick 2.6
 
 import "../"
 import "./Dashboard"
@@ -23,10 +23,15 @@ Rectangle {
             anchors.top: parent.top
         }
 
-        MapView {
-            id: map
+        Column {
             width: parent.width - boardView.width
             height: parent.height
+
+            MapView {
+                id: map
+                width: parent.width
+                height: parent.height * 2 / 3
+            }
         }
     }
 
