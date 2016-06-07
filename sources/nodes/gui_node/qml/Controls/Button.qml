@@ -1,5 +1,5 @@
 import QtQuick 2.6
-import Qt.labs.controls 1.0
+import QtQuick.Controls 2.0
 
 Button {
     id: button
@@ -18,22 +18,28 @@ Button {
                    palette.highlightColor : palette.foregroundColor
     }
 
-    label: Row {
-        anchors.centerIn: parent
-        height: parent.availableHeight
+    contentItem: Item {
+        implicitWidth: row.width
+        implicitHeight: row.height
 
-        Image {
-            id: image
-            anchors.verticalCenter: parent.verticalCenter
-        }
+        Row {
+            id: row
+            anchors.centerIn: parent
+            height: parent.availableHeight
 
-        Text {
-            font: button.font
-            text: button.text
-            color: palette.textColor
-            anchors.verticalCenter: parent.verticalCenter
-            horizontalAlignment: Text.AlignHCenter
-            verticalAlignment: Text.AlignVCenter
+            Image {
+                id: image
+                anchors.verticalCenter: parent.verticalCenter
+            }
+
+            Text {
+                font: button.font
+                text: button.text
+                color: palette.textColor
+                anchors.verticalCenter: parent.verticalCenter
+                horizontalAlignment: Text.AlignHCenter
+                verticalAlignment: Text.AlignVCenter
+            }
         }
     }
 }
