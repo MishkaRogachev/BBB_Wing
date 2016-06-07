@@ -9,7 +9,9 @@ project(${PROJECT})
 ADD_JSON_CONFIG(${CMAKE_CURRENT_SOURCE_DIR}/config.json)
 
 # Enable required Qt modules
-find_package(Qt5 COMPONENTS Gui Quick Multimedia Positioning Location REQUIRED)
+find_package(Qt5 COMPONENTS
+    Gui Quick Multimedia Positioning Location Charts
+REQUIRED)
 
 # Libraries
 set(LIBRARIES
@@ -19,6 +21,7 @@ set(LIBRARIES
     Qt5::Multimedia
     Qt5::Positioning
     Qt5::Location
+    Qt5::Charts
 )
 
 # Includes

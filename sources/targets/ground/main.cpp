@@ -1,5 +1,5 @@
 // Qt
-#include <QtGui/QGuiApplication>
+#include <QtWidgets/QApplication>
 
 // Internal
 #include "branch_node.h"
@@ -10,7 +10,7 @@
 
 int main(int argc, char* argv[])
 {
-    QGuiApplication app(argc, argv);
+    QApplication app(argc, argv);
 
     using namespace domain;
 

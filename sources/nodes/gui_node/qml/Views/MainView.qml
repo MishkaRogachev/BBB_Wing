@@ -3,6 +3,7 @@ import QtQuick 2.6
 import "../"
 import "./Dashboard"
 import "./Map"
+import "./Plot"
 import "./Settings"
 import "./Status"
 
@@ -31,6 +32,12 @@ Rectangle {
                 id: map
                 width: parent.width
                 height: parent.height * 2 / 3
+            }
+
+            PlotView {
+                id : plot
+                width: parent.width
+                height: parent.height / 3
             }
         }
     }

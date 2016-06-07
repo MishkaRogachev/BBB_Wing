@@ -19,6 +19,7 @@
         <file>qml/Indicators/FlightDirector.qml</file>
         <file>qml/Widgets/LocationEdit.qml</file>
         <file>qml/Views/MainView.qml</file>
+        <file>qml/Views/Plot/PlotView.qml</file>
         <file>qml/Views/Dashboard/DashboardView.qml</file>
         <file>qml/Views/Dashboard/VideoView.qml</file>
         <file>qml/Views/Dashboard/InitView.qml</file>
