@@ -10,7 +10,6 @@
 #include "config.h"
 
 #include "publisher.h"
-
 #include "record_packet.h"
 
 using namespace domain;

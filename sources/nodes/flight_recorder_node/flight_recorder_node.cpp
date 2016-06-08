@@ -1,8 +1,6 @@
 ﻿#include "flight_recorder_node.h"
 
 // Qt
-#include <QDir>
-#include <QFile>
 #include <QDateTime>
 #include <QDataStream>
 #include <QMap>
@@ -14,7 +12,7 @@
 
 #include "subscriber.h"
 
-#include "record_packet.h"
+#include "recorders/file_recorder.h"
 
 namespace
 {
@@ -23,13 +21,13 @@ namespace
 
 using namespace domain;
 
-class FlightRecorderNode::Impl // TODO: Board and ground recorder nodes
+class FlightRecorderNode::Impl
 {
 public:
-    QFile file;
     Subscriber sub;
 
-    QMap <QString, RecordPacket> packets;
+    QString filename;
+    FileRecorder recorder;
 };
 
 FlightRecorderNode::FlightRecorderNode(QObject* parent):
@@ -57,40 +55,27 @@ void FlightRecorderNode::init()
             &FlightRecorderNode::onSubReceived);
 }
 
+void FlightRecorderNode::start()
+{
+    d->filename = QDateTime::currentDateTime().toString(
+                       Config::value("FlightRecorder/file_format").toString() +
+                       ::fileExtention);
+    d->recorder.open(d->filename);
+
+    AbstractNodeFrequency::start();
+}
+
 void FlightRecorderNode::exec()
 {
-    Config::begin("FlightRecorder");
-
-    if (d->file.isOpen() &&
-        (d->file.size() > Config::value("max_record_size").toInt() ||
-         !d->file.exists())) d->file.close();
-
-    if (!d->file.isOpen())
+    if (!d->recorder.isAvalible())
     {
-        QString path = Config::value("path").toString();
-        if (!QDir(path).exists()) QDir(path).mkpath(".");
-
-        d->file.setFileName(path + QDateTime::currentDateTime().toString(
-                            Config::value("file_format").toString()) +
-                            ::fileExtention);
-
-        d->file.open(QIODevice::Append);
+        d->recorder.open(d->filename);
+        d->recorder.flush();
     }
-
-    if (d->file.isOpen())
-    {
-        for (const RecordPacket& packet: d->packets.values())
-        {
-             d->file.write(packet.toByteArray());
-        }
-        d->packets.clear();
-    }
-
-    Config::end();
 }
 
 void FlightRecorderNode::onSubReceived(const QString& topic,
                                        const QByteArray& data)
 {
-    d->packets.insert(topic, RecordPacket(topic, data));
+    d->recorder.addRecord(RecordPacket(topic, data));
 }

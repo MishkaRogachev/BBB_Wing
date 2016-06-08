@@ -15,6 +15,7 @@ namespace domain
 
     public slots:
         void init() override;
+        void start() override;
         void exec() override;
 
     private slots:

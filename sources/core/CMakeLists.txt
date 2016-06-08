@@ -4,6 +4,7 @@ cmake_minimum_required(VERSION 2.8.11)
 add_subdirectory(config)
 add_subdirectory(nodes)
 add_subdirectory(transport)
+add_subdirectory(recorders)
 add_subdirectory(packets)
 
 # Includes
