@@ -16,7 +16,6 @@ namespace domain
 
         QString topic;
         QByteArray data;
-        QTime timeStamp;
         quint16 crc;
 
         bool validateCrc();

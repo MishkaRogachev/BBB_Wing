@@ -7,8 +7,7 @@ CrcPacket::CrcPacket()
 
 CrcPacket::CrcPacket(const QString& topic, const QByteArray& data):
     topic(topic),
-    data(data),
-    timeStamp(QTime::currentTime())
+    data(data)
 {
     this->calcCrc();
 }
@@ -27,7 +26,6 @@ QDataStream& CrcPacket::operator >>(QDataStream& stream) const
 {
     stream << topic;
     stream << data;
-    stream << timeStamp;
     stream << crc;
 
     return stream;
@@ -37,7 +35,6 @@ QDataStream& CrcPacket::operator <<(QDataStream& stream)
 {
     stream >> topic;
     stream >> data;
-    stream >> timeStamp;
     stream >> crc;
 
     return stream;

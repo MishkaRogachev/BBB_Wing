@@ -145,7 +145,6 @@ void PacketsTest::testTransmissionPacket()
 
     QCOMPARE(converted.topic, packet.topic);
     QCOMPARE(converted.data, packet.data);
-    QCOMPARE(converted.timeStamp, packet.timeStamp);
     QVERIFY(converted.validateCrc());
 
     converted.data = "another_data";

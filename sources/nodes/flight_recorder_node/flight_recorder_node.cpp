@@ -14,7 +14,7 @@
 
 #include "subscriber.h"
 
-#include "crc_packet.h"
+#include "record_packet.h"
 
 namespace
 {
@@ -29,7 +29,7 @@ public:
     QFile file;
     Subscriber sub;
 
-    QMap <QString, CrcPacket> packets;
+    QMap <QString, RecordPacket> packets;
 };
 
 FlightRecorderNode::FlightRecorderNode(QObject* parent):
@@ -79,7 +79,7 @@ void FlightRecorderNode::exec()
 
     if (d->file.isOpen())
     {
-        for (const CrcPacket& packet: d->packets.values())
+        for (const RecordPacket& packet: d->packets.values())
         {
              d->file.write(packet.toByteArray());
         }
@@ -92,5 +92,5 @@ void FlightRecorderNode::exec()
 void FlightRecorderNode::onSubReceived(const QString& topic,
                                        const QByteArray& data)
 {
-    d->packets.insert(topic, CrcPacket(topic, data));
+    d->packets.insert(topic, RecordPacket(topic, data));
 }
