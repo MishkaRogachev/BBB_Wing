@@ -2,7 +2,7 @@ import QtQuick 2.6
 import "../../Controls"
 
 StickPad {
-    spacing: dashboardView.spacing
+    spacing: dashboard.spacing
     height: configService.value("Gui/StickPad/size")
     model: configService.value("Gui/StickPad/model")
     onDeviationChanged: {

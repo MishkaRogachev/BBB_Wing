@@ -3,7 +3,7 @@ import "../../Controls"
 import "../../Indicators"
 
 Column {
-    id: dashboardView
+    id: dashboard
 
     spacing: configService.value("Gui/Dashboard/spacing")
     width: configService.value("Gui/Dashboard/width")
@@ -11,7 +11,7 @@ Column {
     FlightDirector {
         id: flightDirector
         width: parent.width
-        spacing: dashboardView.spacing
+        spacing: dashboard.spacing
 
         pitch: boardService.pitch
         roll: boardService.roll
@@ -67,7 +67,7 @@ Column {
 
     VideoView {
         id: video
-        width: parent.width - dashboardView.spacing
+        width: parent.width - dashboard.spacing
         anchors.horizontalCenter: parent.horizontalCenter
         height: width * 3 / 4
     }
@@ -100,7 +100,7 @@ Column {
         id: modeBar
         anchors.horizontalCenter: parent.horizontalCenter
         property variant currentModelItem: model[currentIndex]
-        width: parent.width - dashboardView.spacing
+        width: parent.width - dashboard.spacing
         model: [
             { text: qsTr("INIT"), component: initComponent },
             { text: qsTr("AUTOMATIC"), component: automaticComponent },
