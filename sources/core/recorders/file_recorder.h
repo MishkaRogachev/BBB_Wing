@@ -14,6 +14,7 @@ namespace domain
         bool isAvalible() const;
 
         void open(const QString& filename);
+        void close();
         void flush();
         void addRecord(const RecordPacket& record) override;
 

@@ -37,6 +37,11 @@ void FileRecorder::open(const QString& filename)
     d->file.open(QIODevice::Append);
 }
 
+void FileRecorder::close()
+{
+    d->file.close();
+}
+
 void FileRecorder::flush()
 {
     d->file.flush();
