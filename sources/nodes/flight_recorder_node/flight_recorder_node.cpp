@@ -14,11 +14,6 @@
 
 #include "recorders/file_recorder.h"
 
-namespace
-{
-    const char* fileExtention = ".tlm";
-}
-
 using namespace domain;
 
 class FlightRecorderNode::Impl
@@ -59,7 +54,7 @@ void FlightRecorderNode::start()
 {
     d->filename = QDateTime::currentDateTime().toString(
                        Config::value("FlightRecorder/file_format").toString() +
-                       ::fileExtention);
+                       Config::value("FlightRecorder/file_extention").toString());
     d->recorder.open(d->filename);
 
     AbstractNodeFrequency::start();

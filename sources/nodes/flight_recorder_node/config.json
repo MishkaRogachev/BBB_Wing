@@ -1,6 +1,7 @@
 {
     "FlightRecorder": {
         "file_format": "ddMMyyyy_hhmm",
+        "file_extention": "tlm",
         "frequency": 1,
         "path": "/media/sd_card/records/"
     }
